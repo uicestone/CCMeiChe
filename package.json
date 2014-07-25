@@ -1,0 +1,24 @@
+{
+  "name": "ccar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "connect-redis": "~2.0.0",
+    "express-session": "~1.7.0",
+    "mongoskin": "~0.6.0",
+    "redis": "~0.11.0",
+    "express-namespace": "~0.1.1",
+    "express": "~4.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.oschina.net/supersheep/ccar.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
+}
