@@ -2,6 +2,7 @@ var express = require('express');
 var namespace = require('express-namespace');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler');
 var config = require('config');
 
@@ -14,6 +15,7 @@ app.use(session({
   resave:false,
   saveUninitialized:false
 }));
+app.use(bodyParser.urlencoded());
 app.namespace("/api/v1", require("./api/v1")(app));
 
 app.use(errorHandler());
