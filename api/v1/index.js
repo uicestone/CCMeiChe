@@ -3,7 +3,8 @@ module.exports = function(app){
     var apis = [
       "signin",
       "order",
-      "upload"
+      "upload",
+      "vcode"
     ];
 
     var verbs = [
