@@ -22,7 +22,8 @@ module.exports = function(app){
 
     apis.forEach(function(api){
       verbs.forEach(function(verb){
-        api[verb] && app[verb]('/' + api.name, api[verb]);
+        var handler = api[verb];
+        handler && app[verb].apply(app,['/' + api.name].concat(handler));
       });
     });
   }

@@ -12,15 +12,17 @@ var app = express();
 app.use(session({
   store: new RedisStore(config.redis),
   secret: config.session_secret,
-  resave:false,
-  saveUninitialized:false
+  resave: false,
+  saveUninitialized: false
 }));
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.namespace("/api/v1", require("./api/v1")(app));
 
 app.use(errorHandler());
 
 
-app.listen(config.get("port"), function(){
-  console.log("server started at %d",config.port);
+app.listen(config.get("port"), function () {
+  console.log("server started at %d", config.port);
 });
