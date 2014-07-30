@@ -23,6 +23,7 @@ exports.verify = function(pair, callback){
   redis.get(redis_key, function(err, expire){
     if(err){return callback(err);}
     if(!expire){
+      console.log(redis_key + ' not exists');
       return callback(null, false);
     }
     var ok = +new Date() < expire;
@@ -47,18 +48,18 @@ exports.generate = function(key, callback){
       if(exists){
         _generateCode(key, callback);
       }else{
-        var timeout = 60 * 1000;
-        var expire = +new Date() + timeout;
+        var timeout = 60;
+        var expire = +new Date() + timeout * 1000;
         var redis_key = _generateRedisKey({
           code: code,
           key: key
         });
-        setTimeout(function(){
-          redis.del(redis_key);
-        }, timeout);
         redis.set(redis_key, expire, function(err){
           if(err){return callback(err);}
-          callback(null, code);
+          redis.expire(redis_key, timeout, function(err){
+            if(err){return callback(err);}
+            callback(null, code);
+          });
         });
       }
     });

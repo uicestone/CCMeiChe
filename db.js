@@ -1,7 +1,7 @@
 var mongo = require("mongoskin");
-var config = require("./config");
+var config = require("config");
 
-var dbcfg = config.db;
+var dbcfg = config.get("db");
 module.exports = mongo.db('mongodb://'
     + ((dbcfg.user && dbcfg.password) ? (dbcfg.user + ':' + dbcfg.password + '@' ) : '')
     + dbcfg.url

@@ -14,6 +14,7 @@ exports.get = function(req,res,next){
 
   vcode.generate(phone, function(err,code){
     if(err){return next(err);}
+    console.log(code);
     res.send(200,"ok");
   });
  }
