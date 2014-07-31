@@ -1,7 +1,8 @@
 module.exports = function(req,res,next){
-  if(req.session){
+  return next();
+  if(!req.isAuthenticated()){
     next();
   }else{
-    req.send(403,"access denided");
+    res.status(403).send("access denided");
   }
 }

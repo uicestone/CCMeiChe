@@ -4,7 +4,8 @@ module.exports = function(app){
       "signin",
       "order",
       "upload",
-      "vcode"
+      "vcode",
+      "car"
     ];
 
     var verbs = [
