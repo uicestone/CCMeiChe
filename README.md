@@ -31,8 +31,8 @@ root: /api/v1
   /cartype
     GET 搜索车型提示
 
-  /location/latlng?address=
+  /location/latlng/:lat,:lng
     GET 获取经纬度
-  /location/address?lat=&lng=
+  /location/address/:address
     GET 获取地址
   ```

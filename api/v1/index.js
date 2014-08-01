@@ -1,31 +1,16 @@
 module.exports = function(app){
   return function(){
-    var apis = [
-      "signin",
-      "order",
-      "upload",
-      "vcode",
-      "car"
-    ];
+    var auth = require('./auth');
 
-    var verbs = [
-      "get",
-      "post",
-      "put",
-      "delete"
-    ];
+    app.put("vcode", require("./vcode").get);
+    app.post("signin", require("./signin").post);
+    app.post("signout", require("./signout").post);
 
-    apis = apis.map(function(name){
-      var api = require("./" + name);
-      api.name = name;
-      return api;
-    });
-
-    apis.forEach(function(api){
-      verbs.forEach(function(verb){
-        var handler = api[verb];
-        handler && app[verb].apply(app,['/' + api.name].concat(handler));
-      });
-    });
+    app.get("order", auth, require("./order").get);
+    app.put("order", auth, require("./order").put);
+    app.get("car", auth, require("./car").get);
+    app.put("car", auth, require("./car").put);
+    app.get("location/address/:address", require("./location").address)
+    app.get("location/latlng/:lat,:lng", require("./location").latlng)
   }
 }

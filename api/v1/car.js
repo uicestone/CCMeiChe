@@ -1,5 +1,4 @@
 var model = require('../../model');
-var auth = require('./auth');
 var Car = model.car;
 
 /**
@@ -27,7 +26,7 @@ exports.get = function(req,res,next){
  * @param  color 颜色
  * @param  comment 备注
  */
-exports.post = [auth, function(req,res,next){
+exports.put = function(req,res,next){
   if(!req.body.number){
     return res.status(400).send("bad request");
   }
@@ -45,4 +44,4 @@ exports.post = [auth, function(req,res,next){
     if(err){return next(err);}
     res.status(200).send("ok")
   });
-}];
+};

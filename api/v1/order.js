@@ -1,4 +1,4 @@
-var model = require('../../order');
+var model = require('../../model/order');
 var Order = model.order;
 
 exports.get = function(req,res){
@@ -15,7 +15,7 @@ exports.get = function(req,res){
  * @param position 具体车位
  * @param  {[type]}   res  [description]
  */
-exports.post = function(req,res,next){
+exports.put = function(req,res,next){
   var user = req.user;
 
   Order.insert({

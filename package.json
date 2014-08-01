@@ -21,7 +21,8 @@
     "request": "~2.39.0",
     "querystring": "~0.2.0",
     "jquery": "~2.1.1",
-    "MD5": "~1.2.1"
+    "MD5": "~1.2.1",
+    "baidu-map": "~0.1.0"
   },
   "devDependencies": {},
   "scripts": {
