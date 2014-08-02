@@ -20,4 +20,4 @@ gulp.task('watch',function(){
 
 });
 
-gulp.task('default',['stylus']);
+gulp.task('default',['stylus','watch']);

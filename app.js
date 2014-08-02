@@ -18,7 +18,7 @@ app.set('views', __dirname + '/public/jade');
 app.use(session({
   store: new RedisStore(config.redis),
   secret: config.session_secret,
-  cookie: { maxAge : 3600000 },
+  cookie: { maxAge : 60 * 24 * 60 * 60 * 1000 },
   resave: false,
   saveUninitialized: false
 }));
@@ -32,6 +32,7 @@ app.use(passport.session());
 
 app.get('/login', function(req,res){
   res.render("login",{
+    id:"login",
     title: "ccmeiche login"
   });
 });
@@ -40,8 +41,11 @@ app.get('/', function(req,res){
   if(!req.isAuthenticated()){
     return res.redirect("/login");
   }
+  console.log(req.user);
   res.render("index",{
-    title: "ccmeiche home"
+    id: "home",
+    title: "ccmeiche home",
+    phone: req.user.phone
   });
 });
 

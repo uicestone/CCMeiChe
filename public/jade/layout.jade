@@ -8,9 +8,9 @@ html
         neuron.config({
             path:"/neurons"
         })
-    link(href="neurons/ccmeiche/0.1.0/css/app.css", rel="stylesheet")
+    link(href="/css/app.css", rel="stylesheet")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     meta(name="apple-mobile-web-app-capable", content="yes")
-  body
+  body(id="#{id}")
     block content
