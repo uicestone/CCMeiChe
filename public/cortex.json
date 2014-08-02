@@ -1,8 +1,11 @@
 {
-  "name": "ccmeiche-static",
+  "name": "ccmeiche",
   "version": "0.1.0",
   "description": "static files for ccmeiche",
-  "main": "index.js",
+  "main": "app.js",
+  "scripts": {
+    "prebuild":"../node_modules/.bin/gulp"
+  },
   "repository": "git://github.com/uicestone/CCMeiChe.git",
   "keywords": [
     "ccmeiche"
@@ -12,6 +15,8 @@
     "name": "supersheep",
     "email": "supersheepxjy@gmail.com"
   },
+  "entries":["./pages/*.js"],
+  "css": "css/app.css",
   "bugs": {
     "url": "http://github.com/uicestone/CCMeiChe/issues"
   },

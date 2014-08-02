@@ -1,0 +1,14 @@
+extends layout
+block content
+  div.container#login
+    .row
+      input.input(type="tel",name="phone",id="phone",placeholder="手机号",maxlength="11")
+      input.button(type="button",id="getvcode",value="发送验证码",disabled)
+    .row
+      input.input(type="tel",name="vcode",id="vcode",placeholder="验证码",maxlength="6")
+    .row
+      input.button(type="button",id="go",value="确认",disabled)
+  script.
+    facade({
+      entry:"ccmeiche/pages/login.js"
+    });

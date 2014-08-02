@@ -14,18 +14,10 @@ gulp.task('stylus', function(){
 
 });
 
-gulp.task('jade', function(){
-
-  return gulp.src(['public/jade/*.jade'])
-    .pipe(jade())
-    .pipe(gulp.dest('public/html'));
-});
-
 gulp.task('watch',function(){
 
   gulp.watch(['public/stylus/*.styl'],['stylus']);
-  gulp.watch(['public/jade/*.jade'],['jade']);
 
 });
 
-gulp.task('default',['stylus','jade','watch']);
+gulp.task('default',['stylus']);

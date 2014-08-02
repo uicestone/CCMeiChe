@@ -12,6 +12,9 @@ var app = express();
 
 require('./auth');
 
+app.set('view engine', 'jade');
+app.set('views', __dirname + '/public/jade');
+
 app.use(session({
   store: new RedisStore(config.redis),
   secret: config.session_secret,
@@ -28,15 +31,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/login', function(req,res){
-  res.sendfile("login.html");
+  res.render("login",{
+    title: "ccmeiche login"
+  });
 });
 
 app.get('/', function(req,res){
   if(!req.isAuthenticated()){
     return res.redirect("/login");
   }
-  res.sendfile("index.html");
+  res.render("index",{
+    title: "ccmeiche home"
+  });
 });
+
+
 
 app.get('/order', function(){
   res.sendfile("order.html");
