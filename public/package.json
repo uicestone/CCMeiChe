@@ -1,0 +1,19 @@
+{
+  "name": "ccmeiche-static",
+  "version": "0.1.0",
+  "description": "static files for ccmeiche",
+  "main": "index.js",
+  "repository": "git://github.com/uicestone/CCMeiChe.git",
+  "keywords": [
+    "ccmeiche"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "supersheep",
+    "email": "supersheepxjy@gmail.com"
+  },
+  "bugs": {
+    "url": "http://github.com/uicestone/CCMeiChe/issues"
+  },
+  "homepage": "http://github.com/uicestone/CCMeiChe"
+}
