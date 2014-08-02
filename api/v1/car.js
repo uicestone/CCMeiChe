@@ -21,7 +21,7 @@ exports.get = function(req,res,next){
 
 /**
  * 更新车辆
- * @param  type 车型
+ * @param  types 车型
  * @param  number 车牌
  * @param  color 颜色
  * @param  comment 备注

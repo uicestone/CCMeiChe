@@ -2,6 +2,7 @@ var model = require('../../model/order');
 var Order = model.order;
 
 exports.get = function(req,res){
+  console.log(req.user);
   res.send("order");
 };
 

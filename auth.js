@@ -18,11 +18,12 @@ passport.use(new LocalStrategy({
       return done(null, null);
     } else {
       var user = {phone:phone};
-      User.update(user,user,{
-        upsert: true
-      }, function(){
-        console.log(arguments);
-        done(null,user);
+      User.findOne(user,function(err, u){
+        if(err){return done(err);}
+        if(u){return done(null,u);}
+        User.insert(user,function(err,results){
+          done(err,results[0]);
+        });
       });
     }
   });

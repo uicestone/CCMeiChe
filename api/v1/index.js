@@ -2,7 +2,7 @@ module.exports = function(app){
   return function(){
     var auth = require('./auth');
 
-    app.put("vcode", require("./vcode").get);
+    app.get("vcode", require("./vcode").get);
     app.post("signin", require("./signin").post);
     app.post("signout", require("./signout").post);
 
