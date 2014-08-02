@@ -2,8 +2,10 @@
   "name": "ccmeiche",
   "version": "0.1.0",
   "description": "static files for ccmeiche",
-  "main": "app.js",
   "repository": "git://github.com/uicestone/CCMeiChe.git",
+  "scripts": {
+    "prebuild": "gulp tpl2mod"
+  },
   "keywords": [
     "ccmeiche"
   ],
@@ -12,7 +14,9 @@
     "name": "supersheep",
     "email": "supersheepxjy@gmail.com"
   },
-  "entries":["./pages/*.js"],
+  "entries": [
+    "./pages/*.js"
+  ],
   "bugs": {
     "url": "http://github.com/uicestone/CCMeiChe/issues"
   },
@@ -21,6 +25,10 @@
     "assert": "*"
   },
   "dependencies": {
-    "zepto": "^1.1.3"
+    "zepto": "^1.1.3",
+    "view-swipe": "~0.1.2",
+    "uploader": "~0.1.4",
+    "events": "^1.0.5",
+    "util": "^1.0.4"
   }
 }

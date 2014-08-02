@@ -8,6 +8,9 @@ body
   color: #fff
   background-color: #f29206
 
+.swipe-container .swipe-inner
+  background-color: rgb(248,162,61)
+
 .container
   width: 260px
   margin: 0 auto
@@ -28,13 +31,18 @@ body
   border: 1px solid #fff
   margin: 0 auto
   margin-bottom: 15px
+  background-color: rgb(250,180,74)
+  border: 1px solid #fff
+  color: #fff
+  display: block
+  font-size: 18px
+.button[disabled]
+  background-color: #bbb
 
 #login
   padding-top: 280px
   .input
     margin-bottom:15px
-  .button
-    display: block
 
 #home
   background-color: rgb(250,174,69)
@@ -64,3 +72,39 @@ body
         margin-right: 10px
         position: relative
         top: 2px
+
+#addcar
+  .h2
+    font-size: 18px
+    text-align: center
+    padding: 20px 0
+  .add-photo
+    clearfix()
+    width: 100%
+    background-color: #fff
+    position: relative
+    margin-bottom: 22px
+    .text
+      background-color: #fff
+      float: left
+      color: #d3d3d3
+      height: 105px
+      padding-right: 105px
+      width: 100%
+      box-sizing: border-box
+      text-align: center
+      padding-top: 10px
+      .title
+        font-size: 18px
+      .desc
+        font-size: 12px
+    .camera
+      float: right
+      position: absolute
+      right: 0
+      img
+        display: block
+  .input
+    margin-bottom: 10px
+  .button
+    margin-top: 15px
