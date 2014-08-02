@@ -6,6 +6,8 @@ module.exports = function(app){
     app.post("signin", require("./signin").post);
     app.post("signout", require("./signout").post);
 
+    app.get("uploadtoken", auth, require("./uploadtoken").get);
+
     app.get("order", auth, require("./order").get);
     app.put("order", auth, require("./order").put);
     app.get("car", auth, require("./car").get);

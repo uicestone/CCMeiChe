@@ -30,6 +30,14 @@ app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(req,res,next){
+  res.locals.config = {
+    qiniu_host: config.qiniu.host
+  };
+  next();
+});
+
+
 app.get('/login', function(req,res){
   res.render("login",{
     id:"login",
@@ -48,8 +56,6 @@ app.get('/', function(req,res){
     phone: req.user.phone
   });
 });
-
-
 
 app.get('/order', function(){
   res.sendfile("order.html");

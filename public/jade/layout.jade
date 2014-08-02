@@ -14,3 +14,8 @@ html
     meta(name="apple-mobile-web-app-capable", content="yes")
   body(id="#{id}")
     block content
+    script.
+        appConfig = {
+            qiniu_bucket: "#{config.qiniu_bucket}",
+            qiniu_host: "#{config.qiniu_host}"
+        }
