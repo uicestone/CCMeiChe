@@ -8,10 +8,11 @@ module.exports = function(app){
 
     app.get("uploadtoken", auth, require("./uploadtoken").get);
 
-    app.get("order", auth, require("./order").get);
-    app.put("order", auth, require("./order").put);
-    app.get("car", auth, require("./car").get);
-    app.put("car", auth, require("./car").put);
+    app.get("myorders", auth, require("./myorders").get);
+    app.post("myorders", auth, require("./myorders").post);
+    app.get("mycars", auth, require("./mycars").get);
+    app.post("mycars", auth, require("./mycars").post);
+    app.get("cartypes", require("./cartypes").get);
     app.get("location/address/:address", require("./location").address)
     app.get("location/latlng/:lat,:lng", require("./location").latlng)
   }

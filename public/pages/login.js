@@ -16,14 +16,19 @@ $(function(){
     return ipt_vcode.val().match(/^(\d){4}$/);
   }
 
-  ipt_phone.on("keyup",function(){
+  function setBtnSend(){
     btn_send_code.prop("disabled",!numValid());
-  });
+  }
 
-  ipt_vcode.on("keyup",function(){
+  function setBtnGo(){
     var valid = vcodeValid() && numValid() && btn_send_code.prop("disabled");
     btn_signin.prop("disabled",valid);
-  });
+  }
+
+
+  ipt_phone.on("keyup",setBtnSend).on("blur",setBtnSend);
+
+  ipt_vcode.on("keyup",setBtnGo).on("blur",setBtnGo);
 
   btn_send_code.on("click",function(){
     ipt_phone.prop("disabled",true);

@@ -4,6 +4,9 @@ body,h1,h2,input,div,p,ul,ol,li
   font-family: 'Hiragino Sans GB', sans-serif
   font-weight: normal
 
+li
+  list-style: none
+
 body
   color: #fff
   background-color: #f29206
@@ -36,6 +39,8 @@ body
   color: #fff
   display: block
   font-size: 18px
+  line-height: 45px
+  text-align: center
 .button[disabled]
   background-color: #bbb
 
@@ -53,25 +58,48 @@ body
     text-align: center
     font-size: 20px
   .section
-    margin-bottom: 40px
     h2
       padding: 15px 0
       text-align: center
       font-size: 16px
-    .cars .add
-      background-color: #FFF
-      text-align: center
-      height: 40px
-      line-height: 40px
-      color: rgb(218, 221, 80)
-      .icon-add
-        display: inline-block
-        background-image: url(./img/add.png)
-        width: 18px
-        height: 18px
-        margin-right: 10px
-        position: relative
-        top: 2px
+    .cars
+      li
+        clearfix()
+        background-color: #fff
+        color: #ccc
+        height: 48px
+        border-bottom: 1px solid #faae45
+        .index
+          margin: 5px 0
+          line-height: 38px
+          text-align: center
+          width: 72px
+          float: left
+          border-right: 1px solid #e4e4e5
+        .detail
+          margin: 8px 0 4px 0
+          padding-left: 20px
+          float: left
+          .type,.number
+            height: 18px
+            line-height: 18px
+            font-size: 14px
+
+
+      .add
+        background-color: #FFF
+        text-align: center
+        height: 40px
+        line-height: 40px
+        color: rgb(218, 221, 80)
+        .icon-add
+          display: inline-block
+          background-image: url(./img/add.png)
+          width: 18px
+          height: 18px
+          margin-right: 10px
+          position: relative
+          top: 2px
 
 #addcar
   .h2
@@ -104,7 +132,46 @@ body
       right: 0
       img
         display: block
-  .input
+  .row
+    position: relative
     margin-bottom: 10px
+    .input
+      color: #bbb
+      padding-left: 40px
+    .icon
+      width: 29px
+      height: 29px
+      top: 7px
+      left: 7px
+      position: absolute
+      background-image: url("/img/icons.png")
+      background-repeat: no-repeat
+    &.number .icon
+      background-position: 0 -29px
+    &.color .icon
+      background-position: 0 -58px
+    &.comment .icon
+      background-position: 0 -87px
+    .autocomplete
+      position: absolute
+      top: 41px
+      z-index: 9
+      width: 100%
+      background: #fff
+      border-left: 2px solid #f8b62b
+      box-sizing: border-box
+      li
+        border-bottom: 1px solid #eee
+        margin: 0 10px
+        color: #ccc
+        font-size: 14px
+        height: 25px
+        line-height: 25px
+        padding-left: 30px
+      .packup
+        border-bottom: 0
+        height: 26px
+        line-height: 26px
+        color: #f8a23d
   .button
     margin-top: 15px

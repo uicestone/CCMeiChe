@@ -16,7 +16,7 @@ exports.get = function(req,res){
  * @param position 具体车位
  * @param  {[type]}   res  [description]
  */
-exports.put = function(req,res,next){
+exports.post = function(req,res,next){
   var user = req.user;
 
   Order.insert({

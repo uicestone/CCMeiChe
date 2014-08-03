@@ -20,13 +20,13 @@ exports.get = function(req,res,next){
 };
 
 /**
- * 更新车辆
+ * 添加车辆
  * @param  types 车型
  * @param  number 车牌
  * @param  color 颜色
  * @param  comment 备注
  */
-exports.put = function(req,res,next){
+exports.post = function(req,res,next){
   if(!req.body.number){
     return res.status(400).send("bad request");
   }

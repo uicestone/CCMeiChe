@@ -10,8 +10,11 @@ module.exports = function(req,res,next){
     next();
   }else{
     var auth_header = req.headers['Authorization'];
+    if(!auth_header){
+      return deny();
+    }
     var token = auth_header.split("Bearer ")[1];
-    if(!token){return deny()}
+    if(!token){return deny();}
     try{
       var user = jwt.decode(token, config.jwt_secret);
     }catch(e){

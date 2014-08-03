@@ -19,10 +19,10 @@ function beforeUpload(file, done){
 }
 
 var uploadTemplate = {
-  template: '<div id="J_upload_item_<%=id%>" class="pic-wrapper">'
+  template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper">'
       +'<div class="pic"><div class="percent"></div></div>'
       +'<div class="icon-delete J_upload_remove" />'
-  +'</div>',
+  +'</li>',
   success: function(e){
       var elem = e.elem;
       var data = e.data;
@@ -32,7 +32,7 @@ var uploadTemplate = {
       img.on('load',function(){
           elem.find(".percent").remove();
           elem.find(".pic").append(img);
-          elem.data("key",data.key);
+          elem.attr("data-key",data.key);
           img.css("display","none");
           img.css({
             display: 'block',
