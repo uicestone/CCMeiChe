@@ -39,7 +39,7 @@ AddCarView.prototype.show = function(){
 
   elem.find(".button").on("click", function(){
     self.submit({
-      pics: elem.find(".upload-list li").map(function(i,item){return $(item).attr("data-key")}),
+      pics: elem.find(".upload-list li").attr("data-key"),
       type: elem.find(".type input").val(),
       color: elem.find(".color input").val(),
       number: elem.find(".number input").val(),
@@ -52,8 +52,8 @@ AddCarView.prototype.show = function(){
 
 AddCarView.prototype.submit = function(data){
   var self = this;
-  if(!data.pics.length){
-    alert("请至少上传一张照片");
+  if(!data.pic){
+    alert("请上传照片");
     return;
   }
   if(!data.type){

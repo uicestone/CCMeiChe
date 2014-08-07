@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var errorHandler = require('errorhandler');
 var passport = require('passport');
 var config = require('config');
+var wechat = require('wechat');
 
 var app = express();
 
@@ -37,7 +38,6 @@ app.use(function(req,res,next){
   next();
 });
 
-
 app.get('/login', function(req,res){
   res.render("login",{
     id:"login",
@@ -49,7 +49,6 @@ app.get('/', function(req,res){
   if(!req.isAuthenticated()){
     return res.redirect("/login");
   }
-  console.log(req.user);
   res.render("index",{
     id: "home",
     title: "ccmeiche home",
@@ -57,11 +56,8 @@ app.get('/', function(req,res){
   });
 });
 
-app.get('/order', function(){
-  res.sendfile("order.html");
-});
-
 app.namespace("/api/v1", require("./api/v1")(app));
+app.namespace("/wechat", require("./wechat")(app));
 
 app.use(errorHandler());
 

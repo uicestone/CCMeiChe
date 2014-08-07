@@ -12,7 +12,7 @@ block content
           | 添加车辆
     .section
       h2 请选择您需要的服务
-      ul
+      ul.services
         li
           .detail
             .title 初级洗车服务
@@ -35,7 +35,7 @@ block content
       .carpark
         input.input(placeholder="具体位置 如B215车位")
     .section
-      .button 欧耶洗车啦
+      #go-wash.button 欧耶洗车啦
   script.
     facade({
       entry: "ccmeiche/pages/home.js"
