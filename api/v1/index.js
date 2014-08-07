@@ -10,6 +10,7 @@ module.exports = function(app){
 
     app.get("myorders", auth, require("./myorders").get);
     app.post("myorders", auth, require("./myorders").post);
+    app.post("preorder", auth, require("./preorder").post);
     app.get("mycars", auth, require("./mycars").get);
     app.post("mycars", auth, require("./mycars").post);
     app.get("cartypes", require("./cartypes").get);

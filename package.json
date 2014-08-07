@@ -25,7 +25,9 @@
     "jwt-simple": "~0.2.0",
     "js-yaml": "~3.1.0",
     "jade": "~1.5.0",
-    "qiniu": "~6.1.5"
+    "qiniu": "~6.1.5",
+    "wechat": "~0.8.8",
+    "async": "^0.9.0"
   },
   "devDependencies": {
     "nib": "~1.0.3",

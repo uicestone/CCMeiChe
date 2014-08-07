@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "description": "static files for ccmeiche",
   "repository": "git://github.com/uicestone/CCMeiChe.git",
-  "scripts": {
-    "prebuild": "gulp tpl2mod"
-  },
   "keywords": [
     "ccmeiche"
   ],

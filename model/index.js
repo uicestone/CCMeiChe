@@ -1,7 +1,9 @@
 var models = [
   "user",
   "vcode",
-  "car"
+  "car",
+  "order",
+  "worker"
 ];
 
 models.forEach(function(name){
