@@ -1,4 +1,4 @@
-var model = require('../../model/order');
+var model = require('../../model');
 var Order = model.order;
 
 exports.get = function(req,res){
@@ -26,8 +26,8 @@ exports.post = function(req,res,next){
     address: req.body.address,
     latlng: req.body.latlng,
     positon: req.body.position
-  },function(err){
+  },function(err, results){
     if(err){return next(err);}
-    res.status(200).send("ok");
+    res.status(200).send(results[0]);
   });
 }

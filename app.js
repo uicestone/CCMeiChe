@@ -20,8 +20,9 @@ app.use(session({
   store: new RedisStore(config.redis),
   secret: config.session_secret,
   cookie: { maxAge : 60 * 24 * 60 * 60 * 1000 },
-  resave: false,
-  saveUninitialized: false
+  resave: true,
+  unset: "destroy",
+  saveUninitialized: true
 }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
@@ -31,6 +32,8 @@ app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// global config for views
 app.use(function(req,res,next){
   res.locals.config = {
     qiniu_host: config.qiniu.host
@@ -38,30 +41,61 @@ app.use(function(req,res,next){
   next();
 });
 
-app.get('/login', function(req,res){
-  res.render("login",{
-    id:"login",
-    title: "ccmeiche login"
-  });
-});
-
-app.get('/', function(req,res){
-  if(!req.isAuthenticated()){
-    return res.redirect("/login");
-  }
-  res.render("index",{
-    id: "home",
-    title: "ccmeiche home",
-    phone: req.user.phone
-  });
-});
+app.use("/wechat", require("./wechat"));
+app.get('/login', require("./routes/login"));
+app.get('/logout', require("./routes/logout"));
+app.get('/', require("./routes/index"));
 
 app.namespace("/api/v1", require("./api/v1")(app));
-app.namespace("/wechat", require("./wechat")(app));
 
 app.use(errorHandler());
-
 
 app.listen(config.get("port"), function () {
   console.log("server started at %d", config.port);
 });
+
+
+
+
+
+
+
+
+
+
+// create menu
+var user_api = require('./util/wechat').user.api;
+var user_menu = {
+  "button": [{
+    "type": "view",
+    "name": "我要洗车",
+    "url": config.host.user
+  },{
+    "type": "view",
+    "name": "优惠活动",
+    "url": config.host.user + "/promos"
+  },{
+    "type": "view",
+    "name": "我的订单",
+    "url": config.host.user + "/myorders"
+  }]
+};
+
+user_api.createMenu(user_menu, function (err, data, response) {
+  console.log("Menu Created", data);
+});
+
+
+
+var worker_api = require('./util/wechat').worker.api;
+var worker_menu = {
+  "button": [{
+    "type": "click",
+    "name": "上班啦",
+    "key": "ON_DUTY"
+  },{
+    "type": "click",
+    "name": "下班喽",
+    "key": "OFF_DUTY"
+  }]
+};

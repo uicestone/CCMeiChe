@@ -5,8 +5,19 @@ var LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy({
   usernameField: "phone",
-  passwordField: "code"
-}, function (phone, code, done) {
+  passwordField: "code",
+  passReqToCallback : true
+}, function (req, phone, code, done) {
+
+  var openid = req.body.openid;
+  var access_token = req.body.access_token;
+  if(!openid || !access_token){
+    return done({
+      status: 400,
+      message: "无效请求"
+    });
+  }
+
   vcode.verify({
     code: code,
     key: phone
@@ -15,15 +26,23 @@ passport.use(new LocalStrategy({
       return done(err);
     }
     if (!match) {
-      return done(null, null);
+      return done({
+        message: "not match",
+        status: 400
+      });
     } else {
-      var user = {phone:phone};
-      User.findOne(user,function(err, u){
+      var user = {
+        phone: phone,
+        access_token: access_token,
+        openid: openid
+      };
+      User.update({
+        phone: user.phone
+      }, user, {
+        upsert: true
+      }, function(err){
         if(err){return done(err);}
-        if(u){return done(null,u);}
-        User.insert(user,function(err,results){
-          done(err,results[0]);
-        });
+        done(null,user);
       });
     }
   });

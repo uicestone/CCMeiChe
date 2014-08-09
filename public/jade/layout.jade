@@ -9,12 +9,16 @@ html
             path:"/neurons"
         })
     link(href="/css/app.css", rel="stylesheet")
-    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="format-detection" content="telephone=no")
+    meta(name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1")
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     meta(name="apple-mobile-web-app-capable", content="yes")
   body(id="#{id}")
     block content
     script.
+        window.onerror = function(message,url,lineNo){
+            alert([message,url,lineNo].join("\n"));
+        }
         appConfig = {
             qiniu_bucket: "#{config.qiniu_bucket}",
             qiniu_host: "#{config.qiniu_host}"
