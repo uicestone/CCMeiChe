@@ -11,7 +11,7 @@ passport.use(new LocalStrategy({
 
   var openid = req.body.openid;
   var access_token = req.body.access_token;
-  if(!openid || !access_token){
+  if(!process.env.DEBUG && (!openid || !access_token)){
     return done({
       status: 400,
       message: "无效请求"

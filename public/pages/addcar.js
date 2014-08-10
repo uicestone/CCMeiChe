@@ -37,15 +37,18 @@ AddCarView.prototype.show = function(){
     });
   });
 
-  elem.find(".button").on("click", function(){
+  elem.find(".submit").on("touchend", function(){
     self.submit({
-      pics: elem.find(".upload-list li").attr("data-key"),
+      pic: elem.find(".upload-list li").attr("data-key"),
       type: elem.find(".type input").val(),
       color: elem.find(".color input").val(),
       number: elem.find(".number input").val(),
       comment: elem.find(".comment input").val()
     });
+  });
 
+  elem.find(".cancel").on("touchend", function(){
+    viewSwipe.out("bottom");
   });
 
 }
@@ -73,8 +76,8 @@ AddCarView.prototype.submit = function(data){
   $.post("/api/v1/mycars",data).done(function(){
     viewSwipe.out("bottom");
     self.emit("add",data);
-  }).fail(function(){
-    console.log("fail",arguments);
+  }).fail(function(xhr){
+    alert(xhr.responseText);
   });
 
 }

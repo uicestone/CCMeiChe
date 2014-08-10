@@ -1,7 +1,6 @@
 var wechat = require('wechat');
 var config = require('config');
 
-console.log(config.wechat.user.token);
 module.exports = wechat(config.wechat.user.token, function(req,res){
   var message = req.weixin;
   console.log(message);

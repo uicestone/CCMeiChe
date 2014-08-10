@@ -51,7 +51,7 @@ body
 
 #home
   background-color: rgb(250,174,69)
-  .title
+  >.container>.title
     padding-top:10px
     height: 40px
     line-height: 40px
@@ -64,6 +64,7 @@ body
       font-size: 16px
     .cars
       .active
+        color: #fff
         background-color: #c70462
       li
         clearfix()
@@ -86,8 +87,6 @@ body
             height: 18px
             line-height: 18px
             font-size: 14px
-
-
       .add
         background-color: #FFF
         text-align: center
@@ -102,7 +101,78 @@ body
           margin-right: 10px
           position: relative
           top: 2px
-
+  .services
+    .active
+      color: #fff
+      background-color: #c70462
+    li
+      clearfix()
+      margin-bottom: 1px
+      padding: 5px 15px
+      background-color: #fff
+      color: #b5b6b6
+      .detail
+        float: left
+        width: 100px
+        .title
+          font-size: 14px
+          padding: 4px 0 0 0
+        .desc
+          font-size: 12px
+      .price
+        float: right
+        padding-right: 12px
+        line-height: 42px
+        height: 42px
+      .promo
+        border-left: 1px solid #b5b6b6
+        padding-left: 12px
+        float: right
+        text-align: center
+        .text
+          padding-top: 5px
+          font-size: 12px
+        .count
+          height: 19px
+  // 积分
+  .credit
+    clearfix()
+    margin-top: 8px
+    .mine
+      padding-left: 15px
+      float: left
+      height: 44px
+      line-height: 44px
+    .use
+      background-color: #fff
+      color: #b5b6b6
+      float: right
+      border: 1px solid #fff
+      width: 100px
+      padding: 9px 0
+      text-align: center
+      &.active
+        color: #fff
+        background-color: rgb(202,27,98)
+  // 支付
+  .payment
+    margin-top: 8px
+    padding: 3px
+    background-color: rgb(217,219,80)
+    .inner
+      padding-top: 8px
+      border: 1px solid #fff
+      text-align: center
+  // 地址
+  .address
+    margin-bottom: 17px
+    .input
+      border: none
+      margin-bottom: 1px
+    .note
+      margin-top: 5px
+      text-align: center
+      font-size: 10px
 #addcar
   .h2
     font-size: 18px
@@ -125,6 +195,7 @@ body
       text-align: center
       padding-top: 10px
       .title
+        padding-top: 20px
         font-size: 18px
       .desc
         font-size: 12px

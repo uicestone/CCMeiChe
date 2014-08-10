@@ -4,40 +4,57 @@ block content
   .container
     h1.title 洗车啦
     .section
-      h2 手机 #{phone}
+      h2 手机 #{user.phone}
     .section
       .cars
         ul
+          each car,i in user.cars
+            li(data="#{JSON.stringify(car)}")
+              .index 车型#{i+1}
+              .detail
+                .type #{car.type}#{car.color}
+                .number #{car.number}
         .add
           i.icon-add
           | 添加车辆
     .section
       h2 请选择您需要的服务
       ul.services
-        li
-          .detail
-            .title 初级洗车服务
-            .desc 洗车洗车洗车洗车
-          .price ￥000
-          .promo 优惠券
+        each service,i in services
+          li(data="#{JSON.stringify(service)}",class="#{i==0?'active':''}")
+            .detail
+              .title #{service.title}
+              .desc #{service.describe}
+            .promo
+              .text 优惠券
+              .count #{service.promo}
+            .price ￥#{service.price}
+    .section.credit
+      .mine 您的积分：#{user.credit || 0}
+      .use 使用积分
     .section
-      .credit 您的积分
-      .use-credit 使用积分
-    .section
-      .count
-        .title 支付金额
-        .num ￥0000
-    .section
+      .payment
+        .inner
+          .title 支付金额
+          .num ￥
+            span.count 0
+    .section.address
       h2 地址
       input#latlng(type="hidden")
-      .address
+      .location
         input.input
         i.icon
       .carpark
         input.input(placeholder="具体位置 如B215车位")
+      .note 注：一地址一订单，其他地址请另行下单
+
     .section
       #go-wash.button 欧耶洗车啦
   script.
+    var user = {
+      promo: #{user.promo || 0},
+      credit: #{user.credit || 0},
+    };
     facade({
       entry: "ccmeiche/pages/home.js"
     });
