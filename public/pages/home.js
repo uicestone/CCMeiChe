@@ -86,7 +86,12 @@ function calculate(){
 }
 
 navigator.geolocation.getCurrentPosition(function(position){
-  $("#latlng").val([position.coords.latitude,position.coords.longitude].join(","));
+  var latlng = [position.coords.latitude,position.coords.longitude].join(",");
+  $("#latlng").val(latlng);
+  $.get("/api/v1/location/latlng/" + latlng, function(data){
+    $(".location .input").val(data.result.formatted_address);
+  });
+
 },function(){});
 
 $("#go-wash").on("touchend", function(){
