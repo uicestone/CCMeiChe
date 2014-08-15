@@ -27,11 +27,18 @@ block content
               .desc #{service.describe}
             .promo
               .text 优惠券
-              .count #{service.promo}
+              .count --
             .price ￥#{service.price}
     .section.credit
       .mine 您的积分：#{user.credit || 0}
       .use 使用积分
+    if user.promos && user.promos.length
+      .section
+        h2 优惠券
+      ul.promos
+        each promo in user.promos
+          li #{promo.title}
+
     .section
       .payment
         .inner
@@ -42,7 +49,7 @@ block content
       h2 地址
       input#latlng(type="hidden")
       .location
-        input.input
+        input#address.input(data-pattern="/api/v1/location/suggestion/{q}")
         i.icon
       .carpark
         input.input(placeholder="具体位置 如B215车位")
@@ -52,6 +59,7 @@ block content
       #go-wash.button 欧耶洗车啦
   script.
     var user = {
+      phone: #{user.phone},
       promo: #{user.promo || 0},
       credit: #{user.credit || 0},
     };

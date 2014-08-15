@@ -166,6 +166,8 @@ body
   // 地址
   .address
     margin-bottom: 17px
+    .location
+      position: relative
     .input
       border: none
       margin-bottom: 1px
@@ -173,6 +175,29 @@ body
       margin-top: 5px
       text-align: center
       font-size: 10px
+
+.autocomplete
+  position: absolute
+  top: 41px
+  z-index: 9
+  width: 100%
+  background: #fff
+  border-left: 2px solid #f8b62b
+  box-sizing: border-box
+  li
+    border-bottom: 1px solid #eee
+    margin: 0 10px
+    color: #ccc
+    font-size: 14px
+    height: 25px
+    line-height: 25px
+    padding-left: 30px
+  .packup
+    border-bottom: 0
+    height: 26px
+    line-height: 26px
+    color: #f8a23d
+
 #addcar
   .h2
     font-size: 18px
@@ -225,26 +250,37 @@ body
       background-position: 0 -58px
     &.comment .icon
       background-position: 0 -87px
-    .autocomplete
-      position: absolute
-      top: 41px
-      z-index: 9
-      width: 100%
-      background: #fff
-      border-left: 2px solid #f8b62b
-      box-sizing: border-box
-      li
-        border-bottom: 1px solid #eee
-        margin: 0 10px
-        color: #ccc
-        font-size: 14px
-        height: 25px
-        line-height: 25px
-        padding-left: 30px
-      .packup
-        border-bottom: 0
-        height: 26px
-        line-height: 26px
-        color: #f8a23d
   .button
     margin-top: 15px
+
+#preorder
+  .h2
+    font-size: 18px
+    text-align: center
+    padding: 15px 0
+  .order
+    padding: 2px
+    background-color: #fff
+    color: #b6b6b6
+    .inner
+      border:2px solid rgb(247,159,60)
+      padding: 14px
+      .row
+        clearfix()
+        .label
+          text-align: right
+          line-height: 23px
+          width: 60px
+          float: left
+        .text
+          width: 120px
+          line-height: 23px
+          float: left
+  .estimate
+    .time
+      text-align: center
+      font-size: 32px
+      line-height: 1.5
+    .text
+      font-size: 10px
+      text-align: center

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Map View</title>
+  <script src="/lib/jquery.js"></script>
+
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=hnXbChBCWR5DeGvMXgtuRAGz"></script>
+  <style type="text/css">
+    html{height:100%}
+    body{height:100%;margin:0px;padding:0px}
+    #container{height:100%}
+  </style>
+</head>
+<body>
+
+  <div id="container"></div>
+
+  <script>
+
+    var map = new BMap.Map("container");          // 创建地图实例
+    var center = new BMap.Point(121.41556309999999,31.217573200000004);  // 创建点坐标
+    map.centerAndZoom(center, 15);
+
+    var marker = new BMap.Marker(center);
+    map.addOverlay(marker);
+    map.addControl(new BMap.NavigationControl());
+
+    var markers = [];
+    var route = null;
+    function getMarkers(kms){
+      $.getJSON("/test/workers/31.0071421,121.41359920000001/" + kms,function(data){
+        markers.forEach(function(marker){
+          map.removeOverlay(marker);
+        });
+        data.forEach(function(item,i){
+          num = i + 1;
+          num = num > 25 ? 25 : num;
+          var icon = new BMap.Icon("http://i2.dpfile.com/s/img/map/fancy/" + num + ".png", new BMap.Size(24, 34));
+          var point = new BMap.Point(item.latlng[1], item.latlng[0]);
+          var marker = new BMap.Marker(point,{
+            icon: icon,
+          });
+          marker.addEventListener("click", function(e){
+            console.log( map.getDistance(e.point, center) );
+            var to = [e.point.lat,e.point.lng].join(",");
+            $.getJSON("/test/walk/" + to + "/31.0071421,121.41359920000001",function(data){
+              var points = [];
+              console.log(data.result.routes[0].distance);
+              map.removeOverlay(route);
+              data.result.routes[0].steps.forEach(function(step,i){
+                if(i == 0){
+                  points.push(step.stepOriginLocation);
+                }
+                points.push(step.stepDestinationLocation);
+              });
+              route = new BMap.Polyline( points.map(function(point){
+                return new BMap.Point(point.lng, point.lat);
+              }),
+               {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5}
+              );
+              map.addOverlay(route);
+            });
+          });
+
+          markers.push(marker);
+          map.addOverlay(marker);
+        });
+      });
+    }
+
+    getMarkers(5);
+  </script>
+
+</body>
+</html>

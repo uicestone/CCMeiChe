@@ -1,4 +1,6 @@
 var $ = require("zepto");
+var util = require("util");
+var events = require("events");
 
 function Autocomplete(input, pattern, parser){
   input = $(input);
@@ -6,23 +8,26 @@ function Autocomplete(input, pattern, parser){
   var list = $("<ul class='autocomplete' />");
   this.list = list;
   input.after(list);
-  var delay = 200;
+  var delay = 350;
   var timeout = null;
   input.on("keyup", function(){
     clearTimeout(timeout);
     timeout = setTimeout(function(){
       var value = input.val();
+      if(!value){return;}
       $.ajax({
         method: "GET",
         dataType: "json",
         url: pattern.replace("{q}",value)
       }).done(function(data){
+        data = parser ? parser(data) : data;
         if(!data.length){return;}
         list.empty();
         data.forEach(function(item){
           var li = $("<li>" + item + "</li>");
           li.on("touchend",function(){
             input.val(item);
+            self.emit("select");
             self.hide();
           });
           $(list).append(li);
@@ -40,6 +45,8 @@ function Autocomplete(input, pattern, parser){
   });
 }
 
+util.inherits(Autocomplete, events);
+
 Autocomplete.prototype.show = function(){
   this.list.show();
 }
@@ -53,5 +60,5 @@ Autocomplete.prototype.hide = function(){
 exports.init = function(input, parser){
   var pattern = input.attr("data-pattern");
   if(!pattern){return;}
-  new Autocomplete(input, pattern, parser);
+  return new Autocomplete(input, pattern, parser);
 }

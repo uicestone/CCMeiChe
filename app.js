@@ -46,6 +46,7 @@ app.get('/login', require("./routes/login"));
 app.get('/logout', require("./routes/logout"));
 app.get('/', require("./routes/index"));
 
+app.namespace('/test', require('./test')(app));
 app.namespace("/api/v1", require("./api/v1")(app));
 
 app.use(errorHandler());

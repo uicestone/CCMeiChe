@@ -25,7 +25,8 @@ exports.post = function(req,res,next){
     service: req.body.service,
     address: req.body.address,
     latlng: req.body.latlng,
-    positon: req.body.position
+    positon: req.body.position,
+    worker: req.body.worker_id,
   },function(err, results){
     if(err){return next(err);}
     res.status(200).send(results[0]);

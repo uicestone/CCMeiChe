@@ -1,6 +1,6 @@
 var $ = require("zepto");
 var tpl = require("tpl");
-
+var autocomplete = require('./mod/autocomplete');
 
 var chinese_numbers = "一二三四五六七八九十".split("");
 var carsList = $(".cars ul");
@@ -11,28 +11,34 @@ $(".cars li").on("touchend", function(){
   calculate();
 });
 
+var panelAddCar,panelPreOrder;
+
 // 添加车辆
 $(".cars .add").on("touchend", function(){
   var addbtn = $(this);
   addbtn.prop("disable",true);
   require.async("./addcar.js",function(addcar){
-    addcar.show();
-    addcar.once("add",function(data){
-      var template = "<li><div class='index'>车型@{it.index}</div>"
-        +"<div class='detail'>"
-          +"<div class='type'>@{it.type}@{it.color}</div>"
-          +"<div class='number'>@{it.number}</div>"
-        +"</div></li>";
-      data.index = chinese_numbers[ carsList.find("li").length ];
-      var html = tpl.render(template,data);
-      var li = $(html);
-      li.on("touchend", function(){
-        $(this).toggleClass("active");
+    if(!panelAddCar){
+      panelAddCar = addcar;
+      panelAddCar.on("add",function(data){
+        var template = "<li><div class='index'>车型@{it.index}</div>"
+          +"<div class='detail'>"
+            +"<div class='type'>@{it.type}@{it.color}</div>"
+            +"<div class='number'>@{it.number}</div>"
+          +"</div></li>";
+        data.index = chinese_numbers[ carsList.find("li").length ];
+        var html = tpl.render(template,data);
+        var li = $(html);
+        li.on("touchend", function(){
+          $(this).toggleClass("active");
+        });
+        li.data("car", data);
+        carsList.append(li);
+        addbtn.prop("disable",false);
       });
-      li.data("car", data);
-      carsList.append(li);
-      addbtn.prop("disable",false);
-    });
+    }
+    panelAddCar.show();
+
   });
 });
 
@@ -82,30 +88,81 @@ function calculate(){
     count -= credit;
   }
 
+  if(count < 0){
+    count = 0;
+  }
+
   $(".payment .count").html(count);
 }
 
+// 地址及经纬度
 navigator.geolocation.getCurrentPosition(function(position){
   var latlng = [position.coords.latitude,position.coords.longitude].join(",");
   $("#latlng").val(latlng);
   $.get("/api/v1/location/latlng/" + latlng, function(data){
     $(".location .input").val(data.result.formatted_address);
   });
-
 },function(){});
 
+// 地址提示
+var updatingLatlng = false;
+(function(){
+function updateLatlng(){
+  ac.hide();
+  clearTimeout(updateLatlng.timeout);
+  updateLatlng.timeout = setTimeout(function(){
+    updatingLatlng = true;
+    var val = $(".location .input").val().replace(/[\(\)\/]/g,'');
+    $.get("/api/v1/location/address/" + val, function(data){
+      updatingLatlng = false;
+      if(data.status == 0){
+        $("#latlng").val( data.result.location.lat + "," + data.result.location.lng )
+      }else{
+        alert("无法解析该地址确切位置");
+        $("#latlng").val("");
+      }
+    });
+  },200);
+}
+
+// 地址提示
+function placeSuggestionParser(data){
+  if(data.status == 0){
+    return data.result.map(function(item){
+      return item.name
+    });
+  }else{
+    return [];
+  }
+}
+
+var ac = autocomplete.init($(".location .input"),placeSuggestionParser).on("select",updateLatlng);
+
+$(".location .input").on("click",function(){
+  $(this)[0].focus();
+  $(this)[0].select();
+}).on("blur",updateLatlng);
+
+})();
+
 $("#go-wash").on("touchend", function(){
+  if(updatingLatlng){
+    alert("正在获取确切位置");
+    return;
+  }
+
   var data = {
     carpark:$(".carpark input").val(),
-    address:$(".address input").val(),
+    address:$("#address").val(),
     latlng :$("#latlng").val(),
-    service:"",
-    promo:"",
-    cars:[]
+    service:JSON.parse($(".services .active").attr("data")),
+    use_credit: $(".credit .use").hasClass("active"),
+    price: $(".payment .count").html(),
+    cars:$(".cars .active").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
 
-  if(!data.carpark){
-    alert("请填写具体车位");
+  if(!data.cars.length){
+    alert("请添加车辆");
     return;
   }
 
@@ -114,16 +171,37 @@ $("#go-wash").on("touchend", function(){
     return;
   }
 
-  // if(!data.service){
-  //   alert("请选择服务");
-  // }
+  if(!data.carpark){
+    alert("请填写具体车位");
+    return;
+  }
 
-  // if(!data.cars.length){
-  //   alert("请添加车辆");
-  // }
+  function addZero(num){
+    return num < 10 ? ("0" + num) : num;
+  }
 
   $.post("/api/v1/preorder",data).done(function(result){
-    console.log(result);
+    require.async("./preorder.js",function(preorder){
+      if(!panelPreOrder){
+        panelPreOrder = preorder;
+        panelPreOrder.on("confirm",function(){
+          data.worker_id = result.worker_id;
+          $.post("/api/v1/myorders",data).done(function(){
+            console.log(arguments);
+          });
+        });
+      }
+      var finish_time = new Date(+new Date() + result.time * 60 * 1000);
+      panelPreOrder.show({
+        service: data.service,
+        phone: user.phone,
+        cars: data.cars,
+        address: data.address,
+        price: data.price,
+        worker_id: result.worker_id,
+        time: addZero(finish_time.getHours()) + ":" + addZero(finish_time.getMinutes())
+      });
+    });
   }).fail(function(){
     alert("fail");
   })
