@@ -1,6 +1,23 @@
 extends layout
 block content
-  a(href="/logout") 退出
+  .menu
+
+  .aside
+    h2.h2 手机 #{user.phone}
+    .credit 积分：#{user.credit}
+    ul.menus
+      li.item
+        a(href="/myorders") 我的订单
+      li.item
+        a(href="/myinfos") 我的信息
+      li.item
+        a(href="/recharge") 充值
+      li.item
+        a(href="/help") 帮助
+    a.button(href="/logout") 退出登录
+
+  .overlay
+
   .container
     h1.title 洗车啦
     .section
@@ -8,7 +25,7 @@ block content
     .section
       .cars
         ul
-          each car,i in user.cars
+          each car,i in user.cars || []
             li(data="#{JSON.stringify(car)}")
               .index 车型#{i+1}
               .detail

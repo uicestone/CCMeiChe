@@ -5,11 +5,22 @@ var autocomplete = require('./mod/autocomplete');
 var chinese_numbers = "一二三四五六七八九十".split("");
 var carsList = $(".cars ul");
 
+// 菜单展开收起
+(function(){
+  $(".menu").on("touchend",function(){
+    $("body").addClass("openmenu");
+  });
+  $('.overlay').on("touchend",function(){
+    $("body").removeClass("openmenu");
+  });
+})()
+
 // 选择车辆
 $(".cars li").on("touchend", function(){
   $(this).toggleClass("active");
   calculate();
 });
+
 
 var panelAddCar,panelPreOrder;
 

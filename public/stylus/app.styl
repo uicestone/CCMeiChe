@@ -10,9 +10,68 @@ li
 body
   color: #fff
   background-color: #f29206
+  &.openmenu
+    position: fixed
+    width: 100%
 
 .swipe-container .swipe-inner
   background-color: rgb(248,162,61)
+
+.menu
+  width: 28px
+  height: 28px
+  position: absolute
+  top: 15px
+  left: 30px
+  background-image: url("../img/menu.png")
+
+.aside
+  width: 240px
+  border-right: 1px solid #fff
+  position: fixed
+  top: 0
+  left: 0
+  height: 100%
+  z-index: 10
+  background-color: rgb(247,155,57)
+  padding-top: 70px
+  transform: translateX(-241px)
+  transition: all .4s linear
+  .h2
+    font-size: 20px
+    text-align: center
+    margin-bottom: 5px
+  .credit
+    text-align: center
+    font-size: 16px
+    margin-bottom: 30px
+  .menus
+    margin-bottom: 100px
+  .item a
+    display: block
+    color: rgb(247,155,57)
+    background-color: #fff
+    text-align: center
+    line-height: 40px
+    border-bottom: 1px solid rgb(247,155,57)
+    text-decoration: none
+
+.openmenu .aside
+  transform: translateX(0)
+
+.overlay
+  display: none
+  opacity: 0
+  transition: all .2s linear
+  position: fixed
+  height: 100%
+  width: 100%
+  z-index: 5
+  background-color: #000
+
+.openmenu .overlay
+  display: block
+  opacity: 0.6
 
 .container
   width: 260px
@@ -135,7 +194,7 @@ body
         .count
           height: 19px
   // 积分
-  .credit
+  .section.credit
     clearfix()
     margin-top: 8px
     .mine

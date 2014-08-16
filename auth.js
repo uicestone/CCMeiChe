@@ -38,7 +38,9 @@ passport.use(new LocalStrategy({
       };
       User.update({
         phone: user.phone
-      }, user, {
+      }, {
+        $set: user
+      }, {
         upsert: true
       }, function(err){
         if(err){return done(err);}
