@@ -1,3 +1,6 @@
-module.exports = function(req,res){
-  res.end("ok");
+module.exports = function(req,res,next){
+
+  res.render('myinfos',{
+    id:"myinfos"
+  });
 }

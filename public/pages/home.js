@@ -2,8 +2,6 @@ var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
 
-var chinese_numbers = "一二三四五六七八九十".split("");
-var carsList = $(".cars ul");
 
 // 菜单展开收起
 (function(){
@@ -22,8 +20,9 @@ $(".cars li").on("touchend", function(){
 });
 
 
-var panelAddCar,panelPreOrder;
-
+var panelAddCar;
+var carsList = $(".cars ul");
+var chinese_numbers = "一二三四五六七八九十".split("");
 // 添加车辆
 $(".cars .add").on("touchend", function(){
   var addbtn = $(this);
@@ -49,7 +48,6 @@ $(".cars .add").on("touchend", function(){
       });
     }
     panelAddCar.show();
-
   });
 });
 
@@ -156,6 +154,7 @@ $(".location .input").on("click",function(){
 
 })();
 
+var panelPreOrder;
 $("#go-wash").on("touchend", function(){
   if(updatingLatlng){
     alert("正在获取确切位置");

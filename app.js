@@ -68,8 +68,6 @@ app.listen(config.get("port"), function () {
 
 
 
-
-
 // create menu
 var user_api = require('./util/wechat').user.api;
 var user_menu = {

@@ -1,3 +1,7 @@
+orange=#f8b62b
+grey=#b6b6b6
+light-grey=#ddd
+
 body,h1,h2,input,div,p,ul,ol,li
   padding: 0
   margin: 0
@@ -9,7 +13,7 @@ li
 
 body
   color: #fff
-  background-color: #faae45
+  background-color: orange
   &.openmenu
     position: fixed
     width: 100%
@@ -25,6 +29,22 @@ body
   left: 30px
   background-image: url("../img/menu.png")
 
+
+.add
+  background-color: #FFF
+  text-align: center
+  height: 40px
+  line-height: 40px
+  color: rgb(218, 221, 80)
+  .icon-add
+    display: inline-block
+    background-image: url(./img/add.png)
+    width: 18px
+    height: 18px
+    margin-right: 10px
+    position: relative
+    top: 2px
+
 .aside
   width: 240px
   border-right: 1px solid #fff
@@ -33,7 +53,7 @@ body
   left: 0
   height: 100%
   z-index: 10
-  background-color: rgb(247,155,57)
+  background-color: orange
   padding-top: 70px
   transform: translateX(-241px)
   transition: all .4s linear
@@ -49,11 +69,11 @@ body
     margin-bottom: 100px
   .item a
     display: block
-    color: rgb(247,155,57)
+    color: orange
     background-color: #fff
     text-align: center
     line-height: 40px
-    border-bottom: 1px solid rgb(247,155,57)
+    border-bottom: 1px solid orange
     text-decoration: none
 
 .openmenu .aside
@@ -79,8 +99,8 @@ body
 
 .input
   font-size: 14px
-  border: 1px solid #ddd
-  border-left: 2px solid #f8b62b
+  border: 1px solid light-grey
+  border-left: 2px solid orange
   text-align: right
   padding-right: 18px
   box-sizing: border-box
@@ -129,7 +149,7 @@ body
         background-color: #fff
         color: #ccc
         height: 48px
-        border-bottom: 1px solid #faae45
+        border-bottom: 1px solid orange
         .index
           margin: 5px 0
           line-height: 38px
@@ -145,20 +165,6 @@ body
             height: 18px
             line-height: 18px
             font-size: 14px
-      .add
-        background-color: #FFF
-        text-align: center
-        height: 40px
-        line-height: 40px
-        color: rgb(218, 221, 80)
-        .icon-add
-          display: inline-block
-          background-image: url(./img/add.png)
-          width: 18px
-          height: 18px
-          margin-right: 10px
-          position: relative
-          top: 2px
   .services
     .active
       color: #fff
@@ -168,7 +174,7 @@ body
       margin-bottom: 1px
       padding: 5px 15px
       background-color: #fff
-      color: #b5b6b6
+      color: grey
       .detail
         float: left
         width: 100px
@@ -183,7 +189,7 @@ body
         line-height: 42px
         height: 42px
       .promo
-        border-left: 1px solid #b5b6b6
+        border-left: 1px solid grey
         padding-left: 12px
         float: right
         text-align: center
@@ -203,7 +209,7 @@ body
       line-height: 44px
     .use
       background-color: #fff
-      color: #b5b6b6
+      color: grey
       float: right
       border: 1px solid #fff
       width: 100px
@@ -240,7 +246,7 @@ body
   z-index: 9
   width: 100%
   background: #fff
-  border-left: 2px solid #f8b62b
+  border-left: 2px solid orange
   box-sizing: border-box
   li
     border-bottom: 1px solid #eee
@@ -353,7 +359,7 @@ body
     font-size: 14px
     text-align: center
     background-color: #fff
-    color: #b5b6b6
+    color: grey
     .h2
       font-size: 14px
       line-height: 40px
@@ -371,19 +377,19 @@ body
       .text
         font-size: 12px
       .time
-        color: #f8b62b
+        color: orange
         font-size: 18px
         height: 27px
       .cancel
-        height: 14px;
-        font-size: 12px;
-        line-height: 15px;
-        width: 50px;
-        text-align: center;
-        margin: 5px auto;
-        color: #fff;
-        background-color: rgb(250,180,74);
-        padding: 3px;
+        height: 14px
+        font-size: 12px
+        line-height: 15px
+        width: 50px
+        text-align: center
+        margin: 5px auto
+        color: #fff
+        background-color: rgb(250,180,74)
+        padding: 3px
       .view-result
         color: #fff
         padding: 5px
@@ -405,3 +411,43 @@ body
         width: 80px
         text-align: left
         line-height: 2
+
+
+#myinfos
+  .h1
+    font-size: 20px
+    text-align: center
+    margin: 50px auto 10px auto
+  .section
+    background-color: #fff
+    padding: 15px 30px
+    margin-bottom: 40px
+    .h2
+      color: orange
+      text-align: center
+      font-size: 18px
+      margin-bottom: 10px
+    .row
+      clearfix()
+      border-bottom: 1px solid orange
+      color: grey
+      font-size: 14px
+      line-height: 36px
+      padding: 4px
+      &:first-child
+        border-top: 1px solid orange
+      .label
+        float: left
+        padding: 0 20px
+        border-right: 1px solid light-grey
+      .text
+        float: left
+        padding-left: 38px
+        &.cartype
+          line-height: 1
+          .type
+            font-size: 15px
+            margin-top: 5px
+            margin-bottom: 3px
+          .number
+            font-size: 12px

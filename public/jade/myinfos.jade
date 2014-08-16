@@ -1,0 +1,52 @@
+extends layout
+block content
+  h1.h1 我的信息
+  .section
+    h2.h2 账户
+    .row
+      .label 手机
+      .text #{user.phone}
+    .row
+      .label 余额
+      .text #{user.credit || 0}
+
+  .section
+    h2.h2 优惠券
+    ul.services
+      each promo,i in user.promos || []
+        li(data="#{JSON.stringify(service)}",class="#{i==0?'active':''}")
+          .detail
+            .title #{service.title}
+            .desc #{service.describe}
+          .promo
+            .text 优惠券
+            .count --
+          .price ￥#{service.price}
+
+  .section.cars
+    h2.h2 车型
+    ul
+      for car,i in user.cars || []
+        li.row
+          .label 车型
+          .text.cartype
+            p.type #{car.type}
+            p.number #{car.number}
+    .add.addcar
+      i.icon-add
+      | 添加车辆
+
+  .section
+    h2.h2 地址
+    for address,i in user.addresses || []
+      .row #{address}
+    .add.addaddress
+      i.icon-add
+      | 添加地址
+
+  .button 保存
+
+  script.
+    facade({
+      entry: "ccmeiche/pages/myinfos.js"
+    });

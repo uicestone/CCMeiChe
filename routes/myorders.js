@@ -9,8 +9,7 @@ module.exports = function(req,res,next){
     }
     res.render('myorders',{
       id:"myorders",
-      data:orders,
-      moment: require('moment')
+      data:orders
     });
   });
 }
