@@ -13,56 +13,51 @@ exports.get = function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.status(200).send(user.cars||[]);
+    res.status(200).send(user.address||[]);
   });
 
 };
 
 /**
  * 添加车辆
- * @param  pic 照片
- * @param  types 车型
- * @param  number 车牌
- * @param  color 颜色
- * @param  comment 备注
+ * @param  latlng 经纬度
+ * @param  address 具体位置
+ * @param  carpark 车位
  */
 exports.post = function (req, res, next) {
-  var number = req.body.number;
-  var pic = req.body.pic;
-  var type = req.body.type;
-  var color = req.body.color;
-  var comment = req.body.comment;
-  var phone = req.user.phone;
-  var action = req.body.action;
-  var car = {
-    pic: pic,
-    number: number,
-    type: type,
-    color: color,
-    comment: comment
+
+  var data = {
+    latlng: req.body.latlng,
+    address: req.body.address,
+    carpark: req.body.carpark
   };
 
-  if (!number) {
-    return res.status(400).send("bad request");
+  var keys = Object.keys(data);
+  for(var i = 0 ; i < keys.length; i++){
+    if(!data[keys[i]]){
+      res.send("missing " + keys[i]);
+      break;
+    }
   }
 
   User.findOne({
     phone: phone,
-    "cars.number": number
+    "address.address": data.address,
+    "address.carpark": data.carpark
   }, function (err, user) {
     if (err) {
       return next(err);
     }
 
     if (user) {
-      return res.status(400).send("您已添加过该车牌");
+      return res.status(400).send("您已添加过该地址");
     }
 
     User.update({
       phone: phone
     }, {
       $addToSet: {
-        cars: car
+        address: data
       }
     }, function (err) {
       if (err) {

@@ -31,6 +31,7 @@ exports.post = function(req,res,next){
     address: req.body.address,
     latlng: req.body.latlng,
     worker: req.body.worker_id,
+    carpark: req.body.carpark,
     finish_time: req.body.finish_time,
     status: "todo"
   };
