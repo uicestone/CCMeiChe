@@ -11,7 +11,7 @@ var wechat = require('wechat');
 
 var app = express();
 
-require('./auth');
+require('./passport-init');
 
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/jade');
@@ -41,10 +41,16 @@ app.use(function(req,res,next){
   next();
 });
 
+
+var assureLogin = require("./routes/auth");
 app.use("/wechat", require("./wechat"));
 app.get('/login', require("./routes/login"));
 app.get('/logout', require("./routes/logout"));
-app.get('/', require("./routes/index"));
+app.get('/', assureLogin, require("./routes/index"));
+app.get('/myorders', assureLogin, require("./routes/myorders"));
+app.get('/myinfos', assureLogin, require("./routes/myinfos"));
+app.get('/recharge', assureLogin, require("./routes/recharge"));
+app.get('/help', require("./routes/help"));
 
 app.namespace('/test', require('./test')(app));
 app.namespace("/api/v1", require("./api/v1")(app));
