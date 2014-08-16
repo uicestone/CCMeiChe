@@ -1,9 +1,10 @@
 mixin item(data)
   li
     .details
-      .row
-        .label 号牌：
-        .text #{data.number}
+      for item in data.cars
+        .row
+          .label 号牌：
+          .text #{item.number}
       .row
         .label 地址：
         .text #{data.address}
@@ -14,8 +15,15 @@ mixin item(data)
       if data.status == "done"
         .view-result 查看结果
       else
-        .text 倒计时时间
-        .time #{finish_time}
+        .text 倒计时间
+        .time(data-finish="#{data.finish_time}")
+          - var finish = new Date(data.finish_time);
+          - var now = new Date();
+          - var duration = Math.abs(now - finish);
+          - var negative = finish < now;
+          - var minutes = moment.duration(duration,'milliseconds').minutes();
+          - var seconds = moment.duration(duration,'milliseconds').seconds();
+          | #{negative ? "-" : ""}#{minutes}:#{seconds}
         if data.status == "todo"
           .cancel 取消订单
 
@@ -23,7 +31,7 @@ mixin empty
   .empty 无
 
 mixin section(title,field)
-  .section
+  div(class=["section",field])
     h2.h2 #{title}
     if sections[field].length
       ul

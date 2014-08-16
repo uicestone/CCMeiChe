@@ -75,11 +75,6 @@ block content
     .section
       #go-wash.button 欧耶洗车啦
   script.
-    var user = {
-      phone: #{user.phone},
-      promo: #{user.promo || 0},
-      credit: #{user.credit || 0},
-    };
     facade({
       entry: "ccmeiche/pages/home.js"
     });

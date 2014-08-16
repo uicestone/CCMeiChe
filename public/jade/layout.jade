@@ -20,7 +20,13 @@ html
         window.onerror = function(message,url,lineNo){
             alert([message,url,lineNo].join("\n"));
         }
-        appConfig = {
+
+        var user = {
+          phone: #{user.phone},
+          promo: #{user.promo || 0},
+          credit: #{user.credit || 0},
+        };
+        var appConfig = {
             qiniu_bucket: "#{config.qiniu_bucket}",
             qiniu_host: "#{config.qiniu_host}"
         }
