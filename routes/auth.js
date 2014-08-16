@@ -7,5 +7,8 @@ module.exports = function(req,res,next){
       return res.redirect(url);
     }
   }
+
+
+  res.locals.user = req.user;
   next();
 }

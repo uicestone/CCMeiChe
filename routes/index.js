@@ -15,8 +15,7 @@ module.exports = function(req,res,next){
     res.render("index",{
       id: "home",
       title: "CC美车",
-      services: services,
-      user: req.user
+      services: services
     });
   });
 }

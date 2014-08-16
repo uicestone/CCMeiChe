@@ -17,13 +17,6 @@ mixin item(data)
       else
         .text 倒计时间
         .time(data-finish="#{data.finish_time}")
-          - var finish = new Date(data.finish_time);
-          - var now = new Date();
-          - var duration = Math.abs(now - finish);
-          - var negative = finish < now;
-          - var minutes = moment.duration(duration,'milliseconds').minutes();
-          - var seconds = moment.duration(duration,'milliseconds').seconds();
-          | #{negative ? "-" : ""}#{minutes}:#{seconds}
         if data.status == "todo"
           .cancel 取消订单
 
@@ -52,3 +45,8 @@ block content
   +section("在路上","todo")
   +section("进行中","doing")
   +section("已完成","done")
+
+  script.
+    facade({
+      entry: "ccmeiche/pages/myorders.js"
+    });
