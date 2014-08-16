@@ -1,0 +1,46 @@
+mixin item(data)
+  li
+    .details
+      .row
+        .label 号牌：
+        .text #{data.number}
+      .row
+        .label 地址：
+        .text #{data.address}
+      .row
+        .label 服务：
+        .text #{data.service.title}
+    .control
+      if data.status == "done"
+        .view-result 查看结果
+      else
+        .text 倒计时时间
+        .time #{finish_time}
+        if data.status == "todo"
+          .cancel 取消订单
+
+mixin empty
+  .empty 无
+
+mixin section(title,field)
+  .section
+    h2.h2 #{title}
+    if sections[field].length
+      ul
+        for item in sections[field]
+          +item(item)
+    else
+      +empty
+
+extends layout
+block content
+  h1.h1 我的订单
+  - var filterStatus = function(status){ return function(item){return item.status == status;} };
+  - var sections = {};
+  - sections.todo = data.filter(filterStatus("todo"));
+  - sections.doing = data.filter(filterStatus("doing"));
+  - sections.done = data.filter(filterStatus("done"));
+
+  +section("在路上","todo")
+  +section("进行中","doing")
+  +section("已完成","done")

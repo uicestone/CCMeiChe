@@ -2,8 +2,14 @@ var model = require('../../model');
 var Order = model.order;
 
 exports.get = function(req,res){
-  console.log(req.user);
-  res.send("order");
+  Order.find({
+    phone: req.user.phone
+  }).toArray(function(err,orders){
+    if(err){
+      return next(err);
+    }
+    res.status(200).send(orders);
+  });
 };
 
 /**
@@ -18,16 +24,25 @@ exports.get = function(req,res){
  */
 exports.post = function(req,res,next){
   var user = req.user;
-
-  Order.insert({
+  var data = {
     phone: user.phone,
     cars: req.body.cars,
     service: req.body.service,
     address: req.body.address,
     latlng: req.body.latlng,
-    positon: req.body.position,
     worker: req.body.worker_id,
-  },function(err, results){
+    finish_time: req.body.finish_time,
+    status: "todo"
+  };
+  var keys = Object.keys(data);
+  for(var i = 0 ; i < keys.length; i++){
+    if(!data[keys[i]]){
+      res.send("missing " + keys[i]);
+      break;
+    }
+  }
+
+  Order.insert(data,function(err, results){
     if(err){return next(err);}
     res.status(200).send(results[0]);
   });
