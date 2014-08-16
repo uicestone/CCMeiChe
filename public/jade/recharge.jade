@@ -1,0 +1,14 @@
+extends layout
+block content
+  h1.h1 充值
+  ul.choices
+    for choice in choices
+      li.row
+        .price #{choice.price}cc
+        if choice.promo
+          .promo #{choice.promo}
+  .button 提交
+  script.
+    facade({
+      entry: "ccmeiche/pages/recharge.js"
+    });
