@@ -23,7 +23,7 @@ html
 
         var user = {
           phone: #{user.phone},
-          promo: #{user.promo || 0},
+          promo: !{JSON.stringify(user.promo)},
           credit: #{user.credit || 0},
         };
         var appConfig = {

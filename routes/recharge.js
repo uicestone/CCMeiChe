@@ -1,25 +1,13 @@
-var choices = [{
-  price: 50
-},{
-  price: 100,
-  promo: "洗车券"
-},{
-  price: 200,
-  promo: "洗车券"
-},{
-  price: 300,
-  promo: "洗车券"
-},{
-  price: 400,
-  promo: "洗车券"
-},{
-  price: 500,
-  promo: "洗车券"
-}]
+var Recharge = require("../model/recharge");
 
-module.exports = function(req,res){
-  res.render("recharge",{
-    id:"recharge",
-    choices:choices
+module.exports = function(req,res,next){
+  Recharge.find().toArray(function(err,results){
+    if(err){
+      return next(err);
+    }
+    res.render("recharge",{
+      id:"recharge",
+      choices:results
+    });
   });
 }

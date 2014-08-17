@@ -14,6 +14,7 @@ module.exports = function(app){
     app.get("mycars", auth, require("./mycars").get);
     app.post("mycars", auth, require("./mycars").post);
     app.get("cartypes", require("./cartypes").get);
+    app.post("recharge/:price", require("./recharge").post);
     app.get("location/address/:address", require("./location").address)
     app.get("location/latlng/:lat,:lng", require("./location").latlng)
     app.get("location/suggestion/:query", require("./location").suggestion)

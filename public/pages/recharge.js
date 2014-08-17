@@ -21,6 +21,7 @@ $(".button").on("touchend",function(){
   $.post("/api/v1/recharge/" + price).done(function(){
     location.href = "/";
   }).fail(function(){
+    console.log("fail");
   });
 
 });

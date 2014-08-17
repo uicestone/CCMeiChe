@@ -6,7 +6,7 @@ block content
       li.row(data-price="#{choice.price}")
         .price #{choice.price}cc
         if choice.promo
-          .promo #{choice.promo}
+          .promo #{choice.promo.title}
   .button 提交
   script.
     facade({
