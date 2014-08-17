@@ -3,7 +3,7 @@ block content
   h1.h1 充值
   ul.choices
     for choice in choices
-      li.row
+      li.row(data-price="#{choice.price}")
         .price #{choice.price}cc
         if choice.promo
           .promo #{choice.promo}
