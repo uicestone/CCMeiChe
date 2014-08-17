@@ -3,25 +3,20 @@ block content
   h1.h1 我的信息
   .section
     h2.h2 账户
-    .row
-      .label 手机
-      .text #{user.phone}
-    .row
-      .label 余额
-      .text #{user.credit || 0}
+    ul
+      li.row
+        .label 手机
+        .text #{user.phone}
+      li.row
+        .label 余额
+        .text #{user.credit || 0}
 
   .section
     h2.h2 优惠券
-    ul.services
-      each promo,i in user.promos || []
-        li(data="#{JSON.stringify(service)}",class="#{i==0?'active':''}")
-          .detail
-            .title #{service.title}
-            .desc #{service.describe}
-          .promo
-            .text 优惠券
-            .count --
-          .price ￥#{service.price}
+    ul.promos
+      each promo,i in user.promo || []
+        li(data="#{JSON.stringify(promo)}")
+          .title #{promo.title}
 
   .section.cars
     h2.h2 车型
