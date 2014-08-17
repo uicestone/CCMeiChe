@@ -43,16 +43,23 @@ app.use(function(req,res,next){
 
 
 var assureLogin = require("./routes/auth");
-app.use("/wechat", require("./wechat"));
-app.get('/login', require("./routes/login"));
-app.get('/logout', require("./routes/logout"));
-app.get('/', assureLogin, require("./routes/index"));
-app.get('/myorders', assureLogin, require("./routes/myorders"));
-app.get('/myinfos', assureLogin, require("./routes/myinfos"));
-app.get('/recharge', assureLogin, require("./routes/recharge"));
-app.get('/help', require("./routes/help"));
+if(process.env.SERVICE == "worker"){
 
-app.namespace('/test', require('./test')(app));
+  app.use("/wechat/worker", require("./wechat").worker);
+
+}else{
+
+  app.use("/wechat/user", require("./wechat").user);
+  app.get('/login', require("./routes/login"));
+  app.get('/logout', require("./routes/logout"));
+  app.get('/', assureLogin, require("./routes/index"));
+  app.get('/myorders', assureLogin, require("./routes/myorders"));
+  app.get('/myinfos', assureLogin, require("./routes/myinfos"));
+  app.get('/recharge', assureLogin, require("./routes/recharge"));
+  app.get('/help', require("./routes/help"));
+  app.namespace('/test', require('./test')(app));
+}
+
 app.namespace("/api/v1", require("./api/v1")(app));
 
 app.use(errorHandler());
@@ -86,12 +93,6 @@ var user_menu = {
   }]
 };
 
-user_api.createMenu(user_menu, function (err, data, response) {
-  console.log("Menu Created", data);
-});
-
-
-
 var worker_api = require('./util/wechat').worker.api;
 var worker_menu = {
   "button": [{
@@ -104,3 +105,13 @@ var worker_menu = {
     "key": "OFF_DUTY"
   }]
 };
+
+if(process.env.SERVICE == "worker"){
+  worker_api.createMenu(user_menu, function (err, data, response) {
+    console.log("Menu Created", data);
+  });
+}else{
+  user_api.createMenu(user_menu, function (err, data, response) {
+    console.log("Menu Created", data);
+  });
+}
