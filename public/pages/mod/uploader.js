@@ -26,7 +26,7 @@ var uploadTemplate = {
   success: function(e){
       var elem = e.elem;
       var data = e.data;
-      var imgSrc = "http://" + appConfig.qiniu_host + "/" + data.key + "?imageView/1/w/90/h/90";
+      var imgSrc = appConfig.qiniu_host + data.key + "?imageView/1/w/90/h/90";
       var img = $("<img />").attr("src",imgSrc);
       if(!elem){return;}
       img.on('load',function(){

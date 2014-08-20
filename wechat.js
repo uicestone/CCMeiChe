@@ -9,7 +9,7 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
   }
 });
 
-
+var Worker = require('./model/worker');
 exports.worker = wechat(config.wechat.worker.token, function(req,res){
   var message = req.weixin;
   console.log(message);

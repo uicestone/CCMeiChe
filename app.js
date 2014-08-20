@@ -44,9 +44,9 @@ app.use(function(req,res,next){
 
 var assureLogin = require("./routes/auth");
 if(process.env.SERVICE == "worker"){
-
+  console.log("service worker");
   app.use("/wechat/worker", require("./wechat").worker);
-
+  app.get("/order/:orderid", require("./routes/order"));
 }else{
 
   app.use("/wechat/user", require("./wechat").user);
@@ -85,7 +85,7 @@ var user_menu = {
   },{
     "type": "view",
     "name": "优惠活动",
-    "url": config.host.user + "/promos"
+    "url": config.host.user + "/recharge"
   },{
     "type": "view",
     "name": "我的订单",
@@ -107,8 +107,9 @@ var worker_menu = {
 };
 
 if(process.env.SERVICE == "worker"){
-  worker_api.createMenu(user_menu, function (err, data, response) {
-    console.log("Menu Created", data);
+  console.log("create menu ", worker_menu);
+  worker_api.createMenu(worker_menu, function (err, data, response) {
+    console.log("Menu Created", err, data);
   });
 }else{
   user_api.createMenu(user_menu, function (err, data, response) {

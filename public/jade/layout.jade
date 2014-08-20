@@ -3,8 +3,8 @@ doctype html
 html
   head
     title= title || sitename
-    script(src="neurons/neuron/7.0.0/neuron.js")
-    script(src="neurons/config.js")
+    script(src="/neurons/neuron/7.0.0/neuron.js")
+    script(src="/neurons/config.js")
     script.
         neuron.config({
             path:"/neurons"
@@ -20,13 +20,15 @@ html
         window.onerror = function(message,url,lineNo){
             alert([message,url,lineNo].join("\n"));
         }
-
-        var user = {
-          phone: #{user.phone},
-          promo: !{JSON.stringify(user.promo)},
-          credit: #{user.credit || 0},
-        };
         var appConfig = {
             qiniu_bucket: "#{config.qiniu_bucket}",
             qiniu_host: "#{config.qiniu_host}"
         }
+
+    if user
+        script.
+            var user = {
+              phone: #{user.phone},
+              promo: !{JSON.stringify(user.promo)},
+              credit: #{user.credit || 0},
+            };

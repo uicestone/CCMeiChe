@@ -1,0 +1,31 @@
+extends layout
+block content
+  for car in order.cars
+    .pic
+      img(src="#{config.qiniu_host}#{car.pic}")
+  .order
+    .inner
+      .row
+        .label 手机：
+        .text #{order.phone}
+      for car in order.cars
+        .row
+          .label 车型：
+          .text
+            p #{car.type}
+            p #{car.number}
+      .row
+        .label 地址：
+        .text #{order.address}
+      .row
+        .label 服务：
+        .text #{order.service.title}
+  .remain
+    .head 剩余时间
+    .time(data-finish="#{order.finish_time}")
+    .message 请在预估时间内完成洗车
+  .button.arrive 到达
+  script.
+    facade({
+      entry: "ccmeiche/pages/order.js"
+    });
