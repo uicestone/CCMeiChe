@@ -190,16 +190,18 @@ $("#go-wash").on("touchend", function(){
     return num < 10 ? ("0" + num) : num;
   }
 
-  $.post("/api/v1/preorder",data).done(function(result){
+  $.post("/api/v1/preorder",data).done(function(estimate){
     require.async("./preorder.js",function(preorder){
-      var finish_time = new Date(+new Date() + result.time * 60 * 1000);
+      var estimated_finish_time = new Date(+new Date() + (estimate.drive_time + estimate.wash_time) * 60 * 1000);
       if(!panelPreOrder){
         panelPreOrder = preorder;
         panelPreOrder.on("confirm",function(){
-          data.worker_id = result.worker_id;
-          data.finish_time = finish_time;
+          data.worker_id = estimate.worker_id;
+          data.estimated_drive_time = estimate.drive_time;
+          data.estimated_wash_time = estimate.wash_time;
+          data.estimated_finish_time = estimated_finish_time;
           $.post("/api/v1/myorders",data).done(function(){
-            console.log(arguments);
+            location.href = "/myorders";
           });
         });
       }

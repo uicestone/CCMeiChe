@@ -3,6 +3,10 @@ var config = require("config");
 var baidumap = require("../../util/baidumap");
 var async = require("async");
 
+function washtime(){
+  return config.washtime;
+}
+
 
 exports.post = function (req, res, next) {
   if (!req.body.latlng) {
@@ -44,7 +48,8 @@ exports.post = function (req, res, next) {
         console.log(solution.result.routes[0].distance);
         done(null,{
           worker_id: worker._id,
-          time: solution.result.routes[0].distance / speedInMin
+          drive_time: solution.result.routes[0].distance / speedInMin,
+          wash_time: washtime()
         });
       });
     },function(err,results){
@@ -53,10 +58,7 @@ exports.post = function (req, res, next) {
         return b.time > a.time ? -1 : 1;
       }
       console.log("results",results);
-      results = results.sort(compare_nearest).map(function(item){
-        item.time = item.time + config.wash_time;
-        return item
-      });
+      results = results.sort(compare_nearest);
 
       res.status(200).send(results[0]);
     });

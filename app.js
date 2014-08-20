@@ -46,7 +46,8 @@ var assureLogin = require("./routes/auth");
 if(process.env.SERVICE == "worker"){
   console.log("service worker");
   app.use("/wechat/worker", require("./wechat").worker);
-  app.get("/order/:orderid", require("./routes/order"));
+  app.get("/orders/:orderid", require("./routes/orders").detail);
+  app.get("/orders", require("./routes/orders").list);
 }else{
 
   app.use("/wechat/user", require("./wechat").user);

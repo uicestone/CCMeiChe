@@ -32,7 +32,9 @@ exports.post = function(req,res,next){
     latlng: req.body.latlng,
     worker: req.body.worker_id,
     carpark: req.body.carpark,
-    finish_time: req.body.finish_time,
+    estimated_finish_time: new Date(req.body.estimated_finish_time),
+    estimated_drive_time: req.body.estimated_drive_time,
+    estimated_wash_time: req.body.estimated_wash_time,
     status: "todo"
   };
   var keys = Object.keys(data);

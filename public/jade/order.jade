@@ -20,12 +20,21 @@ block content
       .row
         .label 服务：
         .text #{order.service.title}
-  .remain
-    .head 剩余时间
-    .time(data-finish="#{order.finish_time}")
-    .message 请在预估时间内完成洗车
-  .button.arrive 到达
+  if order.status == "done"
+    .remain 已完成
+  else
+    .remain
+      .head 剩余时间
+      .time(data-finish="#{order.finish_time}")
+      .message 请在预估时间内完成洗车
+
+  if order.status == "todo"
+    .button.arrive 到达
+  else if order.status == "doing"
+    .button.done 完成
+
   script.
+    var order = !{JSON.stringify(order)}
     facade({
       entry: "ccmeiche/pages/order.js"
     });

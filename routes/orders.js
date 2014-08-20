@@ -1,6 +1,21 @@
 var Order = require("../model/order");
 
-module.exports = function(req,res){
+
+exports.list = function(req,res,next){
+  Order.find({
+    "worker": req.user._id
+  }).toArray(function(err,orders){
+    if(err){
+      return next(err);
+    }
+
+    res.render("order-list",{
+      orders:orders
+    });
+  })
+}
+
+exports.detail = function(req,res,next){
   var id = req.params.orderid;
 
   Order.findById(id,function(err,order){
@@ -15,7 +30,8 @@ module.exports = function(req,res){
     // if(order.worker !== req.user._id){
     //   return res.send(403,"not your order");
     // }
-    console.log(order);
+    order.status = order.status || "todo";
+
     res.render("order",{
       id:"order",
       order: order
