@@ -8,6 +8,7 @@ module.exports = function(req,res,next){
       return next(err);
     }
     res.render('myorders',{
+      role:"user",
       id:"myorders",
       data:orders
     });

@@ -3,14 +3,16 @@ var Order = require("../model/order");
 
 exports.list = function(req,res,next){
   Order.find({
-    "worker": req.user._id
+    "worker": (req.user && req.user._id) || "53e2bbc178a91f000000001e"
   }).toArray(function(err,orders){
     if(err){
       return next(err);
     }
 
-    res.render("order-list",{
-      orders:orders
+    res.render("myorders",{
+      role:"worker",
+      id:"myorders",
+      data:orders
     });
   })
 }

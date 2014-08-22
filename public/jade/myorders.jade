@@ -42,8 +42,9 @@ block content
   - sections.doing = data.filter(filterStatus("doing"));
   - sections.done = data.filter(filterStatus("done"));
 
-  +section("在路上","todo")
-  +section("进行中","doing")
+  if role == "user"
+    +section("在路上","todo")
+    +section("进行中","doing")
   +section("已完成","done")
 
   script.
