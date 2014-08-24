@@ -21,6 +21,10 @@ exports.post = function (req, res, next) {
   console.log("$near", user_latlng.split(",").map(function(item){return +item}));
   console.log("$maxDistance",kms / 111.12);
   worker.find({
+    openid:{
+      $ne: null
+    },
+    status:"on_duty",
     latlng:{
       // $near: user_latlng.split(",").map(function(item){return +item})
       $near: user_latlng.split(",").map(function(item){return +item}),
