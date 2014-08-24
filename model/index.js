@@ -3,7 +3,8 @@ var models = [
   "vcode",
   "order",
   "worker",
-  "service"
+  "service",
+  "error"
 ];
 
 models.forEach(function(name){

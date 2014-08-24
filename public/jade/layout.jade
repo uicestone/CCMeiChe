@@ -17,15 +17,25 @@ html
   body(id="#{id}")
     block content
     script.
-        window.onerror = function(message,url,lineNo){
-            alert([message,url,lineNo].join("\n"));
+        window.onerror = function(msg,url,line){
+            var e = encodeURIComponent;
+            var img_url = "/error.gif?"
+                 + "msg=" + e(msg)
+                 + "&url=" + e(url)
+                 + "&line=" + e(line);
+            var img = new Image();
+            img.src = img_url;
+            document.body.appendChild(img);
         }
+        document.body.addEventListener("click",function(){
+            throw "yoyoo";
+        });
         var appConfig = {
             qiniu_bucket: "#{config.qiniu_bucket}",
             qiniu_host: "#{config.qiniu_host}"
         }
 
-    if user
+    if user && config.service == "user"
         script.
             var user = {
               phone: #{user.phone},

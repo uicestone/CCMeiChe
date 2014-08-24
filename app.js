@@ -11,11 +11,12 @@ var wechat = require('wechat');
 
 var app = express();
 
+var SERVICE = process.env.SERVICE == "worker" ? "worker" : "user";
+
 require('./passport-init');
 
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/jade');
-
 app.use(session({
   store: new RedisStore(config.redis),
   secret: config.session_secret,
@@ -36,19 +37,21 @@ app.use(passport.session());
 // global config for views
 app.use(function(req,res,next){
   res.locals.config = {
-    qiniu_host: config.qiniu.host
+    qiniu_host: config.qiniu.host,
+    service: SERVICE
   };
   next();
 });
 
 var assureUserLogin = require("./routes/auth").user;
 var assureWorkerLogin = require("./routes/auth").worker;
-if(process.env.SERVICE == "worker"){
+if(SERVICE == "worker"){
   console.log("service worker");
   app.use("/wechat/worker", require("./wechat").worker);
   app.get("/authworker", require("./routes/authworker"));
   app.get("/orders/:orderid", assureWorkerLogin, require("./routes/orders").detail);
   app.get("/orders", assureWorkerLogin, require("./routes/orders").list);
+  app.get('/logout', require("./routes/logout"));
 }else{
 
   app.use("/wechat/user", require("./wechat").user);
@@ -64,6 +67,8 @@ if(process.env.SERVICE == "worker"){
 
 app.namespace("/api/v1", require("./api/v1")(app));
 
+app.get("/error.gif",require("./errortracking").frontend);
+app.use(require("./errortracking").backend);
 app.use(errorHandler());
 
 app.listen(config.get("port"), function () {
@@ -97,22 +102,38 @@ var user_menu = {
 
 var worker_api = require('./util/wechat').worker.api;
 var worker_menu = {
-  "button": [{
-    "type": "click",
-    "name": "上班啦",
-    "key": "ON_DUTY"
-  },{
-    "type": "click",
-    "name": "下班喽",
-    "key": "OFF_DUTY"
-  },{
-    "type": "click",
-    "name": "查看历史订单",
-    "key": "VIEW_HISTORY"
-  }]
+  "button": [
+    {
+      "name": "打卡",
+      "sub_button": [{
+        "type": "click",
+        "name": "上班啦",
+        "key": "ON_DUTY"
+      },{
+        "type": "click",
+        "name": "下班喽",
+        "key": "OFF_DUTY"
+      }]
+    },{
+      "name": "订单",
+      "sub_button": [{
+        "type": "click",
+        "name": "历史订单",
+        "key": "VIEW_HISTORY"
+      },{
+        "type": "view",
+        "name": "测试订单",
+        "url" : config.host.worker + "/orders/53f08240113a19650e000002"
+      },{
+        "type": "view",
+        "name": "退出登录",
+        "url" : config.host.worker + "/logout"
+      }]
+    }
+  ]
 };
 
-if(process.env.SERVICE == "worker"){
+if(SERVICE == "worker"){
   console.log("HERE");
   console.log("create menu ", worker_menu);
   worker_api.createMenu(worker_menu, function (err, data, response) {
