@@ -104,10 +104,15 @@ var worker_menu = {
     "type": "click",
     "name": "下班喽",
     "key": "OFF_DUTY"
+  },{
+    "type": "click",
+    "name": "查看历史订单",
+    "key": "VIEW_HISTORY"
   }]
 };
 
 if(process.env.SERVICE == "worker"){
+  console.log("HERE");
   console.log("create menu ", worker_menu);
   worker_api.createMenu(worker_menu, function (err, data, response) {
     console.log("Menu Created", err, data);
