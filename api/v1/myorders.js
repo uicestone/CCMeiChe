@@ -1,4 +1,7 @@
+var config = require('config');
 var model = require('../../model');
+var wechat_worker = require('../../util/wechat').worker.api;
+var Worker = model.worker;
 var Order = model.order;
 
 exports.get = function(req,res){
@@ -45,8 +48,19 @@ exports.post = function(req,res,next){
     }
   }
 
+
   Order.insert(data,function(err, results){
     if(err){return next(err);}
-    res.status(200).send(results[0]);
+    var result = results[0];
+    Worker.findById(data.worker,function(err,worker){
+      if(err){return next(err);}
+      if(!worker || !worker.openid){return next(new Error("worker not find");)}
+      var url = config.host.worker + "/orders/" + results._id;
+      var message = "你有一笔新订单：" + url;
+      wechat_worker.sendText(worker.openid,message,function(err){
+        if(err){return next(err);}
+        res.status(200).send(results[0]);
+      });
+    });
   });
 }
