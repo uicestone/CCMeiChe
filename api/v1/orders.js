@@ -1,5 +1,6 @@
 var model = require('../../model');
 var Order = model.order;
+var Worker = model.worker;
 
 exports.detail = function(req,res,next){
   Order.findById(req.params.orderid,function(err,order){
@@ -25,11 +26,19 @@ exports.done = function(req,res,next){
       status: "done",
       finish_time: new Date()
     }
-  },function(err){
+  },function(err, order){
     if(err){
       return next(err);
     }
-    res.send("ok");
+    Order.findById(req.params.orderid,function(err,order){
+      if(err){return next(err);}
+      Worker.updateById(req.user._id, {
+        last_available_time: new Date(req.user.last_available_time - (order.estimate_finish_time - order.finish_time))
+      },function(err){
+        if(err){return next(err);}
+        res.send("ok");
+      });
+    });
   });
 }
 
