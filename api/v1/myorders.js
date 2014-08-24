@@ -54,7 +54,7 @@ exports.post = function(req,res,next){
     var result = results[0];
     Worker.findById(data.worker,function(err,worker){
       if(err){return next(err);}
-      if(!worker || !worker.openid){return next(new Error("worker not find");)}
+      if(!worker || !worker.openid){return next(new Error("worker not find"));}
       var url = config.host.worker + "/orders/" + results._id;
       var message = "你有一笔新订单：" + url;
       wechat_worker.sendText(worker.openid,message,function(err){
