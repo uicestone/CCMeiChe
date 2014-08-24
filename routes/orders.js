@@ -3,7 +3,7 @@ var Order = require("../model/order");
 
 exports.list = function(req,res,next){
   Order.find({
-    "worker": (req.user && req.user._id) || "53e2bbc178a91f000000001e"
+    "worker": req.user && req.user._id,
   }).toArray(function(err,orders){
     if(err){
       return next(err);
@@ -29,9 +29,9 @@ exports.detail = function(req,res,next){
       return res.send(404,"not found");
     }
 
-    // if(order.worker !== req.user._id){
-    //   return res.send(403,"not your order");
-    // }
+    if(order.worker !== req.user._id){
+      return res.send(403,"not your order");
+    }
     order.status = order.status || "todo";
 
     res.render("order",{

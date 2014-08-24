@@ -4,7 +4,7 @@ var baidumap = require("../../util/baidumap");
 var async = require("async");
 
 function washtime(){
-  return config.washtime;
+  return config.washtime * 60 * 1000;
 }
 
 
@@ -35,7 +35,7 @@ exports.post = function (req, res, next) {
     console.log(workers);
     async.map(workers, function(worker, done){
       var worker_latlng = worker.latlng;
-      var speedInMin = config.motor_speed * 1000 / 60; // km/h 转换为 m/min
+      var speedInMin = config.motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
       console.log("from %s to %s",worker_latlng,user_latlng)
       baidumap.direction({
         origin: worker_latlng.join(","),
@@ -46,20 +46,23 @@ exports.post = function (req, res, next) {
       }, function(err,solution){
         if(err){return done(err);}
         if(!solution || !solution.result || !solution.result.routes[0]){
-          return done("solution is " + JSON.stringify(solution));
+          return done("solution parse error " + JSON.stringify(solution));
         }
         console.log(arguments);
         console.log(solution.result.routes[0].distance);
+        var drive_time = solution.result.routes[0].distance / speedInMin;
+        var wash_time = washtime();
         done(null,{
           worker_id: worker._id,
-          drive_time: solution.result.routes[0].distance / speedInMin,
-          wash_time: washtime()
+          drive_time: drive_time,
+          wash_time: wash_time,
+          finish_time: worker.last_available_time + drive_time + wash_time
         });
       });
     },function(err,results){
       if(err){return next(err);}
       function compare_nearest(a,b){
-        return b.time > a.time ? -1 : 1;
+        return b.finish_time > a.finish_time ? -1 : 1;
       }
       console.log("results",results);
       results = results.sort(compare_nearest);

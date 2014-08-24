@@ -192,14 +192,13 @@ $("#go-wash").on("touchend", function(){
 
   $.post("/api/v1/preorder",data).done(function(estimate){
     require.async("./preorder.js",function(preorder){
-      var estimated_finish_time = new Date(+new Date() + (estimate.drive_time + estimate.wash_time) * 60 * 1000);
       if(!panelPreOrder){
         panelPreOrder = preorder;
         panelPreOrder.on("confirm",function(){
           data.worker_id = estimate.worker_id;
           data.estimated_drive_time = estimate.drive_time;
           data.estimated_wash_time = estimate.wash_time;
-          data.estimated_finish_time = estimated_finish_time;
+          data.estimated_finish_time = estimate.finish_time;
           $.post("/api/v1/myorders",data).done(function(){
             location.href = "/myorders";
           });

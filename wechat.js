@@ -40,15 +40,28 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       if(user.status == "on_duty"){
         return res.reply("你已经在上班了，好好干！");
       }
-      Worker.update({
+      Worker.findOne({
         openid: openid
-      },{
-        $set:{
-          status:"on_duty"
+      },function(err, worker){
+        if(err){return res.reply(err)}
+        var now = new Date();
+        var last_abailable_time;
+        if(worker.last_abailable_time && worker.last_abailable_time > now){
+          last_abailable_time = worker.last_abailable_time;
+        }else{
+          last_abailable_time = now;
         }
-      },function(err){
-        if(err){return res.reply(err);}
-        return res.reply("你已经在上班了，好好干！");
+        Worker.update({
+          openid: openid
+        },{
+          $set:{
+            last_abailable_time: last_abailable_time,
+            status:"on_duty"
+          }
+        },function(err){
+          if(err){return res.reply(err);}
+          return res.reply("你已经在上班了，好好干！");
+        });
       });
     }else if(message.EventKey == "OFF_DUTY"){
       // 下班
@@ -60,7 +73,8 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
         openid: openid
       },{
         $set:{
-          status:"off_duty"
+          status:"off_duty",
+          last_abailable_time: null
         }
       },function(err){
         if(err){return res.reply(err);}
