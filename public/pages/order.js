@@ -4,6 +4,7 @@ require("./mod/countdown");
 
 var button = $(".button");
 var posting = false;
+var finishPanel = null;
 button.on("touchend",function(e){
   if(posting){return;}
   if(button.hasClass("arrive")){
@@ -14,9 +15,18 @@ button.on("touchend",function(e){
       button.removeClass("arrive").addClass("done");
     });
   }else if(button.hasClass("done")){
-    posting = true;
-    $.post("/api/v1/orders/" + order._id + "/done").done(function(){
-      location.href = "/orders";
+
+    require.async("./finishorder.js",function(finishorder){
+      if(!finishPanel){
+        finishPanel = finishorder;
+        finishPanel.on("done",function(data){
+          posting = true;
+          $.post("/api/v1/orders/" + order._id + "/done",data).done(function(){
+            location.href = "/orders";
+          });
+        });
+      }
+      finishPanel.show();
     });
   }
 });
