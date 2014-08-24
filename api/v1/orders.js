@@ -1,6 +1,10 @@
+var async = require('async');
+var config = require('config');
 var model = require('../../model');
 var Order = model.order;
 var Worker = model.worker;
+var wechat_user = require('../../util/wechat').user.api;
+var wechat_worker = require('../../util/wechat').worker.api;
 
 exports.detail = function(req,res,next){
   Order.findById(req.params.orderid,function(err,order){
@@ -26,6 +30,7 @@ exports.done = function(req,res,next){
     finish_pics: req.body.finish_pics,
     broken_pics: req.body.broken_pics
   };
+  var worker = req.user;
 
   if(!data.finish_pics){
     res.status(400).send("wrong params");
@@ -44,14 +49,41 @@ exports.done = function(req,res,next){
       return next(err);
     }
 
-    // 更新车工最后可用时间
     Order.findById(req.params.orderid,function(err,order){
       if(err){return next(err);}
-      Worker.updateById(req.user._id, {
-        last_available_time: new Date(req.user.last_available_time - (order.estimate_finish_time - order.finish_time))
-      },function(err){
-        if(err){return next(err);}
-        res.send("ok");
+
+      async.parallel([
+        // 更新车工最后可用时间
+        function(done){
+
+          Worker.updateById(worker._id, {
+            last_available_time: new Date(worker.last_available_time - (order.estimate_finish_time - order.finish_time))
+          },done);
+
+        },
+        // 给车工发送消息
+        function(done){
+          Order.findOne({
+            "worker._id": worker._id
+          },function(err,new_order){
+            if(err){return done(err);}
+            if(!new_order){return done(null);}
+            var url = config.host.worker + "/orders/" + new_order._id;
+            wechat_worker.sendText(worker.openid,"查看下一笔订单：" + url, done);
+          });
+        },
+        // 给用户发送消息
+        function(done){
+          var url = config.host.user + "/myorders/" + order._id;
+          wechat_user.sendText(order.user.openid,"您的车已洗完：" + url);
+        }
+      ],function(err){
+        if(err){
+          return next(err);
+        }
+
+        res.status(200).send("ok");
+
       });
     });
   });
