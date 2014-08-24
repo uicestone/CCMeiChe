@@ -1,8 +1,8 @@
 var User = require('./model').user;
+var Worker = require("./model").worker;
 var vcode = require('./model/vcode');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
 passport.use(new LocalStrategy({
   usernameField: "phone",
   passwordField: "code",
@@ -50,12 +50,25 @@ passport.use(new LocalStrategy({
   });
 }));
 
-passport.serializeUser(function (user, done) {
-  done(null, user.phone);
-});
 
-passport.deserializeUser(function (phone, done) {
-  User.findOne({
-    phone: phone
-  }, done);
-});
+if(process.env.SERVICE == "worker"){
+  passport.serializeUser(function (user, done) {
+    done(null, user.openid);
+  });
+
+  passport.deserializeUser(function (openid, done) {
+    Worker.findOne({
+      openid: openid
+    }, done);
+  });
+}else{
+  passport.serializeUser(function (user, done) {
+    done(null, user.phone);
+  });
+
+  passport.deserializeUser(function (phone, done) {
+    User.findOne({
+      phone: phone
+    }, done);
+  });
+}

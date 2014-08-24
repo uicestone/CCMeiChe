@@ -26,10 +26,11 @@ exports.detail = function(req,res,next){
     }
 
     if(!order){
+      console.log("order not exists");
       return res.send(404,"not found");
     }
 
-    if(order.worker !== req.user._id){
+    if(order.worker._id !== req.user._id.toString()){
       return res.send(403,"not your order");
     }
     order.status = order.status || "todo";
