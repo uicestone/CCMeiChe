@@ -1,7 +1,7 @@
+var config = require("config");
 
-module.exports = function(req,res,next){
+exports.user = function(req,res,next){
   var user_oauth = require("../util/wechat").user.oauth;
-  var config = require("config");
 
   if(!req.isAuthenticated()){
     if(process.env.DEBUG){
@@ -12,7 +12,18 @@ module.exports = function(req,res,next){
     }
   }
 
-
   res.locals.user = req.user;
   next();
+}
+
+exports.worker = function(req,res){
+  var worker_oauth = require("../util/wechat").worker.oauth;
+  if(!req.isAuthenticated()){
+    var origin_url = config.host.worker + req.url;
+    var auth_url = config.host.worker + '/authworker?redirect=' + encodeURIComponent();
+    var redirect_url = worker_oauth.getAuthorizeURL(auth_url);
+    return res.redirect(redirect_url);
+  }
+
+  res.locals.user = req.user;
 }

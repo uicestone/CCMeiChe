@@ -41,22 +41,23 @@ app.use(function(req,res,next){
   next();
 });
 
-
-var assureLogin = require("./routes/auth");
+var assureUserLogin = require("./routes/auth").user;
+var assureWorkerLogin = require("./routes/auth").worker;
 if(process.env.SERVICE == "worker"){
   console.log("service worker");
   app.use("/wechat/worker", require("./wechat").worker);
-  app.get("/orders/:orderid", require("./routes/orders").detail);
-  app.get("/orders", require("./routes/orders").list);
+  app.get("/authworker", require("./routes/authworker"));
+  app.get("/orders/:orderid", assureWorkerLogin, require("./routes/orders").detail);
+  app.get("/orders", assureWorkerLogin, require("./routes/orders").list);
 }else{
 
   app.use("/wechat/user", require("./wechat").user);
   app.get('/login', require("./routes/login"));
   app.get('/logout', require("./routes/logout"));
-  app.get('/', assureLogin, require("./routes/index"));
-  app.get('/myorders', assureLogin, require("./routes/myorders"));
-  app.get('/myinfos', assureLogin, require("./routes/myinfos"));
-  app.get('/recharge', assureLogin, require("./routes/recharge"));
+  app.get('/', assureUserLogin, require("./routes/index"));
+  app.get('/myorders', assureUserLogin, require("./routes/myorders"));
+  app.get('/myinfos', assureUserLogin, require("./routes/myinfos"));
+  app.get('/recharge', assureUserLogin, require("./routes/recharge"));
   app.get('/help', require("./routes/help"));
   app.namespace('/test', require('./test')(app));
 }
