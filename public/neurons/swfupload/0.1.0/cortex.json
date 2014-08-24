@@ -1,0 +1,18 @@
+{
+  "directories": {
+    "src": "res"
+  },
+  "dependencies": {},
+  "asyncDependencies": {},
+  "devDependencies": {},
+  "engines": {},
+  "scripts": {},
+  "name": "swfupload",
+  "version": "0.1.0",
+  "main": "./src/swfu.js",
+  "gitHead": "a6efb41f88328ada768342b7122e80c8152a681b",
+  "readme": "ERROR: No README data found!",
+  "_id": "swfupload@0.1.0",
+  "css": [],
+  "entries": []
+}

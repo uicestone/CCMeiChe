@@ -14,28 +14,24 @@ exports.post = function (req, res, next) {
   }
 
   var user_latlng = req.body.latlng;
+  var kms = 50; // 周边50公里
 
-  console.log("find ",user_latlng.split(",").map(function(item){return +item}));
-  var kms = 50; // 周边500公里
-
-  console.log("$near", user_latlng.split(",").map(function(item){return +item}));
-  console.log("$maxDistance",kms / 111.12);
   worker.find({
     openid:{
       $ne: null
     },
     status:"on_duty",
     latlng:{
-      // $near: user_latlng.split(",").map(function(item){return +item})
       $near: user_latlng.split(",").map(function(item){return +item}),
       $maxDistance: kms / 111.12 // in kilometers
     }
   }).limit(5).toArray(function (err, workers) {
     if(err){return next(err);}
-    console.log(workers);
     async.map(workers, function(worker, done){
       var worker_latlng = worker.latlng;
       var speedInMin = config.motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
+
+      // 通过百度api查询路线
       console.log("from %s to %s",worker_latlng,user_latlng)
       baidumap.direction({
         origin: worker_latlng.join(","),
@@ -48,12 +44,11 @@ exports.post = function (req, res, next) {
         if(!solution || !solution.result || !solution.result.routes[0]){
           return done("solution parse error " + JSON.stringify(solution));
         }
-        console.log(arguments);
-        console.log(solution.result.routes[0].distance);
+
         var drive_time = solution.result.routes[0].distance / speedInMin;
         var wash_time = washtime();
         done(null,{
-          worker_id: worker._id,
+          worker: worker,
           drive_time: drive_time,
           wash_time: wash_time,
           finish_time: worker.last_available_time + drive_time + wash_time

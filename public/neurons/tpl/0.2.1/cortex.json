@@ -1,0 +1,44 @@
+{
+  "dependencies": {},
+  "asyncDependencies": {},
+  "devDependencies": {},
+  "scripts": {},
+  "name": "tpl",
+  "description": "A very simple javascript template engine.",
+  "version": "0.2.1",
+  "homepage": "http://github.com/kaelzhang/tpl",
+  "author": {
+    "name": "Kael",
+    "email": "i@kael.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kaelzhang/tpl.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "keywords": [
+    "tpl",
+    "template",
+    "template engine",
+    "engine",
+    "embed",
+    "javascript",
+    "js"
+  ],
+  "main": "./index.js",
+  "readme": "# tpl\n\nA very simple JavaScript template engine using embeded javascript code\n\n\n## Syntax\n\n### \\<?js `codeSlice` ?>\n\nYou could embed javascript slices into the template(or just strings), just like PHP does.\n\nIf we have a template: \n\n```php\n<ul><?js\n    var i = 5;\n    while(i -- > 0){\n    \t?>  <li></li><?js\n    }\n?></ul>\n```\n\nThen it will create:\n\n```html\n<ul>\n  <li></li>\n  <li></li>\n  <li></li>\n  <li></li>\n  <li></li>\n</ul>\n```\n\n### @{`value`}\n\nWill be replaced by the `value` variable or statement within the current scope. \n\nFor example, if the template is:\n\n```ftl\n<span class=\"name\">@{it.name}</span>\n```\n\nobject:\n\n```js\n{\n  name: \"Peter\"\n}\n```\n\nresult:\n\n```html\n<span class=\"name\">Peter</span>\n```\n\n**NOTICE** that in top level of the template, there is always a variable `it` which is the object passed into the template function.\n\n\n#### Duplex usage\n\n```php\n<ul><?js\n    it.forEach(function(user){\n    \tvar age = parseInt(user.age);\n    \t?><li>@{user.name}, age @{age}</li><?js\n    });\n?></ul>\n```\n\nThe template above might accept some data like:\n\n```js\n[\n\t{name: 'Peter', age: '40'},\n\t{name: 'Tom', age: 10}\n]\n```\n\nAnd the result is:\n\n```html\n<ul>\n<li>Peter, age 40</li>\n<li>Tom, age 10</li>\n</ul>\n```\n\n\n## APIs\n\n### tpl.compile(template)\n\nCompiles the template string into a template function which only accepts one parameter, `it`.\n\n- template `String` the template string\n\nReturns `function(it)`\n\n```\nvar templateFn = tpl.compile(template);\nvar result = templateFn(object);\n```\n\n### tpl.render(template, object)\n\nRenders a template with the given object.\n\nDo **NOT** use this method frequently, because compiling a template costs much of performance and `tpl.render` will not memoize any result.\n\nSo, for most cases, you should cache the template function which returns from `tpl.compile` by yourself.\n",
+  "readmeFilename": "README.md",
+  "gitHead": "afc7974ac73b16b1a59decccb4994e8c6dfe015e",
+  "_id": "tpl@0.2.1",
+  "styles": [],
+  "css": [],
+  "entries": []
+}

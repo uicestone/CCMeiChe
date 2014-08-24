@@ -6,7 +6,7 @@ var Order = model.order;
 
 exports.get = function(req,res){
   Order.find({
-    phone: req.user.phone
+    "user.phone": req.user.phone
   }).toArray(function(err,orders){
     if(err){
       return next(err);
@@ -28,12 +28,12 @@ exports.get = function(req,res){
 exports.post = function(req,res,next){
   var user = req.user;
   var data = {
-    phone: user.phone,
+    user: user,
     cars: req.body.cars,
     service: req.body.service,
     address: req.body.address,
     latlng: req.body.latlng,
-    worker: req.body.worker_id,
+    worker: req.body.worker,
     carpark: req.body.carpark,
     estimated_finish_time: new Date(req.body.estimated_finish_time),
     estimated_drive_time: req.body.estimated_drive_time,
@@ -52,21 +52,18 @@ exports.post = function(req,res,next){
   Order.insert(data,function(err, results){
     if(err){return next(err);}
     var result = results[0];
-    var worker_id = data.worker;
-    Worker.findById(worker_id,function(err,worker){
-      if(err){return next(err);}
-      if(!worker || !worker.openid){return next("worker not find");}
+    var worker = data.worker;
 
-      Order.find({
-        worker_id: worker_id
-      }).toArray(function(err,orders){
+    Order.find({
+      "worker._id": worker._id
+    }).toArray(function(err,orders){
+      if(err){return next(err);}
+      var message = "你现在有" + order.length + "笔任务待完成，预计下班时间：" + data.estimated_finish_time;
+      wechat_worker.sendText(worker.openid,message,function(err){
         if(err){return next(err);}
-        var message = "你现在有" + order.length + "笔任务待完成，预计下班时间：" + data.estimated_finish_time;
-        wechat_worker.sendText(worker.openid,message,function(err){
-          if(err){return next(err);}
-          res.status(200).send(results[0]);
-        });
+        res.status(200).send(results[0]);
       });
     });
+
   });
 }
