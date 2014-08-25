@@ -10,12 +10,13 @@ process.on("uncaughtException", function(err){
 
 gulp.task('stylus', function(){
 
-  return gulp.src(['public/stylus/*.styl'])
+  return gulp.src([__dirname + '/public/stylus/*.styl'])
     .pipe(stylus({
       "use": nib(),
       "import": "nib"
     }))
-    .pipe(gulp.dest('public/css'));
+    .on("error",console.log)
+    .pipe(gulp.dest(__dirname + '/public/css'));
 
 });
 
@@ -32,8 +33,8 @@ gulp.task('tpl2mod', function(){
 
 gulp.task('watch',function(){
 
-  gulp.watch(['public/stylus/*.styl'],['stylus']);
-  gulp.watch(['public/pages/tpl/*.jade'],['tpl2mod']);
+  gulp.watch([__dirname + '/public/stylus/*.styl'],['stylus']);
+  gulp.watch([__dirname + '/public/pages/tpl/*.jade'],['tpl2mod']);
 
 });
 

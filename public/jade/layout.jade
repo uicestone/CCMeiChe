@@ -27,9 +27,6 @@ html
             img.src = img_url;
             document.body.appendChild(img);
         }
-        document.body.addEventListener("click",function(){
-            throw "yoyoo";
-        });
         var appConfig = {
             qiniu_bucket: "#{config.qiniu_bucket}",
             qiniu_host: "#{config.qiniu_host}"

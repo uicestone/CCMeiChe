@@ -1,7 +1,7 @@
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
-
+var singleSelect = require('./mod/singleselect');
 
 // 菜单展开收起
 (function(){
@@ -52,23 +52,7 @@ $(".cars .add").on("touchend", function(){
 });
 
 // 选择服务
-(function(){
-  var current = null;
-  var services_items = $(".services li");
-  services_items.on("touchend",function(){
-    var me = $(this);
-    if(me == current){
-      me.removeClass("active");
-      current = null;
-    }else{
-      current && current.removeClass("active");
-      me.addClass("active");
-      current = me;
-    }
-    calculate();
-  });
-})();
-$(".services li:eq(0)").trigger("touchend");
+singleSelect(".services li").on("change",calculate).select(0);
 
 // 使用积分
 $(".credit .use").on("touchend",function(){

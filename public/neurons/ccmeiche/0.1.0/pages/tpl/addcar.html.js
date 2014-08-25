@@ -17,44 +17,11 @@ var _13 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
 var _14 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
 var _15 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
 var _16 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _17 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_9, [_5], function(require, exports, module, __filename, __dirname) {
-require("./mod/countdown");
-}, {
-    entries:entries,
-    map:mix({"./mod/countdown":_5},globalMap)
-});
-
-define(_5, [_17], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-
-function addZero(num){
-  if(Math.abs(num) < 10){
-    return "0" + num;
-  }else{
-    return num;
-  }
-}
-
-function calculateTime(){
-  $(".time").forEach(function(elem,i){
-    var el = $(elem);
-    var finish_time = new Date(el.attr("data-finish"));
-    var now = new Date();
-    var duration = finish_time - now;
-    var negative = now > finish_time ? "-" : "";
-    var minutes =  Math.floor( Math.abs( duration / (1000 * 60)));
-    var seconds = Math.round( (Math.abs(duration) - minutes * 1000 * 60) / 1000);
-    el.html( negative + addZero(minutes) + ":" + addZero(seconds) );
-  });
-}
-
-
-setInterval(calculateTime,1000);
-calculateTime();
+define(_13, [], function(require, exports, module, __filename, __dirname) {
+module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes?q={q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap

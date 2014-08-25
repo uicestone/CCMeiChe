@@ -18,7 +18,10 @@ AddCarView.prototype.show = function(){
   var elem = $(template);
   var self = this;
   viewSwipe.in(elem[0],"bottom");
-  uploader.init(".add-photo");
+  uploader.init(".add-photo",{
+    type:"single",
+    prefix:"userpic/"
+  });
 
   $(".input").each(function(){
     var input = $(this);

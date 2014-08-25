@@ -94,6 +94,46 @@ body
   display: block
   opacity: 0.6
 
+.add-photo
+  clearfix()
+  width: 100%
+  background-color: #fff
+  position: relative
+  margin-bottom: 22px
+  .area
+    background-color: #fff
+    float: left
+    color: #d3d3d3
+    height: 105px
+    padding-right: 105px
+    width: 100%
+    box-sizing: border-box
+    text-align: center
+    padding-top: 10px
+    .text
+      .title
+        padding-top: 20px
+        font-size: 18px
+      .desc
+        font-size: 12px
+  .loading
+    position: absolute
+    top: 30px
+    left: 60px
+    display: none
+    .spin
+      background-image: url("./img/loading.png")
+      width: 40px
+      height: 40px
+      background-size: 40px 320px
+      background-position: 0 0
+  .camera
+    float: right
+    position: absolute
+    right: 0
+    img
+      display: block
+
 .container
   width: 260px
   margin: 0 auto
@@ -121,6 +161,7 @@ body
   font-size: 18px
   line-height: 45px
   text-align: center
+  border-radius: 5px
 .button[disabled]
   background-color: #bbb
 
@@ -268,33 +309,6 @@ body
     font-size: 18px
     text-align: center
     padding: 20px 0
-  .add-photo
-    clearfix()
-    width: 100%
-    background-color: #fff
-    position: relative
-    margin-bottom: 22px
-    .text
-      background-color: #fff
-      float: left
-      color: #d3d3d3
-      height: 105px
-      padding-right: 105px
-      width: 100%
-      box-sizing: border-box
-      text-align: center
-      padding-top: 10px
-      .title
-        padding-top: 20px
-        font-size: 18px
-      .desc
-        font-size: 12px
-    .camera
-      float: right
-      position: absolute
-      right: 0
-      img
-        display: block
   .row
     position: relative
     margin-bottom: 10px
@@ -498,6 +512,31 @@ body
       font-size: 32px
     .message
       font-size: 10px
+  .swipe-inner
+    background-color: #fff
+
+#finishorder
+  .h2
+    color: #999
+    font-size: 18px
+    padding: 12px 0
+    text-align: center
+  .car-brokes
+    clearfix()
+    margin-left: -10px
+    position: relative
+    left: 10px
+  .car-broke
+    color: orange
+    float: left
+    width: 42px
+    height: 30px
+    margin-right: 10px
+    margin-bottom: 10px
+    border: 1px solid orange
+    &.active
+      background-color: orange
+      color: #fff
 
 #recharge
   .h1

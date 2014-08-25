@@ -18,43 +18,46 @@ var _14 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
 var _15 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
 var _16 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
 var _17 = "zepto@^1.1.3";
+var _18 = "events@^1.0.5";
+var _19 = "util@^1.0.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_9, [_5], function(require, exports, module, __filename, __dirname) {
-require("./mod/countdown");
-}, {
-    entries:entries,
-    map:mix({"./mod/countdown":_5},globalMap)
-});
-
-define(_5, [_17], function(require, exports, module, __filename, __dirname) {
+define(_6, [_17,_18,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
+var events = require("events");
+var util = require("util");
 
-function addZero(num){
-  if(Math.abs(num) < 10){
-    return "0" + num;
-  }else{
-    return num;
-  }
+function SingleSelect(selector){
+  var self = this;
+  (function(){
+    var current = null;
+    var items = self.items = $(selector);
+    items.on("touchend",function(){
+      var me = $(this);
+      if(me == current){
+        me.removeClass("active");
+        current = null;
+      }else{
+        current && current.removeClass("active");
+        me.addClass("active");
+        current = me;
+      }
+      self.emit("change",this);
+    });
+  })();
+  return this;
 }
 
-function calculateTime(){
-  $(".time").forEach(function(elem,i){
-    var el = $(elem);
-    var finish_time = new Date(el.attr("data-finish"));
-    var now = new Date();
-    var duration = finish_time - now;
-    var negative = now > finish_time ? "-" : "";
-    var minutes =  Math.floor( Math.abs( duration / (1000 * 60)));
-    var seconds = Math.round( (Math.abs(duration) - minutes * 1000 * 60) / 1000);
-    el.html( negative + addZero(minutes) + ":" + addZero(seconds) );
-  });
+util.inherits(SingleSelect,events);
+
+SingleSelect.prototype.select = function(index){
+  this.items.eq(index).trigger("touchend");
 }
 
-
-setInterval(calculateTime,1000);
-calculateTime();
+module.exports = function(selector){
+  return new SingleSelect(selector);
+}
 }, {
     entries:entries,
     map:globalMap

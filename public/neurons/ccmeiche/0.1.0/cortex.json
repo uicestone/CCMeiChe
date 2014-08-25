@@ -19,11 +19,19 @@
     "./pages/finishorder.js",
     "./pages/home.js",
     "./pages/login.js",
+    "./pages/mod/autocomplete.js",
+    "./pages/mod/countdown.js",
+    "./pages/mod/singleselect.js",
+    "./pages/mod/uploader.js",
     "./pages/myinfos.js",
     "./pages/myorders.js",
     "./pages/order.js",
     "./pages/preorder.js",
-    "./pages/recharge.js"
+    "./pages/recharge.js",
+    "./pages/tpl/addcar.html.js",
+    "./pages/tpl/finishorder.html.js",
+    "./pages/tpl/mixins.html.js",
+    "./pages/tpl/preorder.html.js"
   ],
   "bugs": {
     "url": "http://github.com/uicestone/CCMeiChe/issues"

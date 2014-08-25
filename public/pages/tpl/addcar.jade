@@ -1,12 +1,8 @@
+include ./mixins
 #addcar.container
   h2.h2 我的车辆信息
   ul.upload-list
-  .add-photo
-    .text
-      .title 照片上传
-      .desc 含号牌的车辆照片
-    .camera
-      img(src="/img/upload.png")
+  +upload
   .row.type
     input.input(placeholder="车型",data-pattern="/api/v1/cartypes?q={q}")
     i.icon

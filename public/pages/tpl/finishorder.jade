@@ -1,0 +1,10 @@
+include ./mixins
+#finishorder.container
+  h2.h2 洗车已完成
+  +upload
+  h2.h2 车损部位
+  ul.car-brokes
+    for i in [1,2,3,4,5,6,7,8,9,10]
+      li(class="car-broke car-broke-#{i}") #{i}
+  +upload
+  input.button(type="button",value="完成")
