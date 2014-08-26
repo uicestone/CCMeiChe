@@ -6,7 +6,7 @@ module.exports = function(req,res,next){
 
   if(process.env.DEBUG){
     return res.render("login",{
-      id:"登录 - CC美车",
+      id:"login",
       title: "ccmeiche login"
     });
   }
@@ -17,7 +17,7 @@ module.exports = function(req,res,next){
     oauth.getAccessToken(code,function(err, result){
       if(err){return next(err);}
       res.render("login",{
-        id:"登录 - CC美车",
+        id:"login",
         title: "ccmeiche login",
         access_token: result.data.access_token,
         openid: result.data.openid

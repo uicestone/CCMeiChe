@@ -22,6 +22,57 @@ body
 .swipe-container .swipe-inner
   background-color: rgb(248,162,61)
 
+#logo
+  display: block
+  position: absolute
+  left: 50%
+  top: 25px
+  margin-left: -50px
+  width: 100px
+
+#login
+  background-color: #f29200
+
+#login-form
+  padding-top: 150px
+  .row
+    position: relative
+    margin-bottom: 10px
+    .input
+      width: 100%
+      border: none
+      border-left: 2px solid orange
+    .icon
+      width: 29px
+      height: 29px
+      position: absolute
+      top: 6px
+      left: 6px
+      background-image: url("../img/icons.png")
+  .row-phone
+    .icon
+      background-position: 0 -145px
+    .pull-left
+      margin-right: 75px
+    .button
+      position: absolute
+      right: 0
+      top: 0
+      border: 0
+      border-radius: 0
+      width: 70px
+      line-height: 40px
+      height: 40px
+      background-color: pink
+      color: #fff
+      &:disabled
+        background-color: grey
+        color: #fff
+  .row-code
+    .icon
+      background-position: 0 -174px
+
+
 .menu
   width: 28px
   height: 28px
@@ -146,7 +197,6 @@ body
   padding-right: 18px
   box-sizing: border-box
   height: 40px
-  width: 260px
 
 .button
   width: 130px
@@ -164,11 +214,6 @@ body
   border-radius: 5px
 .button[disabled]
   background-color: #bbb
-
-#login
-  padding-top: 280px
-  .input
-    margin-bottom:15px
 
 #home
   >.container>.title

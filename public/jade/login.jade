@@ -1,10 +1,14 @@
 extends layout
 block content
-  div.container
-    .row
-      input.input(type="tel",name="phone",id="phone",placeholder="手机号",maxlength="11")
-      input.button(type="button",id="getvcode",value="发送验证码",disabled)
-    .row
+  img#logo(src="/img/logo.png")
+  div.container#login-form
+    .row.row-phone
+      .icon
+      .pull-left
+        input.input(type="tel",name="phone",id="phone",placeholder="手机号",maxlength="11")
+      input.button(type="button",id="getvcode",value="验证",disabled)
+    .row.row-code
+      .icon
       input.input(type="tel",name="vcode",id="vcode",placeholder="验证码",maxlength="6")
     .row
       input.button(type="button",id="go",value="确认",disabled)
