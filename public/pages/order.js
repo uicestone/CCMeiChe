@@ -17,6 +17,7 @@ button.on("touchend",function(e){
   }else if(button.hasClass("done")){
 
     require.async("./finishorder.js",function(finishorder){
+      $("#order").css("position","fixed");
       if(!finishPanel){
         finishPanel = finishorder;
         finishPanel.on("done",function(data){
@@ -33,6 +34,7 @@ button.on("touchend",function(e){
 
 
     require.async("./finishorder.js",function(finishorder){
+      $("#order").css("position","fixed");
       if(!finishPanel){
         finishPanel = finishorder;
         finishPanel.on("done",function(data){

@@ -22,6 +22,47 @@ body
 .swipe-container .swipe-inner
   background-color: rgb(248,162,61)
 
+.popselect
+  position: fixed
+  top: 20px
+  background-color: rgba(0,0,0,0.8)
+  width: 300px
+  left: 50%
+  margin-left: -150px
+  .close
+    background-image: url("../img/close-btn.png")
+    position: absolute
+    background-size: 19px 19px
+    right: 12px
+    top: 12px
+    width: 19px
+    height: 19px
+  .choices
+    padding: 50px 14px 36px 14px
+    clearfix()
+    .item
+      box-sizing: border-box
+      background-color: #fff
+      border: 1px solid #898989
+      width: 50%
+      height: 49px
+      padding: 8px 0
+      text-align: center
+      font-size: 13px
+      color: grey
+      float: left
+      &.active
+        background-color: pink
+        color: #fff
+  .btn.submit
+    height: 45px
+    line-height: 45px
+    text-align: center
+    width: 135px
+    margin: 0 auto 50px auto
+    background-color: #898989
+    color: #fff
+
 #logo
   display: block
   position: absolute
@@ -321,6 +362,7 @@ body
       position: relative
     .input
       border: none
+      width: 100%
       margin-bottom: 1px
     .note
       margin-top: 5px
@@ -358,6 +400,7 @@ body
     position: relative
     margin-bottom: 10px
     .input
+      width: 100%
       color: #bbb
       padding-left: 40px
     .icon

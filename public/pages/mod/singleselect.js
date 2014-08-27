@@ -2,11 +2,11 @@ var $ = require("zepto");
 var events = require("events");
 var util = require("util");
 
-function SingleSelect(selector){
+function SingleSelect(elem,selector){
   var self = this;
   (function(){
     var current = null;
-    var items = self.items = $(selector);
+    var items = self.items = elem.find(selector);
     items.on("touchend",function(){
       var me = $(this);
       if(me == current){
@@ -29,6 +29,6 @@ SingleSelect.prototype.select = function(index){
   this.items.eq(index).trigger("touchend");
 }
 
-module.exports = function(selector){
-  return new SingleSelect(selector);
+module.exports = function(elem,selector){
+  return new SingleSelect(elem,selector);
 }

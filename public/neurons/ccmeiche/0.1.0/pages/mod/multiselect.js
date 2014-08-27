@@ -20,45 +20,30 @@ var _16 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
 var _17 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
 var _18 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
 var _19 = "zepto@^1.1.3";
-var _20 = "events@^1.0.5";
-var _21 = "util@^1.0.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_8, [_19,_20,_21], function(require, exports, module, __filename, __dirname) {
+define(_6, [_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
-var events = require("events");
-var util = require("util");
 
-function SingleSelect(elem,selector){
-  var self = this;
-  (function(){
-    var current = null;
-    var items = self.items = elem.find(selector);
-    items.on("touchend",function(){
-      var me = $(this);
-      if(me == current){
-        me.removeClass("active");
-        current = null;
-      }else{
-        current && current.removeClass("active");
-        me.addClass("active");
-        current = me;
-      }
-      self.emit("change",this);
-    });
-  })();
+function MultiSelect(container,itemSelector){
+  container = $(container);
+  var items = this.items = container.find(itemSelector);
+  items.each(function(i,item){
+    $(item).on("touchend",function(){
+      $(this).toggleClass("active");
+    })
+  });
   return this;
 }
 
-util.inherits(SingleSelect,events);
+MultiSelect.prototype.select = function(text){
+  this.items.filter(function(i){return $(this).text().trim() == text}).addClass("active");
+};
 
-SingleSelect.prototype.select = function(index){
-  this.items.eq(index).trigger("touchend");
-}
 
-module.exports = function(elem,selector){
-  return new SingleSelect(elem,selector);
+module.exports = function(container,itemSelector){
+  return new MultiSelect(container,itemSelector);
 }
 }, {
     entries:entries,

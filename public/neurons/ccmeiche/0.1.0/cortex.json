@@ -21,6 +21,8 @@
     "./pages/login.js",
     "./pages/mod/autocomplete.js",
     "./pages/mod/countdown.js",
+    "./pages/mod/multiselect.js",
+    "./pages/mod/popselect.js",
     "./pages/mod/singleselect.js",
     "./pages/mod/uploader.js",
     "./pages/myinfos.js",

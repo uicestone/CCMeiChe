@@ -2,6 +2,10 @@ var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
 var singleSelect = require('./mod/singleselect');
+var popselect = require('./mod/popselect');
+
+
+
 
 // 菜单展开收起
 (function(){
@@ -13,10 +17,17 @@ var singleSelect = require('./mod/singleselect');
   });
 })()
 
-// 选择车辆
-$(".cars li").on("touchend", function(){
-  $(this).toggleClass("active");
+
+var carsSelect = popselect([1,2,3],{
+  type:"multi"
+});
+carsSelect.on("submit",function(values){
+  console.log(values);
   calculate();
+});
+// 选择车辆
+$(".cars .selected-cars").on("touchend", function(){
+  carsSelect.open();
 });
 
 
@@ -52,7 +63,7 @@ $(".cars .add").on("touchend", function(){
 });
 
 // 选择服务
-singleSelect(".services li").on("change",calculate).select(0);
+singleSelect($("body"),".services li").on("change",calculate).select(0);
 
 // 使用积分
 $(".credit .use").on("touchend",function(){

@@ -1,5 +1,6 @@
 var $ = require("zepto");
 var template = require("./tpl/finishorder.html");
+var uploader = require("./mod/uploader");
 var events = require("events");
 var util = require("util");
 var tpl = require("tpl");
@@ -26,7 +27,7 @@ FinishOrder.prototype.show = function(data){
     viewSwipe.out("bottom");
   });
 
-  singleSelect(".car-broke");
+  singleSelect($("#finishorder"),".car-broke");
 
   return this;
 }
