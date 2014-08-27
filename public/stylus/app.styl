@@ -3,7 +3,7 @@ grey=#b6b6b6
 light-grey=#ddd
 pink=#c70462
 
-body,h1,h2,input,div,p,ul,ol,li
+body,h1,h2,input,div,p,ul,ol,li,table,tr,td
   padding: 0
   margin: 0
   font-family: 'Hiragino Sans GB', sans-serif
@@ -272,30 +272,61 @@ body
       .active
         color: #fff
         background-color: pink
-      li
+      .selected-cars
         clearfix()
-        background-color: #fff
-        color: #ccc
-        height: 48px
+        border-collapse:collapse
         border-bottom: 1px solid orange
-        .index
-          margin: 5px 0
-          line-height: 38px
-          text-align: center
-          width: 72px
-          float: left
-          border-right: 1px solid #e4e4e5
-        .detail
-          text-align: center
-          height: 48px
-          padding-left: 20px
-          line-height: 48px
-          .type,.number
+        width: 100%
+        position: relative
+        .cars-cell
+          width: 200px
+        .arrow
+          position: relative
+          float: right
+          width: 100%
+          height: 100%
+          .icon
+            position: absolute
+            margin-top: -9px
+            top: 50%
+            left: 24px
+            width: 10px
             height: 18px
-            line-height: 18px
-            font-size: 14px
-            display: inline-block
-            margin-right: 10px
+            background-image: url("../img/arrow.png")
+        ul
+          width: 100%
+          border-right: 1px solid #ccc
+          float: left
+        td
+          padding: 4px 0
+          border: 0
+          background-color: #fff
+        li
+          clearfix()
+          background-color: #fff
+          color: #ccc
+          height: 48px
+          border-bottom: 1px solid #ccc
+          &:last-child
+            border-bottom: none
+          .index
+            margin: 5px 0
+            line-height: 38px
+            text-align: center
+            width: 72px
+            float: left
+            border-right: 1px solid #e4e4e5
+          .detail
+            text-align: center
+            height: 48px
+            padding-left: 20px
+            line-height: 48px
+            .type,.number
+              height: 18px
+              line-height: 18px
+              font-size: 14px
+              display: inline-block
+              margin-right: 10px
   .services
     .active
       color: #fff
