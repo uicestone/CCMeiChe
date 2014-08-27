@@ -62,8 +62,11 @@ block content
               option 3
           | 张
     .section.credit
-      .mine 您的积分：#{user.credit || 0}
-      .use 使用积分
+      | 我的积分：
+      span.num #{user.credit||0}
+      .use
+        span.text 未使用
+        i.icon
 
     .section
       .payment

@@ -371,22 +371,25 @@ body
     line-height: 35px
     padding: 5px 15px
     background-color: #ccc
+    margin-bottom:1px
     .count
       float: right
       color: pink
       .num
         position: relative
-        width: 20px
+        width: 50px
         height: 25px
+        border: 1px solid pink
         top: 3px
         display: inline-block
         margin-right: 5px
         background-color: #fff
         background-color: #fff
         .text
+          text-align: center
           position: relative
-          top: -3px
-          left: 6px
+          top: -4px
+          left: 0px
         select
           position: absolute
           top: 0
@@ -396,24 +399,25 @@ body
           opacity: 0
   // 积分
   .section.credit
-    clearfix()
-    margin-top: 8px
-    .mine
-      padding-left: 15px
-      float: left
-      height: 44px
-      line-height: 44px
+    @extends #home .section.promo
     .use
-      background-color: #fff
-      color: grey
       float: right
-      border: 1px solid #fff
       width: 100px
-      padding: 9px 0
-      text-align: center
+      .icon
+        background-image: url("../img/checkbox.png");
+        width: 26px;
+        height: 27px;
+        display: block;
+        float: right;
+        margin-right: 8px
+        position: relative
+        top: 3px
+      .text
+        float: right
+        color: pink
       &.active
-        color: #fff
-        background-color: rgb(202,27,98)
+        .icon
+          background-position: 0 -27px
   // 支付
   .payment
     margin-top: 8px

@@ -108,6 +108,7 @@ var currentService = window.services[0];
     li.find(".title").html(currentService.title);
     li.find(".desc").html(currentService.describe);
     li.find(".price").html("￥" + currentService.price);
+    judgePromo();
   });
 
   $(".services").on('touchend',function(){
