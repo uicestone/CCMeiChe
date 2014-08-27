@@ -50,15 +50,20 @@ block content
             .desc #{service.describe}
           .arrow &gt;
           .price ￥#{service.price}
+    if user.promo
+      .section.promo(style="display:none")
+        | 请使用服务优惠券
+        .count
+          span.num
+            .text 1
+            select
+              option 1
+              option 2
+              option 3
+          | 张
     .section.credit
       .mine 您的积分：#{user.credit || 0}
       .use 使用积分
-    if user.promos && user.promos.length
-      .section
-        h2 优惠券
-      ul.promos
-        each promo in user.promos
-          li #{promo.title}
 
     .section
       .payment

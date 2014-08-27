@@ -84,8 +84,8 @@ $(".cars .add").on("touchend", function(){
 });
 
 // 选择服务
+var currentService = window.services[0];
 (function(){
-  var currentService = window.services[0];
   var serviceSelect = popselect(services, {
     type: 'single',
     name:"service-select",
@@ -114,6 +114,23 @@ $(".cars .add").on("touchend", function(){
     serviceSelect.open();
   });
 })();
+
+// 优惠券
+function judgePromo(){
+  var mypromo = user.promo.filter(function(item){
+    return item.id == currentService._id;
+  })[0];
+  if(mypromo){
+    $(".promo").show();
+  }else{
+    $(".promo").hide();
+  }
+}
+judgePromo();
+$(".section.promo select").on("change",function(){
+  $(".section.promo .text").text($(this).val());
+});
+
 // 使用积分
 $(".credit .use").on("touchend",function(){
   $(this).toggleClass("active");
