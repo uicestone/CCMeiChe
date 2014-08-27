@@ -27,11 +27,11 @@ block content
         .selected-cars
           ul
             each car,i in user.cars || []
-              li(data="#{JSON.stringify(car)}")
-                .index 车型#{i+1}
-                .detail
-                  .type #{car.type}#{car.color}
-                  .number #{car.number}
+              if car["default"]
+                li(data="#{JSON.stringify(car)}")
+                  .detail
+                    .type #{car.type}#{car.color}
+                    .number #{car.number}
         .add
           i.icon-add
           | 添加车辆

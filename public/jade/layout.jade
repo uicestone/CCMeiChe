@@ -35,6 +35,7 @@ html
     if user && config.service == "user"
         script.
             var user = {
+              cars: !{JSON.stringify(user.cars)},
               phone: #{user.phone},
               promo: !{JSON.stringify(user.promo)},
               credit: #{user.credit || 0},

@@ -18,12 +18,33 @@ var popselect = require('./mod/popselect');
 })()
 
 
-var carsSelect = popselect([1,2,3],{
-  type:"multi"
+var carsSelect = popselect(user.cars,{
+  type:"multi",
+  parser: function(car){
+    return car.type + car.color + "<br />" + car.number;
+  }
 });
-carsSelect.on("submit",function(values){
-  console.log(values);
+carsSelect.on("submit",function(dataList){
+  var ul = $(".selected-cars ul");
+  ul.empty();
+  dataList.forEach(function(data){
+    var li = $('<li data=\''
+        + JSON.stringify(data)
+      + '\'><div class="detail"><div class="type">'
+      + data.type + data.color
+      + '</div>'
+      +'<div class="number">' + data.number + '</div></div></li>');
+    ul.append(li);
+  });
   calculate();
+});
+carsSelect.on("open",function(){
+  var data = $(".selected-cars li").get().map(function(el,i){
+    var data = JSON.parse($(el).attr("data"));
+    return data;
+  });
+
+  carsSelect.select(data);
 });
 // 选择车辆
 $(".cars .selected-cars").on("touchend", function(){

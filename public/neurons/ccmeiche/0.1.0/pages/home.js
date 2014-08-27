@@ -47,12 +47,33 @@ var popselect = require('./mod/popselect');
 })()
 
 
-var carsSelect = popselect([1,2,3],{
-  type:"multi"
+var carsSelect = popselect(user.cars,{
+  type:"multi",
+  parser: function(car){
+    return car.type + car.color + "<br />" + car.number;
+  }
 });
-carsSelect.on("submit",function(values){
-  console.log(values);
+carsSelect.on("submit",function(dataList){
+  var ul = $(".selected-cars ul");
+  ul.empty();
+  dataList.forEach(function(data){
+    var li = $('<li data=\''
+        + JSON.stringify(data)
+      + '\'><div class="detail"><div class="type">'
+      + data.type + data.color
+      + '</div>'
+      +'<div class="number">' + data.number + '</div></div></li>');
+    ul.append(li);
+  });
   calculate();
+});
+carsSelect.on("open",function(){
+  var data = $(".selected-cars li").get().map(function(el,i){
+    var data = JSON.parse($(el).attr("data"));
+    return data;
+  });
+
+  carsSelect.select(data);
 });
 // 选择车辆
 $(".cars .selected-cars").on("touchend", function(){
@@ -398,10 +419,10 @@ PopSelect.prototype.render = function() {
 
   switch(this.type){
     case "single":
-      singleSelect(choices_elem,".item");
+      this.selector = singleSelect(choices_elem,".item");
       break;
     case "multi":
-      multiSelect(choices_elem,".item");
+      this.selector = multiSelect(choices_elem,".item");
       break;
     default:
       throw "invalid type " + this.type;
@@ -419,8 +440,12 @@ PopSelect.prototype.render = function() {
   container.find(".close").on("touchend",function(){
     self.close();
   });
-  // container.hide();
+  container.hide();
 };
+
+PopSelect.prototype.select = function(item){
+  this.selector.select(item);
+}
 
 PopSelect.prototype.open = function(){
   this.container.show();
@@ -454,8 +479,14 @@ function MultiSelect(container,itemSelector){
   return this;
 }
 
-MultiSelect.prototype.select = function(text){
-  this.items.filter(function(i){return $(this).text().trim() == text}).addClass("active");
+MultiSelect.prototype.select = function(dataList){
+  var items = this.items;
+  var jsonList = dataList.map(function(data){return JSON.stringify(data);});
+  dataList.forEach(function(data){
+    items.filter(function(i){
+      return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+    }).addClass("active");
+  });
 };
 
 

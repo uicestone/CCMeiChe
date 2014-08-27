@@ -37,8 +37,14 @@ function MultiSelect(container,itemSelector){
   return this;
 }
 
-MultiSelect.prototype.select = function(text){
-  this.items.filter(function(i){return $(this).text().trim() == text}).addClass("active");
+MultiSelect.prototype.select = function(dataList){
+  var items = this.items;
+  var jsonList = dataList.map(function(data){return JSON.stringify(data);});
+  dataList.forEach(function(data){
+    items.filter(function(i){
+      return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+    }).addClass("active");
+  });
 };
 
 

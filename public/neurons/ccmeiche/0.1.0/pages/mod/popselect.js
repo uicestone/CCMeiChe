@@ -63,10 +63,10 @@ PopSelect.prototype.render = function() {
 
   switch(this.type){
     case "single":
-      singleSelect(choices_elem,".item");
+      this.selector = singleSelect(choices_elem,".item");
       break;
     case "multi":
-      multiSelect(choices_elem,".item");
+      this.selector = multiSelect(choices_elem,".item");
       break;
     default:
       throw "invalid type " + this.type;
@@ -84,8 +84,12 @@ PopSelect.prototype.render = function() {
   container.find(".close").on("touchend",function(){
     self.close();
   });
-  // container.hide();
+  container.hide();
 };
+
+PopSelect.prototype.select = function(item){
+  this.selector.select(item);
+}
 
 PopSelect.prototype.open = function(){
   this.container.show();
@@ -159,8 +163,14 @@ function MultiSelect(container,itemSelector){
   return this;
 }
 
-MultiSelect.prototype.select = function(text){
-  this.items.filter(function(i){return $(this).text().trim() == text}).addClass("active");
+MultiSelect.prototype.select = function(dataList){
+  var items = this.items;
+  var jsonList = dataList.map(function(data){return JSON.stringify(data);});
+  dataList.forEach(function(data){
+    items.filter(function(i){
+      return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+    }).addClass("active");
+  });
 };
 
 
