@@ -36,6 +36,7 @@ function PopSelect(choices, options){
   this.parser = options.parser || function(v){return v;}
   this.choices = choices;
   this.type = options.type;
+  this.name = options.name;
   this.render();
 
 }
@@ -52,6 +53,7 @@ PopSelect.prototype.render = function() {
   +"</div>");
 
   container.appendTo($("body"));
+  this.name && container.addClass(this.name);
   var self = this;
   var choices_elem = container.find(".choices");
   this.choices.forEach(function(choice){
@@ -120,6 +122,7 @@ function SingleSelect(elem,selector){
     var current = null;
     var items = self.items = elem.find(selector);
     items.on("touchend",function(){
+      elem.find(".active").removeClass("active");
       var me = $(this);
       if(me == current){
         me.removeClass("active");
@@ -137,8 +140,10 @@ function SingleSelect(elem,selector){
 
 util.inherits(SingleSelect,events);
 
-SingleSelect.prototype.select = function(index){
-  this.items.eq(index).trigger("touchend");
+SingleSelect.prototype.select = function(data){
+  this.items.filter(function(i){
+    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+  }).addClass("active");
 }
 
 module.exports = function(elem,selector){

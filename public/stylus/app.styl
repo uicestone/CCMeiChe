@@ -333,6 +333,7 @@ body
       background-color: pink
     li
       clearfix()
+      position: relative
       margin-bottom: 1px
       padding: 5px 15px
       background-color: #fff
@@ -347,9 +348,13 @@ body
           font-size: 12px
       .price
         float: right
-        padding-right: 12px
+        padding-right: 47px
         line-height: 42px
         height: 42px
+      .arrow
+        position: absolute
+        right: 25px
+        top: 12px
       .promo
         border-left: 1px solid grey
         padding-left: 12px
@@ -402,6 +407,16 @@ body
       margin-top: 5px
       text-align: center
       font-size: 10px
+
+.service-select .choices .item
+  @extend #home .services li
+  width: auto
+  height: auto
+  float: none
+  border: none
+  .price
+    font-size: 14px
+    padding-right: 12px
 
 .autocomplete
   position: absolute

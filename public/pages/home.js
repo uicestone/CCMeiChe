@@ -84,8 +84,36 @@ $(".cars .add").on("touchend", function(){
 });
 
 // 选择服务
-singleSelect($("body"),".services li").on("change",calculate).select(0);
+(function(){
+  var currentService = window.services[0];
+  var serviceSelect = popselect(services, {
+    type: 'single',
+    name:"service-select",
+    parser: function(service){
+      return '<div>'
+        + '<div class="detail">'
+          + '<div class="title">' + service.title + '</div>'
+          + '<div class="desc">' + service.describe + '</div>'
+        + '</div>'
+        + '<div>'
+          + '<div class="price">￥' + service.price + '</div>'
+        + '</div>';
+    }
+  });
+  serviceSelect.on("open",function(){
+    serviceSelect.select(currentService);
+  }).on("submit",function(result){
+    currentService = result[0];
+    var li = $(".services li");currentService
+    li.find(".title").html(currentService.title);
+    li.find(".desc").html(currentService.describe);
+    li.find(".price").html("￥" + currentService.price);
+  });
 
+  $(".services").on('touchend',function(){
+    serviceSelect.open();
+  });
+})();
 // 使用积分
 $(".credit .use").on("touchend",function(){
   $(this).toggleClass("active");

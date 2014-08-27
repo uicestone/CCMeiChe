@@ -8,6 +8,7 @@ function PopSelect(choices, options){
   this.parser = options.parser || function(v){return v;}
   this.choices = choices;
   this.type = options.type;
+  this.name = options.name;
   this.render();
 
 }
@@ -24,6 +25,7 @@ PopSelect.prototype.render = function() {
   +"</div>");
 
   container.appendTo($("body"));
+  this.name && container.addClass(this.name);
   var self = this;
   var choices_elem = container.find(".choices");
   this.choices.forEach(function(choice){

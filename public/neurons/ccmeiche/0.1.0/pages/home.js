@@ -113,8 +113,36 @@ $(".cars .add").on("touchend", function(){
 });
 
 // 选择服务
-singleSelect($("body"),".services li").on("change",calculate).select(0);
+(function(){
+  var currentService = window.services[0];
+  var serviceSelect = popselect(services, {
+    type: 'single',
+    name:"service-select",
+    parser: function(service){
+      return '<div>'
+        + '<div class="detail">'
+          + '<div class="title">' + service.title + '</div>'
+          + '<div class="desc">' + service.describe + '</div>'
+        + '</div>'
+        + '<div>'
+          + '<div class="price">￥' + service.price + '</div>'
+        + '</div>';
+    }
+  });
+  serviceSelect.on("open",function(){
+    serviceSelect.select(currentService);
+  }).on("submit",function(result){
+    currentService = result[0];
+    var li = $(".services li");currentService
+    li.find(".title").html(currentService.title);
+    li.find(".desc").html(currentService.describe);
+    li.find(".price").html("￥" + currentService.price);
+  });
 
+  $(".services").on('touchend',function(){
+    serviceSelect.open();
+  });
+})();
 // 使用积分
 $(".credit .use").on("touchend",function(){
   $(this).toggleClass("active");
@@ -352,6 +380,7 @@ function SingleSelect(elem,selector){
     var current = null;
     var items = self.items = elem.find(selector);
     items.on("touchend",function(){
+      elem.find(".active").removeClass("active");
       var me = $(this);
       if(me == current){
         me.removeClass("active");
@@ -369,8 +398,10 @@ function SingleSelect(elem,selector){
 
 util.inherits(SingleSelect,events);
 
-SingleSelect.prototype.select = function(index){
-  this.items.eq(index).trigger("touchend");
+SingleSelect.prototype.select = function(data){
+  this.items.filter(function(i){
+    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+  }).addClass("active");
 }
 
 module.exports = function(elem,selector){
@@ -392,6 +423,7 @@ function PopSelect(choices, options){
   this.parser = options.parser || function(v){return v;}
   this.choices = choices;
   this.type = options.type;
+  this.name = options.name;
   this.render();
 
 }
@@ -408,6 +440,7 @@ PopSelect.prototype.render = function() {
   +"</div>");
 
   container.appendTo($("body"));
+  this.name && container.addClass(this.name);
   var self = this;
   var choices_elem = container.find(".choices");
   this.choices.forEach(function(choice){

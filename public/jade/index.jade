@@ -44,13 +44,11 @@ block content
       h2 请选择您需要的服务
       ul.services
         - var service = services[0];
-        li(data="#{JSON.stringify(service)}",class="#{i==0?'active':''}")
+        li.active
           .detail
             .title #{service.title}
             .desc #{service.describe}
-          .promo
-            .text 优惠券
-            .count --
+          .arrow &gt;
           .price ￥#{service.price}
     .section.credit
       .mine 您的积分：#{user.credit || 0}
@@ -81,6 +79,7 @@ block content
     .section
       #go-wash.button 欧耶洗车啦
   script.
+    var services = !{JSON.stringify(services)};
     facade({
       entry: "ccmeiche/pages/home.js"
     });
