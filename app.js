@@ -69,6 +69,10 @@ app.namespace("/api/v1", require("./api/v1")(app));
 
 app.get("/error.gif",require("./errortracking").frontend);
 app.use(require("./errortracking").backend);
+app.use(function(err,req,res,next){
+  res.type('json');
+  next(err);
+});
 app.use(errorHandler());
 
 app.listen(config.get("port"), function () {

@@ -27,7 +27,7 @@ var _23 = "uploader@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_19,_20,_21,_22,_9,_15,_4], function(require, exports, module, __filename, __dirname) {
+define(_0, [_19,_20,_21,_22,_9,_4,_15], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("./mod/uploader");
 var autocomplete = require("./mod/autocomplete");
@@ -118,7 +118,7 @@ AddCarView.prototype.submit = function(data){
 module.exports = new AddCarView();
 }, {
     entries:entries,
-    map:mix({"./mod/uploader":_9,"./tpl/addcar.html":_15,"./mod/autocomplete":_4},globalMap)
+    map:mix({"./mod/uploader":_9,"./mod/autocomplete":_4,"./tpl/addcar.html":_15},globalMap)
 });
 
 define(_9, [_19,_23], function(require, exports, module, __filename, __dirname) {
@@ -228,13 +228,6 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_15, [], function(require, exports, module, __filename, __dirname) {
-module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes?q={q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
-}, {
-    entries:entries,
-    map:globalMap
-});
-
 define(_4, [_19,_21,_20], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
@@ -248,6 +241,7 @@ function Autocomplete(input, pattern, parser){
   input.after(list);
   var delay = 350;
   var timeout = null;
+  parser = parser || function(item){return item;}
   input.on("keyup", function(){
     clearTimeout(timeout);
     timeout = setTimeout(function(){
@@ -258,14 +252,13 @@ function Autocomplete(input, pattern, parser){
         dataType: "json",
         url: pattern.replace("{q}",value)
       }).done(function(data){
-        data = parser ? parser(data) : data;
         if(!data.length){return;}
         list.empty();
-        data.forEach(function(item){
+        data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
           li.on("touchend",function(){
             input.val(item);
-            self.emit("select");
+            self.emit("select",data[i]);
             self.hide();
           });
           $(list).append(li);
@@ -300,6 +293,13 @@ exports.init = function(input, parser){
   if(!pattern){return;}
   return new Autocomplete(input, pattern, parser);
 }
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_15, [], function(require, exports, module, __filename, __dirname) {
+module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes?q={q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap

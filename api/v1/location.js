@@ -9,21 +9,21 @@ exports.latlng = function(req,res){
   });
 }
 
-exports.suggestion = function(req,res){
-  baidumap.placeSuggestion({
+exports.suggestion = function(req,res,next){
+  baidumap.placeSearch({
     q: req.params.query,
     region: "上海"
   },function(err,result){
-    if(err){return next();}
-    res.status(200).send(result);
+    if(err){return next(err);}
+    res.status(200).send(result.results||[]);
   });
 }
 
-exports.address = function(req,res){
-  baidumap.geocoder({
-    address: req.params.address
-  },function(err, result){
-    if(err){return next();}
-    res.status(200).send(result);
-  });
-}
+// exports.address = function(req,res,next){
+//   baidumap.geocoder({
+//     address: req.params.address
+//   },function(err, result){
+//     if(err){return next(err);}
+//     res.status(200).send(result);
+//   });
+// }

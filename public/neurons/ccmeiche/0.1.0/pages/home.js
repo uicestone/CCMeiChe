@@ -232,36 +232,17 @@ navigator.geolocation.getCurrentPosition(function(position){
 // 地址提示
 var updatingLatlng = false;
 (function(){
-function updateLatlng(){
+function updateLatlng(data){
   ac.hide();
-  clearTimeout(updateLatlng.timeout);
-  updateLatlng.timeout = setTimeout(function(){
-    updatingLatlng = true;
-    var val = $(".location .input").val().replace(/[\(\)\/]/g,'');
-    $.get("/api/v1/location/address/" + val, function(data){
-      updatingLatlng = false;
-      if(data.status == 0){
-        $("#latlng").val( data.result.location.lat + "," + data.result.location.lng )
-      }else{
-        alert("无法解析该地址确切位置");
-        $("#latlng").val("");
-      }
-    });
-  },200);
-}
-
-// 地址提示
-function placeSuggestionParser(data){
-  if(data.status == 0){
-    return data.result.map(function(item){
-      return item.name
-    });
-  }else{
-    return [];
+  if(!data || !data.location){
+    return;
   }
+  $("#latlng").val(data.location.lat + "," + data.location.lng);
 }
 
-var ac = autocomplete.init($(".location .input"),placeSuggestionParser).on("select",updateLatlng);
+var ac = autocomplete.init($(".location .input"),function(item){
+  return item.name;
+}).on("select",updateLatlng);
 
 $(".location .input").on("click",function(){
   $(this)[0].focus();
@@ -284,7 +265,7 @@ $("#go-wash").on("touchend", function(){
     service:JSON.parse($(".services .active").attr("data")),
     use_credit: $(".credit .use").hasClass("active"),
     price: $(".payment .count").html(),
-    cars:$(".cars .active").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
+    cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
 
   if(!data.cars.length){
@@ -326,8 +307,8 @@ $("#go-wash").on("touchend", function(){
         cars: data.cars,
         address: data.address,
         price: data.price,
-        worker: result.worker,
-        time: addZero(finish_time.getHours()) + ":" + addZero(finish_time.getMinutes())
+        worker: estimate.worker,
+        time: addZero(estimate.finish_time.getHours()) + ":" + addZero(estimate.finish_time.getMinutes())
       });
     });
   }).fail(function(){
@@ -355,6 +336,7 @@ function Autocomplete(input, pattern, parser){
   input.after(list);
   var delay = 350;
   var timeout = null;
+  parser = parser || function(item){return item;}
   input.on("keyup", function(){
     clearTimeout(timeout);
     timeout = setTimeout(function(){
@@ -365,14 +347,13 @@ function Autocomplete(input, pattern, parser){
         dataType: "json",
         url: pattern.replace("{q}",value)
       }).done(function(data){
-        data = parser ? parser(data) : data;
         if(!data.length){return;}
         list.empty();
-        data.forEach(function(item){
+        data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
           li.on("touchend",function(){
             input.val(item);
-            self.emit("select");
+            self.emit("select",data[i]);
             self.hide();
           });
           $(list).append(li);

@@ -38,6 +38,7 @@ function Autocomplete(input, pattern, parser){
   input.after(list);
   var delay = 350;
   var timeout = null;
+  parser = parser || function(item){return item;}
   input.on("keyup", function(){
     clearTimeout(timeout);
     timeout = setTimeout(function(){
@@ -48,14 +49,13 @@ function Autocomplete(input, pattern, parser){
         dataType: "json",
         url: pattern.replace("{q}",value)
       }).done(function(data){
-        data = parser ? parser(data) : data;
         if(!data.length){return;}
         list.empty();
-        data.forEach(function(item){
+        data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
           li.on("touchend",function(){
             input.val(item);
-            self.emit("select");
+            self.emit("select",data[i]);
             self.hide();
           });
           $(list).append(li);

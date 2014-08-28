@@ -10,7 +10,10 @@ function washtime(){
 
 exports.post = function (req, res, next) {
   if (!req.body.latlng) {
-    return res.status(400).send("bad request");
+    return next({
+      statusCode: 400,
+      message: "missing latlng"
+    });
   }
 
   var user_latlng = req.body.latlng;
