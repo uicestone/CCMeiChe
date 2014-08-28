@@ -83,7 +83,6 @@ $(".cars .selected-cars").on("touchend", function(){
 
 var panelAddCar;
 var carsList = $(".cars ul");
-var chinese_numbers = "一二三四五六七八九十".split("");
 // 添加车辆
 $(".cars .add").on("touchend", function(){
   var addbtn = $(this);
@@ -92,20 +91,17 @@ $(".cars .add").on("touchend", function(){
     if(!panelAddCar){
       panelAddCar = addcar;
       panelAddCar.on("add",function(data){
-        var template = "<li><div class='index'>车型@{it.index}</div>"
+        carsSelect.add(data);
+        var template = "<li data='" + JSON.stringify(data) + "'>"
           +"<div class='detail'>"
             +"<div class='type'>@{it.type}@{it.color}</div>"
             +"<div class='number'>@{it.number}</div>"
           +"</div></li>";
-        data.index = chinese_numbers[ carsList.find("li").length ];
         var html = tpl.render(template,data);
         var li = $(html);
-        li.on("touchend", function(){
-          $(this).toggleClass("active");
-        });
-        li.data("car", data);
         carsList.append(li);
         addbtn.prop("disable",false);
+        calculate();
       });
     }
     panelAddCar.show();
@@ -138,6 +134,7 @@ var currentService = window.services[0];
     li.find(".desc").html(currentService.describe);
     li.find(".price").html("￥" + currentService.price);
     judgePromo();
+    calculate();
   });
 
   $(".services").on('touchend',function(){
@@ -150,8 +147,19 @@ function judgePromo(){
   var mypromo = user.promo.filter(function(item){
     return item.id == currentService._id;
   })[0];
-  if(mypromo){
+  if(mypromo && mypromo.count){
     $(".promo").show();
+    var html = "";
+    $(".promo .text").html(1);
+    for(var i = 0; i < mypromo.count + 1; i++){
+      if(i==1){
+        html += ("<option selected>" + i + "</option>");
+      }else{
+        html += ("<option>" + i + "</option>");
+      }
+    }
+
+    $(".promo select").html(html);
   }else{
     $(".promo").hide();
   }
@@ -159,41 +167,58 @@ function judgePromo(){
 judgePromo();
 $(".section.promo select").on("change",function(){
   $(".section.promo .text").text($(this).val());
+  calculate();
 });
 
 // 使用积分
 $(".credit .use").on("touchend",function(){
-  $(this).toggleClass("active");
+  var el = $(this);
+  var text = el.find(".text");
+  if(el.hasClass("active")){
+    el.removeClass("active");
+    text.html("未使用");
+  }else{
+    el.addClass('active');
+    text.html("已使用");
+  }
   calculate();
 });
 
 // 计算应付金额
 function calculate(){
-  var cars_count = $(".cars .active").length;
-  var service = JSON.parse($(".services .active").attr("data"));
+  var cars_count = $(".cars-cell li").length;
+  var service = currentService;
   var use_credit = $(".credit .use").hasClass("active");
   var count = 0;
-  var promo = user.promo;
+  var promo_count = 0;
+  if($(".section.promo").is(":visible")){
+    promo_count = +$(".section.promo .text").text();
+  }
+
   var credit = user.credit;
 
   for(var i = 0; i < cars_count; i++){
-    if(service.promo && service.promo != 0 && promo - service.promo >= 0){
-      promo -= service.promo;
+    if(promo_count){
+      promo_count--;
     }else{
       count += (+service.price);
     }
   }
 
   if(use_credit){
-    count -= credit;
+    if(credit < count){
+      count = count - credit;
+      credit = 0;
+    }else{
+      credit = credit - count;
+      count = 0;
+    }
   }
 
-  if(count < 0){
-    count = 0;
-  }
-
+  $(".credit .num").html(credit);
   $(".payment .count").html(count);
 }
+calculate();
 
 // 地址及经纬度
 navigator.geolocation.getCurrentPosition(function(position){
@@ -442,25 +467,28 @@ function PopSelect(choices, options){
   this.choices = choices;
   this.type = options.type;
   this.name = options.name;
+  var container = this.container =  $("<div class='popselect'>"
+      +"<div class='close'></div>"
+      +"<div class='choices'></div>"
+    +"<div class='btn submit'>确认</div>"
+  +"</div>");
   this.render();
-
+  this.bind();
+  container.appendTo($("body"));
+  container.hide();
+  this.name && container.addClass(this.name);
 }
 
 util.inherits(PopSelect,events);
 
 
 PopSelect.prototype.render = function() {
-  var parser = this.parser;
-  var container = this.container = $("<div class='popselect'>"
-      +"<div class='close'></div>"
-      +"<div class='choices'></div>"
-    +"<div class='btn submit'>确认</div>"
-  +"</div>");
-
-  container.appendTo($("body"));
-  this.name && container.addClass(this.name);
   var self = this;
+  var parser = this.parser;
+  var container = this.container;
+
   var choices_elem = container.find(".choices");
+  choices_elem.empty();
   this.choices.forEach(function(choice){
     var text = parser(choice);
     var item = $("<div class='item'>" + text + "</div>");
@@ -478,7 +506,11 @@ PopSelect.prototype.render = function() {
     default:
       throw "invalid type " + this.type;
   }
+};
 
+PopSelect.prototype.bind = function(){
+  var self = this;
+  var container = this.container;
   container.find(".submit").on("touchend",function(){
     var result = container.find(".active").map(function(i,el){
       return $(el).data("data");
@@ -491,11 +523,15 @@ PopSelect.prototype.render = function() {
   container.find(".close").on("touchend",function(){
     self.close();
   });
-  container.hide();
-};
+}
 
 PopSelect.prototype.select = function(item){
   this.selector.select(item);
+}
+
+PopSelect.prototype.add = function(data){
+  this.choices.push(data);
+  this.render();
 }
 
 PopSelect.prototype.open = function(){

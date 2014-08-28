@@ -42,7 +42,7 @@ AddCarView.prototype.show = function(){
 
   elem.find(".submit").on("touchend", function(){
     self.submit({
-      pic: elem.find(".upload-list li").attr("data-key"),
+      pic: elem.find(".result").attr("data-key"),
       type: elem.find(".type input").val(),
       color: elem.find(".color input").val(),
       number: elem.find(".number input").val(),

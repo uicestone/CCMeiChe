@@ -37,25 +37,28 @@ function PopSelect(choices, options){
   this.choices = choices;
   this.type = options.type;
   this.name = options.name;
+  var container = this.container =  $("<div class='popselect'>"
+      +"<div class='close'></div>"
+      +"<div class='choices'></div>"
+    +"<div class='btn submit'>确认</div>"
+  +"</div>");
   this.render();
-
+  this.bind();
+  container.appendTo($("body"));
+  container.hide();
+  this.name && container.addClass(this.name);
 }
 
 util.inherits(PopSelect,events);
 
 
 PopSelect.prototype.render = function() {
-  var parser = this.parser;
-  var container = this.container = $("<div class='popselect'>"
-      +"<div class='close'></div>"
-      +"<div class='choices'></div>"
-    +"<div class='btn submit'>确认</div>"
-  +"</div>");
-
-  container.appendTo($("body"));
-  this.name && container.addClass(this.name);
   var self = this;
+  var parser = this.parser;
+  var container = this.container;
+
   var choices_elem = container.find(".choices");
+  choices_elem.empty();
   this.choices.forEach(function(choice){
     var text = parser(choice);
     var item = $("<div class='item'>" + text + "</div>");
@@ -73,7 +76,11 @@ PopSelect.prototype.render = function() {
     default:
       throw "invalid type " + this.type;
   }
+};
 
+PopSelect.prototype.bind = function(){
+  var self = this;
+  var container = this.container;
   container.find(".submit").on("touchend",function(){
     var result = container.find(".active").map(function(i,el){
       return $(el).data("data");
@@ -86,11 +93,15 @@ PopSelect.prototype.render = function() {
   container.find(".close").on("touchend",function(){
     self.close();
   });
-  container.hide();
-};
+}
 
 PopSelect.prototype.select = function(item){
   this.selector.select(item);
+}
+
+PopSelect.prototype.add = function(data){
+  this.choices.push(data);
+  this.render();
 }
 
 PopSelect.prototype.open = function(){
