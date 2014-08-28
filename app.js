@@ -8,6 +8,7 @@ var errorHandler = require('errorhandler');
 var passport = require('passport');
 var config = require('config');
 var wechat = require('wechat');
+var uuid = require('uuid').v1;
 
 var app = express();
 
@@ -17,6 +18,10 @@ require('./passport-init');
 
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/jade');
+app.use(function(req,res,next){
+  req.reqid = uuid();
+  next();
+});
 app.use(session({
   store: new RedisStore(config.redis),
   secret: config.session_secret,
@@ -70,7 +75,12 @@ app.namespace("/api/v1", require("./api/v1")(app));
 app.get("/error.gif",require("./errortracking").frontend);
 app.use(require("./errortracking").backend);
 app.use(function(err,req,res,next){
-  res.type('json');
+  if(typeof err == "string"){
+    return next({
+      status: 400,
+      message: err
+    });
+  }
   next(err);
 });
 app.use(errorHandler());

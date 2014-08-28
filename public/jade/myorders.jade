@@ -16,7 +16,7 @@ mixin item(data)
         .view-result 查看结果
       else
         .text 倒计时间
-        .time(data-finish="#{data.finish_time}")
+        .time(data-finish="#{data.estimated_finish_time}")
         if data.status == "todo"
           .cancel 取消订单
 

@@ -3,9 +3,7 @@ var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
 var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
-
-
-
+var popMessage = require('./mod/popmessage');
 
 // 菜单展开收起
 (function(){
@@ -198,7 +196,10 @@ navigator.geolocation.getCurrentPosition(function(position){
   $.get("/api/v1/location/latlng/" + latlng, function(data){
     $(".location .input").val(data.result.formatted_address);
   });
-},function(){});
+},function(){
+  if($(".location .input").val()){return;}
+  popMessage("无法定位当前位置");
+});
 
 // 地址提示
 var updatingLatlng = false;
@@ -233,7 +234,7 @@ $("#go-wash").on("touchend", function(){
     carpark:$(".carpark input").val(),
     address:$("#address").val(),
     latlng :$("#latlng").val(),
-    service:JSON.parse($(".services .active").attr("data")),
+    service:currentService,
     use_credit: $(".credit .use").hasClass("active"),
     price: $(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
@@ -254,11 +255,7 @@ $("#go-wash").on("touchend", function(){
     return;
   }
 
-  function addZero(num){
-    return num < 10 ? ("0" + num) : num;
-  }
-
-  $.post("/api/v1/preorder",data).done(function(estimate){
+  $.post("/api/v1/preorder",data,"json").done(function(estimate){
     require.async("./preorder.js",function(preorder){
       if(!panelPreOrder){
         panelPreOrder = preorder;
@@ -279,12 +276,21 @@ $("#go-wash").on("touchend", function(){
         address: data.address,
         price: data.price,
         worker: estimate.worker,
-        time: addZero(estimate.finish_time.getHours()) + ":" + addZero(estimate.finish_time.getMinutes())
+        carpark: data.carpark,
+        drive_time: estimate.drive_time,
+        wash_time: estimate.wash_time,
+        finish_time: estimate.finish_time
       });
     });
-  }).fail(function(){
-    alert("fail");
-  })
+  }).fail(function(xhr){
+    try{
+      json = JSON.parse(xhr.responseText);
+    }catch(e){
+      json = {}
+    }
+
+    popMessage(json.error && json.error.message);
+  });
 
 });
 

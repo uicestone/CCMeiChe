@@ -1,8 +1,11 @@
 var config = require('config');
 var model = require('../../model');
 var wechat_worker = require('../../util/wechat').worker.api;
+var errortracking = require('../../errortracking');
 var Worker = model.worker;
 var Order = model.order;
+var moment = require("moment");
+moment.locale('zh-cn');
 
 exports.get = function(req,res){
   Order.find({
@@ -48,7 +51,6 @@ exports.post = function(req,res,next){
     }
   }
 
-
   Order.insert(data,function(err, results){
     if(err){return next(err);}
     var result = results[0];
@@ -58,9 +60,16 @@ exports.post = function(req,res,next){
       "worker._id": worker._id
     }).toArray(function(err,orders){
       if(err){return next(err);}
-      var message = "你现在有" + order.length + "笔任务待完成，预计下班时间：" + data.estimated_finish_time;
+      var message = "你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(data.estimated_finish_time).format("lll");
+      if(!worker.openid){
+        return next("worker " + worker._id + " doesn't have openid");
+      }
+
+      console.log("sendText to",worker.openid,message);
       wechat_worker.sendText(worker.openid,message,function(err){
-        if(err){return next(err);}
+        if(err){
+          errortracking.other(err,req,res);
+        }
         res.status(200).send(results[0]);
       });
     });

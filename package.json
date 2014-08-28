@@ -28,7 +28,8 @@
     "qiniu": "~6.1.5",
     "wechat": "~0.8.8",
     "async": "^0.9.0",
-    "moment": "^2.8.1"
+    "moment": "^2.8.1",
+    "uuid": "^1.4.1"
   },
   "devDependencies": {
     "nib": "~1.0.3",

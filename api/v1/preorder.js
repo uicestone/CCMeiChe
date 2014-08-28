@@ -1,22 +1,22 @@
 var worker = require("../../model/worker");
 var config = require("config");
 var baidumap = require("../../util/baidumap");
+var moment = require("moment");
 var async = require("async");
 
 function washtime(){
-  return config.washtime * 60 * 1000;
+  return config.wash_time * 60 * 1000;
 }
 
 
 exports.post = function (req, res, next) {
-  if (!req.body.latlng) {
+  var user_latlng = req.body.latlng;
+  if (!user_latlng) {
     return next({
-      statusCode: 400,
+      status: 400,
       message: "missing latlng"
     });
   }
-
-  var user_latlng = req.body.latlng;
   var kms = 50; // 周边50公里
 
   worker.find({
@@ -30,12 +30,13 @@ exports.post = function (req, res, next) {
     }
   }).limit(5).toArray(function (err, workers) {
     if(err){return next(err);}
+    console.log("Workers",workers);
     async.map(workers, function(worker, done){
       var worker_latlng = worker.latlng;
       var speedInMin = config.motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
 
       // 通过百度api查询路线
-      console.log("from %s to %s",worker_latlng,user_latlng)
+      console.log("from %s to %s",worker_latlng,user_latlng);
       baidumap.direction({
         origin: worker_latlng.join(","),
         destination: user_latlng,
@@ -48,13 +49,18 @@ exports.post = function (req, res, next) {
           return done("solution parse error " + JSON.stringify(solution));
         }
 
+        if(!worker.last_available_time){
+          return done("worker " + worker._id + " do not have last_available_time");
+        }
+
         var drive_time = solution.result.routes[0].distance / speedInMin;
         var wash_time = washtime();
+        var base_time = Math.max(new Date(worker.last_available_time), new Date());
         done(null,{
           worker: worker,
           drive_time: drive_time,
           wash_time: wash_time,
-          finish_time: worker.last_available_time + drive_time + wash_time
+          finish_time: new Date(base_time + drive_time + wash_time)
         });
       });
     },function(err,results){

@@ -4,7 +4,7 @@ var events = require("events");
 var util = require("util");
 var tpl = require("tpl");
 var viewSwipe = require("view-swipe");
-
+var moment = require("moment");
 
 function PreOrder(){
 
@@ -12,7 +12,21 @@ function PreOrder(){
 
 util.inherits(PreOrder,events);
 
+function addZero(num){
+  return num < 10 ? ("0" + num) : num;
+}
+
+function formatTime(data){
+  var milliseconds = data.drive_time + data.wash_time;
+  var duration = moment.duration({milliseconds:milliseconds});
+  return addZero(duration.minutes()) + ":" + addZero(duration.seconds());
+}
+
 PreOrder.prototype.show = function(data){
+  if(!data.drive_time || !data.wash_time){
+    throw "data.drive_time and data.wash_time are required";
+  }
+  data.time = formatTime(data);
   var html = tpl.render(template,data);
   var elem = $(html);
   var self = this;

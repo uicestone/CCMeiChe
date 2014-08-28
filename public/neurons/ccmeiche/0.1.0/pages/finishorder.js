@@ -7,28 +7,29 @@ var _3 = "ccmeiche@0.1.0/pages/login.js";
 var _4 = "ccmeiche@0.1.0/pages/mod/autocomplete.js";
 var _5 = "ccmeiche@0.1.0/pages/mod/countdown.js";
 var _6 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
-var _7 = "ccmeiche@0.1.0/pages/mod/popselect.js";
-var _8 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
-var _9 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _10 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _11 = "ccmeiche@0.1.0/pages/myorders.js";
-var _12 = "ccmeiche@0.1.0/pages/order.js";
-var _13 = "ccmeiche@0.1.0/pages/preorder.js";
-var _14 = "ccmeiche@0.1.0/pages/recharge.js";
-var _15 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _16 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _19 = "zepto@^1.1.3";
-var _20 = "events@^1.0.5";
-var _21 = "util@^1.0.4";
-var _22 = "tpl@~0.2.1";
-var _23 = "view-swipe@~0.1.4";
-var _24 = "uploader@~0.1.4";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18];
+var _7 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
+var _8 = "ccmeiche@0.1.0/pages/mod/popselect.js";
+var _9 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
+var _10 = "ccmeiche@0.1.0/pages/mod/uploader.js";
+var _11 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _12 = "ccmeiche@0.1.0/pages/myorders.js";
+var _13 = "ccmeiche@0.1.0/pages/order.js";
+var _14 = "ccmeiche@0.1.0/pages/preorder.js";
+var _15 = "ccmeiche@0.1.0/pages/recharge.js";
+var _16 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _17 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _20 = "zepto@^1.1.3";
+var _21 = "events@^1.0.5";
+var _22 = "util@^1.0.4";
+var _23 = "tpl@~0.2.1";
+var _24 = "view-swipe@~0.1.4";
+var _25 = "uploader@~0.1.4";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_1, [_19,_20,_21,_22,_23,_16,_9,_8], function(require, exports, module, __filename, __dirname) {
+define(_1, [_20,_21,_22,_23,_24,_17,_10,_9], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var template = require("./tpl/finishorder.html");
 var uploader = require("./mod/uploader");
@@ -71,17 +72,17 @@ FinishOrder.prototype.confirm = function(data){
 module.exports = new FinishOrder();
 }, {
     entries:entries,
-    map:mix({"./tpl/finishorder.html":_16,"./mod/uploader":_9,"./mod/singleselect":_8},globalMap)
+    map:mix({"./tpl/finishorder.html":_17,"./mod/uploader":_10,"./mod/singleselect":_9},globalMap)
 });
 
-define(_16, [], function(require, exports, module, __filename, __dirname) {
+define(_17, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="finishorder" class="container"><h2 class="h2">洗车已完成</h2><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><h2 class="h2">车损部位</h2><ul class="car-brokes"><li class="car-broke car-broke-1">1</li><li class="car-broke car-broke-2">2</li><li class="car-broke car-broke-3">3</li><li class="car-broke car-broke-4">4</li><li class="car-broke car-broke-5">5</li><li class="car-broke car-broke-6">6</li><li class="car-broke car-broke-7">7</li><li class="car-broke car-broke-8">8</li><li class="car-broke car-broke-9">9</li><li class="car-broke car-broke-10">10</li></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><input type="button" value="完成" class="button cancel"/></div>'
 }, {
     entries:entries,
     map:globalMap
 });
 
-define(_9, [_19,_24], function(require, exports, module, __filename, __dirname) {
+define(_10, [_20,_25], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -188,7 +189,7 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_8, [_19,_20,_21], function(require, exports, module, __filename, __dirname) {
+define(_9, [_20,_21,_22], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var events = require("events");
 var util = require("util");

@@ -16,6 +16,20 @@ exports.frontend = function(req,res,next){
   return res.type("gif").status(200).send("");
 }
 
+exports.other = function(err,req,res,next){
+  errmodel.insert({
+    type:"other",
+    time: new Date(),
+    message: err.message,
+    stack: err.stack,
+    req: {
+      reqid: req.reqid,
+      url: req.url,
+      headers: req.headers
+    }
+  });
+}
+
 exports.backend = function(err,req,res,next){
   errmodel.insert({
     type:"backend",
@@ -23,6 +37,7 @@ exports.backend = function(err,req,res,next){
     message: err.message,
     stack: err.stack,
     req: {
+      reqid: req.reqid,
       url: req.url,
       headers: req.headers
     }

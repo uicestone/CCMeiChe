@@ -7,34 +7,33 @@ var _3 = "ccmeiche@0.1.0/pages/login.js";
 var _4 = "ccmeiche@0.1.0/pages/mod/autocomplete.js";
 var _5 = "ccmeiche@0.1.0/pages/mod/countdown.js";
 var _6 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
-var _7 = "ccmeiche@0.1.0/pages/mod/popselect.js";
-var _8 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
-var _9 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _10 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _11 = "ccmeiche@0.1.0/pages/myorders.js";
-var _12 = "ccmeiche@0.1.0/pages/order.js";
-var _13 = "ccmeiche@0.1.0/pages/preorder.js";
-var _14 = "ccmeiche@0.1.0/pages/recharge.js";
-var _15 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _16 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _19 = "zepto@^1.1.3";
-var _20 = "tpl@~0.2.1";
-var _21 = "util@^1.0.4";
-var _22 = "events@^1.0.5";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18];
+var _7 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
+var _8 = "ccmeiche@0.1.0/pages/mod/popselect.js";
+var _9 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
+var _10 = "ccmeiche@0.1.0/pages/mod/uploader.js";
+var _11 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _12 = "ccmeiche@0.1.0/pages/myorders.js";
+var _13 = "ccmeiche@0.1.0/pages/order.js";
+var _14 = "ccmeiche@0.1.0/pages/preorder.js";
+var _15 = "ccmeiche@0.1.0/pages/recharge.js";
+var _16 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _17 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _20 = "zepto@^1.1.3";
+var _21 = "tpl@~0.2.1";
+var _22 = "util@^1.0.4";
+var _23 = "events@^1.0.5";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_2, [_19,_20,_4,_8,_7], function(require, exports, module, __filename, __dirname) {
+define(_2, [_20,_21,_4,_9,_8,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
 var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
-
-
-
+var popMessage = require('./mod/popmessage');
 
 // 菜单展开收起
 (function(){
@@ -227,7 +226,10 @@ navigator.geolocation.getCurrentPosition(function(position){
   $.get("/api/v1/location/latlng/" + latlng, function(data){
     $(".location .input").val(data.result.formatted_address);
   });
-},function(){});
+},function(){
+  if($(".location .input").val()){return;}
+  popMessage("无法定位当前位置");
+});
 
 // 地址提示
 var updatingLatlng = false;
@@ -262,7 +264,7 @@ $("#go-wash").on("touchend", function(){
     carpark:$(".carpark input").val(),
     address:$("#address").val(),
     latlng :$("#latlng").val(),
-    service:JSON.parse($(".services .active").attr("data")),
+    service:currentService,
     use_credit: $(".credit .use").hasClass("active"),
     price: $(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
@@ -283,11 +285,7 @@ $("#go-wash").on("touchend", function(){
     return;
   }
 
-  function addZero(num){
-    return num < 10 ? ("0" + num) : num;
-  }
-
-  $.post("/api/v1/preorder",data).done(function(estimate){
+  $.post("/api/v1/preorder",data,"json").done(function(estimate){
     require.async("./preorder.js",function(preorder){
       if(!panelPreOrder){
         panelPreOrder = preorder;
@@ -308,22 +306,31 @@ $("#go-wash").on("touchend", function(){
         address: data.address,
         price: data.price,
         worker: estimate.worker,
-        time: addZero(estimate.finish_time.getHours()) + ":" + addZero(estimate.finish_time.getMinutes())
+        carpark: data.carpark,
+        drive_time: estimate.drive_time,
+        wash_time: estimate.wash_time,
+        finish_time: estimate.finish_time
       });
     });
-  }).fail(function(){
-    alert("fail");
-  })
+  }).fail(function(xhr){
+    try{
+      json = JSON.parse(xhr.responseText);
+    }catch(e){
+      json = {}
+    }
+
+    popMessage(json.error && json.error.message);
+  });
 
 });
 
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_4,"./mod/singleselect":_8,"./mod/popselect":_7},globalMap)
+    map:mix({"./mod/autocomplete":_4,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7},globalMap)
 });
 
-define(_4, [_19,_21,_22], function(require, exports, module, __filename, __dirname) {
+define(_4, [_20,_22,_23], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -393,7 +400,7 @@ exports.init = function(input, parser){
     map:globalMap
 });
 
-define(_8, [_19,_22,_21], function(require, exports, module, __filename, __dirname) {
+define(_9, [_20,_23,_22], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var events = require("events");
 var util = require("util");
@@ -436,7 +443,7 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_7, [_19,_22,_21,_8,_6], function(require, exports, module, __filename, __dirname) {
+define(_8, [_20,_23,_22,_9,_6], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
 var multiSelect = require("./multiselect");
@@ -530,10 +537,49 @@ module.exports = function(choices,options){
 }
 }, {
     entries:entries,
-    map:mix({"./singleselect":_8,"./multiselect":_6},globalMap)
+    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
 });
 
-define(_6, [_19], function(require, exports, module, __filename, __dirname) {
+define(_7, [_20], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message){
+  var pop = $("<div>" + message + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px"
+  });
+  pop.appendTo($("body"));
+  pop.css({
+    "margin-left": - pop.width() / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
+    });
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },1500)
+}
+
+module.exports = popMessage
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_6, [_20], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 
 function MultiSelect(container,itemSelector){

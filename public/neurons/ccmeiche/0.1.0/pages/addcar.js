@@ -7,27 +7,28 @@ var _3 = "ccmeiche@0.1.0/pages/login.js";
 var _4 = "ccmeiche@0.1.0/pages/mod/autocomplete.js";
 var _5 = "ccmeiche@0.1.0/pages/mod/countdown.js";
 var _6 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
-var _7 = "ccmeiche@0.1.0/pages/mod/popselect.js";
-var _8 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
-var _9 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _10 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _11 = "ccmeiche@0.1.0/pages/myorders.js";
-var _12 = "ccmeiche@0.1.0/pages/order.js";
-var _13 = "ccmeiche@0.1.0/pages/preorder.js";
-var _14 = "ccmeiche@0.1.0/pages/recharge.js";
-var _15 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _16 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _19 = "zepto@^1.1.3";
-var _20 = "events@^1.0.5";
-var _21 = "util@^1.0.4";
-var _22 = "view-swipe@~0.1.4";
-var _23 = "uploader@~0.1.4";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18];
+var _7 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
+var _8 = "ccmeiche@0.1.0/pages/mod/popselect.js";
+var _9 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
+var _10 = "ccmeiche@0.1.0/pages/mod/uploader.js";
+var _11 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _12 = "ccmeiche@0.1.0/pages/myorders.js";
+var _13 = "ccmeiche@0.1.0/pages/order.js";
+var _14 = "ccmeiche@0.1.0/pages/preorder.js";
+var _15 = "ccmeiche@0.1.0/pages/recharge.js";
+var _16 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _17 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _20 = "zepto@^1.1.3";
+var _21 = "events@^1.0.5";
+var _22 = "util@^1.0.4";
+var _23 = "view-swipe@~0.1.4";
+var _24 = "uploader@~0.1.4";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_19,_20,_21,_22,_9,_4,_15], function(require, exports, module, __filename, __dirname) {
+define(_0, [_20,_21,_22,_23,_10,_4,_16], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("./mod/uploader");
 var autocomplete = require("./mod/autocomplete");
@@ -118,10 +119,10 @@ AddCarView.prototype.submit = function(data){
 module.exports = new AddCarView();
 }, {
     entries:entries,
-    map:mix({"./mod/uploader":_9,"./mod/autocomplete":_4,"./tpl/addcar.html":_15},globalMap)
+    map:mix({"./mod/uploader":_10,"./mod/autocomplete":_4,"./tpl/addcar.html":_16},globalMap)
 });
 
-define(_9, [_19,_23], function(require, exports, module, __filename, __dirname) {
+define(_10, [_20,_24], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -228,7 +229,7 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_4, [_19,_21,_20], function(require, exports, module, __filename, __dirname) {
+define(_4, [_20,_22,_21], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -298,7 +299,7 @@ exports.init = function(input, parser){
     map:globalMap
 });
 
-define(_15, [], function(require, exports, module, __filename, __dirname) {
+define(_16, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes?q={q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
