@@ -156,12 +156,14 @@ var worker_menu = {
 };
 
 if(SERVICE == "worker"){
-  console.log("HERE");
   console.log("create menu ", worker_menu);
-  worker_api.createMenu(worker_menu, function (err, data, response) {
-    console.log("Menu Created", err, data);
-  });
+  setTimeout(function(){
+    worker_api.createMenu(worker_menu, function (err, data, response) {
+      console.log("Menu Created", err, data);
+    });
+  },5000);
 }else{
+  console.log("create menu ", user_menu);
   user_api.createMenu(user_menu, function (err, data, response) {
     console.log("Menu Created", data);
   });

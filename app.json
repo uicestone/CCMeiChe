@@ -1,7 +1,6 @@
 [{
   "name":"ccmeiche-user",
-  "script":"app.js",
-  "instances":"max",
+  "script":"server.js",
   "env":{
     "PORT":4272,
     "NODE_ENV":"product",
@@ -9,8 +8,7 @@
   }
 },{
   "name":"ccmeiche-worker",
-  "script":"app.js",
-  "instances":"max",
+  "script":"server.js",
   "env":{
     "PORT":4273,
     "NODE_ENV":"product",
