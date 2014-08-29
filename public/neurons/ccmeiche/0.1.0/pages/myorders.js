@@ -26,6 +26,10 @@ var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
 define(_12, [_5], function(require, exports, module, __filename, __dirname) {
 require("./mod/countdown");
+
+$(".cancel").on("touchend",function(){
+  alert("取消功能施工中");
+});
 }, {
     entries:entries,
     map:mix({"./mod/countdown":_5},globalMap)

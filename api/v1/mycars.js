@@ -58,6 +58,10 @@ exports.post = function (req, res, next) {
       return res.status(400).send("您已添加过该车牌");
     }
 
+    if(req.user.cars.length >= 5){
+      return res.status(400).send("无法添加更多车辆");
+    }
+
     User.update({
       phone: phone
     }, {
@@ -68,7 +72,7 @@ exports.post = function (req, res, next) {
       if (err) {
         return next(err);
       }
-      res.status(200).send("ok");
+      res.status(200).send({message:"ok"});
     });
   });
 

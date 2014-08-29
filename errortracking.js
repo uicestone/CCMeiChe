@@ -1,7 +1,7 @@
 var errmodel = require("./model/error");
 
 exports.frontend = function(req,res,next){
-
+  console.log("track error frontend %s".red, err.query.msg);
   errmodel.insert({
     type:"frontend",
     time: new Date(),
@@ -17,6 +17,7 @@ exports.frontend = function(req,res,next){
 }
 
 exports.other = function(err,req,res,next){
+  console.log("track error other %s".red, err.message);
   errmodel.insert({
     type:"other",
     time: new Date(),
@@ -31,6 +32,7 @@ exports.other = function(err,req,res,next){
 }
 
 exports.backend = function(err,req,res,next){
+  console.log("track error backend %s".red, err.query.msg);
   errmodel.insert({
     type:"backend",
     time: new Date(),

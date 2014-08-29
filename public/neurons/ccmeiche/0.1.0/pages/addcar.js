@@ -82,6 +82,7 @@ AddCarView.prototype.show = function(){
   });
 
   elem.find(".cancel").on("touchend", function(){
+    self.emit("cancel");
     viewSwipe.out("bottom");
   });
 
@@ -107,7 +108,7 @@ AddCarView.prototype.submit = function(data){
   }
 
 
-  $.post("/api/v1/mycars",data).done(function(){
+  $.post("/api/v1/mycars",data,"json").done(function(){
     viewSwipe.out("bottom");
     self.emit("add",data);
   }).fail(function(xhr){

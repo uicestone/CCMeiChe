@@ -19,12 +19,19 @@ li {
   list-style: none;
 }
 body {
+  width: 100%;
   color: #fff;
   background-color: #fab44a;
 }
 body.openmenu {
   position: fixed;
   width: 100%;
+}
+.button,
+.input {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
 }
 .swipe-container .swipe-inner {
   background-color: #f8a23d;
@@ -99,7 +106,7 @@ body.openmenu {
   background-color: #f29200;
 }
 #login-form {
-  padding-top: 150px;
+  padding-top: 200px;
 }
 #login-form .row {
   position: relative;

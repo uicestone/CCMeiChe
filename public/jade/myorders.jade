@@ -1,5 +1,5 @@
 mixin item(data)
-  li
+  li(data-id="#{data._id}")
     .details
       for item in data.cars
         .row

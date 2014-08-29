@@ -37,9 +37,10 @@ block content
             td
               .arrow
                 .icon
-        .add
-          i.icon-add
-          | 添加车辆
+        if user.cars.length < 5
+          .add
+            i.icon-add
+            | 添加车辆
     .section
       h2 请选择您需要的服务
       ul.services

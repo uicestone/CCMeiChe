@@ -15,7 +15,7 @@ exports.get = function(req,res,next){
 
   vcode.generate(phone, function(err,code){
     if(err){return next(err);}
-    if(process.env.NODE_ENV="product"){
+    if(process.env.NODE_ENV=="product"){
       weimi.send(phone,code);
     }
     console.log(code);

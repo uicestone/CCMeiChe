@@ -53,6 +53,7 @@ var carsSelect = popselect(user.cars,{
   }
 });
 carsSelect.on("submit",function(dataList){
+  $("body").css("position","static");
   var ul = $(".selected-cars ul");
   ul.empty();
   dataList.forEach(function(data){
@@ -67,12 +68,16 @@ carsSelect.on("submit",function(dataList){
   calculate();
 });
 carsSelect.on("open",function(){
+  $("body").css("position","fixed");
   var data = $(".selected-cars li").get().map(function(el,i){
     var data = JSON.parse($(el).attr("data"));
     return data;
   });
 
   carsSelect.select(data);
+});
+carsSelect.on("close",function(){
+  $("body").css("position","static");
 });
 // 选择车辆
 $(".cars .selected-cars").on("touchend", function(){
@@ -83,13 +88,19 @@ $(".cars .selected-cars").on("touchend", function(){
 var panelAddCar;
 var carsList = $(".cars ul");
 // 添加车辆
-$(".cars .add").on("touchend", function(){
+$(".cars .add").on("touchend", function(e){
+  e.preventDefault();
   var addbtn = $(this);
   addbtn.prop("disable",true);
   require.async("./addcar.js",function(addcar){
+    $("body").css("position","fixed");
     if(!panelAddCar){
       panelAddCar = addcar;
+      panelAddCar.on("cancel",function(){
+        $("body").css("position","static");
+      });
       panelAddCar.on("add",function(data){
+        $("body").css("position","static");
         carsSelect.add(data);
         var template = "<li data='" + JSON.stringify(data) + "'>"
           +"<div class='detail'>"
@@ -100,6 +111,9 @@ $(".cars .add").on("touchend", function(){
         var li = $(html);
         carsList.append(li);
         addbtn.prop("disable",false);
+        if($(".cars-cell li").length >= 5){
+          addbtn.remove();
+        }
         calculate();
       });
     }
@@ -125,8 +139,10 @@ var currentService = window.services[0];
     }
   });
   serviceSelect.on("open",function(){
+    $("body").css("position","fixed");
     serviceSelect.select(currentService);
   }).on("submit",function(result){
+    $("body").css("position","static");
     currentService = result[0];
     var li = $(".services li");currentService
     li.find(".title").html(currentService.title);
@@ -134,6 +150,8 @@ var currentService = window.services[0];
     li.find(".price").html("￥" + currentService.price);
     judgePromo();
     calculate();
+  }).on("close",function(){
+    $("body").css("position","static");
   });
 
   $(".services").on('touchend',function(){
