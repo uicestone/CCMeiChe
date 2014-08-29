@@ -32,7 +32,7 @@ exports.other = function(err,req,res,next){
 }
 
 exports.backend = function(err,req,res,next){
-  console.log("track error backend %s".red, err.query.msg);
+  console.log("track error backend %s".red, err.message);
   errmodel.insert({
     type:"backend",
     time: new Date(),
