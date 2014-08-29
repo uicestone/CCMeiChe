@@ -20,6 +20,7 @@ app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/jade');
 app.use(function(req,res,next){
   req.reqid = uuid();
+  console.log(req.method,req.url);
   next();
 });
 app.use(session({
