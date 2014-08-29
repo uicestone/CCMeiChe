@@ -9,7 +9,7 @@ var passport = require('passport');
 var config = require('config');
 var wechat = require('wechat');
 var uuid = require('uuid').v1;
-
+require('colors');
 var app = express();
 
 var SERVICE = process.env.SERVICE == "worker" ? "worker" : "user";
