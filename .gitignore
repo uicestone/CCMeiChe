@@ -2,4 +2,3 @@ node_modules
 config/*.yml
 public/css/*.css
 public/html/*.html
-app.json
