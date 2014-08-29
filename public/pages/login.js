@@ -1,7 +1,7 @@
 var $ = require('zepto');
 
 $(function(){
-  var COUNT = 30;
+  var COUNT = 90;
   var ipt_phone = $("#phone");
   var ipt_vcode = $("#vcode");
   var btn_send_code = $("#getvcode");

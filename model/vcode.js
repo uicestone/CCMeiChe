@@ -48,7 +48,7 @@ exports.generate = function(key, callback){
       if(exists){
         _generateCode(key, callback);
       }else{
-        var timeout = 30;
+        var timeout = 90;
         var expire = +new Date() + timeout * 1000;
         var redis_key = _generateRedisKey({
           code: code,

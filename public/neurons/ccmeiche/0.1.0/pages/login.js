@@ -28,7 +28,7 @@ define(_3, [_20], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 
 $(function(){
-  var COUNT = 30;
+  var COUNT = 90;
   var ipt_phone = $("#phone");
   var ipt_vcode = $("#vcode");
   var btn_send_code = $("#getvcode");
