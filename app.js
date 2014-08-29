@@ -85,8 +85,15 @@ app.use(function(err,req,res,next){
 });
 app.use(errorHandler());
 
-app.listen(config.get("port"), function () {
-  console.log("server started at %d", config.port);
+var port;
+if(SERVICE == "worker"){
+  port = process.env.PORT || config.port.worker;
+}else{
+  port = process.env.PORT || config.port.user;
+}
+
+app.listen(port, function () {
+  console.log("server started at %d", port || config.port);
 });
 
 
