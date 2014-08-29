@@ -21,7 +21,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       return res.reply(err);
     }
     if(!user){
-      return res.reply("您没有权限进行该操作，请管理员添加用户");
+      return res.reply("您没有权限进行该操作，请管理员添加用户" + openid);
     }
 
     if(message.Event == "LOCATION"){
