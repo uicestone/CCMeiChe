@@ -37,7 +37,7 @@ block content
             td
               .arrow
                 .icon
-        if user.cars.length < 5
+        if !user.cars || user.cars.length < 5
           .add
             i.icon-add
             | 添加车辆
