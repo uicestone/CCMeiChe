@@ -57,10 +57,20 @@ exports.post = function(req,res,next){
     var worker = data.worker;
 
     Order.find({
-      "worker._id": worker._id
+      "worker._id": worker._id,
+      "status": "todo"
     }).toArray(function(err,orders){
       if(err){return next(err);}
-      var message = "你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(data.estimated_finish_time).format("lll");
+      var message = "";
+      var url = "";
+
+      if(orders.length == 1){
+        url = config.host.worker + "/orders/" + orders[0]._id;
+        message = "你有一比新订单，点击查看：" + url;
+      }else{
+        message = "你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(data.estimated_finish_time).format("lll");
+      }
+
       if(!worker.openid){
         return next("worker " + worker._id + " doesn't have openid");
       }

@@ -24,9 +24,9 @@ var _20 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_12, [_5], function(require, exports, module, __filename, __dirname) {
+define(_12, [_20,_5], function(require, exports, module, __filename, __dirname) {
 require("./mod/countdown");
-
+var $ = require("zepto");
 $(".cancel").on("touchend",function(){
   alert("取消功能施工中");
 });

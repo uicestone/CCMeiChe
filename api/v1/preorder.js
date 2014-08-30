@@ -51,6 +51,7 @@ exports.post = function (req, res, next) {
         destination_region: "上海"
       }, function(err,solution){
         if(err){return done(err);}
+        console.log(solution);
         if(!solution || !solution.result || !solution.result.routes[0]){
           return done("solution parse error " + JSON.stringify(solution));
         }
