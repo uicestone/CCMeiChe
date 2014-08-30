@@ -58,7 +58,7 @@ exports.post = function (req, res, next) {
       return res.status(400).send("您已添加过该车牌");
     }
 
-    if(req.user.cars.length >= 5){
+    if(req.user.cars && req.user.cars.length >= 5){
       return res.status(400).send("无法添加更多车辆");
     }
 

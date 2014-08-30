@@ -23,7 +23,7 @@ AddCarView.prototype.show = function(){
     prefix:"userpic/"
   });
 
-  $(".input").each(function(){
+  elem.find(".input").each(function(){
     var input = $(this);
     autocomplete.init(input);
     var ph = input.attr("placeholder");

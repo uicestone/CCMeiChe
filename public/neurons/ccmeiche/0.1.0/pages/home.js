@@ -363,9 +363,10 @@ function Autocomplete(input, pattern, parser){
   var timeout = null;
   parser = parser || function(item){return item;}
   input.on("keyup", function(){
+    console.log("comming");
     clearTimeout(timeout);
     timeout = setTimeout(function(){
-      var value = input.val();
+      var value = input.val().trim();
       if(!value){return;}
       $.ajax({
         method: "GET",
@@ -461,7 +462,7 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_8, [_20,_23,_22,_9,_6], function(require, exports, module, __filename, __dirname) {
+define(_8, [_20,_23,_22,_6,_9], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
 var multiSelect = require("./multiselect");
@@ -555,7 +556,7 @@ module.exports = function(choices,options){
 }
 }, {
     entries:entries,
-    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
+    map:mix({"./multiselect":_6,"./singleselect":_9},globalMap)
 });
 
 define(_7, [_20], function(require, exports, module, __filename, __dirname) {
