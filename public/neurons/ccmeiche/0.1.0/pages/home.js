@@ -334,6 +334,8 @@ $("#go-wash").on("touchend", function(){
 
 });
 
+require.async("./addcar.js",function(){});
+require.async("./preorder.js",function(){});
 
 }, {
     entries:entries,

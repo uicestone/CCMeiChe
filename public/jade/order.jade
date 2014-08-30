@@ -25,7 +25,7 @@ block content
   else
     .remain
       .head 剩余时间
-      .time(data-finish="#{order.estimate_finish_time}")
+      .time(data-finish="#{order.estimated_finish_time}")
       .message 请在预估时间内完成洗车
 
   if order.status == "todo"

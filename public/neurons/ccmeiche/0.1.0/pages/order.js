@@ -60,19 +60,7 @@ button.on("touchend",function(e){
 });
 
 
-    require.async("./finishorder.js",function(finishorder){
-      $("#order").css("position","fixed");
-      if(!finishPanel){
-        finishPanel = finishorder;
-        finishPanel.on("done",function(data){
-          posting = true;
-          $.post("/api/v1/orders/" + order._id + "/done",data).done(function(){
-            location.href = "/orders";
-          });
-        });
-      }
-      finishPanel.show();
-    });
+require.async("./finishorder.js",function(finishorder){});
 }, {
     entries:entries,
     map:mix({"./mod/countdown":_5},globalMap)
