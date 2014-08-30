@@ -20,8 +20,14 @@ var beforeUpload = function(prefix){
   }
 }
 
-var loadImageToElem = function(key, elem, callback){
-  var imgSrc = appConfig.qiniu_host + key + "?imageView/1/w/90/h/90";
+var loadImageToElem = function(key, elem, size, callback){
+  var imgSrc = appConfig.qiniu_host
+    + key
+    + "?imageView/"
+    + size.mode
+    + "/w/"
+    + size.width
+    + (size.height ? ("/h/" + size.height) : "");
   var img = $("<img />").attr("src",imgSrc);
   if(!elem){return;}
   img.on('load',function(){
@@ -30,21 +36,26 @@ var loadImageToElem = function(key, elem, callback){
       img.css("display","none");
       img.css({
         display: 'block',
-        opacity:1
+        opacity: 1
       });
       callback && callback();
   });
 };
 
 var uploadTemplate = {
-  template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper">'
-      +'<div class="pic"><div class="percent"></div></div>'
-      +'<div class="icon-delete J_upload_remove" />'
-  +'</li>',
+  template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper"></li>',
+  add: function(e){
+    initloading(e.elem);
+  },
   success: function(e){
-      var elem = e.elem;
-      var data = e.data;
-      loadImageToElem(data.key, elem);
+    var elem = e.elem;
+    var data = e.data;
+    loadImageToElem(data.key, elem, {
+      mode: 2,
+      width: 260
+    },function(){
+      elem.find(".loading").hide();
+    });
   },
   remove: function(e){
       var elem = e.elem;
@@ -58,12 +69,13 @@ var uploadTemplate = {
 function initloading(elem){
   var loading = $("<div class='loading'><div class='spin'></div></div>");
   var spin = loading.find(".spin");
-  elem.find(".area").append(loading);
+  elem.append(loading);
   var i = 0;
   setInterval(function(){
     spin.css("background-position","0 " + (i%8) * 40 + "px")
     i++;
   },100);
+  return loading;
 }
 
 exports.init = function(selector,options){
@@ -76,13 +88,13 @@ exports.init = function(selector,options){
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
-    maxItems: options.max
+    maxItems: type == "single" ? 1 : 2
   });
 
   var elem = $(selector);
   var result = $("<div class='result'></div>");
   if(options.type == "single"){
-    initloading(elem);
+    initloading(elem.find(".area"));
     elem.find(".area").append(result);
     uploader.on("progress",function(){
       result.empty();
@@ -90,11 +102,18 @@ exports.init = function(selector,options){
       elem.find(".result").hide();
       elem.find(".loading").show();
     }).on("success",function(e){
-      loadImageToElem(e.data.key, result, function(){
+      loadImageToElem(e.data.key, result, {
+        width: 155,
+        height: 105
+      }, function(){
         elem.find(".loading").hide();
         elem.find(".result").show();
       });
     })
+  }else{
+    uploader.on("disable",function(){
+      elem.hide();
+    });
   }
 
   return uploader;

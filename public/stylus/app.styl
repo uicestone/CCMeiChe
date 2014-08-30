@@ -191,6 +191,26 @@ body
   display: block
   opacity: 0.6
 
+
+.loading
+  position: absolute
+  top: 30px
+  left: 60px
+  display: none
+  .spin
+    background-image: url("./img/loading.png")
+    width: 40px
+    height: 40px
+    background-size: 40px 320px
+    background-position: 0 0
+
+.photo-list
+  .loading
+    display: block
+    position: static
+    .spin
+      margin: 0 auto
+
 .add-photo
   clearfix()
   width: 100%
@@ -213,17 +233,6 @@ body
         font-size: 18px
       .desc
         font-size: 12px
-  .loading
-    position: absolute
-    top: 30px
-    left: 60px
-    display: none
-    .spin
-      background-image: url("./img/loading.png")
-      width: 40px
-      height: 40px
-      background-size: 40px 320px
-      background-position: 0 0
   .camera
     float: right
     position: absolute
@@ -697,12 +706,12 @@ body
     font-size: 18px
     padding: 12px 0
     text-align: center
-  .car-brokes
+  .breakages
     clearfix()
     margin-left: -10px
     position: relative
     left: 10px
-  .car-broke
+  .breakage
     color: orange
     float: left
     width: 42px
@@ -712,7 +721,9 @@ body
     border: 1px solid orange
     &.active
       background-color: orange
-      color: #fff
+      path
+        fill: white
+        stroke: white
 
 #recharge
   .h1

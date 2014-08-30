@@ -247,6 +247,28 @@ body.openmenu {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
   filter: alpha(opacity=60);
 }
+.loading {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  display: none;
+}
+.loading .spin {
+  background-image: url("./img/loading.png");
+  width: 40px;
+  height: 40px;
+  -webkit-background-size: 40px 320px;
+  -moz-background-size: 40px 320px;
+  background-size: 40px 320px;
+  background-position: 0 0;
+}
+.photo-list .loading {
+  display: block;
+  position: static;
+}
+.photo-list .loading .spin {
+  margin: 0 auto;
+}
 .add-photo {
   zoom: 1;
   width: 100%;
@@ -281,21 +303,6 @@ body.openmenu {
 }
 .add-photo .area .text .desc {
   font-size: 12px;
-}
-.add-photo .loading {
-  position: absolute;
-  top: 30px;
-  left: 60px;
-  display: none;
-}
-.add-photo .loading .spin {
-  background-image: url("./img/loading.png");
-  width: 40px;
-  height: 40px;
-  -webkit-background-size: 40px 320px;
-  -moz-background-size: 40px 320px;
-  background-size: 40px 320px;
-  background-position: 0 0;
 }
 .add-photo .camera {
   float: right;
@@ -934,21 +941,21 @@ body.openmenu {
   padding: 12px 0;
   text-align: center;
 }
-#finishorder .car-brokes {
+#finishorder .breakages {
   zoom: 1;
   margin-left: -10px;
   position: relative;
   left: 10px;
 }
-#finishorder .car-brokes:before,
-#finishorder .car-brokes:after {
+#finishorder .breakages:before,
+#finishorder .breakages:after {
   content: "";
   display: block;
 }
-#finishorder .car-brokes:after {
+#finishorder .breakages:after {
   clear: both;
 }
-#finishorder .car-broke {
+#finishorder .breakage {
   color: #fab44a;
   float: left;
   width: 42px;
@@ -957,9 +964,12 @@ body.openmenu {
   margin-bottom: 10px;
   border: 1px solid #fab44a;
 }
-#finishorder .car-broke.active {
+#finishorder .breakage.active {
   background-color: #fab44a;
-  color: #fff;
+}
+#finishorder .breakage.active path {
+  fill: #fff;
+  stroke: #fff;
 }
 #recharge .h1 {
   font-size: 20px;

@@ -21,13 +21,17 @@ exports.worker = function(req,res,next){
   var worker_oauth = require("../util/wechat").worker.oauth;
 
   if(process.env.DEBUG){
-    return Worker.findOne({
+    Worker.findOne({
       name:"spud"
     },function(err,spud){
       if(err){return next(err);}
-      res.locals.user = req.user = spud;
-      next();
+      req.login(spud,function(err){
+        if(err){return next(err);}
+        res.locals.user = req.user = spud;
+        next();
+      });
     });
+    return
   }
 
   if(!req.isAuthenticated()){
@@ -38,8 +42,6 @@ exports.worker = function(req,res,next){
     console.log("will redirect to", redirect_url);
     return res.redirect(redirect_url);
   }
-
-  console.log("req.user",req.user);
 
   res.locals.user = req.user;
   next();
