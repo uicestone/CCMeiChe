@@ -20,7 +20,6 @@ app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/jade');
 app.use(function(req,res,next){
   req.reqid = uuid();
-  console.log(req.method,req.url);
   next();
 });
 app.use(session({
@@ -35,6 +34,11 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(function(req,res,next){
+  console.log(req.method,req.url);
+  console.log(JSON.stringify(req.body,null,2));
+  next();
+});
 app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
 app.use(passport.session());
