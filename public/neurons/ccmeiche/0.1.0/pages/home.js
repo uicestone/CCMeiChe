@@ -330,15 +330,7 @@ $("#go-wash").on("touchend", function(){
         finish_time: estimate.finish_time
       });
     });
-  }).fail(function(xhr){
-    try{
-      json = JSON.parse(xhr.responseText);
-    }catch(e){
-      json = {}
-    }
-
-    popMessage(json.error && json.error.message);
-  });
+  }).fail(popMessage);
 
 });
 
@@ -462,7 +454,7 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_8, [_20,_23,_22,_6,_9], function(require, exports, module, __filename, __dirname) {
+define(_8, [_20,_23,_22,_9,_6], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
 var multiSelect = require("./multiselect");
@@ -556,13 +548,29 @@ module.exports = function(choices,options){
 }
 }, {
     entries:entries,
-    map:mix({"./multiselect":_6,"./singleselect":_9},globalMap)
+    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
 });
 
 define(_7, [_20], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
-  var pop = $("<div>" + message + "</div>");
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
   pop.css({
     position:"fixed",
     opacity:"0",

@@ -27,7 +27,23 @@ var globalMap = asyncDepsToMix;
 define(_7, [_20], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
-  var pop = $("<div>" + message + "</div>");
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
   pop.css({
     position:"fixed",
     opacity:"0",

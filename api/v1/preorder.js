@@ -30,13 +30,19 @@ exports.post = function (req, res, next) {
     }
   }).limit(5).toArray(function (err, workers) {
     if(err){return next(err);}
-    console.log("Workers",workers);
+    if(!workers.length){
+      return next({
+        status: 400,
+        message: "未找到可用车工"
+      });
+    }
+
     async.map(workers, function(worker, done){
       var worker_latlng = worker.latlng;
       var speedInMin = config.motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
 
       // 通过百度api查询路线
-      console.log("from %s to %s",worker_latlng,user_latlng);
+      console.log("查询baidu地图路线 %s 到 %s",worker_latlng,user_latlng);
       baidumap.direction({
         origin: worker_latlng.join(","),
         destination: user_latlng,
@@ -68,7 +74,6 @@ exports.post = function (req, res, next) {
       function compare_nearest(a,b){
         return b.finish_time > a.finish_time ? -1 : 1;
       }
-      console.log("results",results);
       results = results.sort(compare_nearest);
 
       res.status(200).send(results[0]);

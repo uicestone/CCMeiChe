@@ -300,15 +300,7 @@ $("#go-wash").on("touchend", function(){
         finish_time: estimate.finish_time
       });
     });
-  }).fail(function(xhr){
-    try{
-      json = JSON.parse(xhr.responseText);
-    }catch(e){
-      json = {}
-    }
-
-    popMessage(json.error && json.error.message);
-  });
+  }).fail(popMessage);
 
 });
 
