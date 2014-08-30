@@ -14,8 +14,7 @@ html
     meta(name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1")
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     meta(name="apple-mobile-web-app-capable", content="yes")
-  body(id="#{id}")
-    block content
+
     script.
         window.onerror = function(msg,url,line){
             var e = encodeURIComponent;
@@ -34,8 +33,10 @@ html
     if user && config.service == "user"
         script.
             var user = {
-              cars: !{JSON.stringify(user.cars)},
+              cars: !{JSON.stringify(user.cars||[])},
               phone: #{user.phone},
-              promo: !{JSON.stringify(user.promo)},
+              promo: !{JSON.stringify(user.promo||[])},
               credit: #{user.credit || 0},
             };
+  body(id="#{id}")
+    block content
