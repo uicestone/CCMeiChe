@@ -6,6 +6,8 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
   console.log("user wechat recieves message %s",JSON.stringify(message,null,2));
   if(message.Event == "subscribe"){
     res.reply("欢迎关注CC美车 \\(^o^)/");
+  }else{
+    res.reply("");
   }
 });
 
@@ -34,7 +36,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
           latlng:[messag.Latitude,message.Longitude]
         }
       });
-      return;
+      return res.reply("");
     }
 
     if(message.EventKey == "ON_DUTY"){
@@ -94,6 +96,8 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
           return [order.address,cars]
         }).join("\n\n"))
       });
+    }else{
+      return res.reply("");
     }
   });
 });
