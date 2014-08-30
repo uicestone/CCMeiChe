@@ -26,9 +26,9 @@ exports.list = function(req,res,next){
 
 exports.done = function(req,res,next){
   var data = {
-    broken: req.body.broken,
+    breakage: req.body.breakage,
     finish_pics: req.body.finish_pics,
-    broken_pics: req.body.broken_pics
+    breakage_pics: req.body.breakage_pics
   };
   var worker = req.user;
 
@@ -38,9 +38,9 @@ exports.done = function(req,res,next){
 
   Order.updateById(req.params.orderid,{
     $set:{
-      broken: data.broken,
+      breakage: data.breakage,
       finish_pics: data.finish_pics,
-      broken_pics: data.broken_pics,
+      breakage_pics: data.breakage_pics,
       status: "done",
       finish_time: new Date()
     }
@@ -57,9 +57,10 @@ exports.done = function(req,res,next){
         function(done){
 
           Worker.updateById(worker._id, {
-            last_available_time: new Date(worker.last_available_time - (order.estimate_finish_time - order.finish_time))
+            $set:{
+              last_available_time: new Date(worker.last_available_time - (order.estimate_finish_time - order.finish_time))
+            }
           },done);
-
         },
         // 给车工发送消息
         function(done){
@@ -69,20 +70,27 @@ exports.done = function(req,res,next){
             if(err){return done(err);}
             if(!new_order){return done(null);}
             var url = config.host.worker + "/orders/" + new_order._id;
-            wechat_worker.sendText(worker.openid,"查看下一笔订单：" + url, done);
+            var message = "查看下一笔订单：" + url;
+            console.log("send text to %s %s",worker.openid,message);
+            wechat_worker.sendText(worker.openid, message, done);
           });
         },
         // 给用户发送消息
         function(done){
+          if(!order.user.openid){
+            return done("订单 %s 的用户没有openid",order._id);
+          }
           var url = config.host.user + "/myorders/" + order._id;
-          wechat_user.sendText(order.user.openid,"您的车已洗完：" + url);
+          var message = "您的车已洗完：" + url;
+          console.log("send text to %s %s",order.user.openid, message);
+          wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
         }
       ],function(err){
         if(err){
           return next(err);
         }
 
-        res.status(200).send("ok");
+        res.status(200).send({message:"ok"});
 
       });
     });

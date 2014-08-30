@@ -108,6 +108,7 @@ FinishOrder.prototype.show = function(data){
   });
 
   elem.find(".cancel").on("touchend", function(){
+    self.emit("cancel");
     viewSwipe.out("bottom");
   });
 
@@ -116,7 +117,7 @@ FinishOrder.prototype.show = function(data){
   return this;
 }
 
-FinishOrder.prototype.confirm = function(data){
+FinishOrder.prototype.confirm = function(){
   if(uploading){
     return popMessage("图片尚未上传完毕，请稍等");
   }
@@ -126,19 +127,25 @@ FinishOrder.prototype.confirm = function(data){
     }),
     breakage_pics: $(".breakage_photos li").get().map(function(el){
       return $(el).attr("data-key");
-    }),
-    breakage: $(".breakages .active").attr("data-index")
+    })
   };
 
   var breakage = $(".breakages .active").attr("data-index");
 
+  if(breakage){
+    data.breakage = breakage;
+  }
 
   if(!data.finish_pics.length){
-    return popMessage("请上车照片");
+    return popMessage("请上传车辆照片");
+  }
+
+  if(data.breakage && !data.breakage_pics.length){
+    return popMessage("请上传车损照片");
   }
 
   viewSwipe.out("bottom");
-  this.emit("confirm");
+  this.emit("confirm",data);
 }
 
 module.exports = new FinishOrder();
