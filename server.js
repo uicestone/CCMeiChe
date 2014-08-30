@@ -36,7 +36,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(function(req,res,next){
   console.log(req.method,req.url);
-  console.log(JSON.stringify(req.body,null,2));
+  if(req.method == "POST"){
+    console.log(JSON.stringify(req.body,null,2));
+  }
   next();
 });
 app.use(express.static(__dirname + '/public'))
