@@ -3,7 +3,7 @@ var config = require('config');
 
 exports.user = wechat(config.wechat.user.token, function(req,res){
   var message = req.weixin;
-  console.log(message);
+  console.log("user wechat recieves message %s",message);
   if(message.Event == "subscribe"){
     res.reply("欢迎关注CC美车 \\(^o^)/");
   }
@@ -14,6 +14,8 @@ var Order = require('./model/order');
 exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   var message = req.weixin;
   var openid = message.FromUserName;
+
+  console.log("worker wechat recieves message %s",message);
   Worker.findOne({
     openid: openid
   },function(err,user){
@@ -66,7 +68,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     }else if(message.EventKey == "OFF_DUTY"){
       // 下班
       if(user.status == "off_duty"){
-        return res.reply("你已经下班了，享受生活把。");
+        return res.reply("你已经下班了，享受生活吧。");
       }
 
       Worker.update({
@@ -78,7 +80,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
         }
       },function(err){
         if(err){return res.reply(err);}
-        return res.reply("你已经下班了，享受生活把。");
+        return res.reply("你已经下班了，享受生活吧。");
       });
     }else if(message.EventKey == "VIEW_HISTORY"){
       Order.find({
