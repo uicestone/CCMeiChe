@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(function(req,res,next){
-  console.log(req.method,req.url);
+  console.log(SERVICE,req.method,req.url);
   if(req.method == "POST"){
     console.log(JSON.stringify(req.body,null,2));
   }
