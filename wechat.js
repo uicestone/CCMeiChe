@@ -3,7 +3,7 @@ var config = require('config');
 
 exports.user = wechat(config.wechat.user.token, function(req,res){
   var message = req.weixin;
-  console.log("user wechat recieves message %s",message);
+  console.log("user wechat recieves message %s",JSON.stringify(message,null,2));
   if(message.Event == "subscribe"){
     res.reply("欢迎关注CC美车 \\(^o^)/");
   }
@@ -15,7 +15,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   var message = req.weixin;
   var openid = message.FromUserName;
 
-  console.log("worker wechat recieves message %s",message);
+  console.log("worker wechat recieves message %s",JSON.stringify(message,null,2));
   Worker.findOne({
     openid: openid
   },function(err,user){
