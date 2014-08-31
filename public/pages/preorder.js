@@ -19,7 +19,7 @@ function addZero(num){
 function formatTime(data){
   var milliseconds = data.drive_time + data.wash_time;
   var duration = moment.duration({milliseconds:milliseconds});
-  return addZero(duration.minutes()) + ":" + addZero(duration.seconds());
+  return addZero(duration.hours()) + "小时" + addZero(duration.minutes()) + "分钟" + addZero(duration.seconds()) + "秒";
 }
 
 PreOrder.prototype.show = function(data){
