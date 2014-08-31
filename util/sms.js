@@ -3,7 +3,7 @@ var request = require('request');
 
 exports.send = function(phone, code, callback){
   console.log("send sms ",phone,code);
-  request.get("http://yunpian.com/v1/sms/tpl_send.json", {
+  request.post("http://yunpian.com/v1/sms/tpl_send.json", {
     form:{
       apikey: config.yunpian.apikey,
       mobile: phone,
