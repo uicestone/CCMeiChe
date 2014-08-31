@@ -7,7 +7,7 @@ module.exports = function(req,res,next){
   if(process.env.DEBUG){
     return res.render("login",{
       id:"login",
-      title: "ccmeiche login"
+      title: "登录"
     });
   }
 
