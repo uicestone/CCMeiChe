@@ -1,6 +1,7 @@
 var cartypes = require("./data/cartypes");
 var CarTypesModel = require("./model/cartype");
 var han = require("han");
+var async = require("async");
 // 抓取车型数据
 // http://car.autohome.com.cn/zhaoche/pinpai/
 
@@ -24,16 +25,23 @@ var han = require("han");
 //   console.log(data);
 
 // });
-cartypes.forEach(function(cartype){
-  CarTypesModel.update({
-    brand: cartype.brand,
-    type: cartype.type,
-    spell: han.letter(cartype.type)
-  },{
-    brand: cartype.brand,
-    type: cartype.type,
-    spell: han.letter(cartype.type.replace("·",""))
-  },{
-    upsert: true
-  });
+var all = cartypes.length;
+var current = 1;
+async.parallel(cartypes.map(function(cartype){
+  return function(done){
+    console.log("update",cartype.type,current+"/"+all);
+    current++;
+    CarTypesModel.update({
+      brand: cartype.brand,
+      type: cartype.type
+    },{
+      brand: cartype.brand,
+      type: cartype.type,
+      spell: han.letter(cartype.type.replace("·",""))
+    },{
+      upsert: true
+    },done);
+  }
+}),function(){
+  console.log("done");
 });
