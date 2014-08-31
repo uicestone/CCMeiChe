@@ -55,17 +55,17 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       },function(err, worker){
         if(err){return res.reply(err)}
         var now = new Date();
-        var last_abailable_time;
-        if(worker.last_abailable_time && worker.last_abailable_time > now){
-          last_abailable_time = worker.last_abailable_time;
+        var last_available_time;
+        if(worker.last_available_time && worker.last_available_time > now){
+          last_available_time = worker.last_available_time;
         }else{
-          last_abailable_time = now;
+          last_available_time = now;
         }
         Worker.update({
           openid: openid
         },{
           $set:{
-            last_abailable_time: last_abailable_time,
+            last_available_time: last_available_time,
             status:"on_duty"
           }
         },function(err){
