@@ -51,7 +51,6 @@ exports.post = function (req, res, next) {
         destination_region: "上海"
       }, function(err,solution){
         if(err){return done(err);}
-        console.log(solution);
         if(!solution || !solution.result || !solution.result.routes[0]){
           return done("solution parse error " + JSON.stringify(solution));
         }
@@ -76,7 +75,7 @@ exports.post = function (req, res, next) {
         return b.finish_time > a.finish_time ? -1 : 1;
       }
       results = results.sort(compare_nearest);
-
+      console.log("生成预估结果",results[0]);
       res.status(200).send(results[0]);
     });
   });
