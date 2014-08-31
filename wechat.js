@@ -30,7 +30,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
           openid: openid
         },{
           $set:{
-            latlng:[message.Latitude,message.Longitude]
+            latlng:[+message.Latitude,+message.Longitude]
           }
         });
       }
