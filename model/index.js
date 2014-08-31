@@ -4,7 +4,8 @@ var models = [
   "order",
   "worker",
   "service",
-  "error"
+  "error",
+  "cartype"
 ];
 
 models.forEach(function(name){

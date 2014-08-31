@@ -1,0 +1,6386 @@
+[
+  {
+    "brand": "阿尔法罗密欧",
+    "type": "ALFA 4C"
+  },
+  {
+    "brand": "阿尔法罗密欧",
+    "type": "Giulietta"
+  },
+  {
+    "brand": "阿尔法罗密欧",
+    "type": "Gloria"
+  },
+  {
+    "brand": "阿尔法罗密欧",
+    "type": "MiTo"
+  },
+  {
+    "brand": "阿尔法罗密欧",
+    "type": "ALFA 147"
+  },
+  {
+    "brand": "阿尔法罗密欧",
+    "type": "ALFA 156"
+  },
+  {
+    "brand": "阿尔法罗密欧",
+    "type": "ALFA GT"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "Cygnet"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "Lagonda"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "Rapide"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "V12 Vantage"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "V8 Vantage"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "Vanquish"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "阿斯顿·马丁DB5"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "阿斯顿·马丁DB9"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "V12 Zagato"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "Virage"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "阿斯顿·马丁DBS"
+  },
+  {
+    "brand": "阿斯顿·马丁",
+    "type": "阿斯顿·马丁One-77"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A3"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A4L"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A6L"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪Q3"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪Q5"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A4"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A6"
+  },
+  {
+    "brand": "奥迪",
+    "type": "allroad"
+  },
+  {
+    "brand": "奥迪",
+    "type": "Crosslane Coupe"
+  },
+  {
+    "brand": "奥迪",
+    "type": "Nanuk"
+  },
+  {
+    "brand": "奥迪",
+    "type": "quattro"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A1"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A2"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A3(进口)"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A4(进口)"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A5"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A6(进口)"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A7"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪A8"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪e-tron"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪Q3(进口)"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪Q5(进口)"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪Q7"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪R18"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪R8"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪S1"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪S3"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪S4"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪S5"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪S6"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪S7"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪S8"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪SQ5"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪TT"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪TT offroad"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪TTS"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪Cross"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪Urban"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪RS 3"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪RS 4"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪RS 5"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪RS 6"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪RS 7"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪RS Q3"
+  },
+  {
+    "brand": "奥迪",
+    "type": "奥迪TT RS"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 CLS级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 E级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 GL级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 G级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 M级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 SLK级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 SLS级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 SL级"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 smart fortwo"
+  },
+  {
+    "brand": "巴博斯",
+    "type": "巴博斯 S级"
+  },
+  {
+    "brand": "宝骏",
+    "type": "宝骏610"
+  },
+  {
+    "brand": "宝骏",
+    "type": "宝骏630"
+  },
+  {
+    "brand": "宝骏",
+    "type": "宝骏730"
+  },
+  {
+    "brand": "宝骏",
+    "type": "乐驰"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马3系"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马5系"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X1"
+  },
+  {
+    "brand": "宝马",
+    "type": "Active Tourer"
+  },
+  {
+    "brand": "宝马",
+    "type": "Gran Lusso"
+  },
+  {
+    "brand": "宝马",
+    "type": "Vision Future Luxury"
+  },
+  {
+    "brand": "宝马",
+    "type": "Zagato Coupe"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马1系"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马2系"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马2系Active Tourer"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马3系(进口)"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马3系GT"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马4系"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马5系(进口)"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马5系GT"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马6系"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马7系"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马i3"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马i8"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X1(进口)"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X3"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X4"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X5"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X6"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马Z4"
+  },
+  {
+    "brand": "宝马",
+    "type": "ConnectedDrive"
+  },
+  {
+    "brand": "宝马",
+    "type": "EfficientDynamics"
+  },
+  {
+    "brand": "宝马",
+    "type": "Isetta"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马Z8"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马M3"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马M4"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马M5"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马M6"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X5 M"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马X6 M"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马1系M"
+  },
+  {
+    "brand": "宝马",
+    "type": "宝马M1"
+  },
+  {
+    "brand": "保时捷",
+    "type": "Boxster"
+  },
+  {
+    "brand": "保时捷",
+    "type": "Cayman"
+  },
+  {
+    "brand": "保时捷",
+    "type": "Macan"
+  },
+  {
+    "brand": "保时捷",
+    "type": "Panamera"
+  },
+  {
+    "brand": "保时捷",
+    "type": "保时捷911"
+  },
+  {
+    "brand": "保时捷",
+    "type": "保时捷918"
+  },
+  {
+    "brand": "保时捷",
+    "type": "卡宴"
+  },
+  {
+    "brand": "保时捷",
+    "type": "Carrera GT"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京40"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京汽车B60"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京汽车BC302Z"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京汽车BJ80"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京汽车C51X"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京汽车C60"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京汽车C71"
+  },
+  {
+    "brand": "北京汽车",
+    "type": "北京汽车E系列"
+  },
+  {
+    "brand": "北汽幻速",
+    "type": "幻速S2"
+  },
+  {
+    "brand": "北汽幻速",
+    "type": "幻速S3"
+  },
+  {
+    "brand": "北汽威旺",
+    "type": "北汽威旺205"
+  },
+  {
+    "brand": "北汽威旺",
+    "type": "北汽威旺306"
+  },
+  {
+    "brand": "北汽威旺",
+    "type": "北汽威旺307"
+  },
+  {
+    "brand": "北汽威旺",
+    "type": "北汽威旺M20"
+  },
+  {
+    "brand": "北汽威旺",
+    "type": "北汽威旺T205-D"
+  },
+  {
+    "brand": "北汽新能源",
+    "type": "E150EV"
+  },
+  {
+    "brand": "北汽新能源",
+    "type": "绅宝EV"
+  },
+  {
+    "brand": "北汽制造",
+    "type": "BJ 212"
+  },
+  {
+    "brand": "北汽制造",
+    "type": "骑士S12"
+  },
+  {
+    "brand": "北汽制造",
+    "type": "勇士"
+  },
+  {
+    "brand": "北汽制造",
+    "type": "域胜007"
+  },
+  {
+    "brand": "北汽制造",
+    "type": "战旗"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰C级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰E级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰GLK级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "凌特"
+  },
+  {
+    "brand": "奔驰",
+    "type": "威霆"
+  },
+  {
+    "brand": "奔驰",
+    "type": "唯雅诺"
+  },
+  {
+    "brand": "奔驰",
+    "type": "Coupe SUV"
+  },
+  {
+    "brand": "奔驰",
+    "type": "Ener-G-Force"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰A级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰B级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CLA级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CLS级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CL级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CSC级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰C级(进口)"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰E级(进口)"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰F125"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰F800"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰GLA级(海外)"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰GLK级(进口)"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰GL级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰G级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰M级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰R级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰SLK级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰SL级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰S级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰V级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "威霆(进口)"
+  },
+  {
+    "brand": "奔驰",
+    "type": "唯雅诺(进口)"
+  },
+  {
+    "brand": "奔驰",
+    "type": "Sprinter"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CLK级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰SLR级"
+  },
+  {
+    "brand": "奔驰",
+    "type": "Vision"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰A级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CLA级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CLS级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰C级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰E级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰GLA级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰GL级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰G级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰M级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰SLK级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰SLS级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰SL级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰S级AMG"
+  },
+  {
+    "brand": "奔驰",
+    "type": "奔驰CL级AMG"
+  },
+  {
+    "brand": "奔腾",
+    "type": "奔腾B50"
+  },
+  {
+    "brand": "奔腾",
+    "type": "奔腾B70"
+  },
+  {
+    "brand": "奔腾",
+    "type": "奔腾B90"
+  },
+  {
+    "brand": "奔腾",
+    "type": "奔腾X80"
+  },
+  {
+    "brand": "本田",
+    "type": "艾力绅"
+  },
+  {
+    "brand": "本田",
+    "type": "本田CR-V"
+  },
+  {
+    "brand": "本田",
+    "type": "本田S"
+  },
+  {
+    "brand": "本田",
+    "type": "本田XR-V"
+  },
+  {
+    "brand": "本田",
+    "type": "杰德"
+  },
+  {
+    "brand": "本田",
+    "type": "思铂睿"
+  },
+  {
+    "brand": "本田",
+    "type": "思域"
+  },
+  {
+    "brand": "本田",
+    "type": "奥德赛"
+  },
+  {
+    "brand": "本田",
+    "type": "本田C"
+  },
+  {
+    "brand": "本田",
+    "type": "缤智"
+  },
+  {
+    "brand": "本田",
+    "type": "飞度"
+  },
+  {
+    "brand": "本田",
+    "type": "锋范"
+  },
+  {
+    "brand": "本田",
+    "type": "歌诗图"
+  },
+  {
+    "brand": "本田",
+    "type": "凌派"
+  },
+  {
+    "brand": "本田",
+    "type": "雅阁"
+  },
+  {
+    "brand": "本田",
+    "type": "思迪"
+  },
+  {
+    "brand": "本田",
+    "type": "CONCEPT B"
+  },
+  {
+    "brand": "本田",
+    "type": "CONCEPT V"
+  },
+  {
+    "brand": "本田",
+    "type": "EV-Ster"
+  },
+  {
+    "brand": "本田",
+    "type": "INSIGHT"
+  },
+  {
+    "brand": "本田",
+    "type": "Pilot"
+  },
+  {
+    "brand": "本田",
+    "type": "VEZEL"
+  },
+  {
+    "brand": "本田",
+    "type": "奥德赛(海外)"
+  },
+  {
+    "brand": "本田",
+    "type": "本田CR-V(海外)"
+  },
+  {
+    "brand": "本田",
+    "type": "本田CR-Z"
+  },
+  {
+    "brand": "本田",
+    "type": "本田FCX"
+  },
+  {
+    "brand": "本田",
+    "type": "本田NSX"
+  },
+  {
+    "brand": "本田",
+    "type": "本田S660"
+  },
+  {
+    "brand": "本田",
+    "type": "本田Urban"
+  },
+  {
+    "brand": "本田",
+    "type": "飞度(进口)"
+  },
+  {
+    "brand": "本田",
+    "type": "歌诗图(海外)"
+  },
+  {
+    "brand": "本田",
+    "type": "思域(海外)"
+  },
+  {
+    "brand": "本田",
+    "type": "雅阁(海外)"
+  },
+  {
+    "brand": "本田",
+    "type": "本田S2000"
+  },
+  {
+    "brand": "本田",
+    "type": "时韵"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪e6"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪F0"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪F3"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪G3"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪G3R"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪G5"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪G6"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪L3"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪M6"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪S6"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪S7"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "秦"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "思锐"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "速锐"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "唐"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪F3R"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪F6"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "比亚迪S8"
+  },
+  {
+    "brand": "比亚迪",
+    "type": "福莱尔"
+  },
+  {
+    "brand": "标致",
+    "type": "标致2008"
+  },
+  {
+    "brand": "标致",
+    "type": "标致3008"
+  },
+  {
+    "brand": "标致",
+    "type": "标致301"
+  },
+  {
+    "brand": "标致",
+    "type": "标致307"
+  },
+  {
+    "brand": "标致",
+    "type": "标致308"
+  },
+  {
+    "brand": "标致",
+    "type": "标致408"
+  },
+  {
+    "brand": "标致",
+    "type": "标致508"
+  },
+  {
+    "brand": "标致",
+    "type": "标致206"
+  },
+  {
+    "brand": "标致",
+    "type": "标致207"
+  },
+  {
+    "brand": "标致",
+    "type": "5 by Peugeot"
+  },
+  {
+    "brand": "标致",
+    "type": "EXALT"
+  },
+  {
+    "brand": "标致",
+    "type": "ONYX"
+  },
+  {
+    "brand": "标致",
+    "type": "Urban Crossover"
+  },
+  {
+    "brand": "标致",
+    "type": "标致107"
+  },
+  {
+    "brand": "标致",
+    "type": "标致108"
+  },
+  {
+    "brand": "标致",
+    "type": "标致2008(海外)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致207(进口)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致208"
+  },
+  {
+    "brand": "标致",
+    "type": "标致3008(进口)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致301(海外)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致308(进口)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致4008"
+  },
+  {
+    "brand": "标致",
+    "type": "标致407"
+  },
+  {
+    "brand": "标致",
+    "type": "标致5008"
+  },
+  {
+    "brand": "标致",
+    "type": "标致508(进口)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致BB1"
+  },
+  {
+    "brand": "标致",
+    "type": "标致EX1"
+  },
+  {
+    "brand": "标致",
+    "type": "标致HR1"
+  },
+  {
+    "brand": "标致",
+    "type": "标致HX1"
+  },
+  {
+    "brand": "标致",
+    "type": "标致iOn"
+  },
+  {
+    "brand": "标致",
+    "type": "标致RCZ"
+  },
+  {
+    "brand": "标致",
+    "type": "标致SR1"
+  },
+  {
+    "brand": "标致",
+    "type": "标致SXC"
+  },
+  {
+    "brand": "标致",
+    "type": "标致206(进口)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致307(进口)"
+  },
+  {
+    "brand": "标致",
+    "type": "标致607"
+  },
+  {
+    "brand": "别克",
+    "type": "昂科拉ENCORE"
+  },
+  {
+    "brand": "别克",
+    "type": "昂科威ENVISION"
+  },
+  {
+    "brand": "别克",
+    "type": "别克GL8"
+  },
+  {
+    "brand": "别克",
+    "type": "君威"
+  },
+  {
+    "brand": "别克",
+    "type": "君越"
+  },
+  {
+    "brand": "别克",
+    "type": "凯越"
+  },
+  {
+    "brand": "别克",
+    "type": "英朗"
+  },
+  {
+    "brand": "别克",
+    "type": "林荫大道"
+  },
+  {
+    "brand": "别克",
+    "type": "荣御"
+  },
+  {
+    "brand": "别克",
+    "type": "Riviera"
+  },
+  {
+    "brand": "别克",
+    "type": "Verano"
+  },
+  {
+    "brand": "别克",
+    "type": "昂科雷"
+  },
+  {
+    "brand": "别克",
+    "type": "昂科威ENVISION(海外)"
+  },
+  {
+    "brand": "别克",
+    "type": "君威(海外)"
+  },
+  {
+    "brand": "别克",
+    "type": "君越(海外)"
+  },
+  {
+    "brand": "别克",
+    "type": "Roadmaster"
+  },
+  {
+    "brand": "别克",
+    "type": "Special"
+  },
+  {
+    "brand": "宾利",
+    "type": "Brooklands"
+  },
+  {
+    "brand": "宾利",
+    "type": "宾利EXP 9 F"
+  },
+  {
+    "brand": "宾利",
+    "type": "飞驰"
+  },
+  {
+    "brand": "宾利",
+    "type": "慕尚"
+  },
+  {
+    "brand": "宾利",
+    "type": "欧陆"
+  },
+  {
+    "brand": "宾利",
+    "type": "雅骏"
+  },
+  {
+    "brand": "宾利",
+    "type": "雅致"
+  },
+  {
+    "brand": "布加迪",
+    "type": "Galibier"
+  },
+  {
+    "brand": "布加迪",
+    "type": "威航"
+  },
+  {
+    "brand": "昌河",
+    "type": "福瑞达"
+  },
+  {
+    "brand": "昌河",
+    "type": "爱迪尔"
+  },
+  {
+    "brand": "长安",
+    "type": "奔奔"
+  },
+  {
+    "brand": "长安",
+    "type": "奔奔MINI"
+  },
+  {
+    "brand": "长安",
+    "type": "长安CS35"
+  },
+  {
+    "brand": "长安",
+    "type": "长安CS75"
+  },
+  {
+    "brand": "长安",
+    "type": "长安CS95"
+  },
+  {
+    "brand": "长安",
+    "type": "长安CX20"
+  },
+  {
+    "brand": "长安",
+    "type": "长安CX30"
+  },
+  {
+    "brand": "长安",
+    "type": "长安E30"
+  },
+  {
+    "brand": "长安",
+    "type": "长安VOSS"
+  },
+  {
+    "brand": "长安",
+    "type": "睿骋"
+  },
+  {
+    "brand": "长安",
+    "type": "逸动"
+  },
+  {
+    "brand": "长安",
+    "type": "悦翔"
+  },
+  {
+    "brand": "长安",
+    "type": "悦翔V3"
+  },
+  {
+    "brand": "长安",
+    "type": "悦翔V5"
+  },
+  {
+    "brand": "长安",
+    "type": "悦翔V7"
+  },
+  {
+    "brand": "长安",
+    "type": "致尚XT"
+  },
+  {
+    "brand": "长安",
+    "type": "奔奔i"
+  },
+  {
+    "brand": "长安",
+    "type": "奔奔LOVE"
+  },
+  {
+    "brand": "长安",
+    "type": "杰勋"
+  },
+  {
+    "brand": "长安",
+    "type": "志翔"
+  },
+  {
+    "brand": "长安商用",
+    "type": "长安V5"
+  },
+  {
+    "brand": "长安商用",
+    "type": "长安星光4500"
+  },
+  {
+    "brand": "长安商用",
+    "type": "长安星卡"
+  },
+  {
+    "brand": "长安商用",
+    "type": "长安之星"
+  },
+  {
+    "brand": "长安商用",
+    "type": "长安之星2"
+  },
+  {
+    "brand": "长安商用",
+    "type": "长安之星7"
+  },
+  {
+    "brand": "长安商用",
+    "type": "金牛星"
+  },
+  {
+    "brand": "长安商用",
+    "type": "欧力威"
+  },
+  {
+    "brand": "长安商用",
+    "type": "欧诺"
+  },
+  {
+    "brand": "长安商用",
+    "type": "神骐"
+  },
+  {
+    "brand": "长安商用",
+    "type": "长安之星S460"
+  },
+  {
+    "brand": "长安商用",
+    "type": "睿行"
+  },
+  {
+    "brand": "长安商用",
+    "type": "尊行"
+  },
+  {
+    "brand": "长城",
+    "type": "长城C20R"
+  },
+  {
+    "brand": "长城",
+    "type": "长城C30"
+  },
+  {
+    "brand": "长城",
+    "type": "长城C50"
+  },
+  {
+    "brand": "长城",
+    "type": "长城C70"
+  },
+  {
+    "brand": "长城",
+    "type": "长城M2"
+  },
+  {
+    "brand": "长城",
+    "type": "长城M4"
+  },
+  {
+    "brand": "长城",
+    "type": "长城V80"
+  },
+  {
+    "brand": "长城",
+    "type": "风骏3"
+  },
+  {
+    "brand": "长城",
+    "type": "风骏5"
+  },
+  {
+    "brand": "长城",
+    "type": "风骏6"
+  },
+  {
+    "brand": "长城",
+    "type": "金迪尔"
+  },
+  {
+    "brand": "长城",
+    "type": "欧拉"
+  },
+  {
+    "brand": "长城",
+    "type": "长城M1"
+  },
+  {
+    "brand": "长城",
+    "type": "长城精灵"
+  },
+  {
+    "brand": "长城",
+    "type": "嘉誉"
+  },
+  {
+    "brand": "长城",
+    "type": "酷熊"
+  },
+  {
+    "brand": "长城",
+    "type": "凌傲"
+  },
+  {
+    "brand": "长城",
+    "type": "赛弗"
+  },
+  {
+    "brand": "长城",
+    "type": "赛影"
+  },
+  {
+    "brand": "长城",
+    "type": "炫丽"
+  },
+  {
+    "brand": "成功汽车",
+    "type": "成功V1"
+  },
+  {
+    "brand": "Dacia",
+    "type": "Duster"
+  },
+  {
+    "brand": "DS",
+    "type": "DS 5"
+  },
+  {
+    "brand": "DS",
+    "type": "DS 5LS"
+  },
+  {
+    "brand": "DS",
+    "type": "DS 6"
+  },
+  {
+    "brand": "DS",
+    "type": "DS 3"
+  },
+  {
+    "brand": "DS",
+    "type": "DS 4"
+  },
+  {
+    "brand": "DS",
+    "type": "DS Wild Rubis"
+  },
+  {
+    "brand": "DS",
+    "type": "DS 5(进口)"
+  },
+  {
+    "brand": "DS",
+    "type": "DS23"
+  },
+  {
+    "brand": "大发",
+    "type": "森雅"
+  },
+  {
+    "brand": "大众",
+    "type": "POLO"
+  },
+  {
+    "brand": "大众",
+    "type": "朗境"
+  },
+  {
+    "brand": "大众",
+    "type": "朗行"
+  },
+  {
+    "brand": "大众",
+    "type": "朗逸"
+  },
+  {
+    "brand": "大众",
+    "type": "凌渡"
+  },
+  {
+    "brand": "大众",
+    "type": "帕萨特"
+  },
+  {
+    "brand": "大众",
+    "type": "桑塔纳"
+  },
+  {
+    "brand": "大众",
+    "type": "途安"
+  },
+  {
+    "brand": "大众",
+    "type": "途观"
+  },
+  {
+    "brand": "大众",
+    "type": "Passat领驭"
+  },
+  {
+    "brand": "大众",
+    "type": "高尔"
+  },
+  {
+    "brand": "大众",
+    "type": "桑塔纳经典"
+  },
+  {
+    "brand": "大众",
+    "type": "桑塔纳志俊"
+  },
+  {
+    "brand": "大众",
+    "type": "宝来"
+  },
+  {
+    "brand": "大众",
+    "type": "高尔夫"
+  },
+  {
+    "brand": "大众",
+    "type": "捷达"
+  },
+  {
+    "brand": "大众",
+    "type": "迈腾"
+  },
+  {
+    "brand": "大众",
+    "type": "速腾"
+  },
+  {
+    "brand": "大众",
+    "type": "一汽-大众CC"
+  },
+  {
+    "brand": "大众",
+    "type": "宝来/宝来经典"
+  },
+  {
+    "brand": "大众",
+    "type": "开迪"
+  },
+  {
+    "brand": "大众",
+    "type": "Amarok"
+  },
+  {
+    "brand": "大众",
+    "type": "BlueSport"
+  },
+  {
+    "brand": "大众",
+    "type": "Buggy Up"
+  },
+  {
+    "brand": "大众",
+    "type": "Bulli"
+  },
+  {
+    "brand": "大众",
+    "type": "Cross Coupe"
+  },
+  {
+    "brand": "大众",
+    "type": "CrossBlue"
+  },
+  {
+    "brand": "大众",
+    "type": "Jetta"
+  },
+  {
+    "brand": "大众",
+    "type": "Passat"
+  },
+  {
+    "brand": "大众",
+    "type": "POLO(海外)"
+  },
+  {
+    "brand": "大众",
+    "type": "Routan"
+  },
+  {
+    "brand": "大众",
+    "type": "Taigun"
+  },
+  {
+    "brand": "大众",
+    "type": "Tiguan"
+  },
+  {
+    "brand": "大众",
+    "type": "T-ROC"
+  },
+  {
+    "brand": "大众",
+    "type": "大众CC"
+  },
+  {
+    "brand": "大众",
+    "type": "大众Eos"
+  },
+  {
+    "brand": "大众",
+    "type": "大众up!"
+  },
+  {
+    "brand": "大众",
+    "type": "大众XL1"
+  },
+  {
+    "brand": "大众",
+    "type": "高尔(海外)"
+  },
+  {
+    "brand": "大众",
+    "type": "高尔夫(进口)"
+  },
+  {
+    "brand": "大众",
+    "type": "辉腾"
+  },
+  {
+    "brand": "大众",
+    "type": "甲壳虫"
+  },
+  {
+    "brand": "大众",
+    "type": "开迪(海外)"
+  },
+  {
+    "brand": "大众",
+    "type": "凯路威"
+  },
+  {
+    "brand": "大众",
+    "type": "迈特威"
+  },
+  {
+    "brand": "大众",
+    "type": "迈腾(进口)"
+  },
+  {
+    "brand": "大众",
+    "type": "尚酷"
+  },
+  {
+    "brand": "大众",
+    "type": "途安(海外)"
+  },
+  {
+    "brand": "大众",
+    "type": "途锐"
+  },
+  {
+    "brand": "大众",
+    "type": "夏朗"
+  },
+  {
+    "brand": "大众",
+    "type": "大众Fox"
+  },
+  {
+    "brand": "道奇",
+    "type": "凯领"
+  },
+  {
+    "brand": "道奇",
+    "type": "Charger SRT"
+  },
+  {
+    "brand": "道奇",
+    "type": "蝰蛇"
+  },
+  {
+    "brand": "道奇",
+    "type": "挑战者 SRT"
+  },
+  {
+    "brand": "道奇",
+    "type": "Charger"
+  },
+  {
+    "brand": "道奇",
+    "type": "Dart"
+  },
+  {
+    "brand": "道奇",
+    "type": "Durango"
+  },
+  {
+    "brand": "道奇",
+    "type": "道奇Ram"
+  },
+  {
+    "brand": "道奇",
+    "type": "锋哲"
+  },
+  {
+    "brand": "道奇",
+    "type": "酷威"
+  },
+  {
+    "brand": "道奇",
+    "type": "挑战者"
+  },
+  {
+    "brand": "道奇",
+    "type": "酷搏"
+  },
+  {
+    "brand": "东风",
+    "type": "俊风CV03"
+  },
+  {
+    "brand": "东风",
+    "type": "猛士"
+  },
+  {
+    "brand": "东风",
+    "type": "御风"
+  },
+  {
+    "brand": "东风风度",
+    "type": "奥丁"
+  },
+  {
+    "brand": "东风风度",
+    "type": "俊风"
+  },
+  {
+    "brand": "东风风度",
+    "type": "锐骐多功能车"
+  },
+  {
+    "brand": "东风风度",
+    "type": "锐骐皮卡"
+  },
+  {
+    "brand": "东风风度",
+    "type": "帅客"
+  },
+  {
+    "brand": "东风风度",
+    "type": "御轩"
+  },
+  {
+    "brand": "东风风神",
+    "type": "东风1号"
+  },
+  {
+    "brand": "东风风神",
+    "type": "风神A30"
+  },
+  {
+    "brand": "东风风神",
+    "type": "风神A60"
+  },
+  {
+    "brand": "东风风神",
+    "type": "风神AX7"
+  },
+  {
+    "brand": "东风风神",
+    "type": "风神E30L"
+  },
+  {
+    "brand": "东风风神",
+    "type": "风神H30"
+  },
+  {
+    "brand": "东风风神",
+    "type": "风神L60"
+  },
+  {
+    "brand": "东风风神",
+    "type": "风神S30"
+  },
+  {
+    "brand": "东风风行",
+    "type": "风行CM7"
+  },
+  {
+    "brand": "东风风行",
+    "type": "景逸"
+  },
+  {
+    "brand": "东风风行",
+    "type": "景逸S50"
+  },
+  {
+    "brand": "东风风行",
+    "type": "景逸X3"
+  },
+  {
+    "brand": "东风风行",
+    "type": "景逸X5"
+  },
+  {
+    "brand": "东风风行",
+    "type": "菱智"
+  },
+  {
+    "brand": "东风风行",
+    "type": "景逸SUV"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康C35"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康C36"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康C37"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康K01"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康K07"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康K07II"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康K17"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康V07S"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康V21"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康V22"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康V27"
+  },
+  {
+    "brand": "东风小康",
+    "type": "东风小康V29"
+  },
+  {
+    "brand": "东风小康",
+    "type": "风光"
+  },
+  {
+    "brand": "东南",
+    "type": "V3菱悦"
+  },
+  {
+    "brand": "东南",
+    "type": "V5菱致"
+  },
+  {
+    "brand": "东南",
+    "type": "V6菱仕"
+  },
+  {
+    "brand": "东南",
+    "type": "得利卡"
+  },
+  {
+    "brand": "东南",
+    "type": "东南V7"
+  },
+  {
+    "brand": "东南",
+    "type": "希旺"
+  },
+  {
+    "brand": "东南",
+    "type": "菱帅"
+  },
+  {
+    "brand": "Fisker",
+    "type": "Karma"
+  },
+  {
+    "brand": "法拉利",
+    "type": "California"
+  },
+  {
+    "brand": "法拉利",
+    "type": "F12berlinetta"
+  },
+  {
+    "brand": "法拉利",
+    "type": "LaFerrari"
+  },
+  {
+    "brand": "法拉利",
+    "type": "Sergio"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利458"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利FF"
+  },
+  {
+    "brand": "法拉利",
+    "type": "Dino"
+  },
+  {
+    "brand": "法拉利",
+    "type": "ENZO"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利250 GT"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利360"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利575M"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利599"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利612"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利F355"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利F40"
+  },
+  {
+    "brand": "法拉利",
+    "type": "法拉利F430"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "Ottimo致悦"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "菲翔"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "派朗"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "派力奥"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "西耶那"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "周末风"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "Panda"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "博悦"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "多宝"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "菲亚特500"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "菲跃"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "朋多"
+  },
+  {
+    "brand": "菲亚特",
+    "type": "领雅"
+  },
+  {
+    "brand": "丰田",
+    "type": "YARiS L 致炫"
+  },
+  {
+    "brand": "丰田",
+    "type": "汉兰达"
+  },
+  {
+    "brand": "丰田",
+    "type": "凯美瑞"
+  },
+  {
+    "brand": "丰田",
+    "type": "雷凌"
+  },
+  {
+    "brand": "丰田",
+    "type": "雅力士"
+  },
+  {
+    "brand": "丰田",
+    "type": "逸致"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田RAV4"
+  },
+  {
+    "brand": "丰田",
+    "type": "花冠"
+  },
+  {
+    "brand": "丰田",
+    "type": "皇冠"
+  },
+  {
+    "brand": "丰田",
+    "type": "卡罗拉"
+  },
+  {
+    "brand": "丰田",
+    "type": "柯斯达"
+  },
+  {
+    "brand": "丰田",
+    "type": "兰德酷路泽"
+  },
+  {
+    "brand": "丰田",
+    "type": "普拉多"
+  },
+  {
+    "brand": "丰田",
+    "type": "普锐斯"
+  },
+  {
+    "brand": "丰田",
+    "type": "锐志"
+  },
+  {
+    "brand": "丰田",
+    "type": "威驰"
+  },
+  {
+    "brand": "丰田",
+    "type": "特锐"
+  },
+  {
+    "brand": "丰田",
+    "type": "4Runner"
+  },
+  {
+    "brand": "丰田",
+    "type": "Auris"
+  },
+  {
+    "brand": "丰田",
+    "type": "Avalon"
+  },
+  {
+    "brand": "丰田",
+    "type": "Avensis"
+  },
+  {
+    "brand": "丰田",
+    "type": "Aygo"
+  },
+  {
+    "brand": "丰田",
+    "type": "FJ 酷路泽"
+  },
+  {
+    "brand": "丰田",
+    "type": "HIACE"
+  },
+  {
+    "brand": "丰田",
+    "type": "Sienna"
+  },
+  {
+    "brand": "丰田",
+    "type": "Tacoma"
+  },
+  {
+    "brand": "丰田",
+    "type": "Venza威飒"
+  },
+  {
+    "brand": "丰田",
+    "type": "Verso"
+  },
+  {
+    "brand": "丰田",
+    "type": "Verso-S"
+  },
+  {
+    "brand": "丰田",
+    "type": "WISH"
+  },
+  {
+    "brand": "丰田",
+    "type": "YARiS(海外)"
+  },
+  {
+    "brand": "丰田",
+    "type": "埃尔法"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田86"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田FCV"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田FT-1"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田FT-86"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田FT-EV"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田iQ"
+  },
+  {
+    "brand": "丰田",
+    "type": "丰田RAV4(进口)"
+  },
+  {
+    "brand": "丰田",
+    "type": "汉兰达(进口)"
+  },
+  {
+    "brand": "丰田",
+    "type": "红杉"
+  },
+  {
+    "brand": "丰田",
+    "type": "皇冠(进口)"
+  },
+  {
+    "brand": "丰田",
+    "type": "杰路驰"
+  },
+  {
+    "brand": "丰田",
+    "type": "卡罗拉(海外)"
+  },
+  {
+    "brand": "丰田",
+    "type": "凯美瑞(海外)"
+  },
+  {
+    "brand": "丰田",
+    "type": "兰德酷路泽(进口)"
+  },
+  {
+    "brand": "丰田",
+    "type": "普拉多(进口)"
+  },
+  {
+    "brand": "丰田",
+    "type": "普锐斯(海外)"
+  },
+  {
+    "brand": "丰田",
+    "type": "普瑞维亚"
+  },
+  {
+    "brand": "丰田",
+    "type": "锐志(海外)"
+  },
+  {
+    "brand": "丰田",
+    "type": "坦途"
+  },
+  {
+    "brand": "丰田",
+    "type": "威驰(海外)"
+  },
+  {
+    "brand": "丰田",
+    "type": "悦佳"
+  },
+  {
+    "brand": "丰田",
+    "type": "Supra"
+  },
+  {
+    "brand": "福迪",
+    "type": "探索者Ⅲ"
+  },
+  {
+    "brand": "福汽启腾",
+    "type": "启腾M70"
+  },
+  {
+    "brand": "福特",
+    "type": "福克斯"
+  },
+  {
+    "brand": "福特",
+    "type": "福睿斯"
+  },
+  {
+    "brand": "福特",
+    "type": "嘉年华"
+  },
+  {
+    "brand": "福特",
+    "type": "麦柯斯"
+  },
+  {
+    "brand": "福特",
+    "type": "蒙迪欧"
+  },
+  {
+    "brand": "福特",
+    "type": "翼搏"
+  },
+  {
+    "brand": "福特",
+    "type": "翼虎"
+  },
+  {
+    "brand": "福特",
+    "type": "致胜"
+  },
+  {
+    "brand": "福特",
+    "type": "蒙迪欧-致胜"
+  },
+  {
+    "brand": "福特",
+    "type": "经典全顺"
+  },
+  {
+    "brand": "福特",
+    "type": "新世代全顺"
+  },
+  {
+    "brand": "福特",
+    "type": "Atlas"
+  },
+  {
+    "brand": "福特",
+    "type": "B-MAX"
+  },
+  {
+    "brand": "福特",
+    "type": "C-MAX"
+  },
+  {
+    "brand": "福特",
+    "type": "Everest(海外)"
+  },
+  {
+    "brand": "福特",
+    "type": "Evos"
+  },
+  {
+    "brand": "福特",
+    "type": "Falcon"
+  },
+  {
+    "brand": "福特",
+    "type": "FLEX"
+  },
+  {
+    "brand": "福特",
+    "type": "Fusion"
+  },
+  {
+    "brand": "福特",
+    "type": "Galaxy"
+  },
+  {
+    "brand": "福特",
+    "type": "Ranger"
+  },
+  {
+    "brand": "福特",
+    "type": "S-MAX"
+  },
+  {
+    "brand": "福特",
+    "type": "Start"
+  },
+  {
+    "brand": "福特",
+    "type": "Tourneo Courier"
+  },
+  {
+    "brand": "福特",
+    "type": "Tourneo Custom"
+  },
+  {
+    "brand": "福特",
+    "type": "Transit"
+  },
+  {
+    "brand": "福特",
+    "type": "Vertrek"
+  },
+  {
+    "brand": "福特",
+    "type": "福克斯(进口)"
+  },
+  {
+    "brand": "福特",
+    "type": "福睿斯(海外)"
+  },
+  {
+    "brand": "福特",
+    "type": "福特E350"
+  },
+  {
+    "brand": "福特",
+    "type": "福特F-150"
+  },
+  {
+    "brand": "福特",
+    "type": "福特F-350"
+  },
+  {
+    "brand": "福特",
+    "type": "福特F-450"
+  },
+  {
+    "brand": "福特",
+    "type": "福特F-650"
+  },
+  {
+    "brand": "福特",
+    "type": "福特Ka"
+  },
+  {
+    "brand": "福特",
+    "type": "嘉年华(进口)"
+  },
+  {
+    "brand": "福特",
+    "type": "金牛座"
+  },
+  {
+    "brand": "福特",
+    "type": "蒙迪欧(海外)"
+  },
+  {
+    "brand": "福特",
+    "type": "锐界"
+  },
+  {
+    "brand": "福特",
+    "type": "探险者"
+  },
+  {
+    "brand": "福特",
+    "type": "野马"
+  },
+  {
+    "brand": "福特",
+    "type": "翼搏(海外)"
+  },
+  {
+    "brand": "福特",
+    "type": "翼虎/Kuga"
+  },
+  {
+    "brand": "福特",
+    "type": "征服者"
+  },
+  {
+    "brand": "福特",
+    "type": "福特GT"
+  },
+  {
+    "brand": "福田",
+    "type": "风景"
+  },
+  {
+    "brand": "福田",
+    "type": "风景G7"
+  },
+  {
+    "brand": "福田",
+    "type": "蒙派克E"
+  },
+  {
+    "brand": "福田",
+    "type": "蒙派克S"
+  },
+  {
+    "brand": "福田",
+    "type": "迷迪"
+  },
+  {
+    "brand": "福田",
+    "type": "萨普"
+  },
+  {
+    "brand": "福田",
+    "type": "拓陆者"
+  },
+  {
+    "brand": "GMC",
+    "type": "CANYON"
+  },
+  {
+    "brand": "GMC",
+    "type": "SAVANA"
+  },
+  {
+    "brand": "GMC",
+    "type": "SIERRA"
+  },
+  {
+    "brand": "GMC",
+    "type": "TERRAIN"
+  },
+  {
+    "brand": "Gumpert",
+    "type": "Apollo"
+  },
+  {
+    "brand": "观致",
+    "type": "观致"
+  },
+  {
+    "brand": "观致",
+    "type": "观致3"
+  },
+  {
+    "brand": "光冈",
+    "type": "大蛇"
+  },
+  {
+    "brand": "光冈",
+    "type": "嘉路"
+  },
+  {
+    "brand": "光冈",
+    "type": "女王"
+  },
+  {
+    "brand": "广汽传祺",
+    "type": "WitStar"
+  },
+  {
+    "brand": "广汽传祺",
+    "type": "传祺GA3"
+  },
+  {
+    "brand": "广汽传祺",
+    "type": "传祺GA3S视界"
+  },
+  {
+    "brand": "广汽传祺",
+    "type": "传祺GA5"
+  },
+  {
+    "brand": "广汽传祺",
+    "type": "传祺GA6"
+  },
+  {
+    "brand": "广汽传祺",
+    "type": "传祺GS5"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "E美"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "奥轩G5"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "奥轩GX5"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "财运100"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "财运300"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "吉奥GA1027"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "吉奥GA6470"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "星朗"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "星旺"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "星旺CL"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "奥轩G3"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "帅豹"
+  },
+  {
+    "brand": "广汽吉奥",
+    "type": "帅舰"
+  },
+  {
+    "brand": "Hennessey",
+    "type": "VelociRaptor"
+  },
+  {
+    "brand": "哈飞",
+    "type": "哈飞小霸王"
+  },
+  {
+    "brand": "哈飞",
+    "type": "骏意"
+  },
+  {
+    "brand": "哈飞",
+    "type": "路宝"
+  },
+  {
+    "brand": "哈飞",
+    "type": "民意"
+  },
+  {
+    "brand": "哈飞",
+    "type": "赛豹III"
+  },
+  {
+    "brand": "哈飞",
+    "type": "赛马"
+  },
+  {
+    "brand": "哈飞",
+    "type": "中意V5"
+  },
+  {
+    "brand": "哈飞",
+    "type": "路尊大霸王"
+  },
+  {
+    "brand": "哈飞",
+    "type": "赛豹V"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗COUPE"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗COUPE C"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H1"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H2"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H5"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H6"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H7"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H8"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H9"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗IF"
+  },
+  {
+    "brand": "哈弗",
+    "type": "哈弗H3"
+  },
+  {
+    "brand": "海格",
+    "type": "海格H5C"
+  },
+  {
+    "brand": "海格",
+    "type": "海格H5V"
+  },
+  {
+    "brand": "海格",
+    "type": "海格H7V"
+  },
+  {
+    "brand": "海格",
+    "type": "龙威"
+  },
+  {
+    "brand": "海格",
+    "type": "御骏"
+  },
+  {
+    "brand": "海马",
+    "type": "福美来"
+  },
+  {
+    "brand": "海马",
+    "type": "福美来M5"
+  },
+  {
+    "brand": "海马",
+    "type": "海马M3"
+  },
+  {
+    "brand": "海马",
+    "type": "海马M6"
+  },
+  {
+    "brand": "海马",
+    "type": "海马M8"
+  },
+  {
+    "brand": "海马",
+    "type": "海马S5"
+  },
+  {
+    "brand": "海马",
+    "type": "海马S7"
+  },
+  {
+    "brand": "海马",
+    "type": "海马骑士"
+  },
+  {
+    "brand": "海马",
+    "type": "普力马"
+  },
+  {
+    "brand": "海马",
+    "type": "丘比特"
+  },
+  {
+    "brand": "海马",
+    "type": "海福星"
+  },
+  {
+    "brand": "海马",
+    "type": "海马3"
+  },
+  {
+    "brand": "海马",
+    "type": "欢动"
+  },
+  {
+    "brand": "海马",
+    "type": "福仕达鸿达"
+  },
+  {
+    "brand": "海马",
+    "type": "福仕达荣达"
+  },
+  {
+    "brand": "海马",
+    "type": "海马爱尚"
+  },
+  {
+    "brand": "海马",
+    "type": "海马王子"
+  },
+  {
+    "brand": "悍马",
+    "type": "悍马H1"
+  },
+  {
+    "brand": "悍马",
+    "type": "悍马H2"
+  },
+  {
+    "brand": "悍马",
+    "type": "悍马H3"
+  },
+  {
+    "brand": "悍马",
+    "type": "悍马HX"
+  },
+  {
+    "brand": "恒天",
+    "type": "途腾T1"
+  },
+  {
+    "brand": "恒天",
+    "type": "途腾T2"
+  },
+  {
+    "brand": "恒天",
+    "type": "途腾T3"
+  },
+  {
+    "brand": "红旗",
+    "type": "红旗H7"
+  },
+  {
+    "brand": "红旗",
+    "type": "红旗L5"
+  },
+  {
+    "brand": "红旗",
+    "type": "红旗L7"
+  },
+  {
+    "brand": "红旗",
+    "type": "红旗L9"
+  },
+  {
+    "brand": "红旗",
+    "type": "红旗盛世"
+  },
+  {
+    "brand": "华普",
+    "type": "海锋"
+  },
+  {
+    "brand": "华普",
+    "type": "海尚"
+  },
+  {
+    "brand": "华普",
+    "type": "海迅"
+  },
+  {
+    "brand": "华普",
+    "type": "海域"
+  },
+  {
+    "brand": "华普",
+    "type": "华普海景"
+  },
+  {
+    "brand": "华骐",
+    "type": "HORKI-1"
+  },
+  {
+    "brand": "华泰",
+    "type": "宝利格"
+  },
+  {
+    "brand": "华泰",
+    "type": "华泰B11"
+  },
+  {
+    "brand": "华泰",
+    "type": "路盛E70"
+  },
+  {
+    "brand": "华泰",
+    "type": "路盛E90"
+  },
+  {
+    "brand": "华泰",
+    "type": "圣达菲"
+  },
+  {
+    "brand": "华泰",
+    "type": "特拉卡"
+  },
+  {
+    "brand": "华泰",
+    "type": "新圣达菲"
+  },
+  {
+    "brand": "黄海",
+    "type": "翱龙CUV"
+  },
+  {
+    "brand": "黄海",
+    "type": "傲骏"
+  },
+  {
+    "brand": "黄海",
+    "type": "大柴神"
+  },
+  {
+    "brand": "黄海",
+    "type": "黄海N1"
+  },
+  {
+    "brand": "黄海",
+    "type": "旗胜F1"
+  },
+  {
+    "brand": "黄海",
+    "type": "旗胜V3"
+  },
+  {
+    "brand": "黄海",
+    "type": "挑战者SUV"
+  },
+  {
+    "brand": "Jeep",
+    "type": "北京JEEP"
+  },
+  {
+    "brand": "Jeep",
+    "type": "大切诺基"
+  },
+  {
+    "brand": "Jeep",
+    "type": "Jeep J12"
+  },
+  {
+    "brand": "Jeep",
+    "type": "大切诺基(进口)"
+  },
+  {
+    "brand": "Jeep",
+    "type": "牧马人"
+  },
+  {
+    "brand": "Jeep",
+    "type": "指南者"
+  },
+  {
+    "brand": "Jeep",
+    "type": "自由光"
+  },
+  {
+    "brand": "Jeep",
+    "type": "自由客"
+  },
+  {
+    "brand": "Jeep",
+    "type": "自由人"
+  },
+  {
+    "brand": "Jeep",
+    "type": "自由侠"
+  },
+  {
+    "brand": "Jeep",
+    "type": "切诺基(进口)"
+  },
+  {
+    "brand": "Jeep",
+    "type": "指挥官"
+  },
+  {
+    "brand": "Jeep",
+    "type": "大切诺基 SRT"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "帝豪"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "帝豪CROSS"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "帝豪EC7"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "海景"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利EC8"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利EV8"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利EX7"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利EX8"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GC3"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GC5"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GC6"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GC7"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GE"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GS"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GV5"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GX5"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GX6"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GX7"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GX9"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SC3"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SC5"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SC5-RV"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SC6"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SC6-RV"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SV5"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SX5"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SX6"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利SX7"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "金刚"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "熊猫"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "英伦TX4"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "远景"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "自由舰"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "豪情"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "吉利GX2"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "金鹰"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "美人豹"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "美日"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "优利欧"
+  },
+  {
+    "brand": "吉利汽车",
+    "type": "中国龙"
+  },
+  {
+    "brand": "江淮",
+    "type": "宝斯通"
+  },
+  {
+    "brand": "江淮",
+    "type": "宾悦"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦A13"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦A13RS"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦A20"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦A30"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦iEV"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦RS"
+  },
+  {
+    "brand": "江淮",
+    "type": "和悦SC"
+  },
+  {
+    "brand": "江淮",
+    "type": "凌铃"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞驰K5"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风A6"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风M3"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风M5"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风M6"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风S3"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风S5"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞风SC-9"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞铃"
+  },
+  {
+    "brand": "江淮",
+    "type": "瑞鹰"
+  },
+  {
+    "brand": "江淮",
+    "type": "星锐"
+  },
+  {
+    "brand": "江淮",
+    "type": "愿景IV"
+  },
+  {
+    "brand": "江淮",
+    "type": "悦悦"
+  },
+  {
+    "brand": "江淮",
+    "type": "同悦"
+  },
+  {
+    "brand": "江淮",
+    "type": "同悦RS"
+  },
+  {
+    "brand": "江铃",
+    "type": "宝典"
+  },
+  {
+    "brand": "江铃",
+    "type": "驭胜"
+  },
+  {
+    "brand": "江铃",
+    "type": "域虎"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹C-Type"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹C-X16"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹C-X17"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹C-X75"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹D-Type"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹E-Type"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹F-TYPE"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹XF"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹XJ"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹XK"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹S-Type"
+  },
+  {
+    "brand": "捷豹",
+    "type": "捷豹X-Type"
+  },
+  {
+    "brand": "金杯",
+    "type": "大力神"
+  },
+  {
+    "brand": "金杯",
+    "type": "阁瑞斯"
+  },
+  {
+    "brand": "金杯",
+    "type": "海星A7"
+  },
+  {
+    "brand": "金杯",
+    "type": "海星A9"
+  },
+  {
+    "brand": "金杯",
+    "type": "海星T22"
+  },
+  {
+    "brand": "金杯",
+    "type": "金杯S50"
+  },
+  {
+    "brand": "金杯",
+    "type": "金杯大海狮"
+  },
+  {
+    "brand": "金杯",
+    "type": "金杯海狮"
+  },
+  {
+    "brand": "金杯",
+    "type": "小海狮X30"
+  },
+  {
+    "brand": "金杯",
+    "type": "智尚S30"
+  },
+  {
+    "brand": "金旅",
+    "type": "金旅海狮"
+  },
+  {
+    "brand": "九龙",
+    "type": "艾菲"
+  },
+  {
+    "brand": "九龙",
+    "type": "九龙A5"
+  },
+  {
+    "brand": "KTM",
+    "type": "X-BOW"
+  },
+  {
+    "brand": "卡尔森",
+    "type": "卡尔森 C25"
+  },
+  {
+    "brand": "卡尔森",
+    "type": "卡尔森 GL级"
+  },
+  {
+    "brand": "卡尔森",
+    "type": "卡尔森 S级"
+  },
+  {
+    "brand": "卡威",
+    "type": "卡威K1"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优劲"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优胜2代"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优雅"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优雅2代"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优优"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优优2代"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优派"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优胜"
+  },
+  {
+    "brand": "开瑞",
+    "type": "优翼"
+  },
+  {
+    "brand": "凯佰赫",
+    "type": "战盾"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克ATS-L"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克XTS"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "SLS赛威"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克CTS"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "Ciel"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "Elmiraj"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克ATS(进口)"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克CTS(进口)"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克ELR"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克SRX"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克XTS(海外)"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯雷德ESCALADE"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "帝威"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克BLS"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克SLS(海外)"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克STS"
+  },
+  {
+    "brand": "凯迪拉克",
+    "type": "凯迪拉克XLR"
+  },
+  {
+    "brand": "凯翼",
+    "type": "凯翼C3R"
+  },
+  {
+    "brand": "科尼赛克",
+    "type": "Agera"
+  },
+  {
+    "brand": "科尼赛克",
+    "type": "One:1"
+  },
+  {
+    "brand": "科尼赛克",
+    "type": "科尼赛克CCR"
+  },
+  {
+    "brand": "科尼赛克",
+    "type": "科尼赛克CCXR"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "铂锐"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "克莱斯勒300C"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "大捷龙"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "大捷龙(进口)"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "克莱斯勒200"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "克莱斯勒300C(进口)"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "PT 漫步者"
+  },
+  {
+    "brand": "克莱斯勒",
+    "type": "克莱斯勒200C"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Aventador"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Egoista"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Gallardo"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Huracan"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Urus"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Veneno"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Estoque"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Murcielago"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Reventon"
+  },
+  {
+    "brand": "兰博基尼",
+    "type": "Sesto Elemento"
+  },
+  {
+    "brand": "劳斯莱斯",
+    "type": "古思特"
+  },
+  {
+    "brand": "劳斯莱斯",
+    "type": "幻影"
+  },
+  {
+    "brand": "劳斯莱斯",
+    "type": "魅影"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯CT"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯ES"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯GS"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯GX"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯IS"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LF-CC"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LF-Gh"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LF-LC"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LF-NX"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LS"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LX"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯NX"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯RC"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯RX"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯HS"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LFA"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯LF-Xh"
+  },
+  {
+    "brand": "雷克萨斯",
+    "type": "雷克萨斯SC"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Alpine"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Captur"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Clio"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Espace"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Initiale"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Twingo"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Twizy"
+  },
+  {
+    "brand": "雷诺",
+    "type": "Wind"
+  },
+  {
+    "brand": "雷诺",
+    "type": "风景"
+  },
+  {
+    "brand": "雷诺",
+    "type": "风朗"
+  },
+  {
+    "brand": "雷诺",
+    "type": "科雷傲"
+  },
+  {
+    "brand": "雷诺",
+    "type": "拉古那"
+  },
+  {
+    "brand": "雷诺",
+    "type": "雷诺ZOE"
+  },
+  {
+    "brand": "雷诺",
+    "type": "梅甘娜"
+  },
+  {
+    "brand": "雷诺",
+    "type": "塔利斯曼"
+  },
+  {
+    "brand": "雷诺",
+    "type": "纬度"
+  },
+  {
+    "brand": "雷诺",
+    "type": "DeZir"
+  },
+  {
+    "brand": "雷诺",
+    "type": "威赛帝"
+  },
+  {
+    "brand": "理念",
+    "type": "理念S1"
+  },
+  {
+    "brand": "力帆",
+    "type": "丰顺"
+  },
+  {
+    "brand": "力帆",
+    "type": "福顺"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆320"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆330"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆520"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆530"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆620"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆630"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆720"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆820"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆X50"
+  },
+  {
+    "brand": "力帆",
+    "type": "力帆X60"
+  },
+  {
+    "brand": "力帆",
+    "type": "兴顺"
+  },
+  {
+    "brand": "莲花汽车",
+    "type": "莲花L3"
+  },
+  {
+    "brand": "莲花汽车",
+    "type": "莲花L5"
+  },
+  {
+    "brand": "莲花汽车",
+    "type": "莲花L6"
+  },
+  {
+    "brand": "莲花汽车",
+    "type": "莲花T5"
+  },
+  {
+    "brand": "莲花汽车",
+    "type": "竞速"
+  },
+  {
+    "brand": "莲花汽车",
+    "type": "竞悦"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "飞腾"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "飞腾C5"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "飞扬"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "黑金刚"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "猎豹6481"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "猎豹CS10"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "猎豹CS6"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "猎豹CT5"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "猎豹Q6"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "飞铃"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "猎豹CS7"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "欧酷曼"
+  },
+  {
+    "brand": "猎豹汽车",
+    "type": "骐菱"
+  },
+  {
+    "brand": "林肯",
+    "type": "林肯MKC"
+  },
+  {
+    "brand": "林肯",
+    "type": "林肯MKS"
+  },
+  {
+    "brand": "林肯",
+    "type": "林肯MKT"
+  },
+  {
+    "brand": "林肯",
+    "type": "林肯MKX"
+  },
+  {
+    "brand": "林肯",
+    "type": "林肯MKZ"
+  },
+  {
+    "brand": "林肯",
+    "type": "领航员"
+  },
+  {
+    "brand": "林肯",
+    "type": "城市"
+  },
+  {
+    "brand": "铃木",
+    "type": "北斗星"
+  },
+  {
+    "brand": "铃木",
+    "type": "北斗星X5"
+  },
+  {
+    "brand": "铃木",
+    "type": "浪迪"
+  },
+  {
+    "brand": "铃木",
+    "type": "利亚纳"
+  },
+  {
+    "brand": "铃木",
+    "type": "利亚纳A6"
+  },
+  {
+    "brand": "铃木",
+    "type": "派喜"
+  },
+  {
+    "brand": "铃木",
+    "type": "奥拓"
+  },
+  {
+    "brand": "铃木",
+    "type": "锋驭"
+  },
+  {
+    "brand": "铃木",
+    "type": "羚羊"
+  },
+  {
+    "brand": "铃木",
+    "type": "天语 SX4"
+  },
+  {
+    "brand": "铃木",
+    "type": "天语 尚悦"
+  },
+  {
+    "brand": "铃木",
+    "type": "雨燕"
+  },
+  {
+    "brand": "铃木",
+    "type": "ALIVIO(海外)"
+  },
+  {
+    "brand": "铃木",
+    "type": "Authentics(海外)"
+  },
+  {
+    "brand": "铃木",
+    "type": "CELERIO"
+  },
+  {
+    "brand": "铃木",
+    "type": "S-CROSS"
+  },
+  {
+    "brand": "铃木",
+    "type": "Splash(海外)"
+  },
+  {
+    "brand": "铃木",
+    "type": "VITARA"
+  },
+  {
+    "brand": "铃木",
+    "type": "超级维特拉"
+  },
+  {
+    "brand": "铃木",
+    "type": "吉姆尼"
+  },
+  {
+    "brand": "铃木",
+    "type": "凯泽西"
+  },
+  {
+    "brand": "铃木",
+    "type": "铃木iV-4"
+  },
+  {
+    "brand": "铃木",
+    "type": "铃木SX4(海外)"
+  },
+  {
+    "brand": "铃木",
+    "type": "速翼特"
+  },
+  {
+    "brand": "铃木",
+    "type": "奥拓(海外)"
+  },
+  {
+    "brand": "陆风",
+    "type": "风尚"
+  },
+  {
+    "brand": "陆风",
+    "type": "陆风X5"
+  },
+  {
+    "brand": "陆风",
+    "type": "陆风X6"
+  },
+  {
+    "brand": "陆风",
+    "type": "陆风X8"
+  },
+  {
+    "brand": "陆风",
+    "type": "陆风X9"
+  },
+  {
+    "brand": "陆风",
+    "type": "风华"
+  },
+  {
+    "brand": "路虎",
+    "type": "Series I"
+  },
+  {
+    "brand": "路虎",
+    "type": "第四代发现"
+  },
+  {
+    "brand": "路虎",
+    "type": "发现 Vision"
+  },
+  {
+    "brand": "路虎",
+    "type": "揽胜"
+  },
+  {
+    "brand": "路虎",
+    "type": "揽胜极光(进口)"
+  },
+  {
+    "brand": "路虎",
+    "type": "揽胜运动版"
+  },
+  {
+    "brand": "路虎",
+    "type": "路虎DC100"
+  },
+  {
+    "brand": "路虎",
+    "type": "神行者2"
+  },
+  {
+    "brand": "路虎",
+    "type": "卫士"
+  },
+  {
+    "brand": "路虎",
+    "type": "第二代发现"
+  },
+  {
+    "brand": "路虎",
+    "type": "第三代发现"
+  },
+  {
+    "brand": "路虎",
+    "type": "第一代发现"
+  },
+  {
+    "brand": "路虎",
+    "type": "神行者"
+  },
+  {
+    "brand": "路特斯",
+    "type": "Elan"
+  },
+  {
+    "brand": "路特斯",
+    "type": "Elise"
+  },
+  {
+    "brand": "路特斯",
+    "type": "Elite"
+  },
+  {
+    "brand": "路特斯",
+    "type": "Evora"
+  },
+  {
+    "brand": "路特斯",
+    "type": "Exige"
+  },
+  {
+    "brand": "路特斯",
+    "type": "Esprit"
+  },
+  {
+    "brand": "MG",
+    "type": "ICON"
+  },
+  {
+    "brand": "MG",
+    "type": "MG CS"
+  },
+  {
+    "brand": "MG",
+    "type": "MG GT"
+  },
+  {
+    "brand": "MG",
+    "type": "MG3"
+  },
+  {
+    "brand": "MG",
+    "type": "MG5"
+  },
+  {
+    "brand": "MG",
+    "type": "MG6"
+  },
+  {
+    "brand": "MG",
+    "type": "MG7"
+  },
+  {
+    "brand": "MG",
+    "type": "MG3SW"
+  },
+  {
+    "brand": "MG",
+    "type": "MGTF"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI CLUBMAN"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI CLUBVAN"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI COUNTRYMAN"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI COUPE"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI PACEMAN"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI ROADSTER"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI ROCKETMAN"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI JCW"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI JCW CLUBMAN"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI JCW COUNTRYMAN"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI JCW COUPE"
+  },
+  {
+    "brand": "MINI",
+    "type": "MINI JCW PACEMAN"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达2"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达3"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达3 Axela昂克赛拉"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达3星骋"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达CX-5"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达2劲翔"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达6"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达6 ATENZA阿特兹"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达8"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达CX-7"
+  },
+  {
+    "brand": "马自达",
+    "type": "睿翼"
+  },
+  {
+    "brand": "马自达",
+    "type": "ATENZA"
+  },
+  {
+    "brand": "马自达",
+    "type": "Hazumi"
+  },
+  {
+    "brand": "马自达",
+    "type": "Minagi"
+  },
+  {
+    "brand": "马自达",
+    "type": "Takeri"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达2(海外)"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达3(进口)"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达5"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达CX-5(进口)"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达CX-7(进口)"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达CX-9"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达MX-5"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达6(进口)"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达8(进口)"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达RX-7"
+  },
+  {
+    "brand": "马自达",
+    "type": "马自达RX-8"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "Alfieri"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "Coupe"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "Ghibli"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "GranCabrio"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "GranTurismo"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "Levante"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "玛莎拉蒂MC12"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "总裁"
+  },
+  {
+    "brand": "玛莎拉蒂",
+    "type": "Spyder"
+  },
+  {
+    "brand": "迈巴赫",
+    "type": "迈巴赫"
+  },
+  {
+    "brand": "迈凯伦",
+    "type": "迈凯伦12C"
+  },
+  {
+    "brand": "迈凯伦",
+    "type": "迈凯伦650S"
+  },
+  {
+    "brand": "迈凯伦",
+    "type": "迈凯伦P1"
+  },
+  {
+    "brand": "迈凯伦",
+    "type": "迈凯伦F1"
+  },
+  {
+    "brand": "摩根",
+    "type": "3 Wheeler"
+  },
+  {
+    "brand": "摩根",
+    "type": "摩根Aero"
+  },
+  {
+    "brand": "摩根",
+    "type": "摩根Plus 8"
+  },
+  {
+    "brand": "Noble",
+    "type": "Noble M600"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "MASTER CEO"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "大7 MPV"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "大7 SUV"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "纳智捷 5 Sedan"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "优6 SUV"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "neora"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "S5 TURBO"
+  },
+  {
+    "brand": "纳智捷",
+    "type": "U6 TURBO"
+  },
+  {
+    "brand": "讴歌",
+    "type": "SUV-X"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌ILX"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌MDX"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌NSX"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌RDX"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌RL"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌RLX"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌TL"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌TLX"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌TSX"
+  },
+  {
+    "brand": "讴歌",
+    "type": "讴歌ZDX"
+  },
+  {
+    "brand": "欧宝",
+    "type": "Monza"
+  },
+  {
+    "brand": "欧宝",
+    "type": "安德拉"
+  },
+  {
+    "brand": "欧宝",
+    "type": "麦瑞纳"
+  },
+  {
+    "brand": "欧宝",
+    "type": "欧宝Adam"
+  },
+  {
+    "brand": "欧宝",
+    "type": "欧宝Cascada"
+  },
+  {
+    "brand": "欧宝",
+    "type": "欧宝Corsa"
+  },
+  {
+    "brand": "欧宝",
+    "type": "赛飞利"
+  },
+  {
+    "brand": "欧宝",
+    "type": "雅特"
+  },
+  {
+    "brand": "欧宝",
+    "type": "英速亚"
+  },
+  {
+    "brand": "欧宝",
+    "type": "Ampera"
+  },
+  {
+    "brand": "欧宝",
+    "type": "威达"
+  },
+  {
+    "brand": "欧朗",
+    "type": "欧朗"
+  },
+  {
+    "brand": "帕加尼",
+    "type": "Huayra"
+  },
+  {
+    "brand": "帕加尼",
+    "type": "Zonda"
+  },
+  {
+    "brand": "佩奇奥",
+    "type": "CEVENNES"
+  },
+  {
+    "brand": "佩奇奥",
+    "type": "HEMERA"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "concept α"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "concept β"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "艾瑞泽7"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "东方之子"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "风云2"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞@ANT"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞A1"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞A3"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞E3"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞E5"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞QQ"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞QQ3"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞QQme"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞TX"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞X1"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞α7"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞β5"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "旗云1"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "旗云2"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "旗云3"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "旗云5"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "瑞虎"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "瑞虎3"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "瑞虎5"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "东方之子6"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "东方之子Cross"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "风云"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞A5"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "奇瑞QQ6"
+  },
+  {
+    "brand": "奇瑞",
+    "type": "旗云"
+  },
+  {
+    "brand": "启辰",
+    "type": "晨风"
+  },
+  {
+    "brand": "启辰",
+    "type": "启辰D50"
+  },
+  {
+    "brand": "启辰",
+    "type": "启辰R30"
+  },
+  {
+    "brand": "启辰",
+    "type": "启辰R50"
+  },
+  {
+    "brand": "启辰",
+    "type": "启辰R50X"
+  },
+  {
+    "brand": "启辰",
+    "type": "启辰ViWa"
+  },
+  {
+    "brand": "起亚",
+    "type": "RIO锐欧"
+  },
+  {
+    "brand": "起亚",
+    "type": "福瑞迪"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚K2"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚K3"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚K3S"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚K4"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚K5"
+  },
+  {
+    "brand": "起亚",
+    "type": "赛拉图"
+  },
+  {
+    "brand": "起亚",
+    "type": "狮跑"
+  },
+  {
+    "brand": "起亚",
+    "type": "秀尔"
+  },
+  {
+    "brand": "起亚",
+    "type": "智跑"
+  },
+  {
+    "brand": "起亚",
+    "type": "嘉华"
+  },
+  {
+    "brand": "起亚",
+    "type": "千里马"
+  },
+  {
+    "brand": "起亚",
+    "type": "远舰"
+  },
+  {
+    "brand": "起亚",
+    "type": "Forte"
+  },
+  {
+    "brand": "起亚",
+    "type": "GT4 Stinger"
+  },
+  {
+    "brand": "起亚",
+    "type": "Niro"
+  },
+  {
+    "brand": "起亚",
+    "type": "Picanto"
+  },
+  {
+    "brand": "起亚",
+    "type": "Provo"
+  },
+  {
+    "brand": "起亚",
+    "type": "Sedona"
+  },
+  {
+    "brand": "起亚",
+    "type": "Soul"
+  },
+  {
+    "brand": "起亚",
+    "type": "SPORTAGE"
+  },
+  {
+    "brand": "起亚",
+    "type": "霸锐"
+  },
+  {
+    "brand": "起亚",
+    "type": "佳乐"
+  },
+  {
+    "brand": "起亚",
+    "type": "凯尊"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚Cee’d"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚K5(进口)"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚K9"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚RIO"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚VQ"
+  },
+  {
+    "brand": "起亚",
+    "type": "速迈"
+  },
+  {
+    "brand": "起亚",
+    "type": "索兰托"
+  },
+  {
+    "brand": "起亚",
+    "type": "Venga"
+  },
+  {
+    "brand": "起亚",
+    "type": "欧菲莱斯"
+  },
+  {
+    "brand": "起亚",
+    "type": "起亚GT"
+  },
+  {
+    "brand": "日产",
+    "type": "骊威"
+  },
+  {
+    "brand": "日产",
+    "type": "楼兰"
+  },
+  {
+    "brand": "日产",
+    "type": "玛驰"
+  },
+  {
+    "brand": "日产",
+    "type": "奇骏"
+  },
+  {
+    "brand": "日产",
+    "type": "骐达"
+  },
+  {
+    "brand": "日产",
+    "type": "天籁"
+  },
+  {
+    "brand": "日产",
+    "type": "逍客"
+  },
+  {
+    "brand": "日产",
+    "type": "轩逸"
+  },
+  {
+    "brand": "日产",
+    "type": "阳光"
+  },
+  {
+    "brand": "日产",
+    "type": "骏逸"
+  },
+  {
+    "brand": "日产",
+    "type": "蓝鸟"
+  },
+  {
+    "brand": "日产",
+    "type": "颐达"
+  },
+  {
+    "brand": "日产",
+    "type": "帕拉丁"
+  },
+  {
+    "brand": "日产",
+    "type": "日产D22"
+  },
+  {
+    "brand": "日产",
+    "type": "日产NV200"
+  },
+  {
+    "brand": "日产",
+    "type": "2020 Vision Gran Turismo"
+  },
+  {
+    "brand": "日产",
+    "type": "Altima"
+  },
+  {
+    "brand": "日产",
+    "type": "BladeGlider"
+  },
+  {
+    "brand": "日产",
+    "type": "Cube"
+  },
+  {
+    "brand": "日产",
+    "type": "Esflow"
+  },
+  {
+    "brand": "日产",
+    "type": "Frontier"
+  },
+  {
+    "brand": "日产",
+    "type": "Hi-Cross"
+  },
+  {
+    "brand": "日产",
+    "type": "Invitation"
+  },
+  {
+    "brand": "日产",
+    "type": "JUKE"
+  },
+  {
+    "brand": "日产",
+    "type": "Maxima"
+  },
+  {
+    "brand": "日产",
+    "type": "Note"
+  },
+  {
+    "brand": "日产",
+    "type": "Pathfinder"
+  },
+  {
+    "brand": "日产",
+    "type": "Rogue"
+  },
+  {
+    "brand": "日产",
+    "type": "Sentra"
+  },
+  {
+    "brand": "日产",
+    "type": "Terra"
+  },
+  {
+    "brand": "日产",
+    "type": "Versa"
+  },
+  {
+    "brand": "日产",
+    "type": "碧莲"
+  },
+  {
+    "brand": "日产",
+    "type": "贵士"
+  },
+  {
+    "brand": "日产",
+    "type": "蓝鸟·印象"
+  },
+  {
+    "brand": "日产",
+    "type": "聆风"
+  },
+  {
+    "brand": "日产",
+    "type": "楼兰(海外)"
+  },
+  {
+    "brand": "日产",
+    "type": "玛驰(海外)"
+  },
+  {
+    "brand": "日产",
+    "type": "奇骏(进口)"
+  },
+  {
+    "brand": "日产",
+    "type": "日产370Z"
+  },
+  {
+    "brand": "日产",
+    "type": "日产GT-R"
+  },
+  {
+    "brand": "日产",
+    "type": "日产NV200(海外)"
+  },
+  {
+    "brand": "日产",
+    "type": "途乐"
+  },
+  {
+    "brand": "日产",
+    "type": "逍客(海外)"
+  },
+  {
+    "brand": "日产",
+    "type": "Pivo 3"
+  },
+  {
+    "brand": "日产",
+    "type": "Silvia"
+  },
+  {
+    "brand": "日产",
+    "type": "风雅"
+  },
+  {
+    "brand": "日产",
+    "type": "日产350Z"
+  },
+  {
+    "brand": "日产",
+    "type": "西玛"
+  },
+  {
+    "brand": "荣威",
+    "type": "荣威350"
+  },
+  {
+    "brand": "荣威",
+    "type": "荣威550"
+  },
+  {
+    "brand": "荣威",
+    "type": "荣威750"
+  },
+  {
+    "brand": "荣威",
+    "type": "荣威950"
+  },
+  {
+    "brand": "荣威",
+    "type": "荣威E50"
+  },
+  {
+    "brand": "荣威",
+    "type": "荣威W5"
+  },
+  {
+    "brand": "如虎",
+    "type": "如虎 CTR 3"
+  },
+  {
+    "brand": "瑞麒",
+    "type": "瑞麒G2"
+  },
+  {
+    "brand": "瑞麒",
+    "type": "瑞麒G3"
+  },
+  {
+    "brand": "瑞麒",
+    "type": "瑞麒G5"
+  },
+  {
+    "brand": "瑞麒",
+    "type": "瑞麒G6"
+  },
+  {
+    "brand": "瑞麒",
+    "type": "瑞麒M1"
+  },
+  {
+    "brand": "瑞麒",
+    "type": "瑞麒M5"
+  },
+  {
+    "brand": "Scion",
+    "type": "Scion FR-S"
+  },
+  {
+    "brand": "smart",
+    "type": "smart forfour"
+  },
+  {
+    "brand": "smart",
+    "type": "smart forjeremy"
+  },
+  {
+    "brand": "smart",
+    "type": "smart forstars"
+  },
+  {
+    "brand": "smart",
+    "type": "smart fortwo"
+  },
+  {
+    "brand": "smart",
+    "type": "smart for-us"
+  },
+  {
+    "brand": "smart",
+    "type": "smart fourjoy"
+  },
+  {
+    "brand": "smart",
+    "type": "smart forspeed"
+  },
+  {
+    "brand": "smart",
+    "type": "smart forvision"
+  },
+  {
+    "brand": "smart",
+    "type": "smart roadster"
+  },
+  {
+    "brand": "SPIRRA",
+    "type": "Spirra思派朗"
+  },
+  {
+    "brand": "SSC",
+    "type": "Tuatara"
+  },
+  {
+    "brand": "萨博",
+    "type": "Saab 9-3"
+  },
+  {
+    "brand": "萨博",
+    "type": "Saab 9-4X"
+  },
+  {
+    "brand": "萨博",
+    "type": "Saab 9-5"
+  },
+  {
+    "brand": "萨博",
+    "type": "Saab 9-7"
+  },
+  {
+    "brand": "三菱",
+    "type": "欧蓝德"
+  },
+  {
+    "brand": "三菱",
+    "type": "帕杰罗速跑"
+  },
+  {
+    "brand": "三菱",
+    "type": "风迪思"
+  },
+  {
+    "brand": "三菱",
+    "type": "君阁"
+  },
+  {
+    "brand": "三菱",
+    "type": "蓝瑟"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱戈蓝"
+  },
+  {
+    "brand": "三菱",
+    "type": "翼神"
+  },
+  {
+    "brand": "三菱",
+    "type": "菱绅"
+  },
+  {
+    "brand": "三菱",
+    "type": "劲炫ASX"
+  },
+  {
+    "brand": "三菱",
+    "type": "帕杰罗"
+  },
+  {
+    "brand": "三菱",
+    "type": "帕杰罗·劲畅"
+  },
+  {
+    "brand": "三菱",
+    "type": "ASX劲炫(进口)"
+  },
+  {
+    "brand": "三菱",
+    "type": "Colt"
+  },
+  {
+    "brand": "三菱",
+    "type": "eK Space"
+  },
+  {
+    "brand": "三菱",
+    "type": "LANCER"
+  },
+  {
+    "brand": "三菱",
+    "type": "Mirage"
+  },
+  {
+    "brand": "三菱",
+    "type": "格蓝迪"
+  },
+  {
+    "brand": "三菱",
+    "type": "欧蓝德(进口)"
+  },
+  {
+    "brand": "三菱",
+    "type": "帕杰罗(进口)"
+  },
+  {
+    "brand": "三菱",
+    "type": "帕杰罗·劲畅(进口)"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱CA-MiEV"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱G4"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱GC-PHEV"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱GR-HEV"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱i"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱PX-MiEV"
+  },
+  {
+    "brand": "三菱",
+    "type": "三菱XR-PHEV"
+  },
+  {
+    "brand": "三菱",
+    "type": "伊柯丽斯"
+  },
+  {
+    "brand": "上汽大通",
+    "type": "上汽大通G10"
+  },
+  {
+    "brand": "上汽大通",
+    "type": "上汽大通V80"
+  },
+  {
+    "brand": "绅宝",
+    "type": "绅宝D50"
+  },
+  {
+    "brand": "绅宝",
+    "type": "绅宝D60"
+  },
+  {
+    "brand": "绅宝",
+    "type": "绅宝D70"
+  },
+  {
+    "brand": "世爵",
+    "type": "世爵B6"
+  },
+  {
+    "brand": "世爵",
+    "type": "世爵C8"
+  },
+  {
+    "brand": "双环",
+    "type": "双环SCEO"
+  },
+  {
+    "brand": "双环",
+    "type": "来宝SRV"
+  },
+  {
+    "brand": "双环",
+    "type": "小贵族"
+  },
+  {
+    "brand": "双龙",
+    "type": "爱腾"
+  },
+  {
+    "brand": "双龙",
+    "type": "柯兰多"
+  },
+  {
+    "brand": "双龙",
+    "type": "雷斯特"
+  },
+  {
+    "brand": "双龙",
+    "type": "雷斯特W"
+  },
+  {
+    "brand": "双龙",
+    "type": "路帝"
+  },
+  {
+    "brand": "双龙",
+    "type": "双龙SIV-1"
+  },
+  {
+    "brand": "双龙",
+    "type": "双龙XIV-1"
+  },
+  {
+    "brand": "双龙",
+    "type": "双龙XIV-2"
+  },
+  {
+    "brand": "双龙",
+    "type": "双龙XLV"
+  },
+  {
+    "brand": "双龙",
+    "type": "享御"
+  },
+  {
+    "brand": "双龙",
+    "type": "主席"
+  },
+  {
+    "brand": "思铭",
+    "type": "思铭"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "CROSS SPORT"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "Crossover 7"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "LEVORG"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "Trezia"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "Viziv"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "傲虎"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "驰鹏"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "力狮"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "森林人"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "斯巴鲁BRZ"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "斯巴鲁WRX"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "斯巴鲁XV"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "翼豹"
+  },
+  {
+    "brand": "斯巴鲁",
+    "type": "Hybrid"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "晶锐"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "明锐"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "速派"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "昕动"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "昕锐"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "野帝"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "昊锐"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "Citigo"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "CitiJet"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "MissionL"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "Roomster"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "VisionC"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "VisionD"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "Yeti(进口)"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "昊锐(进口)"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "晶锐(海外)"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "明锐(海外)"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "速尊"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "昕动(海外)"
+  },
+  {
+    "brand": "斯柯达",
+    "type": "昕锐(海外)"
+  },
+  {
+    "brand": "特斯拉",
+    "type": "MODEL S"
+  },
+  {
+    "brand": "特斯拉",
+    "type": "MODEL X"
+  },
+  {
+    "brand": "特斯拉",
+    "type": "特斯拉 Roadster"
+  },
+  {
+    "brand": "腾势",
+    "type": "腾势"
+  },
+  {
+    "brand": "威麟",
+    "type": "威麟H3"
+  },
+  {
+    "brand": "威麟",
+    "type": "威麟H5"
+  },
+  {
+    "brand": "威麟",
+    "type": "威麟V5"
+  },
+  {
+    "brand": "威麟",
+    "type": "威麟X5"
+  },
+  {
+    "brand": "威麟",
+    "type": "威麟V8"
+  },
+  {
+    "brand": "威兹曼",
+    "type": "威兹曼GT"
+  },
+  {
+    "brand": "威兹曼",
+    "type": "威兹曼Roadster"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃S80L"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃S40"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃S60L"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃XC60"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "Coupe"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "Estate"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "XC Coupe"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃C30"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃C70"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃S60"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃S80"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃V40"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃V50"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃V60"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃V70"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃XC60(进口)"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃XC70"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃XC90(进口)"
+  },
+  {
+    "brand": "沃尔沃",
+    "type": "沃尔沃S40(进口)"
+  },
+  {
+    "brand": "沃克斯豪尔",
+    "type": "沃克斯豪尔Adam"
+  },
+  {
+    "brand": "五菱汽车",
+    "type": "PN货车"
+  },
+  {
+    "brand": "五菱汽车",
+    "type": "五菱宏光"
+  },
+  {
+    "brand": "五菱汽车",
+    "type": "五菱荣光"
+  },
+  {
+    "brand": "五菱汽车",
+    "type": "五菱荣光小卡"
+  },
+  {
+    "brand": "五菱汽车",
+    "type": "五菱征程"
+  },
+  {
+    "brand": "五菱汽车",
+    "type": "五菱之光"
+  },
+  {
+    "brand": "五十铃",
+    "type": "五十铃皮卡"
+  },
+  {
+    "brand": "五十铃",
+    "type": "D-MAX(海外)"
+  },
+  {
+    "brand": "西雅特",
+    "type": "LEON"
+  },
+  {
+    "brand": "西雅特",
+    "type": "Toledo"
+  },
+  {
+    "brand": "西雅特",
+    "type": "欧悦搏"
+  },
+  {
+    "brand": "西雅特",
+    "type": "西雅特IBE"
+  },
+  {
+    "brand": "西雅特",
+    "type": "西雅特IBL"
+  },
+  {
+    "brand": "西雅特",
+    "type": "西雅特IBX"
+  },
+  {
+    "brand": "西雅特",
+    "type": "西雅特Mii"
+  },
+  {
+    "brand": "西雅特",
+    "type": "伊比飒Ibiza"
+  },
+  {
+    "brand": "现代",
+    "type": "北京现代ix25"
+  },
+  {
+    "brand": "现代",
+    "type": "北京现代ix35"
+  },
+  {
+    "brand": "现代",
+    "type": "朗动"
+  },
+  {
+    "brand": "现代",
+    "type": "名图"
+  },
+  {
+    "brand": "现代",
+    "type": "全新胜达"
+  },
+  {
+    "brand": "现代",
+    "type": "瑞纳"
+  },
+  {
+    "brand": "现代",
+    "type": "瑞奕"
+  },
+  {
+    "brand": "现代",
+    "type": "索纳塔八"
+  },
+  {
+    "brand": "现代",
+    "type": "途胜"
+  },
+  {
+    "brand": "现代",
+    "type": "悦动"
+  },
+  {
+    "brand": "现代",
+    "type": "北京现代i30"
+  },
+  {
+    "brand": "现代",
+    "type": "领翔"
+  },
+  {
+    "brand": "现代",
+    "type": "名驭"
+  },
+  {
+    "brand": "现代",
+    "type": "索纳塔"
+  },
+  {
+    "brand": "现代",
+    "type": "雅绅特"
+  },
+  {
+    "brand": "现代",
+    "type": "伊兰特"
+  },
+  {
+    "brand": "现代",
+    "type": "御翔"
+  },
+  {
+    "brand": "现代",
+    "type": "Avante"
+  },
+  {
+    "brand": "现代",
+    "type": "H-1辉翼"
+  },
+  {
+    "brand": "现代",
+    "type": "Intrado"
+  },
+  {
+    "brand": "现代",
+    "type": "Veloster飞思"
+  },
+  {
+    "brand": "现代",
+    "type": "Xcent"
+  },
+  {
+    "brand": "现代",
+    "type": "格锐"
+  },
+  {
+    "brand": "现代",
+    "type": "捷恩斯"
+  },
+  {
+    "brand": "现代",
+    "type": "劳恩斯"
+  },
+  {
+    "brand": "现代",
+    "type": "劳恩斯-酷派"
+  },
+  {
+    "brand": "现代",
+    "type": "全新胜达(进口)"
+  },
+  {
+    "brand": "现代",
+    "type": "索纳塔(进口)"
+  },
+  {
+    "brand": "现代",
+    "type": "现代HND-9"
+  },
+  {
+    "brand": "现代",
+    "type": "现代i10"
+  },
+  {
+    "brand": "现代",
+    "type": "现代i20"
+  },
+  {
+    "brand": "现代",
+    "type": "现代i30(海外)"
+  },
+  {
+    "brand": "现代",
+    "type": "现代i40"
+  },
+  {
+    "brand": "现代",
+    "type": "现代ix20"
+  },
+  {
+    "brand": "现代",
+    "type": "现代ix35(海外)"
+  },
+  {
+    "brand": "现代",
+    "type": "新胜达(进口)"
+  },
+  {
+    "brand": "现代",
+    "type": "雅科仕"
+  },
+  {
+    "brand": "现代",
+    "type": "雅绅特(海外)"
+  },
+  {
+    "brand": "现代",
+    "type": "雅尊"
+  },
+  {
+    "brand": "现代",
+    "type": "伊兰特(海外)"
+  },
+  {
+    "brand": "现代",
+    "type": "君爵"
+  },
+  {
+    "brand": "现代",
+    "type": "酷派"
+  },
+  {
+    "brand": "现代",
+    "type": "美佳"
+  },
+  {
+    "brand": "现代",
+    "type": "维拉克斯"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "TRAX创酷"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "爱唯欧"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "景程"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "科鲁兹"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "科帕奇"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "迈锐宝"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "赛欧"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "乐骋"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "乐风"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "Code"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "Colorado"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "Equinox"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "Impala"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "Orlando"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "Sonic"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "Traverse"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "TRAX"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "爱唯欧(海外)"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "科尔维特"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "科鲁兹(海外)"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "科迈罗Camaro"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "科帕奇(进口)"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "迈锐宝(海外)"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "斯帕可SPARK"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "沃蓝达Volt"
+  },
+  {
+    "brand": "雪佛兰",
+    "type": "雪佛兰Tru"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "爱丽舍"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "毕加索"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "世嘉"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C2"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C3-XR"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C4L"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C5"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "富康"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "凯旋"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "Berlingo Multispace"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "C3毕加索"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "C4毕加索"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "Cactus"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "C-Crosser"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "C-Zero"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "Lacoste"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "Numero 9"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "Survolt"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "Technospace"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "Tubik"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "爱丽舍(海外)"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C1"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C3"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C4"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C4 Aircross"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C4L(海外)"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C5(进口)"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙GT"
+  },
+  {
+    "brand": "雪铁龙",
+    "type": "雪铁龙C6"
+  },
+  {
+    "brand": "亚琛施纳泽",
+    "type": "亚琛施纳泽 7系"
+  },
+  {
+    "brand": "亚琛施纳泽",
+    "type": "亚琛施纳泽 X5"
+  },
+  {
+    "brand": "亚琛施纳泽",
+    "type": "亚琛施纳泽 X6"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马A-MPV"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马C30"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马F10"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马F12"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马F16"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马M302"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马M31D"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马T70"
+  },
+  {
+    "brand": "野马汽车",
+    "type": "野马F99"
+  },
+  {
+    "brand": "一汽",
+    "type": "骏派D60"
+  },
+  {
+    "brand": "一汽",
+    "type": "威志"
+  },
+  {
+    "brand": "一汽",
+    "type": "威志V2"
+  },
+  {
+    "brand": "一汽",
+    "type": "威志V5"
+  },
+  {
+    "brand": "一汽",
+    "type": "威姿"
+  },
+  {
+    "brand": "一汽",
+    "type": "夏利"
+  },
+  {
+    "brand": "一汽",
+    "type": "夏利N5"
+  },
+  {
+    "brand": "一汽",
+    "type": "夏利N7"
+  },
+  {
+    "brand": "一汽",
+    "type": "威乐"
+  },
+  {
+    "brand": "一汽",
+    "type": "佳宝T50"
+  },
+  {
+    "brand": "一汽",
+    "type": "佳宝T51"
+  },
+  {
+    "brand": "一汽",
+    "type": "佳宝T57"
+  },
+  {
+    "brand": "一汽",
+    "type": "佳宝V52"
+  },
+  {
+    "brand": "一汽",
+    "type": "佳宝V70"
+  },
+  {
+    "brand": "一汽",
+    "type": "佳宝V70 II代"
+  },
+  {
+    "brand": "一汽",
+    "type": "佳宝V80"
+  },
+  {
+    "brand": "一汽",
+    "type": "森雅M80"
+  },
+  {
+    "brand": "一汽",
+    "type": "森雅S80"
+  },
+  {
+    "brand": "一汽",
+    "type": "坤程"
+  },
+  {
+    "brand": "依维柯",
+    "type": "宝迪"
+  },
+  {
+    "brand": "依维柯",
+    "type": "得意"
+  },
+  {
+    "brand": "依维柯",
+    "type": "都灵"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪Q50L"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "Emerg-E"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "Etherea"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪ESQ"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪G系"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪JX"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪LE"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪Q30"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪Q50"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪Q60"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪Q60S"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪Q70L"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪QX50"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪QX60"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪QX70"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪QX80"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "Essence"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪EX"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪FX"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪M系"
+  },
+  {
+    "brand": "英菲尼迪",
+    "type": "英菲尼迪QX"
+  },
+  {
+    "brand": "英致",
+    "type": "英致G3"
+  },
+  {
+    "brand": "永源",
+    "type": "猎鹰"
+  },
+  {
+    "brand": "永源",
+    "type": "永源A380"
+  },
+  {
+    "brand": "永源",
+    "type": "永源五星"
+  },
+  {
+    "brand": "之诺",
+    "type": "之诺1E"
+  },
+  {
+    "brand": "知豆",
+    "type": "知豆"
+  },
+  {
+    "brand": "中华",
+    "type": "中华C3"
+  },
+  {
+    "brand": "中华",
+    "type": "中华H220"
+  },
+  {
+    "brand": "中华",
+    "type": "中华H230"
+  },
+  {
+    "brand": "中华",
+    "type": "中华H320"
+  },
+  {
+    "brand": "中华",
+    "type": "中华H330"
+  },
+  {
+    "brand": "中华",
+    "type": "中华H530"
+  },
+  {
+    "brand": "中华",
+    "type": "中华V5"
+  },
+  {
+    "brand": "中华",
+    "type": "中华骏捷"
+  },
+  {
+    "brand": "中华",
+    "type": "中华骏捷Cross"
+  },
+  {
+    "brand": "中华",
+    "type": "中华骏捷FRV"
+  },
+  {
+    "brand": "中华",
+    "type": "中华骏捷FSV"
+  },
+  {
+    "brand": "中华",
+    "type": "中华酷宝"
+  },
+  {
+    "brand": "中华",
+    "type": "中华尊驰"
+  },
+  {
+    "brand": "中兴",
+    "type": "昌铃"
+  },
+  {
+    "brand": "中兴",
+    "type": "旗舰A9"
+  },
+  {
+    "brand": "中兴",
+    "type": "威虎G3"
+  },
+  {
+    "brand": "中兴",
+    "type": "威虎TUV"
+  },
+  {
+    "brand": "中兴",
+    "type": "中兴C3"
+  },
+  {
+    "brand": "中兴",
+    "type": "无限V3"
+  },
+  {
+    "brand": "中兴",
+    "type": "无限V5"
+  },
+  {
+    "brand": "中兴",
+    "type": "无限V7"
+  },
+  {
+    "brand": "众泰",
+    "type": "江南TT"
+  },
+  {
+    "brand": "众泰",
+    "type": "云100"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰2008"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰5008"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰E20"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰M300"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰T200"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰T300"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰T600"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰V10"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰Z100"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰Z200"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰Z200HB"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰Z300"
+  },
+  {
+    "brand": "众泰",
+    "type": "众泰Z500"
+  }
+]
