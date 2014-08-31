@@ -84,7 +84,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       },{
         $set:{
           status:"off_duty",
-          last_abailable_time: null
+          last_available_time: null
         }
       },function(err){
         if(err){return res.reply(err);}
