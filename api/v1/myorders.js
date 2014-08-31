@@ -4,6 +4,7 @@ var wechat_worker = require('../../util/wechat').worker.api;
 var errortracking = require('../../errortracking');
 var Worker = model.worker;
 var Order = model.order;
+var User = model.user;
 var moment = require("moment");
 moment.locale('zh-cn');
 
@@ -51,10 +52,24 @@ exports.post = function(req,res,next){
     }
   }
 
+
   Order.insert(data,function(err, results){
     if(err){return next(err);}
     var result = results[0];
     var worker = data.worker;
+
+    user.cars = user.cars.map(function(car){
+      car["default"] = data.cars.some(function(postCar){
+        return postCar.number == car.number;
+      });
+    });
+    User.update({
+      phone: user.phone
+    },{
+      $set:{
+        cars: cars
+      }
+    });
 
     Order.find({
       "worker._id": worker._id,
@@ -64,6 +79,7 @@ exports.post = function(req,res,next){
       var message = "";
       var url = "";
 
+      // 给车工发送消息
       if(orders.length == 1){
         url = config.host.worker + "/orders/" + orders[0]._id;
         message = "你有一比新订单，点击查看：" + url;

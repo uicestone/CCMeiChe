@@ -632,12 +632,18 @@ body.openmenu {
   height: 25px;
   line-height: 25px;
   padding-left: 30px;
+  overflow: hidden;
 }
 .autocomplete .packup {
   border-bottom: 0;
   height: 26px;
   line-height: 26px;
   color: #f8a23d;
+}
+.autocomplete .small {
+  margin-left: 10px;
+  color: #ccc;
+  font-size: 12px;
 }
 #addcar .h2 {
   font-size: 18px;

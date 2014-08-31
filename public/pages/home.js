@@ -231,7 +231,9 @@ function updateLatlng(data){
 }
 
 var ac = autocomplete.init($(".location .input"),function(item){
-  return item.name;
+  return item.name + (item.address ? ("<span class='small'>" + item.address + "</span>") : "");
+},function(item){
+  return item.name
 }).on("select",updateLatlng);
 
 $(".location .input").on("click",function(){
@@ -265,6 +267,11 @@ $("#go-wash").on("touchend", function(){
 
   if(!data.address){
     alert("请填写地址");
+    return;
+  }
+
+  if(!data.latlng){
+    alert("请选择确切位置");
     return;
   }
 

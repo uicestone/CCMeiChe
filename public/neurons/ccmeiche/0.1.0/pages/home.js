@@ -261,7 +261,9 @@ function updateLatlng(data){
 }
 
 var ac = autocomplete.init($(".location .input"),function(item){
-  return item.name;
+  return item.name + (item.address ? ("<span class='small'>" + item.address + "</span>") : "");
+},function(item){
+  return item.name
 }).on("select",updateLatlng);
 
 $(".location .input").on("click",function(){
@@ -295,6 +297,11 @@ $("#go-wash").on("touchend", function(){
 
   if(!data.address){
     alert("请填写地址");
+    return;
+  }
+
+  if(!data.latlng){
+    alert("请选择确切位置");
     return;
   }
 
@@ -347,7 +354,7 @@ var $ = require("zepto");
 var util = require("util");
 var events = require("events");
 
-function Autocomplete(input, pattern, parser){
+function Autocomplete(input, pattern, parser, getVal){
   input = $(input);
   var self = this;
   var list = $("<ul class='autocomplete' />");
@@ -356,6 +363,7 @@ function Autocomplete(input, pattern, parser){
   var delay = 350;
   var timeout = null;
   parser = parser || function(item){return item;}
+  getVal = getVal || function(item){return item;}
   var needRequest = function(value){
     return value.match(/\w{3,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
   }
@@ -376,7 +384,7 @@ function Autocomplete(input, pattern, parser){
         data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
           li.on("touchend",function(){
-            input.val(item);
+            input.val(getVal(data[i]));
             self.emit("select",data[i]);
             self.hide();
           });
@@ -407,10 +415,10 @@ Autocomplete.prototype.hide = function(){
 }
 
 
-exports.init = function(input, parser){
+exports.init = function(input, parser, getVal){
   var pattern = input.attr("data-pattern");
   if(!pattern){return;}
-  return new Autocomplete(input, pattern, parser);
+  return new Autocomplete(input, pattern, parser, getVal);
 }
 }, {
     entries:entries,
