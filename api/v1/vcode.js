@@ -1,5 +1,5 @@
 var vcode = require("../../model").vcode;
-var weimi = require("../../util/weimi");
+var sms = require("../../util/sms");
 
 /**
  * 获取验证码
@@ -16,7 +16,7 @@ exports.get = function(req,res,next){
   vcode.generate(phone, function(err,code){
     if(err){return next(err);}
     if(process.env.NODE_ENV=="product"){
-      weimi.send(phone,code);
+      sms.send(phone,code);
     }
     console.log(code);
     res.send(200,"ok");
