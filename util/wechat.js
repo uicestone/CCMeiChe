@@ -15,7 +15,7 @@ function getToken(store_key){
       } catch (e) {
         token = null;
       }
-      console.log("using token");
+      console.log("using token",token);
       done(null, token);
     });
   }

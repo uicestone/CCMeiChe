@@ -270,7 +270,6 @@ function Autocomplete(input, pattern, parser, getVal){
   }
 
   input.on("keyup", function(){
-    console.log("comming");
     clearTimeout(timeout);
     timeout = setTimeout(function(){
       var value = input.val().trim();

@@ -1,0 +1,17 @@
+[{
+  "name":"test-a",
+  "script":"server.js",
+  "exec_mode": "fork_mode",
+  "env":{
+    "PORT":2000,
+    "VAR":"a"
+  }
+},{
+  "name":"test-b",
+  "script":"server.js",
+  "exec_mode": "fork_mode",
+  "env":{
+    "PORT":2001,
+    "VAR":"b"
+  }
+}]
