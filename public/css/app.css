@@ -340,8 +340,6 @@ body.openmenu {
   font-size: 18px;
   line-height: 45px;
   text-align: center;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
 }
 .button[disabled] {
   background-color: #bbb;
