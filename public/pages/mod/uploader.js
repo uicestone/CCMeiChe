@@ -103,6 +103,7 @@ exports.init = function(selector,options){
       elem.find(".loading").show();
     }).on("success",function(e){
       loadImageToElem(e.data.key, result, {
+        mode: 1,
         width: 155,
         height: 105
       }, function(){
