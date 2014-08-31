@@ -67,7 +67,7 @@ exports.post = function(req,res,next){
       phone: user.phone
     },{
       $set:{
-        cars: cars
+        cars: user.cars
       }
     });
 
