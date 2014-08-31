@@ -37,6 +37,7 @@ var worker_menu = {
 console.log("create menu ", JSON.stringify(worker_menu,null,2));
 worker_api.createMenu(worker_menu, function (err, data, response) {
   console.log("Menu Created", err, data);
+  process.exit(0);
 });
 }else if(service == "user"){
 // create menu
@@ -59,5 +60,6 @@ var user_menu = {
 console.log("create menu ", JSON.stringify(user_menu,null,2));
 user_api.createMenu(user_menu, function (err, data, response) {
   console.log("Menu Created", data);
+  process.exit(0);
 });
 }
