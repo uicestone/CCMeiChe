@@ -31,7 +31,7 @@ $(function(){
   function stepOne(){
     step = 1;
     count = COUNT;
-    btn_send_code.val("发送验证码").prop("disabled",false);
+    btn_send_code.val("验证").prop("disabled",false);
     clearInterval(interval);
   }
 
