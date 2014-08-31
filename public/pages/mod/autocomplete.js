@@ -11,12 +11,16 @@ function Autocomplete(input, pattern, parser){
   var delay = 350;
   var timeout = null;
   parser = parser || function(item){return item;}
+  var needRequest = function(value){
+    return value.match(/\w{3,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
+  }
+
   input.on("keyup", function(){
     console.log("comming");
     clearTimeout(timeout);
     timeout = setTimeout(function(){
       var value = input.val().trim();
-      if(!value){return;}
+      if(!needRequest(value)){return;}
       $.ajax({
         method: "GET",
         dataType: "json",
