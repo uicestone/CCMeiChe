@@ -34,6 +34,7 @@ exports.worker = function(req,res,next){
     return
   }
 
+
   if(!req.isAuthenticated()){
     console.log("not authenticated");
     var origin_url = config.host.worker + req.url;
