@@ -18,7 +18,7 @@ module.exports = function(req,res,next){
       if(err){return next(err);}
       res.render("login",{
         id:"login",
-        title: "ccmeiche login",
+        title: "登录",
         access_token: result.data.access_token,
         openid: result.data.openid
       });
