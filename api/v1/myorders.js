@@ -62,6 +62,7 @@ exports.post = function(req,res,next){
       car["default"] = data.cars.some(function(postCar){
         return postCar.number == car.number;
       });
+      return car;
     });
     User.update({
       phone: user.phone
