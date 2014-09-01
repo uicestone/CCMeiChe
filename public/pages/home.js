@@ -61,7 +61,7 @@ var carsList = $(".cars ul");
 $(".cars .add").on("touchend", function(e){
   e.preventDefault();
   var addbtn = $(this);
-  addbtn.prop("disable",true);
+  addbtn.prop("disabled",true);
   require.async("./addcar.js",function(addcar){
     $("body").css("position","fixed");
     if(!panelAddCar){
@@ -80,7 +80,7 @@ $(".cars .add").on("touchend", function(e){
         var html = tpl.render(template,data);
         var li = $(html);
         carsList.append(li);
-        addbtn.prop("disable",false);
+        addbtn.prop("disabled",false);
         if($(".cars-cell li").length >= 5){
           addbtn.remove();
         }
@@ -223,7 +223,6 @@ navigator.geolocation.getCurrentPosition(function(position){
 });
 
 // 地址提示
-var updatingLatlng = false;
 (function(){
 function updateLatlng(data){
   ac.hide();
@@ -247,12 +246,12 @@ $(".location .input").on("click",function(){
 })();
 
 var panelPreOrder;
-$("#go-wash").on("touchend", function(){
-  if(updatingLatlng){
-    alert("正在获取确切位置");
+$("#go-wash").on("touchend", function(e){
+  var el = $(this);
+  if(el.prop("disabled")){
+    e.preventDefault();
     return;
   }
-
   var data = {
     carpark:$(".carpark input").val(),
     address:$("#address").val(),
@@ -283,11 +282,13 @@ $("#go-wash").on("touchend", function(){
     return;
   }
 
+  el.prop("disabled",true);
   $.post("/api/v1/preorder",data,"json").done(function(estimate){
     require.async("./preorder.js",function(preorder){
       if(!panelPreOrder){
         panelPreOrder = preorder;
         panelPreOrder.on("confirm",function(){
+          el.prop("disabled",false);
           data.worker = estimate.worker;
           data.estimated_drive_time = estimate.drive_time;
           data.estimated_wash_time = estimate.wash_time;
@@ -295,6 +296,8 @@ $("#go-wash").on("touchend", function(){
           $.post("/api/v1/myorders",data).done(function(){
             location.href = "/myorders";
           });
+        }).on("cancel",function(){
+          el.prop("disabled",false);
         });
       }
       panelPreOrder.show({

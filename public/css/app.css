@@ -40,6 +40,37 @@ body.openmenu {
   border-radius: 0;
   -webkit-appearance: none;
 }
+.input {
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-left: 2px solid #fab44a;
+  text-align: right;
+  padding-right: 18px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 40px;
+}
+.button {
+  width: 130px;
+  height: 45px;
+  border: 1px solid #fff;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  background-color: #fab44a;
+  border: 1px solid #fff;
+  color: #fff;
+  display: block;
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+}
+.button[disabled] {
+  background-color: #bbb;
+}
+.button:active {
+  background-color: #c70462;
+}
 .swipe-container {
   z-index: 20;
 }
@@ -324,34 +355,6 @@ body.openmenu {
 .container {
   width: 260px;
   margin: 0 auto;
-}
-.input {
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-left: 2px solid #fab44a;
-  text-align: right;
-  padding-right: 18px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  height: 40px;
-}
-.button {
-  width: 130px;
-  height: 45px;
-  border: 1px solid #fff;
-  margin: 0 auto;
-  margin-bottom: 15px;
-  background-color: #fab44a;
-  border: 1px solid #fff;
-  color: #fff;
-  display: block;
-  font-size: 18px;
-  line-height: 45px;
-  text-align: center;
-}
-.button[disabled] {
-  background-color: #bbb;
 }
 #home {
   position: fixed;
