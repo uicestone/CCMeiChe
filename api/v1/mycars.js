@@ -62,6 +62,10 @@ exports.post = function (req, res, next) {
       return res.status(400).send("无法添加更多车辆");
     }
 
+    if(!req.user.cars.length){
+      car["default"] = true;
+    }
+
     User.update({
       phone: phone
     }, {

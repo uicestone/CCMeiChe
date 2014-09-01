@@ -27,11 +27,21 @@ body.openmenu {
   position: fixed;
   width: 100%;
 }
+.blank {
+  position: fixed;
+  background-color: #fab44a;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+}
 .button,
 .input {
   -webkit-border-radius: 0;
   border-radius: 0;
   -webkit-appearance: none;
+}
+.swipe-container {
+  z-index: 20;
 }
 .swipe-container .swipe-inner {
   background-color: #f8a23d;
@@ -342,6 +352,9 @@ body.openmenu {
 }
 .button[disabled] {
   background-color: #bbb;
+}
+#home {
+  position: fixed;
 }
 #home >.container>.title {
   padding-top: 10px;

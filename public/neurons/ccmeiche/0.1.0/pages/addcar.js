@@ -86,6 +86,10 @@ AddCarView.prototype.show = function(){
     viewSwipe.out("bottom");
   });
 
+  if(!user.cars.length){
+    elem.find(".cancel").hide();
+  }
+
 }
 
 AddCarView.prototype.submit = function(data){

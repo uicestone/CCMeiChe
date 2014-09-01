@@ -88,6 +88,9 @@ $(".cars .add").on("touchend", function(e){
       });
     }
     panelAddCar.show();
+    setTimeout(function(){
+      $(".blank").hide();
+    },400);
   });
 });
 
@@ -311,5 +314,10 @@ $("#go-wash").on("touchend", function(){
 
 });
 
+if(!user.cars.length){
+  $(".cars .add").trigger("touchend");
+}else{
+  $(".blank").hide();
+}
 require.async("./addcar.js",function(){});
 require.async("./preorder.js",function(){});

@@ -20,12 +20,22 @@ body
     position: fixed
     width: 100%
 
+.blank
+  position: fixed
+  background-color: orange
+  z-index: 10
+  height: 100%
+  width: 100%
+
+
 .button,.input
   border-radius: 0
   -webkit-appearance: none
 
-.swipe-container .swipe-inner
-  background-color: rgb(248,162,61)
+.swipe-container
+  z-index: 20
+  .swipe-inner
+    background-color: rgb(248,162,61)
 
 .popselect
   position: fixed
@@ -269,6 +279,7 @@ body
   background-color: #bbb
 
 #home
+  position: fixed
   >.container>.title
     padding-top:10px
     height: 40px
