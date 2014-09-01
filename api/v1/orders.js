@@ -36,77 +36,88 @@ exports.done = function(req,res,next){
     res.status(400).send("wrong params");
   }
 
-  Order.updateById(req.params.orderid,{
-    $set:{
-      breakage: data.breakage,
-      finish_pics: data.finish_pics,
-      breakage_pics: data.breakage_pics,
-      status: "done",
-      finish_time: new Date()
-    }
-  },function(err){
-    if(err){
-      return next(err);
-    }
+  Order.findById(req.params.orderid,function(err,order){
+    if(err){return next(err);}
 
-    Order.findById(req.params.orderid,function(err,order){
-      if(err){return next(err);}
-
-      async.parallel([
-        // 更新车工最后可用时间
-        function(done){
-
-          Worker.updateById(worker._id, {
-            $set:{
-              last_available_time: new Date(worker.last_available_time - (order.estimate_finish_time - order.finish_time))
-            }
-          },done);
-        },
-        // 给车工发送消息
-        function(done){
-          Order.findOne({
-            "worker._id": worker._id
-          },function(err,new_order){
-            if(err){return done(err);}
-            if(!new_order){return done(null);}
-            var url = config.host.worker + "/orders/" + new_order._id;
-            var message = "查看下一笔订单：" + url;
-            console.log("send text to %s %s",worker.openid,message);
-            wechat_worker.sendText(worker.openid, message, done);
-          });
-        },
-        // 给用户发送消息
-        function(done){
-          if(!order.user.openid){
-            return done("订单 %s 的用户没有openid",order._id);
+    async.series([
+      // 给车工发送消息
+      function(done){
+        Order.findOne({
+          "worker._id": worker._id
+        },function(err,new_order){
+          if(err){return done(err);}
+          if(!new_order){return done(null);}
+          var url = config.host.worker + "/orders/" + new_order._id;
+          var message = "查看下一笔订单：" + url;
+          console.log("send text to %s %s",worker.openid,message);
+          wechat_worker.sendText(worker.openid, message, done);
+        });
+      },
+      // 给用户发送消息
+      function(done){
+        if(!order.user.openid){
+          return done("订单 %s 的用户没有openid",order._id);
+        }
+        var url = config.host.user + "/myorders/" + order._id;
+        var message = "您的车已洗完：" + url;
+        console.log("send text to %s %s",order.user.openid, message);
+        wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
+      },
+      // 更新车工最后可用时间
+      function(done){
+        Worker.updateById(worker._id, {
+          $set:{
+            last_available_time: new Date(worker.last_available_time - (order.estimate_finish_time - order.finish_time))
           }
-          var url = config.host.user + "/myorders/" + order._id;
-          var message = "您的车已洗完：" + url;
-          console.log("send text to %s %s",order.user.openid, message);
-          wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
-        }
-      ],function(err){
-        if(err){
-          return next(err);
-        }
+        },done);
+      },
+      // 更新订单状态
+      function(done){
+        Order.updateById(order._id,{
+          $set:{
+            breakage: data.breakage,
+            finish_pics: data.finish_pics,
+            breakage_pics: data.breakage_pics,
+            status: "done",
+            finish_time: new Date()
+          }
+        },done);
+      }
+    ],function(err){
+      if(err){
+        return next(err);
+      }
 
-        res.status(200).send({message:"ok"});
+      res.status(200).send({message:"ok"});
 
-      });
     });
   });
 }
 
 exports.arrive = function(req,res,next){
-  Order.updateById(req.params.orderid,{
-    $set:{
-      status: "doing",
-      arrive_time: new Date()
-    }
-  },function(err){
-    if(err){
-      return next(err);
-    }
-    res.send("ok");
+  Order.findById(req.params.orderid,function(err, order){
+    if(err){return next(err);}
+
+    async.series([
+      function(done){
+        var message = "车工已到达并开始为您洗车";
+        console.log("send text to user %s %s",order.user.openid,message);
+        wechat_user.sendText(order.user.openid, message, done);
+      },
+      function(done){
+        Order.updateById(order._id,{
+          $set:{
+            status: "doing",
+            arrive_time: new Date()
+          }
+        }, done);
+      }
+    ],function(err){
+      if(err){
+        return next(err);
+      }
+      res.send("ok");
+    })
   });
+
 }
