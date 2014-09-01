@@ -207,7 +207,7 @@ exports.init = function(selector,options){
   if(options.type == "single"){
     initloading(elem.find(".area"));
     elem.find(".area").append(result);
-    uploader.on("progress",function(){
+    uploader.on("add",function(){
       result.empty();
       elem.find(".text").hide();
       elem.find(".result").hide();
@@ -318,6 +318,11 @@ function popMessage(message){
     try{
       json = JSON.parse(message.responseText);
     }catch(e){
+      json = {
+        error:{
+          message: message.responseText
+        }
+      }
     }
   }else if(typeof message == "string"){
     json = {
@@ -336,16 +341,18 @@ function popMessage(message){
     transition:"opacity linear .4s",
     top: "140px",
     left: "50%",
+    zIndex: "30",
     padding: "10px 25px",
     backgroundColor: "rgba(0,0,0,0.8)",
     borderRadius:"5px"
   });
   pop.appendTo($("body"));
-  var width = pop.width() + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
-    return parseInt(pop.css(prop));
-  }).reduce(function(a,b){
-    return a+b;
-  },0);
+  var width = pop.width()
+    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    //   return parseInt(pop.css(prop));
+    // }).reduce(function(a,b){
+    //   return a+b;
+    // },0);
   pop.css({
     "margin-left": - width / 2
   });
@@ -381,32 +388,45 @@ function SwipeModal(config){
   var self = this;
   var submit = config.submit;
   var elem = this.elem = $(config.template);
-  var getData = config.getData;
-  var validate = config.validate;
-  var button = config.button;
-  var submit = config.submit;
+  var getData = this.getData = config.getData;
+  var validate = this.validate = config.validate;
+  var button = this.button = config.button;
   this._show = config.show;
 
+
+  function viewReturn(){
+    $("body").css("position","static");
+    viewSwipe.out("bottom");
+    button.prop("disabled",false);
+  }
+
+  function viewCome(){
+    $("body").css("position","fixed");
+    viewSwipe.in(elem[0],"bottom");
+    button.prop("disabled",true);
+  }
+
+  self.on("show",viewCome);
+  self.on("submit",viewReturn);
+  self.on("cancel",viewReturn);
+
   elem.find(".submit").on("touchend",function(){
-    var data = this.getData();
-    var isValid = this.validate();
+    var data = self.getData();
+    var isValid = self.validate(data);
 
     if(isValid){
       if(!submit){
         self.emit("submit",data);
       }else{
         submit(data,function(result){
-          viewSwipe.out("bottom");
           self.emit("submit",result);
         });
       }
-      viewSwipe.out("bottom");
     }
   });
 
   elem.find(".cancel").on("touchend", function(){
     self.emit("cancel");
-    viewSwipe.out("bottom");
   });
 }
 
@@ -414,7 +434,6 @@ util.inherits(SwipeModal,events);
 
 SwipeModal.prototype.show = function(){
   this.emit("show");
-  viewSwipe.in(this.elem[0],"bottom");
   this._show();
 }
 

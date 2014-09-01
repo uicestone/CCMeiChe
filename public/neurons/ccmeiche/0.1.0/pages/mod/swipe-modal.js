@@ -39,32 +39,45 @@ function SwipeModal(config){
   var self = this;
   var submit = config.submit;
   var elem = this.elem = $(config.template);
-  var getData = config.getData;
-  var validate = config.validate;
-  var button = config.button;
-  var submit = config.submit;
+  var getData = this.getData = config.getData;
+  var validate = this.validate = config.validate;
+  var button = this.button = config.button;
   this._show = config.show;
 
+
+  function viewReturn(){
+    $("body").css("position","static");
+    viewSwipe.out("bottom");
+    button.prop("disabled",false);
+  }
+
+  function viewCome(){
+    $("body").css("position","fixed");
+    viewSwipe.in(elem[0],"bottom");
+    button.prop("disabled",true);
+  }
+
+  self.on("show",viewCome);
+  self.on("submit",viewReturn);
+  self.on("cancel",viewReturn);
+
   elem.find(".submit").on("touchend",function(){
-    var data = this.getData();
-    var isValid = this.validate();
+    var data = self.getData();
+    var isValid = self.validate(data);
 
     if(isValid){
       if(!submit){
         self.emit("submit",data);
       }else{
         submit(data,function(result){
-          viewSwipe.out("bottom");
           self.emit("submit",result);
         });
       }
-      viewSwipe.out("bottom");
     }
   });
 
   elem.find(".cancel").on("touchend", function(){
     self.emit("cancel");
-    viewSwipe.out("bottom");
   });
 }
 
@@ -72,7 +85,6 @@ util.inherits(SwipeModal,events);
 
 SwipeModal.prototype.show = function(){
   this.emit("show");
-  viewSwipe.in(this.elem[0],"bottom");
   this._show();
 }
 

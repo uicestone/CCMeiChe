@@ -96,7 +96,7 @@ exports.init = function(selector,options){
   if(options.type == "single"){
     initloading(elem.find(".area"));
     elem.find(".area").append(result);
-    uploader.on("progress",function(){
+    uploader.on("add",function(){
       result.empty();
       elem.find(".text").hide();
       elem.find(".result").hide();
