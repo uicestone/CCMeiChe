@@ -3,6 +3,14 @@ var wechat = require('../util/wechat');
 module.exports = function(req,res,next){
   var oauth = wechat.user.oauth;
   var code = req.query.code;
+  var redirect = req.query.redirect;
+  if(!redirect || redirect == req.url){
+    redirect = "/";
+  }
+
+  if(req.isAuthenticated()){
+    res.redirect(redirect);
+  }
 
   if(process.env.DEBUG){
     return res.render("login",{
