@@ -25,6 +25,7 @@
     "./pages/mod/popmessage.js",
     "./pages/mod/popselect.js",
     "./pages/mod/singleselect.js",
+    "./pages/mod/swipe-modal.js",
     "./pages/mod/uploader.js",
     "./pages/myinfos.js",
     "./pages/myorders.js",

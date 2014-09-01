@@ -21,48 +21,64 @@ var _17 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
 var _18 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
 var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
 var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _21 = "zepto@^1.1.3";
+var _21 = "util@^1.0.4";
+var _22 = "events@^1.0.5";
+var _23 = "view-swipe@~0.1.4";
+var _24 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_13, [_21,_5], function(require, exports, module, __filename, __dirname) {
-require("./mod/countdown");
-var $ = require("zepto");
-$(".cancel").on("touchend",function(){
-  alert("取消功能施工中");
-});
-}, {
-    entries:entries,
-    map:mix({"./mod/countdown":_5},globalMap)
-});
-
-define(_5, [_21], function(require, exports, module, __filename, __dirname) {
+define(_10, [_21,_22,_23,_24], function(require, exports, module, __filename, __dirname) {
+var util = require("util");
+var events = require("events");
+var viewSwipe = require("view-swipe");
 var $ = require("zepto");
 
-function addZero(num){
-  if(Math.abs(num) < 10){
-    return "0" + num;
-  }else{
-    return num;
-  }
-}
 
-function calculateTime(){
-  $(".time").forEach(function(elem,i){
-    var el = $(elem);
-    var finish_time = new Date(el.attr("data-finish"));
-    var now = new Date();
-    var duration = finish_time - now;
-    var negative = now > finish_time ? "-" : "";
-    var minutes =  Math.floor( Math.abs( duration / (1000 * 60)));
-    var seconds = Math.round( (Math.abs(duration) - minutes * 1000 * 60) / 1000);
-    el.html( negative + addZero(minutes) + ":" + addZero(seconds) );
+function SwipeModal(config){
+  var self = this;
+  var submit = config.submit;
+  var elem = this.elem = $(config.template);
+  var getData = config.getData;
+  var validate = config.validate;
+  var button = config.button;
+  var submit = config.submit;
+  this._show = config.show;
+
+  elem.find(".submit").on("touchend",function(){
+    var data = this.getData();
+    var isValid = this.validate();
+
+    if(isValid){
+      if(!submit){
+        self.emit("submit",data);
+      }else{
+        submit(data,function(result){
+          viewSwipe.out("bottom");
+          self.emit("submit",result);
+        });
+      }
+      viewSwipe.out("bottom");
+    }
+  });
+
+  elem.find(".cancel").on("touchend", function(){
+    self.emit("cancel");
+    viewSwipe.out("bottom");
   });
 }
 
+util.inherits(SwipeModal,events);
 
-setInterval(calculateTime,1000);
-calculateTime();
+SwipeModal.prototype.show = function(){
+  this.emit("show");
+  viewSwipe.in(this.elem[0],"bottom");
+  this._show();
+}
+
+exports.create = function(config){
+  return new SwipeModal(config);
+}
 }, {
     entries:entries,
     map:globalMap

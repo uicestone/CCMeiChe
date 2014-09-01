@@ -10,21 +10,22 @@ var _6 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
 var _7 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
 var _8 = "ccmeiche@0.1.0/pages/mod/popselect.js";
 var _9 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
-var _10 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _11 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _12 = "ccmeiche@0.1.0/pages/myorders.js";
-var _13 = "ccmeiche@0.1.0/pages/order.js";
-var _14 = "ccmeiche@0.1.0/pages/preorder.js";
-var _15 = "ccmeiche@0.1.0/pages/recharge.js";
-var _16 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _20 = "zepto@^1.1.3";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19];
+var _10 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
+var _11 = "ccmeiche@0.1.0/pages/mod/uploader.js";
+var _12 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _13 = "ccmeiche@0.1.0/pages/myorders.js";
+var _14 = "ccmeiche@0.1.0/pages/order.js";
+var _15 = "ccmeiche@0.1.0/pages/preorder.js";
+var _16 = "ccmeiche@0.1.0/pages/recharge.js";
+var _17 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _21 = "zepto@^1.1.3";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_15, [_20], function(require, exports, module, __filename, __dirname) {
+define(_16, [_21], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var current = null;
 $(".choices .row").on("touchend",function(){

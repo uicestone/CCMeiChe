@@ -10,26 +10,27 @@ var _6 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
 var _7 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
 var _8 = "ccmeiche@0.1.0/pages/mod/popselect.js";
 var _9 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
-var _10 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _11 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _12 = "ccmeiche@0.1.0/pages/myorders.js";
-var _13 = "ccmeiche@0.1.0/pages/order.js";
-var _14 = "ccmeiche@0.1.0/pages/preorder.js";
-var _15 = "ccmeiche@0.1.0/pages/recharge.js";
-var _16 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _20 = "zepto@^1.1.3";
-var _21 = "events@^1.0.5";
-var _22 = "util@^1.0.4";
-var _23 = "tpl@~0.2.1";
-var _24 = "view-swipe@~0.1.4";
-var _25 = "uploader@~0.1.4";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19];
+var _10 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
+var _11 = "ccmeiche@0.1.0/pages/mod/uploader.js";
+var _12 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _13 = "ccmeiche@0.1.0/pages/myorders.js";
+var _14 = "ccmeiche@0.1.0/pages/order.js";
+var _15 = "ccmeiche@0.1.0/pages/preorder.js";
+var _16 = "ccmeiche@0.1.0/pages/recharge.js";
+var _17 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _21 = "zepto@^1.1.3";
+var _22 = "events@^1.0.5";
+var _23 = "util@^1.0.4";
+var _24 = "tpl@~0.2.1";
+var _25 = "view-swipe@~0.1.4";
+var _26 = "uploader@~0.1.4";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_1, [_20,_21,_22,_23,_24,_17,_10,_9,_7], function(require, exports, module, __filename, __dirname) {
+define(_1, [_21,_22,_23,_24,_25,_18,_11,_9,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var template = require("./tpl/finishorder.html");
 var uploader = require("./mod/uploader");
@@ -151,17 +152,17 @@ FinishOrder.prototype.confirm = function(){
 module.exports = new FinishOrder();
 }, {
     entries:entries,
-    map:mix({"./tpl/finishorder.html":_17,"./mod/uploader":_10,"./mod/singleselect":_9,"./mod/popmessage":_7},globalMap)
+    map:mix({"./tpl/finishorder.html":_18,"./mod/uploader":_11,"./mod/singleselect":_9,"./mod/popmessage":_7},globalMap)
 });
 
-define(_17, [], function(require, exports, module, __filename, __dirname) {
+define(_18, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="finishorder" class="container"><h2 class="h2">洗车已完成</h2><ul class="photo-list finish_photos"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><h2 class="h2">车损部位</h2><ul class="breakages"><li data-index="1" class="breakage breakage-1"><img src="/img/breakages/icon-1.svg" width="100%"/></li><li data-index="2" class="breakage breakage-2"><img src="/img/breakages/icon-2.svg" width="100%"/></li><li data-index="3" class="breakage breakage-3"><img src="/img/breakages/icon-3.svg" width="100%"/></li><li data-index="4" class="breakage breakage-4"><img src="/img/breakages/icon-4.svg" width="100%"/></li><li data-index="5" class="breakage breakage-5"><img src="/img/breakages/icon-5.svg" width="100%"/></li><li data-index="6" class="breakage breakage-6"><img src="/img/breakages/icon-6.svg" width="100%"/></li><li data-index="7" class="breakage breakage-7"><img src="/img/breakages/icon-7.svg" width="100%"/></li><li data-index="8" class="breakage breakage-8"><img src="/img/breakages/icon-8.svg" width="100%"/></li><li data-index="9" class="breakage breakage-9"><img src="/img/breakages/icon-9.svg" width="100%"/></li><li data-index="10" class="breakage breakage-10"><img src="/img/breakages/icon-10.svg" width="100%"/></li></ul><ul class="photo-list breakage_photos"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><input type="button" value="完成" class="button submit"/><input type="button" value="取消" class="button cancel"/></div>'
 }, {
     entries:entries,
     map:globalMap
 });
 
-define(_10, [_20,_25], function(require, exports, module, __filename, __dirname) {
+define(_11, [_21,_26], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -288,7 +289,7 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_9, [_20,_21,_22], function(require, exports, module, __filename, __dirname) {
+define(_9, [_21,_22,_23], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var events = require("events");
 var util = require("util");
@@ -331,7 +332,7 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_7, [_20], function(require, exports, module, __filename, __dirname) {
+define(_7, [_21], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
   var json = {}
