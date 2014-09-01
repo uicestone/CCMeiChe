@@ -1,18 +1,55 @@
 var wechat = require('wechat');
 var config = require('config');
+var worker_api = require('./util/wechat').worker.api;
+var user_api = require('./util/wechat').worker.api;
+var model = require("./model");
+var Worker = model.worker;
+var User = model.user;
+var Order = model.order;
+
+function updateInfo(openid,Model,api,callback){
+  if(!user.wechat_info){
+    api.getUser(openid, function(err, result){
+      if(err){return callback(err);}
+      if(result){
+        Model.update({
+          openid: openid
+        },{
+          $set:{
+            wechat_info: result
+          }
+        },callback);
+      }else{
+        callback(null);
+      }
+    });
+  }
+}
+
 
 exports.user = wechat(config.wechat.user.token, function(req,res){
   var message = req.weixin;
+  var openid = message.FromUserName;
   console.log("user wechat recieves message %s",JSON.stringify(message,null,2));
+
   if(message.Event == "subscribe"){
     res.reply("欢迎关注CC美车 \\(^o^)/");
   }else{
-    res.reply("");
+    User.findOne({
+      openid: openid
+    },function(err,user){
+      if(err){
+        res.reply("");
+        return;
+      }
+
+      updateInfo(openid, User, user_api, function(){
+        res.reply("");
+      });
+    });
   }
 });
 
-var Worker = require('./model/worker');
-var Order = require('./model/order');
 exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   var message = req.weixin;
   var openid = message.FromUserName;
@@ -24,6 +61,13 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     if(err){
       return res.reply(err);
     }
+
+    updateInfo(openid, Worker, worker_api, function(err){
+      if(err){
+        console.log("update worker info fail");
+      }
+    });
+
     if(message.Event == "LOCATION"){
       if(user){
         Worker.update({
