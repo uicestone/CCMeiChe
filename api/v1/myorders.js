@@ -39,6 +39,7 @@ exports.post = function(req,res,next){
     latlng: req.body.latlng,
     worker: req.body.worker,
     carpark: req.body.carpark,
+    order_time: new Date(),
     estimated_finish_time: new Date(req.body.estimated_finish_time),
     estimated_drive_time: req.body.estimated_drive_time,
     estimated_wash_time: req.body.estimated_wash_time,
