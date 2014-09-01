@@ -8,7 +8,7 @@ exports.send = function(phone, code, callback){
       apikey: config.yunpian.apikey,
       mobile: phone,
       tpl_id: 1,
-      tpl_value: "#code#=" + phone + "&#company#=CC美车"
+      tpl_value: "#code#=" + code + "&#company#=CC美车"
     }
   },callback);
 }

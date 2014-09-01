@@ -1,5 +1,5 @@
 var $ = require('zepto');
-
+var popMessage = require("./mod/popmessage");
 $(function(){
   var COUNT = 90;
   var ipt_phone = $("#phone");
@@ -73,8 +73,8 @@ $(function(){
     },'json').done(function(response, status, xhr){
       location.href = "/";
     }).fail(function(xhr){
-      alert(xhr.responseText || "验证失败，请正确填写");
-    btn_signin.prop("disabled",false);
+      popMessage(xhr);
+      btn_signin.prop("disabled",false);
     });
   });
 });

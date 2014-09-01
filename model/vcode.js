@@ -11,17 +11,19 @@ function _codeExists(code,callback){
   });
 }
 
-function _keyExists(key,callback){
+function _getRedisKey(key,callback){
   redis.keys("vcode:*" + key, function(err, results){
     if(err){return callback(err);}
-    callback(null,!!results.length);
+    callback(null,results[0]);
   });
 }
 
 exports.verify = function(pair, callback){
   var redis_key = _generateRedisKey(pair);
-  redis.get(redis_key, function(err, expire){
+  redis.get(redis_key, function(err, value){
     if(err){return callback(err);}
+    var json = JSON.parse(value);
+    var expire = json && json.expire;
     if(!expire){
       console.log(redis_key + ' not exists');
       return callback(null, false);
@@ -54,7 +56,12 @@ exports.generate = function(key, callback){
           code: code,
           key: key
         });
-        redis.set(redis_key, expire, function(err){
+        var value = JSON.stringify({
+          expire: expire,
+          key: key,
+          code: code
+        });
+        redis.set(redis_key, value, function(err){
           if(err){return callback(err);}
           redis.expire(redis_key, timeout, function(err){
             if(err){return callback(err);}
@@ -66,16 +73,12 @@ exports.generate = function(key, callback){
   }
 
 
-  _keyExists(key, function(err, exists){
+  _getRedisKey(key, function(err, redis_key){
     if(err){return callback(err);}
-    if(exists){
-      callback({
-        message: "last vcode not expired key:" + key,
-        status: 401,
-        code: "ERR_LAST_NOT_EXPIRED",
-        toString: function(){
-          return JSON.stringify(this);
-        }
+    if(redis_key){
+      redis.get(redis_key,function(err,value){
+        if(err){return callback(err);}
+        callback(null, JSON.parse(value).code);
       });
     }else{
       _generateCode(key, callback);

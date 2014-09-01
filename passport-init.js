@@ -27,7 +27,7 @@ passport.use(new LocalStrategy({
     }
     if (!match) {
       return done({
-        message: "not match",
+        message: "验证码不正确或已失效",
         status: 400
       });
     } else {

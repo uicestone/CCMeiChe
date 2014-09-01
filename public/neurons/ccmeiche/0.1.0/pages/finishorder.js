@@ -362,8 +362,13 @@ function popMessage(message){
     borderRadius:"5px"
   });
   pop.appendTo($("body"));
+  var width = pop.width() + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    return parseInt(pop.css(prop));
+  }).reduce(function(a,b){
+    return a+b;
+  },0);
   pop.css({
-    "margin-left": - pop.width() / 2
+    "margin-left": - width / 2
   });
   setTimeout(function(){
     pop.css({

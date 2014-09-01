@@ -24,9 +24,9 @@ var _20 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_3, [_20], function(require, exports, module, __filename, __dirname) {
+define(_3, [_20,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
-
+var popMessage = require("./mod/popmessage");
 $(function(){
   var COUNT = 90;
   var ipt_phone = $("#phone");
@@ -100,11 +100,71 @@ $(function(){
     },'json').done(function(response, status, xhr){
       location.href = "/";
     }).fail(function(xhr){
-      alert(xhr.responseText || "验证失败，请正确填写");
-    btn_signin.prop("disabled",false);
+      popMessage(xhr);
+      btn_signin.prop("disabled",false);
     });
   });
 });
+}, {
+    entries:entries,
+    map:mix({"./mod/popmessage":_7},globalMap)
+});
+
+define(_7, [_20], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message){
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px"
+  });
+  pop.appendTo($("body"));
+  var width = pop.width() + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    return parseInt(pop.css(prop));
+  }).reduce(function(a,b){
+    return a+b;
+  },0);
+  pop.css({
+    "margin-left": - width / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
+    });
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },1500)
+}
+
+module.exports = popMessage
 }, {
     entries:entries,
     map:globalMap
