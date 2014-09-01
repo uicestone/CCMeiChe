@@ -21,7 +21,7 @@ li {
 body {
   width: 100%;
   color: #fff;
-  background-color: #fab44a;
+  background-color: #f39600;
 }
 body.openmenu {
   position: fixed;
@@ -29,7 +29,7 @@ body.openmenu {
 }
 .blank {
   position: fixed;
-  background-color: #fab44a;
+  background-color: #f39600;
   z-index: 10;
   height: 100%;
   width: 100%;
@@ -44,7 +44,7 @@ body.openmenu {
   z-index: 20;
 }
 .swipe-container .swipe-inner {
-  background-color: #f8a23d;
+  background-color: #f39600;
 }
 .popselect {
   position: fixed;
@@ -113,7 +113,7 @@ body.openmenu {
   width: 100px;
 }
 #login {
-  background-color: #f29200;
+  background-color: #f39600;
 }
 #login-form {
   padding-top: 200px;

@@ -348,6 +348,7 @@ if(!user.cars.length){
   $(".cars .add").trigger("touchend");
 }else{
   $(".blank").hide();
+  $("body").css("position","static");
 }
 require.async("./addcar.js",function(){});
 require.async("./preorder.js",function(){});
