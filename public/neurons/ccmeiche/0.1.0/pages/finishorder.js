@@ -252,7 +252,7 @@ exports.init = function(selector,options){
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
-    maxItems: type == "single" ? 1 : 2
+    maxItems: type == "single" ? -1 : 2
   });
 
   var elem = $(selector);
