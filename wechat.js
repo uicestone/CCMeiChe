@@ -152,12 +152,13 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
             console.log(err);
             return res.reply("");
           }
-          return res.reply(orders.map(function(order){
+          var message = orders.map(function(order){
             var cars = order.cars.map(function(){
               return [car.number,car.type];
             }).join("\n");
             return [order.address,cars]
-          }).join("\n\n"))
+          }).join("\n\n");
+          return res.reply(message);
         });
       }else{
         res.reply("");
