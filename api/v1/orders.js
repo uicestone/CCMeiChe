@@ -43,7 +43,7 @@ exports.done = function(req,res,next){
       // 给车工发送消息
       function(done){
         Order.findOne({
-          "worker._id": worker._id
+          "worker._id": worker._id.toString()
         },function(err,new_order){
           if(err){return done(err);}
           if(!new_order){return done(null);}
