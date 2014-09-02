@@ -99,7 +99,7 @@ exports.post = function(req,res,next){
       console.log("sendText to",worker.openid,message);
       wechat_worker.sendText(worker.openid,message,function(err){
         if(err){
-          errortracking.other(err,req,res);
+          return errortracking.other(err,req,res);
         }
         res.status(200).send(results[0]);
       });
