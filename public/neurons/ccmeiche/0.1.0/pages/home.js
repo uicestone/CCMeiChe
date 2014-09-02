@@ -205,16 +205,21 @@ $(".credit .use").on("touchend",function(){
   calculate();
 });
 
+function getPromoCount(){
+  var promo_count = 0;
+  if($(".section.promo").is(":visible")){
+    promo_count = +$(".section.promo .text").text();
+  }
+  return promo_count;
+}
+
 // 计算应付金额
 function calculate(){
   var cars_count = $(".cars-cell li").length;
   var service = currentService;
   var use_credit = $(".credit .use").hasClass("active");
   var count = 0;
-  var promo_count = 0;
-  if($(".section.promo").is(":visible")){
-    promo_count = +$(".section.promo .text").text();
-  }
+  var promo_count = getPromoCount();
 
   var credit = user.credit;
 
@@ -288,7 +293,9 @@ $("#go-wash").on("touchend", function(e){
     address:$("#address").val(),
     latlng :$("#latlng").val(),
     service:currentService,
+    promo_count: getPromoCount(),
     use_credit: $(".credit .use").hasClass("active"),
+    credit: user.credit - $(".credit .num").text().trim(),
     price: $(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
