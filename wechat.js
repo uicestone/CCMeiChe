@@ -60,27 +60,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     openid: openid
   },function(err,user){
     if(err){
-      return res.reply(err);
-    }
-
-    if(user && !user.wechat_info){
-    updateInfo(openid, Worker, worker_api, function(err){
-      if(err){
-        console.log("update worker info fail");
-      }
-    });
-    }
-
-    if(message.Event == "LOCATION"){
-      if(user){
-        Worker.update({
-          openid: openid
-        },{
-          $set:{
-            latlng:[+message.Latitude,+message.Longitude]
-          }
-        });
-      }
+      console.error(err);
       return res.reply("");
     }
 
@@ -90,6 +70,24 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
     if(message.EventKey && !user){
       return res.reply("您没有权限进行该操作，请管理员添加用户" + openid);
+    }
+
+    if(!user.wechat_info){
+      updateInfo(openid, Worker, worker_api, function(err){
+        if(err){
+          console.log("update worker info fail");
+        }
+      });
+    }
+
+    if(message.Event == "LOCATION"){
+      Worker.update({
+        openid: openid
+      },{
+        $set:{
+          latlng:[+message.Latitude,+message.Longitude]
+        }
+      });
     }
 
     if(message.EventKey == "ON_DUTY"){
@@ -116,12 +114,16 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
             status:"on_duty"
           }
         },function(err){
-          if(err){return res.reply(err);}
+          if(err){
+            console.error(err);
+            return res.reply("");
+          }
           return res.reply("你已经在上班了，好好干！");
         });
       });
     }else if(message.EventKey == "OFF_DUTY"){
       // 下班
+
       if(user.status == "off_duty"){
         return res.reply("你已经下班了，享受生活吧。");
       }
@@ -134,21 +136,32 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
           last_available_time: null
         }
       },function(err){
-        if(err){return res.reply(err);}
+        if(err){
+          console.error(err);
+          return res.reply("");
+        }
         return res.reply("你已经下班了，享受生活吧。");
       });
     }else if(message.EventKey == "VIEW_HISTORY"){
-      Order.find({
-        worker:"",
-        status:"done"
-      }).limit(15).toArray(function(err,orders){
-        return res.reply(orders.map(function(order){
-          var cars = order.cars.map(function(){
-            return [car.number,car.type];
-          }).join("\n");
-          return [order.address,cars]
-        }).join("\n\n"))
-      });
+      if(user){
+        Order.find({
+          "worker._id":user._id.toString(),
+          "status":"done"
+        }).limit(15).toArray(function(err,orders){
+          if(err){
+            console.log(err);
+            return res.reply("");
+          }
+          return res.reply(orders.map(function(order){
+            var cars = order.cars.map(function(){
+              return [car.number,car.type];
+            }).join("\n");
+            return [order.address,cars]
+          }).join("\n\n"))
+        });
+      }else{
+        res.reply("");
+      }
     }else{
       return res.reply("");
     }
