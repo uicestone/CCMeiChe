@@ -42,7 +42,7 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
       }
 
 
-      if(!user.wechat_info){
+      if(user && !user.wechat_info){
         updateInfo(openid, User, user_api, function(){
           res.reply("");
         });
@@ -63,7 +63,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       return res.reply(err);
     }
 
-    if(!user.wechat_info){
+    if(user && !user.wechat_info){
     updateInfo(openid, Worker, worker_api, function(err){
       if(err){
         console.log("update worker info fail");
