@@ -8,22 +8,20 @@ var User = model.user;
 var Order = model.order;
 
 function updateInfo(openid,Model,api,callback){
-  if(!user.wechat_info){
-    api.getUser(openid, function(err, result){
-      if(err){return callback(err);}
-      if(result){
-        Model.update({
-          openid: openid
-        },{
-          $set:{
-            wechat_info: result
-          }
-        },callback);
-      }else{
-        callback(null);
-      }
-    });
-  }
+  api.getUser(openid, function(err, result){
+    if(err){return callback(err);}
+    if(result){
+      Model.update({
+        openid: openid
+      },{
+        $set:{
+          wechat_info: result
+        }
+      },callback);
+    }else{
+      callback(null);
+    }
+  });
 }
 
 
@@ -43,9 +41,12 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
         return;
       }
 
-      updateInfo(openid, User, user_api, function(){
-        res.reply("");
-      });
+
+      if(!user.wechat_info){
+        updateInfo(openid, User, user_api, function(){
+          res.reply("");
+        });
+      }
     });
   }
 });
@@ -62,11 +63,13 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       return res.reply(err);
     }
 
+    if(!user.wechat_info){
     updateInfo(openid, Worker, worker_api, function(err){
       if(err){
         console.log("update worker info fail");
       }
     });
+    }
 
     if(message.Event == "LOCATION"){
       if(user){
