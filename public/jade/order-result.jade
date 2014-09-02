@@ -20,4 +20,14 @@ block content
           .label 支付
           .text #{order.service.title}
   h2.title 已完成
+  .finish_pics.container
+    for pic in order.finish_pics
+      .pic
+        img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")
   h2.title 车损部位
+  .container
+    include ./breakages
+  .breakage_pics.container
+    for pic in order.breakage_pics
+      .pic
+        img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")

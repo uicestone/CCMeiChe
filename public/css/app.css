@@ -67,7 +67,7 @@ body.openmenu {
   color: #fff;
   display: block;
   font-size: 18px;
-  line-height: 1;
+  line-height: 45px;
   text-align: center;
 }
 .button[disabled] {
@@ -905,6 +905,7 @@ body.openmenu {
   color: #b6b6b6;
 }
 #order {
+  background-image: none;
   background-color: #fff;
 }
 #order .pic {
@@ -996,27 +997,36 @@ body.openmenu {
   line-height: 23px;
   float: left;
 }
+#order-result .pic {
+  background-color: #fff;
+  padding: 5px;
+  margin-bottom: 7px;
+}
+#order-result .pic img {
+  width: 100%;
+  display: block;
+}
 #finishorder .h2 {
   color: #999;
   font-size: 18px;
   padding: 12px 0;
   text-align: center;
 }
-#finishorder .breakages {
+.breakages {
   zoom: 1;
   margin-left: -10px;
   position: relative;
   left: 10px;
 }
-#finishorder .breakages:before,
-#finishorder .breakages:after {
+.breakages:before,
+.breakages:after {
   content: "";
   display: block;
 }
-#finishorder .breakages:after {
+.breakages:after {
   clear: both;
 }
-#finishorder .breakage {
+.breakage {
   color: #fab44a;
   float: left;
   width: 42px;
@@ -1025,12 +1035,28 @@ body.openmenu {
   margin-bottom: 10px;
   border: 1px solid #fab44a;
 }
-#finishorder .breakage.active {
+.breakage.active {
   background-color: #fab44a;
 }
-#finishorder .breakage.active path {
+.breakage.active path,
+.breakage.active ellipse {
   fill: #fff;
   stroke: #fff;
+}
+#order-result .breakage {
+  border: 1px solid #fff;
+}
+#order-result .breakage path,
+#order-result .breakage ellipse {
+  stroke: #fff;
+}
+#order-result .breakage.active {
+  background-color: #c70462;
+  border: 1px solid #c70462;
+}
+#order-result .breakage.active path,
+#order-result .breakage.active ellipse {
+  fill: #fff;
 }
 #recharge .h1 {
   font-size: 20px;

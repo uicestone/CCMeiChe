@@ -1,0 +1,24 @@
+- var breakage = locals.order && locals.order.breakage || -1;
+ul.breakages
+  for i in [1,2,3,4,5,6,7,8,9,10]
+    li(class=["breakage","breakage-#{i}", i == breakage ? "active" : ""],data-index="#{i}")
+      if i == 1
+        include ../img/breakages/icon-1.svg
+      else if i == 2
+        include ../img/breakages/icon-2.svg
+      else if i == 3
+        include ../img/breakages/icon-3.svg
+      else if i == 4
+        include ../img/breakages/icon-4.svg
+      else if i == 5
+        include ../img/breakages/icon-5.svg
+      else if i == 6
+        include ../img/breakages/icon-6.svg
+      else if i == 7
+        include ../img/breakages/icon-7.svg
+      else if i == 8
+        include ../img/breakages/icon-8.svg
+      else if i == 9
+        include ../img/breakages/icon-9.svg
+      else if i == 10
+        include ../img/breakages/icon-10.svg

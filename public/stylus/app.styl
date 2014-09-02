@@ -54,7 +54,7 @@ body
   color: #fff
   display: block
   font-size: 18px
-  line-height: 1
+  line-height: 45px
   text-align: center
 .button[disabled]
   background-color: #bbb
@@ -684,6 +684,7 @@ body
         color: grey
 
 #order
+  background-image: none
   background-color: #fff
   .pic
     margin: 20px 30px
@@ -747,6 +748,13 @@ body
           width: 120px
           line-height: 23px
           float: left
+  .pic
+    background-color: #fff
+    padding: 5px
+    margin-bottom: 7px
+    img
+      width: 100%
+      display: block
 
 
 #finishorder
@@ -755,24 +763,36 @@ body
     font-size: 18px
     padding: 12px 0
     text-align: center
-  .breakages
-    clearfix()
-    margin-left: -10px
-    position: relative
-    left: 10px
+
+.breakages
+  clearfix()
+  margin-left: -10px
+  position: relative
+  left: 10px
+.breakage
+  color: orange
+  float: left
+  width: 42px
+  height: 30px
+  margin-right: 10px
+  margin-bottom: 10px
+  border: 1px solid orange
+  &.active
+    background-color: orange
+    path,ellipse
+      fill: white
+      stroke: white
+
+#order-result
   .breakage
-    color: orange
-    float: left
-    width: 42px
-    height: 30px
-    margin-right: 10px
-    margin-bottom: 10px
-    border: 1px solid orange
+    border: 1px solid white
+    path,ellipse
+      stroke: white
     &.active
-      background-color: orange
-      path
+      background-color: pink
+      border: 1px solid pink
+      path,ellipse
         fill: white
-        stroke: white
 
 #recharge
   .h1

@@ -16,6 +16,7 @@ exports.list = function(req,res,next){
 }
 
 exports.detail = function(req,res,next){
+  console.log(req.params.orderid);
   Order.findById(req.params.orderid,function(err,order){
     if(err || !order){
       return next(err);
