@@ -1,6 +1,6 @@
 var Order = require("../model/order");
 
-module.exports = function(req,res,next){
+exports.list = function(req,res,next){
   Order.find({
     "user.phone": req.user.phone
   }).toArray(function(err,orders){
@@ -13,4 +13,17 @@ module.exports = function(req,res,next){
       data:orders
     });
   });
+}
+
+exports.detail = function(req,res,next){
+  Order.findById(req.params.orderid,function(err,order){
+    if(err || !order){
+      return next(err);
+    }
+
+    res.render('order-result',{
+      id:"order-result",
+      order: order
+    });
+  })
 }

@@ -485,7 +485,7 @@ body.openmenu {
 #home .services li .detail,
 .service-select .choices .item .detail {
   float: left;
-  width: 100px;
+  width: 150px;
 }
 #home .services li .detail .title,
 .service-select .choices .item .detail .title {
@@ -499,14 +499,14 @@ body.openmenu {
 #home .services li .price,
 .service-select .choices .item .price {
   float: right;
-  padding-right: 47px;
+  padding-right: 25px;
   line-height: 42px;
   height: 42px;
 }
 #home .services li .arrow,
 .service-select .choices .item .arrow {
   position: absolute;
-  right: 25px;
+  right: 20px;
   top: 12px;
 }
 #home .services li .promo,
@@ -615,6 +615,9 @@ body.openmenu {
   margin-top: 5px;
   text-align: center;
   font-size: 10px;
+}
+.service-select .choices .inner {
+  overflow: auto;
 }
 .service-select .choices .item {
   width: auto;
@@ -954,6 +957,38 @@ body.openmenu {
 }
 #order .swipe-inner {
   background-color: #fff;
+}
+#order-result .order {
+  padding: 2px;
+  background-color: #fab44a;
+  color: #fff;
+  margin: 0 30px;
+}
+#order-result .order .inner {
+  border: 2px solid #fff;
+  padding: 14px;
+}
+#order-result .order .inner .row {
+  zoom: 1;
+}
+#order-result .order .inner .row:before,
+#order-result .order .inner .row:after {
+  content: "";
+  display: block;
+}
+#order-result .order .inner .row:after {
+  clear: both;
+}
+#order-result .order .inner .row .label {
+  text-align: right;
+  line-height: 23px;
+  width: 60px;
+  float: left;
+}
+#order-result .order .inner .row .text {
+  width: 120px;
+  line-height: 23px;
+  float: left;
 }
 #finishorder .h2 {
   color: #999;

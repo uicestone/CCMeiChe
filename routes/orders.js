@@ -21,13 +21,8 @@ exports.detail = function(req,res,next){
   var id = req.params.orderid;
 
   Order.findById(id,function(err,order){
-    if(err){
+    if(err || !order){
       return next(err);
-    }
-
-    if(!order){
-      console.log("order not exists");
-      return res.send(404,"not found");
     }
 
     if(order.worker._id !== req.user._id.toString()){

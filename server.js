@@ -70,7 +70,8 @@ if(SERVICE == "worker"){
   app.get('/login', require("./routes/login"));
   app.get('/logout', require("./routes/logout"));
   app.get('/', assureUserLogin, require("./routes/index"));
-  app.get('/myorders', assureUserLogin, require("./routes/myorders"));
+  app.get('/myorders/:orderid', assureUserLogin, require("./routes/myorders").detail);
+  app.get('/myorders', assureUserLogin, require("./routes/myorders").list);
   app.get('/myinfos', assureUserLogin, require("./routes/myinfos"));
   app.get('/recharge', assureUserLogin, require("./routes/recharge"));
   app.get('/help', require("./routes/help"));

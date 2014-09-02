@@ -166,7 +166,7 @@ var currentService = window.services[0];
 // 优惠券
 function judgePromo(){
   var mypromo = user.promo.filter(function(item){
-    return item.id == currentService._id;
+    return item._id == currentService._id;
   })[0];
   if(mypromo && mypromo.count){
     $(".promo").show();
@@ -494,11 +494,16 @@ function PopSelect(choices, options){
   this.name = options.name;
   var container = this.container =  $("<div class='popselect'>"
       +"<div class='close'></div>"
-      +"<div class='choices'></div>"
+      +"<div class='choices'>"
+      +"<div class='inner'></div>"
+      +"</div>"
     +"<div class='btn submit'>确认</div>"
   +"</div>");
   this.render();
   this.bind();
+  var doc_height = $(window).height();
+  container.css("max-height",doc_height - 40);
+  container.find(".inner").css("max-height",doc_height - 200);
   container.appendTo($("body"));
   container.hide();
   this.name && container.addClass(this.name);
@@ -512,7 +517,7 @@ PopSelect.prototype.render = function() {
   var parser = this.parser;
   var container = this.container;
 
-  var choices_elem = container.find(".choices");
+  var choices_elem = container.find(".choices .inner");
   choices_elem.empty();
   this.choices.forEach(function(choice){
     var text = parser(choice);

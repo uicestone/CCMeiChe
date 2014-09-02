@@ -135,7 +135,7 @@ var currentService = window.services[0];
 // 优惠券
 function judgePromo(){
   var mypromo = user.promo.filter(function(item){
-    return item.id == currentService._id;
+    return item._id == currentService._id;
   })[0];
   if(mypromo && mypromo.count){
     $(".promo").show();

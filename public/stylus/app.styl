@@ -367,7 +367,7 @@ body
       color: grey
       .detail
         float: left
-        width: 100px
+        width: 150px
         .title
           font-size: 14px
           padding: 4px 0 0 0
@@ -375,12 +375,12 @@ body
           font-size: 12px
       .price
         float: right
-        padding-right: 47px
+        padding-right: 25px
         line-height: 42px
         height: 42px
       .arrow
         position: absolute
-        right: 25px
+        right: 20px
         top: 12px
       .promo
         border-left: 1px solid grey
@@ -469,15 +469,18 @@ body
       text-align: center
       font-size: 10px
 
-.service-select .choices .item
-  @extend #home .services li
-  width: auto
-  height: auto
-  float: none
-  border: none
-  .price
-    font-size: 14px
-    padding-right: 12px
+.service-select .choices
+  .inner
+    overflow: auto
+  .item
+    @extend #home .services li
+    width: auto
+    height: auto
+    float: none
+    border: none
+    .price
+      font-size: 14px
+      padding-right: 12px
 
 .autocomplete
   position: absolute
@@ -718,6 +721,28 @@ body
       font-size: 10px
   .swipe-inner
     background-color: #fff
+
+#order-result
+  .order
+    padding: 2px
+    background-color: orange
+    color: #fff
+    margin: 0 30px
+    .inner
+      border:2px solid #fff
+      padding: 14px
+      .row
+        clearfix()
+        .label
+          text-align: right
+          line-height: 23px
+          width: 60px
+          float: left
+        .text
+          width: 120px
+          line-height: 23px
+          float: left
+
 
 #finishorder
   .h2
