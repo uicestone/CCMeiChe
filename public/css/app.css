@@ -26,6 +26,7 @@ body {
   background-image: -o-linear-gradient(#fab44a, #f39600);
   background-image: -ms-linear-gradient(#fab44a, #f39600);
   background-image: linear-gradient(#fab44a, #f39600);
+  background-repeat: no-repeat;
 }
 body.openmenu {
   position: fixed;
@@ -363,7 +364,8 @@ body.openmenu {
 #home {
   position: fixed;
 }
-#home >.container>.title {
+#home >.container>.title,
+#order-result .title {
   padding-top: 10px;
   height: 40px;
   line-height: 40px;
@@ -963,16 +965,13 @@ body.openmenu {
   background-color: #fff;
 }
 #order-result .order {
-  padding: 2px;
-  background-color: #fab44a;
-  color: #fff;
-  margin: 0 30px;
-}
-#order-result .order .inner {
-  border: 2px solid #fff;
-  padding: 14px;
+  background-color: #fff;
+  color: #b6b6b6;
 }
 #order-result .order .inner .row {
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+  padding: 5px 0;
   zoom: 1;
 }
 #order-result .order .inner .row:before,
@@ -984,12 +983,15 @@ body.openmenu {
   clear: both;
 }
 #order-result .order .inner .row .label {
+  padding-left: 20px;
+  padding-right: 23px;
   text-align: right;
   line-height: 23px;
-  width: 60px;
   float: left;
 }
 #order-result .order .inner .row .text {
+  border-left: 1px solid #ddd;
+  padding-left: 30px;
   width: 120px;
   line-height: 23px;
   float: left;

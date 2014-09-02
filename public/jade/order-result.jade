@@ -1,38 +1,23 @@
 extends layout
 block content
   h1.title 车洗完啦
-  .order
-    .inner
-      .row
-        .label 手机：
-        .text #{order.user.phone}
-      for car in order.cars
+  .container
+    .order
+      .inner
         .row
-          .label 车型：
-          .text
-            p #{car.type}
-            p #{car.number}
-      .row
-        .label 服务：
-        .text #{order.service.title}
-      .row
-        .label 支付：
-        .text #{order.service.title}
-  if order.status == "done"
-    .remain 已完成
-  else
-    .remain
-      .head 剩余时间
-      .time(data-finish="#{order.estimated_finish_time}")
-      .message 请在预估时间内完成洗车
-
-  if order.status == "todo"
-    button.button.arrive 到达
-  else if order.status == "doing"
-    button.button.done 完成
-
-  script.
-    var order = !{JSON.stringify(order)}
-    facade({
-      entry: "ccmeiche/pages/order.js"
-    });
+          .label 手机
+          .text #{order.user.phone}
+        for car in order.cars
+          .row
+            .label 车型
+            .text
+              p #{car.type}
+              p #{car.number}
+        .row
+          .label 服务
+          .text #{order.service.title}
+        .row
+          .label 支付
+          .text #{order.service.title}
+  h2.title 已完成
+  h2.title 车损部位

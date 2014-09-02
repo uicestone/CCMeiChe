@@ -39,8 +39,8 @@ neuron.config({
         "events@~1.0.5": 1,
         "util@~1.0.4": 2,
         "attributes@~1.4.0": 7,
-        "json@~1.0.1": 3,
         "jquery@~1.9.1": 9,
+        "json@~1.0.1": 3,
         "simple-mime@^0.0.8": 10,
         "swfupload@~0.1.0": 11,
         "underscore@~1.6.0": 12

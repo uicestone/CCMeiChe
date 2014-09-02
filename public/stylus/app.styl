@@ -17,6 +17,7 @@ body
   width: 100%
   color: #fff
   background-image: linear-gradient(orange,deeporange)
+  background-repeat: no-repeat
   &.openmenu
     position: fixed
     width: 100%
@@ -723,22 +724,26 @@ body
     background-color: #fff
 
 #order-result
+  .title
+    @extend #home >.container>.title
   .order
-    padding: 2px
-    background-color: orange
-    color: #fff
-    margin: 0 30px
+    background-color: #fff
+    color: grey
     .inner
-      border:2px solid #fff
-      padding: 14px
       .row
+        font-size: 14px
+        border-bottom: 1px solid light-grey
+        padding: 5px 0
         clearfix()
         .label
+          padding-left: 20px
+          padding-right: 23px
           text-align: right
           line-height: 23px
-          width: 60px
           float: left
         .text
+          border-left: 1px solid light-grey
+          padding-left: 30px
           width: 120px
           line-height: 23px
           float: left
