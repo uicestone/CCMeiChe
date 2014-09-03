@@ -1,6 +1,7 @@
 [{
   "name":"ccmeiche-user",
   "script":"server.js",
+  "exec_mode":"fork_mode",
   "env":{
     "PORT":4272,
     "NODE_ENV":"product",
@@ -9,6 +10,7 @@
 },{
   "name":"ccmeiche-worker",
   "script":"server.js",
+  "exec_mode":"fork_mode",
   "env":{
     "PORT":4273,
     "NODE_ENV":"product",
