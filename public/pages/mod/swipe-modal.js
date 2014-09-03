@@ -1,7 +1,10 @@
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
+var hashState = require('hashstate')();
 var $ = require("zepto");
+
+var i = 1;
 
 
 function SwipeModal(config){
@@ -11,10 +14,18 @@ function SwipeModal(config){
   var getData = this.getData = config.getData;
   var validate = this.validate = config.validate;
   var button = this.button = config.button;
+  this.name = config.name || "swipe-modal-" + i;
   this._show = config.show;
+  i++;
 
+  hashState.on('hashchange', function(e){
+    if(!e.newHash){
+      viewReturn();
+    }
+  });
 
   function viewReturn(){
+    hashState.setHash("");
     $("body").css("position","static");
     viewSwipe.out("bottom");
     button.prop("disabled",false);
@@ -53,6 +64,7 @@ function SwipeModal(config){
 util.inherits(SwipeModal,events);
 
 SwipeModal.prototype.show = function(){
+  hashState.setHash(this.name);
   this.emit("show");
   this._show();
 }

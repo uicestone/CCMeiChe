@@ -1,0 +1,52 @@
+{
+  "devDependencies": {
+    "neuron": "*",
+    "assert": "~1.0.1",
+    "async": "~0.2.9"
+  },
+  "asyncDependencies": {},
+  "scripts": {},
+  "dependencies": {
+    "util": "~1.0.0",
+    "events": "~1.0.0"
+  },
+  "name": "hashstate",
+  "description": "Location hash manager for the web inspired by YUI3",
+  "version": "0.1.0",
+  "homepage": "https://github.com/kaelzhang/hashstate",
+  "author": {
+    "name": "Kael",
+    "email": "i@kael.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kaelzhang/hashstate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kaelzhang/hashstate/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/kaelzhang/hashstate/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "keywords": [
+    "hash",
+    "hashstate",
+    "hashchange",
+    "history",
+    "location"
+  ],
+  "gitHead": "987249239a4219bf5a1f62e101307bf37bd75dbe",
+  "readme": "# hashstate\n\nLocation hash manager for the web inspired by [YUI3](http://yuilibrary.com/yui/docs/history/).\n\n## Installation\n\n```js\ncortex install hashstate --save\n```\n\n## Usage\n\n```js\nvar hashState = require('hashstate')(options);\n```\n\n- options `Object=`\n\t- prefix `String='!'` Prefix to prepend when setting the hash fragment. Default to `'!'`\n\t- split `String=','` String to split the key-value pairs.\n\t- assign `String='='` String to join key and value of a key-value pair.\n\t- window `Window=`\n\t\nThe instance of `hashState` is an [EventEmitter](http://search.cortexjs.org/package/events).\n\n### .stringify(object)\n\nReturns `String` , **excluding** `options.prefix`.\n\n```js\nhashState.stringify({a: 1, b: 'c'}); // 'a=1,b=c'\n```\n\n### .parse(string)\n\nParses the given `string` and returns `Object` the parsed object according to `options.split` and `options.assign`.\n\n```js\n// Will deal with the leading '#!'\nhashState.parse('#!a=1,b=c'); // {a: '1', b: 'c'}\nhashState.parse('!a=1,b=c'); // {a: '1', b: 'c'}\nhashState.parse('#a=1,b=c'); // {a: '1', b: 'c'}\n\nhashState.parse('a=1,b=c'); // {a: '1', b: 'c'}\n```\n\n### .setHash(hash, options)\n\n- hash `String` hash string.\n- options `Object`\n\t- mute `Boolean` if `true`, calling this method will not emit a `'hashchange'` event. \n\nChanges the current location hash, which will add a new history entry.\n\n### .replaceHash(hash, options)\n\n- hash `String` hash string.\n- options `Object`\n\t- mute `Boolean` if `true`, calling this method will not emit a `'hashchange'` event.\n\nChanges location hash and replaces the current history  entry instead of adding a new entry.\n\n### .getHash()\n\nReturns the current hash string, excluding the leading `'#'` and `options.prefix`.\n\n\n### Event: hashchange\n\n- e `Object` \n  - newHash `String` the new(current) hash string.\n  - oldHash `String` the old hash string.\n\nEmitted when hash changes.\n\n```js\nhashState.on('hashchange', function(e){\n    console.log('hashchange:', e.newHash);\n});\n```",
+  "readmeFilename": "README.md",
+  "_id": "hashstate@0.1.0",
+  "styles": [],
+  "css": [],
+  "main": "./index.js",
+  "entries": []
+}

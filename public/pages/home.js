@@ -4,7 +4,7 @@ var autocomplete = require('./mod/autocomplete');
 var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
-
+var hashState = require('hashstate')();
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
@@ -13,8 +13,9 @@ var popMessage = require('./mod/popmessage');
   $('.overlay').on("touchend",function(){
     $("body").removeClass("openmenu");
   });
-})()
+})();
 
+hashState.setHash("");
 
 var carsSelect = popselect(user.cars,{
   type:"multi",

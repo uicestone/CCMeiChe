@@ -24,15 +24,19 @@ var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
 var _21 = "util@^1.0.4";
 var _22 = "events@^1.0.5";
 var _23 = "view-swipe@~0.1.4";
-var _24 = "zepto@^1.1.3";
+var _24 = "hashstate@~0.1.0";
+var _25 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_10, [_21,_22,_23,_24], function(require, exports, module, __filename, __dirname) {
+define(_10, [_21,_22,_23,_24,_25], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
+var hashState = require('hashstate')();
 var $ = require("zepto");
+
+var i = 1;
 
 
 function SwipeModal(config){
@@ -42,10 +46,18 @@ function SwipeModal(config){
   var getData = this.getData = config.getData;
   var validate = this.validate = config.validate;
   var button = this.button = config.button;
+  this.name = config.name || "swipe-modal-" + i;
   this._show = config.show;
+  i++;
 
+  hashState.on('hashchange', function(e){
+    if(!e.newHash){
+      viewReturn();
+    }
+  });
 
   function viewReturn(){
+    hashState.setHash("");
     $("body").css("position","static");
     viewSwipe.out("bottom");
     button.prop("disabled",false);
@@ -84,6 +96,7 @@ function SwipeModal(config){
 util.inherits(SwipeModal,events);
 
 SwipeModal.prototype.show = function(){
+  hashState.setHash(this.name);
   this.emit("show");
   this._show();
 }

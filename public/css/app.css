@@ -22,6 +22,7 @@ body {
   min-height: 400px;
   width: 100%;
   color: #fff;
+  background-color: #fab44a;
   background-image: -webkit-linear-gradient(#fab44a, #f39600);
   background-image: -moz-linear-gradient(#fab44a, #f39600);
   background-image: -o-linear-gradient(#fab44a, #f39600);

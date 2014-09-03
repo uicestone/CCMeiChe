@@ -23,19 +23,20 @@ var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
 var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
 var _21 = "zepto@^1.1.3";
 var _22 = "tpl@~0.2.1";
-var _23 = "util@^1.0.4";
-var _24 = "events@^1.0.5";
+var _23 = "hashstate@~0.1.0";
+var _24 = "util@^1.0.4";
+var _25 = "events@^1.0.5";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_2, [_21,_22,_4,_9,_8,_7], function(require, exports, module, __filename, __dirname) {
+define(_2, [_21,_22,_23,_4,_9,_8,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
 var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
-
+var hashState = require('hashstate')();
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
@@ -44,8 +45,9 @@ var popMessage = require('./mod/popmessage');
   $('.overlay').on("touchend",function(){
     $("body").removeClass("openmenu");
   });
-})()
+})();
 
+hashState.setHash("");
 
 var carsSelect = popselect(user.cars,{
   type:"multi",
@@ -369,7 +371,7 @@ require.async("./preorder.js",function(){});
     map:mix({"./mod/autocomplete":_4,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7},globalMap)
 });
 
-define(_4, [_21,_23,_24], function(require, exports, module, __filename, __dirname) {
+define(_4, [_21,_24,_25], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -444,7 +446,7 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_9, [_21,_24,_23], function(require, exports, module, __filename, __dirname) {
+define(_9, [_21,_25,_24], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var events = require("events");
 var util = require("util");
@@ -487,7 +489,7 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_8, [_21,_24,_23,_9,_6], function(require, exports, module, __filename, __dirname) {
+define(_8, [_21,_25,_24,_9,_6], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
 var multiSelect = require("./multiselect");
