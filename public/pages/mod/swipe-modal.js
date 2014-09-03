@@ -32,7 +32,9 @@ function SwipeModal(config){
   }
 
   function viewCome(){
-    $("body").css("position","fixed");
+    setTimeout(function(){
+      $("body").css("position","fixed");
+    },300);
     viewSwipe.in(elem[0],"bottom");
     button.prop("disabled",true);
   }

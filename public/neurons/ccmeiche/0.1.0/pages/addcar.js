@@ -22,15 +22,15 @@ var _18 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
 var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
 var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
 var _21 = "zepto@^1.1.3";
-var _22 = "uploader@~0.1.4";
-var _23 = "util@^1.0.4";
-var _24 = "events@^1.0.5";
+var _22 = "util@^1.0.4";
+var _23 = "events@^1.0.5";
+var _24 = "uploader@~0.1.4";
 var _25 = "view-swipe@~0.1.4";
 var _26 = "hashstate@~0.1.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_21,_11,_4,_7,_10,_17], function(require, exports, module, __filename, __dirname) {
+define(_0, [_21,_4,_11,_7,_10,_17], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("./mod/uploader");
 var autocomplete = require("./mod/autocomplete");
@@ -106,10 +106,85 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"./mod/uploader":_11,"./mod/autocomplete":_4,"./mod/popmessage":_7,"./mod/swipe-modal":_10,"./tpl/addcar.html":_17},globalMap)
+    map:mix({"./mod/autocomplete":_4,"./mod/uploader":_11,"./mod/popmessage":_7,"./mod/swipe-modal":_10,"./tpl/addcar.html":_17},globalMap)
 });
 
-define(_11, [_21,_22], function(require, exports, module, __filename, __dirname) {
+define(_4, [_21,_22,_23], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var util = require("util");
+var events = require("events");
+
+function Autocomplete(input, pattern, parser, getVal){
+  input = $(input);
+  var self = this;
+  var list = $("<ul class='autocomplete' />");
+  this.list = list;
+  input.after(list);
+  var delay = 350;
+  var timeout = null;
+  parser = parser || function(item){return item;}
+  getVal = getVal || function(item){return item;}
+  var needRequest = function(value){
+    return value.match(/\w{3,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
+  }
+
+  input.on("keyup", function(){
+    clearTimeout(timeout);
+    timeout = setTimeout(function(){
+      var value = input.val().trim();
+      if(!needRequest(value)){return;}
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        url: pattern.replace("{q}",value)
+      }).done(function(data){
+        if(!data.length){return;}
+        list.empty();
+        data.map(parser).forEach(function(item,i){
+          var li = $("<li>" + item + "</li>");
+          li.on("touchend",function(){
+            input.val(getVal(data[i]));
+            self.emit("select",data[i]);
+            self.hide();
+          });
+          $(list).append(li);
+        });
+        var packup = $("<li class='packup'>收起</li>");
+        packup.on("touchend",function(){
+          self.hide();
+        });
+        list.append(packup);
+        self.show();
+      }).fail(function(){
+        console.log("failed");
+      });
+    },delay);
+  });
+}
+
+util.inherits(Autocomplete, events);
+
+Autocomplete.prototype.show = function(){
+  this.list.show();
+}
+
+
+Autocomplete.prototype.hide = function(){
+  this.list.hide();
+}
+
+
+exports.init = function(input, parser, getVal){
+  var pattern = input.attr("data-pattern");
+  if(!pattern){return;}
+  return new Autocomplete(input, pattern, parser, getVal);
+}
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_11, [_21,_24], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -236,81 +311,6 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_4, [_21,_23,_24], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var util = require("util");
-var events = require("events");
-
-function Autocomplete(input, pattern, parser, getVal){
-  input = $(input);
-  var self = this;
-  var list = $("<ul class='autocomplete' />");
-  this.list = list;
-  input.after(list);
-  var delay = 350;
-  var timeout = null;
-  parser = parser || function(item){return item;}
-  getVal = getVal || function(item){return item;}
-  var needRequest = function(value){
-    return value.match(/\w{3,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
-  }
-
-  input.on("keyup", function(){
-    clearTimeout(timeout);
-    timeout = setTimeout(function(){
-      var value = input.val().trim();
-      if(!needRequest(value)){return;}
-      $.ajax({
-        method: "GET",
-        dataType: "json",
-        url: pattern.replace("{q}",value)
-      }).done(function(data){
-        if(!data.length){return;}
-        list.empty();
-        data.map(parser).forEach(function(item,i){
-          var li = $("<li>" + item + "</li>");
-          li.on("touchend",function(){
-            input.val(getVal(data[i]));
-            self.emit("select",data[i]);
-            self.hide();
-          });
-          $(list).append(li);
-        });
-        var packup = $("<li class='packup'>收起</li>");
-        packup.on("touchend",function(){
-          self.hide();
-        });
-        list.append(packup);
-        self.show();
-      }).fail(function(){
-        console.log("failed");
-      });
-    },delay);
-  });
-}
-
-util.inherits(Autocomplete, events);
-
-Autocomplete.prototype.show = function(){
-  this.list.show();
-}
-
-
-Autocomplete.prototype.hide = function(){
-  this.list.hide();
-}
-
-
-exports.init = function(input, parser, getVal){
-  var pattern = input.attr("data-pattern");
-  if(!pattern){return;}
-  return new Autocomplete(input, pattern, parser, getVal);
-}
-}, {
-    entries:entries,
-    map:globalMap
-});
-
 define(_7, [_21], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
@@ -378,7 +378,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_10, [_23,_24,_25,_26,_21], function(require, exports, module, __filename, __dirname) {
+define(_10, [_22,_23,_25,_26,_21], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
@@ -413,7 +413,9 @@ function SwipeModal(config){
   }
 
   function viewCome(){
-    $("body").css("position","fixed");
+    setTimeout(function(){
+      $("body").css("position","fixed");
+    },300);
     viewSwipe.in(elem[0],"bottom");
     button.prop("disabled",true);
   }

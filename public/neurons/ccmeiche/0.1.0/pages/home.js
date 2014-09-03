@@ -102,7 +102,7 @@ $(".cars .add").on("touchend", function(e){
       panelAddCar.on("cancel",function(){
         $("body").css("position","static");
       });
-      panelAddCar.on("add",function(data){
+      panelAddCar.on("submit",function(data){
         $("body").css("position","static");
         carsSelect.add(data);
         var template = "<li data='" + JSON.stringify(data) + "'>"
