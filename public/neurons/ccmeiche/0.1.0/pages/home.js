@@ -489,7 +489,7 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_8, [_21,_25,_24,_6,_9], function(require, exports, module, __filename, __dirname) {
+define(_8, [_21,_25,_24,_9,_6], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
 var multiSelect = require("./multiselect");
@@ -588,7 +588,7 @@ module.exports = function(choices,options){
 }
 }, {
     entries:entries,
-    map:mix({"./multiselect":_6,"./singleselect":_9},globalMap)
+    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
 });
 
 define(_7, [_21], function(require, exports, module, __filename, __dirname) {

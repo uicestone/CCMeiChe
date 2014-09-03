@@ -8,17 +8,21 @@ block content
 
   .aside
     h2.h2 手机 #{user.phone}
-    .credit 积分：#{user.credit}
+    .credit 积分：#{user.credit || 0}
     ul.menus
       li.item
         a(href="/myorders") 我的订单
+        i.icon.icon-orders
       li.item
         a(href="/myinfos") 我的信息
+        i.icon.icon-info
       li.item
         a(href="/recharge") 充值
+        i.icon.icon-recharge
       li.item
         a(href="/help") 帮助
-    button.button(href="/logout") 退出登录
+        i.icon.icon-help
+    .button(href="/logout") 退出登录
 
   .overlay
 

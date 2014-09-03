@@ -1,3 +1,17 @@
+.aside .icon,
+#home .address .location .icon,
+#addcar .row .icon {
+  width: 40px;
+  height: 40px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  -webkit-background-size: 40px 440px;
+  -moz-background-size: 40px 440px;
+  background-size: 40px 440px;
+  background-image: url("/img/icons.png");
+  background-repeat: no-repeat;
+}
 body,
 h1,
 h2,
@@ -200,11 +214,15 @@ body.openmenu {
   background-position: 0 -174px;
 }
 .menu {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   position: absolute;
   top: 15px;
   left: 30px;
+  background-repeat: no-repeat;
+  -webkit-background-size: 26px 26px;
+  -moz-background-size: 26px 26px;
+  background-size: 26px 26px;
   background-image: url("../img/menu.png");
 }
 .add {
@@ -257,14 +275,33 @@ body.openmenu {
 .aside .menus {
   margin-bottom: 100px;
 }
+.aside .item {
+  position: relative;
+}
 .aside .item a {
   display: block;
   color: #fab44a;
   background-color: #fff;
-  text-align: center;
+  text-align: left;
+  padding-left: 60px;
   line-height: 40px;
   border-bottom: 1px solid #fab44a;
   text-decoration: none;
+}
+.aside .icon {
+  left: 10px;
+}
+.aside .icon.icon-order {
+  background-position: 0 -200px;
+}
+.aside .icon.icon-info {
+  background-position: 0 -240px;
+}
+.aside .icon.icon-recharge {
+  background-position: 0 -280px;
+}
+.aside .icon.icon-help {
+  background-position: 0 -320px;
 }
 .openmenu .aside {
   -webkit-transform: translateX(0);
@@ -614,6 +651,9 @@ body.openmenu {
 #home .address .location {
   position: relative;
 }
+#home .address .location .icon {
+  background-position: 0 -160px;
+}
 #home .address .input {
   border: none;
   width: 100%;
@@ -683,23 +723,14 @@ body.openmenu {
   color: #bbb;
   padding-left: 40px;
 }
-#addcar .row .icon {
-  width: 29px;
-  height: 29px;
-  top: 7px;
-  left: 7px;
-  position: absolute;
-  background-image: url("/img/icons.png");
-  background-repeat: no-repeat;
-}
 #addcar .row.number .icon {
-  background-position: 0 -29px;
+  background-position: 0 -40px;
 }
 #addcar .row.color .icon {
-  background-position: 0 -58px;
+  background-position: 0 -80px;
 }
 #addcar .row.comment .icon {
-  background-position: 0 -87px;
+  background-position: 0 -120px;
 }
 #addcar .button {
   margin-top: 15px;

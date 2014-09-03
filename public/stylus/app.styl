@@ -4,6 +4,16 @@ grey=#b6b6b6
 light-grey=#ddd
 pink=#c70462
 
+$icon
+  width: 40px
+  height: 40px
+  top: 0px
+  left: 0px
+  position: absolute
+  background-size: 40px 440px
+  background-image: url("/img/icons.png")
+  background-repeat: no-repeat
+
 body,h1,h2,input,div,p,ul,ol,li,table,tr,td
   padding: 0
   margin: 0
@@ -162,11 +172,13 @@ body
 
 
 .menu
-  width: 28px
-  height: 28px
+  width: 26px
+  height: 26px
   position: absolute
   top: 15px
   left: 30px
+  background-repeat: no-repeat
+  background-size: 26px 26px
   background-image: url("../img/menu.png")
 
 
@@ -207,14 +219,28 @@ body
     margin-bottom: 30px
   .menus
     margin-bottom: 100px
-  .item a
-    display: block
-    color: orange
-    background-color: #fff
-    text-align: center
-    line-height: 40px
-    border-bottom: 1px solid orange
-    text-decoration: none
+  .item
+    position: relative
+    a
+      display: block
+      color: orange
+      background-color: #fff
+      text-align: left
+      padding-left: 60px
+      line-height: 40px
+      border-bottom: 1px solid orange
+      text-decoration: none
+  .icon
+    @extend $icon
+    left: 10px
+    &.icon-order
+      background-position: 0 -200px
+    &.icon-info
+      background-position: 0 -240px
+    &.icon-recharge
+      background-position: 0 -280px
+    &.icon-help
+      background-position: 0 -320px
 
 .openmenu .aside
   transform: translateX(0)
@@ -463,6 +489,9 @@ body
     margin-bottom: 17px
     .location
       position: relative
+      .icon
+        @extend $icon
+        background-position: 0 -160px
     .input
       border: none
       width: 100%
@@ -525,19 +554,13 @@ body
       color: #bbb
       padding-left: 40px
     .icon
-      width: 29px
-      height: 29px
-      top: 7px
-      left: 7px
-      position: absolute
-      background-image: url("/img/icons.png")
-      background-repeat: no-repeat
+      @extend $icon
     &.number .icon
-      background-position: 0 -29px
+      background-position: 0 -40px
     &.color .icon
-      background-position: 0 -58px
+      background-position: 0 -80px
     &.comment .icon
-      background-position: 0 -87px
+      background-position: 0 -120px
   .button
     margin-top: 15px
 
