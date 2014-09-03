@@ -4,10 +4,7 @@ include ./mixins
   ul.photo-list.finish_photos
   +upload
   h2.h2 车损部位
-  ul.breakages
-    for i in [1,2,3,4,5,6,7,8,9,10]
-      li(class="breakage breakage-#{i}",data-index="#{i}")
-        img(src="/img/breakages/icon-#{i}.svg",width="100%")
+  include ../../jade/breakages
   ul.photo-list.breakage_photos
   +upload
   input.button.submit(type="button",value="完成")
