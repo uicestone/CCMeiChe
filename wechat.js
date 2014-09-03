@@ -3,6 +3,7 @@ var config = require('config');
 var worker_api = require('./util/wechat').worker.api;
 var user_api = require('./util/wechat').worker.api;
 var model = require("./model");
+var UserMessage = model.usermessage;
 var Worker = model.worker;
 var User = model.user;
 var Order = model.order;
@@ -36,19 +37,19 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
     User.findOne({
       openid: openid
     },function(err,user){
-      if(err){
+      if(err || !user){
         res.reply("");
         return;
       }
 
-
-      if(user && !user.wechat_info){
+      if(!user.wechat_info){
         updateInfo(openid, User, user_api, function(){
           res.reply("");
         });
       }
     });
   }
+  UserMessage.insert(message);
 });
 
 exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
