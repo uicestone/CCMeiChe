@@ -1,0 +1,35 @@
+port:
+  user: 4272
+  worker: 4273
+host:
+  user: http://localhost:4272
+  worker: https://localhost:4273/
+db:
+  url: "localhost:27017/ccmeiche"
+redis:
+  address: "127.0.0.1"
+  port: 6379
+  session: 2
+wechat:
+  user:
+    token: "<token>"
+    id: "<id>"
+    secret: "<secret>"
+  worker:
+    token: "<token>"
+    id: "<id>"
+    secret: "<secret>"
+yunpian:
+  apikey: "<apikey>"
+map:
+  ak: "<ak>"
+  sk: "<sk>"
+qiniu:
+  host: "http://ccmeiche.qiniudn.com/"
+  key: "<key>"
+  secret: "<secret>"
+  bucket: "ccmeiche"
+session_secret: "<session_secret>"
+jwt_secret: "<jwt_secret>"
+motor_speed: 32 # km/h
+wash_time: 30 # min
