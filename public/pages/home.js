@@ -5,6 +5,8 @@ var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
 var hashState = require('hashstate')();
+var addcar = require("./addcar");
+var preorder = require("./preorder");
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
@@ -63,7 +65,7 @@ $(".cars .add").on("touchend", function(e){
   e.preventDefault();
   var addbtn = $(this);
   addbtn.prop("disabled",true);
-  require.async("./addcar.js",function(addcar){
+  // require.async("./addcar.js",function(addcar){
     $("body").css("position","fixed");
     if(!panelAddCar){
       panelAddCar = addcar;
@@ -92,7 +94,7 @@ $(".cars .add").on("touchend", function(e){
     setTimeout(function(){
       $(".blank").hide();
     },400);
-  });
+  // });
 });
 
 // 选择服务
@@ -292,7 +294,7 @@ $("#go-wash").on("touchend", function(e){
 
   el.prop("disabled",true);
   $.post("/api/v1/preorder",data,"json").done(function(estimate){
-    require.async("./preorder.js",function(preorder){
+    // require.async("./preorder.js",function(preorder){
       if(!panelPreOrder){
         panelPreOrder = preorder;
         panelPreOrder.on("confirm",function(){
@@ -320,7 +322,7 @@ $("#go-wash").on("touchend", function(e){
         wash_time: estimate.wash_time,
         finish_time: estimate.finish_time
       });
-    });
+    // });
   }).fail(popMessage);
 
 });
@@ -331,5 +333,5 @@ if(!user.cars.length){
   $(".blank").hide();
   $("body").css("position","static");
 }
-require.async("./addcar.js",function(){});
-require.async("./preorder.js",function(){});
+// require.async("./addcar.js",function(){});
+// require.async("./preorder.js",function(){});

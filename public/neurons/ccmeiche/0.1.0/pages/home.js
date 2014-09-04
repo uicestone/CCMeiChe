@@ -26,10 +26,13 @@ var _22 = "tpl@~0.2.1";
 var _23 = "hashstate@~0.1.0";
 var _24 = "util@^1.0.4";
 var _25 = "events@^1.0.5";
+var _26 = "view-swipe@~0.1.4";
+var _27 = "moment@^2.7.0";
+var _28 = "uploader@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_2, [_21,_22,_23,_4,_9,_8,_7], function(require, exports, module, __filename, __dirname) {
+define(_2, [_21,_22,_23,_4,_9,_8,_7,_0,_15], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
@@ -37,6 +40,8 @@ var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
 var hashState = require('hashstate')();
+var addcar = require("./addcar");
+var preorder = require("./preorder");
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
@@ -95,7 +100,7 @@ $(".cars .add").on("touchend", function(e){
   e.preventDefault();
   var addbtn = $(this);
   addbtn.prop("disabled",true);
-  require.async("./addcar.js",function(addcar){
+  // require.async("./addcar.js",function(addcar){
     $("body").css("position","fixed");
     if(!panelAddCar){
       panelAddCar = addcar;
@@ -124,7 +129,7 @@ $(".cars .add").on("touchend", function(e){
     setTimeout(function(){
       $(".blank").hide();
     },400);
-  });
+  // });
 });
 
 // 选择服务
@@ -324,7 +329,7 @@ $("#go-wash").on("touchend", function(e){
 
   el.prop("disabled",true);
   $.post("/api/v1/preorder",data,"json").done(function(estimate){
-    require.async("./preorder.js",function(preorder){
+    // require.async("./preorder.js",function(preorder){
       if(!panelPreOrder){
         panelPreOrder = preorder;
         panelPreOrder.on("confirm",function(){
@@ -352,7 +357,7 @@ $("#go-wash").on("touchend", function(e){
         wash_time: estimate.wash_time,
         finish_time: estimate.finish_time
       });
-    });
+    // });
   }).fail(popMessage);
 
 });
@@ -363,12 +368,12 @@ if(!user.cars.length){
   $(".blank").hide();
   $("body").css("position","static");
 }
-require.async("./addcar.js",function(){});
-require.async("./preorder.js",function(){});
+// require.async("./addcar.js",function(){});
+// require.async("./preorder.js",function(){});
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_4,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7},globalMap)
+    map:mix({"./mod/autocomplete":_4,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7,"./addcar":_0,"./preorder":_15},globalMap)
 });
 
 define(_4, [_21,_24,_25], function(require, exports, module, __filename, __dirname) {
@@ -658,6 +663,143 @@ module.exports = popMessage
     map:globalMap
 });
 
+define(_0, [_21,_11,_4,_7,_10,_17], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var uploader = require("./mod/uploader");
+var autocomplete = require("./mod/autocomplete");
+var popMessage = require("./mod/popmessage");
+var swipeModal = require("./mod/swipe-modal");
+
+module.exports = swipeModal.create({
+  button: $("#go-wash"),
+  template:  require("./tpl/addcar.html"),
+  show: function(){
+    var elem = this.elem;
+    uploader.init(".add-photo",{
+      type:"single",
+      prefix:"userpic/"
+    });
+
+    elem.find(".input").each(function(){
+      var input = $(this);
+      autocomplete.init(input);
+      var ph = input.attr("placeholder");
+      input.on("focus",function(){
+        if(!input.val()){
+          input.attr("placeholder","");
+        }
+        input.css("text-align","left");
+      }).on("blur",function(){
+        if(!input.val()){
+          input.attr("placeholder",ph);
+          input.css("text-align","right");
+        }
+      });
+    });
+
+    if(!user.cars.length){
+      elem.find(".cancel").hide();
+    }
+  },
+  getData: function(){
+    var elem = this.elem;
+    return {
+      pic: elem.find(".result").attr("data-key"),
+      type: elem.find(".type input").val(),
+      color: elem.find(".color input").val(),
+      number: elem.find(".number input").val(),
+      comment: elem.find(".comment input").val()
+    }
+  },
+  validate: function(data){
+    if(!data.pic){
+      alert("请上传照片");
+      return;
+    }
+    if(!data.type){
+      alert("请填写车型");
+      return;
+    }
+    if(!data.number){
+      alert("请填写车号");
+      return;
+    }
+    if(!data.color){
+      alert("请填写颜色");
+      return;
+    }
+
+    return true
+  },
+  submit: function(data,callback){
+    $.post("/api/v1/mycars",data,"json").done(function(){
+      callback(data);
+    }).fail(popMessage);
+  }
+});
+}, {
+    entries:entries,
+    map:mix({"./mod/uploader":_11,"./mod/autocomplete":_4,"./mod/popmessage":_7,"./mod/swipe-modal":_10,"./tpl/addcar.html":_17},globalMap)
+});
+
+define(_15, [_21,_25,_24,_22,_26,_27,_20], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var template = require("./tpl/preorder.html");
+var events = require("events");
+var util = require("util");
+var tpl = require("tpl");
+var viewSwipe = require("view-swipe");
+var moment = require("moment");
+
+function PreOrder(){
+
+}
+
+util.inherits(PreOrder,events);
+
+function addZero(num){
+  return num < 10 ? ("0" + num) : num;
+}
+
+function formatTime(data){
+  var milliseconds = data.drive_time + data.wash_time;
+  var duration = moment.duration({milliseconds:milliseconds});
+  var hours = duration.hours() ? ( addZero(duration.hours()) + "小时" ) : "";
+  return hours + addZero(duration.minutes()) + "分钟" + addZero(duration.seconds()) + "秒";
+}
+
+PreOrder.prototype.show = function(data){
+  if(!data.drive_time || !data.wash_time){
+    throw "data.drive_time and data.wash_time are required";
+  }
+  data.time = formatTime(data);
+  var html = tpl.render(template,data);
+  var elem = $(html);
+  var self = this;
+  viewSwipe.in(elem[0],"bottom");
+
+  elem.find(".submit").on("touchend", function(){
+    self.confirm();
+  });
+
+  elem.find(".cancel").on("touchend", function(){
+    self.emit("cancel");
+    viewSwipe.out("bottom");
+  });
+  return this;
+}
+
+PreOrder.prototype.confirm = function(data){
+  viewSwipe.out("bottom");
+  this.emit("confirm");
+}
+
+module.exports = new PreOrder();
+}, {
+    entries:entries,
+    map:mix({"./tpl/preorder.html":_20},globalMap)
+});
+
 define(_6, [_21], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 
@@ -686,6 +828,229 @@ MultiSelect.prototype.select = function(dataList){
 module.exports = function(container,itemSelector){
   return new MultiSelect(container,itemSelector);
 }
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_11, [_21,_28], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+var Uploader = require('uploader');
+
+var beforeUpload = function(prefix){
+  return function(file, done){
+    var uploader = this;
+    $.ajax({
+      url:"/api/v1/uploadtoken",
+      dataType:"json",
+      success:function(json){
+        var fileName = json.fileName; // random file name generated
+        var token = json.token;
+        uploader.set('data',{
+          token: token,
+          key: prefix + fileName + file.ext
+        });
+        done();
+      }
+    });
+  }
+}
+
+var loadImageToElem = function(key, elem, size, callback){
+  var imgSrc = appConfig.qiniu_host
+    + key
+    + "?imageView/"
+    + size.mode
+    + "/w/"
+    + size.width
+    + (size.height ? ("/h/" + size.height) : "");
+  var img = $("<img />").attr("src",imgSrc);
+  if(!elem){return;}
+  img.on('load',function(){
+      elem.append(img);
+      elem.attr("data-key",key);
+      img.css("display","none");
+      img.css({
+        display: 'block',
+        opacity: 1
+      });
+      callback && callback();
+  });
+};
+
+var uploadTemplate = {
+  template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper"></li>',
+  add: function(e){
+    initloading(e.elem);
+  },
+  success: function(e){
+    var elem = e.elem;
+    var data = e.data;
+    loadImageToElem(data.key, elem, {
+      mode: 2,
+      width: 260
+    },function(){
+      elem.find(".loading").hide();
+    });
+  },
+  remove: function(e){
+      var elem = e.elem;
+      elem && elem.fadeOut();
+  },
+  error: function(e){
+      console && console.log("e")
+  }
+};
+
+function initloading(elem){
+  var loading = $("<div class='loading'><div class='spin'></div></div>");
+  var spin = loading.find(".spin");
+  elem.append(loading);
+  var i = 0;
+  setInterval(function(){
+    spin.css("background-position","0 " + (i%8) * 40 + "px")
+    i++;
+  },100);
+  return loading;
+}
+
+exports.init = function(selector,options){
+  var type = options.type;
+  var uploader =  new Uploader(selector, {
+    action:"http://up.qiniu.com",
+    name:"file",
+    queueTarget: options.queueTarget,
+    theme: type == "single" ? null : uploadTemplate,
+    beforeUpload: beforeUpload(options.prefix || ""),
+    allowExtensions: ["png","jpg"],
+    maxSize: "500K",
+    maxItems: type == "single" ? -1 : 2
+  });
+
+  var elem = $(selector);
+  var result = $("<div class='result'></div>");
+  if(options.type == "single"){
+    initloading(elem.find(".area"));
+    elem.find(".area").append(result);
+    uploader.on("add",function(){
+      result.empty();
+      elem.find(".text").hide();
+      elem.find(".result").hide();
+      elem.find(".loading").show();
+    }).on("success",function(e){
+      loadImageToElem(e.data.key, result, {
+        mode: 1,
+        width: 155,
+        height: 105
+      }, function(){
+        elem.find(".loading").hide();
+        elem.find(".result").show();
+      });
+    })
+  }else{
+    uploader.on("disable",function(){
+      elem.hide();
+    });
+  }
+
+  return uploader;
+}
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_10, [_24,_25,_26,_23,_21], function(require, exports, module, __filename, __dirname) {
+var util = require("util");
+var events = require("events");
+var viewSwipe = require("view-swipe");
+var hashState = require('hashstate')();
+var $ = require("zepto");
+
+var i = 1;
+
+
+function SwipeModal(config){
+  var self = this;
+  var submit = config.submit;
+  var elem = this.elem = $(config.template);
+  var getData = this.getData = config.getData;
+  var validate = this.validate = config.validate;
+  var button = this.button = config.button;
+  this.name = config.name || "swipe-modal-" + i;
+  this._show = config.show;
+  i++;
+
+  hashState.on('hashchange', function(e){
+    if(!e.newHash){
+      viewReturn();
+    }
+  });
+
+  function viewReturn(){
+    hashState.setHash("");
+    $("body").css("position","static");
+    viewSwipe.out("bottom");
+    button.prop("disabled",false);
+  }
+
+  function viewCome(){
+    setTimeout(function(){
+      $("body").css("position","fixed");
+    },300);
+    viewSwipe.in(elem[0],"bottom");
+    button.prop("disabled",true);
+  }
+
+  self.on("show",viewCome);
+  self.on("submit",viewReturn);
+  self.on("cancel",viewReturn);
+
+  elem.find(".submit").on("touchend",function(){
+    var data = self.getData();
+    var isValid = self.validate(data);
+
+    if(isValid){
+      if(!submit){
+        self.emit("submit",data);
+      }else{
+        submit(data,function(result){
+          self.emit("submit",result);
+        });
+      }
+    }
+  });
+
+  elem.find(".cancel").on("touchend", function(){
+    self.emit("cancel");
+  });
+}
+
+util.inherits(SwipeModal,events);
+
+SwipeModal.prototype.show = function(){
+  hashState.setHash(this.name);
+  this.emit("show");
+  this._show();
+}
+
+exports.create = function(config){
+  return new SwipeModal(config);
+}
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_17, [], function(require, exports, module, __filename, __dirname) {
+module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_20, [], function(require, exports, module, __filename, __dirname) {
+module.exports = '<div id="preorder" class="container"><h2 class="h2">提交订单</h2><div class="order"><div class="inner"><div class="row"><div class="label">手机：</div><div class="text">@{it.phone}</div></div><?js it.cars.forEach(function(car,index){ ?><div class="row"><div class="label">车型：</div><div class="text"><p>@{car.type}</p><p>@{car.number}</p></div></div><?js }); ?><div class="row"><div class="label">地址：</div><div class="text">@{it.address} @{it.carpark}</div></div><div class="row"><div class="label">服务：</div><div class="text">@{it.service.title}</div></div></div></div><h2 class="h2">预估时间</h2><div class="estimate"><div class="time">@{it.time}</div><div class="text"><p>我们将在预估时间内完成洗车，预估时间以付款后为准</p><p>您也可在我们达到前随时取消订单</p></div></div><h2 class="h2">应付金额<div class="price">￥@{it.price}</div></h2><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap
