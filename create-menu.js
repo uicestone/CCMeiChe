@@ -48,13 +48,38 @@ var user_menu = {
     "name": "我要洗车",
     "url": config.host.user
   },{
-    "type": "view",
-    "name": "优惠活动",
-    "url": config.host.user + "/recharge"
+    "name": "CC乐享",
+    "sub_button": [
+      {
+        "name": "充值有礼",
+        "type": "view",
+        "url": config.host.user + "/recharge"
+      },
+      {
+        "name": "服务礼包",
+        "type": "view",
+        "url": config.host.user + "/packages"
+      }
+    ]
   },{
-    "type": "view",
-    "name": "我的订单",
-    "url": config.host.user + "/myorders"
+    "name": "CC助手",
+    "sub_button": [
+      {
+        "name": "我的订单"
+        "type": "view",
+        "url": config.host.user + "/myorders"
+      },
+      {
+        "name": "联系我们"
+        "type": "view",
+        "url": config.host.user + "/contact-us"
+      },
+      {
+        "name": "服务介绍"
+        "type": "view",
+        "url": config.host.user + "/services"
+      }
+    ]
   }]
 };
 console.log("create menu ", JSON.stringify(user_menu,null,2));
