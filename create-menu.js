@@ -65,17 +65,17 @@ var user_menu = {
     "name": "CC助手",
     "sub_button": [
       {
-        "name": "我的订单"
+        "name": "我的订单",
         "type": "view",
         "url": config.host.user + "/myorders"
       },
       {
-        "name": "联系我们"
+        "name": "联系我们",
         "type": "view",
         "url": config.host.user + "/contact-us"
       },
       {
-        "name": "服务介绍"
+        "name": "服务介绍",
         "type": "view",
         "url": config.host.user + "/services"
       }
