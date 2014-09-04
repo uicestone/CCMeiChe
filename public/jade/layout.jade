@@ -1,18 +1,19 @@
 - var sitename = "CC美车"
 mixin facade(name)
-  if env == product
-  script(src="/dest/pages/#{name}.js")
+  if env == "product"
+    script(src="/dest/pages/#{name}.js")
   script.
     facade({
       entry: "ccmeiche@#{package_version}/pages/#{name}.js"
     });
+
 doctype html
 html
   head
     title= title || sitename
 
+    script(src="/neurons/neuron/7.0.0/neuron.js")
     if env !== "product"
-      script(src="/neurons/neuron/7.0.0/neuron.js")
       script(src="/neurons/config.js")
       script.
           neuron.config({

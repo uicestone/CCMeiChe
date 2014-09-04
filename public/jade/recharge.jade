@@ -8,7 +8,4 @@ block content
         if choice.promo
           .promo #{choice.promo.title}
   .button 提交
-  script.
-    facade({
-      entry: "ccmeiche/pages/recharge.js"
-    });
+  +facade('recharge')

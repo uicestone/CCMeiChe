@@ -1,0 +1,3 @@
+{ "_id" : { "$oid" : "53f000dcec05d70d762bbfce" }, "price" : 100, "acture_price" : 110, "coupon" : [],  "title" : "充100元得110分"  }
+{ "_id" : { "$oid" : "53f000e0ec05d70d762bbfcf" }, "price" : 200, "acture_price" : 230, "coupon" : [{"id":"54054c3a16bb665badb890b8","title" : "CC全手工水蜡精洗", "amount" : 1}], "title" : "充200元得230分并送CC全手工水蜡精洗（价值108元）服务" }
+{ "_id" : { "$oid" : "53f000e3ec05d70d762bbfd0" }, "price" : 500, "acture_price" : 600, "coupon" : [{"id":"54054c6016bb665badb890bb","title" : "CC美车顶级汽车封釉", "amount" : 1}], "title" : "充500元得600分并送CC美车顶级汽车封釉（原价1088元）服务" }

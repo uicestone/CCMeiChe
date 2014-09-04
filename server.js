@@ -52,6 +52,7 @@ app.use(function(req,res,next){
     qiniu_host: config.qiniu.host,
     service: SERVICE
   };
+  console.log(process.env.NODE_ENV);
   res.locals.env = process.env.NODE_ENV;
   res.locals.package_version = require('./public/cortex.json').version;
   next();
