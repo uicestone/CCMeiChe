@@ -299,7 +299,7 @@ function SingleSelect(elem,selector){
   (function(){
     var current = null;
     var items = self.items = elem.find(selector);
-    items.on("touchend",function(){
+    items.on("click",function(){
       elem.find(".active").removeClass("active");
       var me = $(this);
       if(me == current){

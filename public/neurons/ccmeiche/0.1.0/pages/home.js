@@ -175,11 +175,11 @@ function judgePromo(){
   var mypromo = user.promo.filter(function(item){
     return item._id == currentService._id;
   })[0];
-  if(mypromo && mypromo.count){
+  if(mypromo && mypromo.amount){
     $(".promo").show();
     var html = "";
     $(".promo .text").html(1);
-    for(var i = 0; i < mypromo.count + 1; i++){
+    for(var i = 0; i < mypromo.amount + 1; i++){
       if(i==1){
         html += ("<option selected>" + i + "</option>");
       }else{
@@ -409,7 +409,7 @@ function Autocomplete(input, pattern, parser, getVal){
         list.empty();
         data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
-          li.on("touchend",function(){
+          li.on("click",function(){
             input.val(getVal(data[i]));
             self.emit("select",data[i]);
             self.hide();
@@ -417,7 +417,7 @@ function Autocomplete(input, pattern, parser, getVal){
           $(list).append(li);
         });
         var packup = $("<li class='packup'>收起</li>");
-        packup.on("touchend",function(){
+        packup.on("click",function(){
           self.hide();
         });
         list.append(packup);
@@ -461,7 +461,7 @@ function SingleSelect(elem,selector){
   (function(){
     var current = null;
     var items = self.items = elem.find(selector);
-    items.on("touchend",function(){
+    items.on("click",function(){
       elem.find(".active").removeClass("active");
       var me = $(this);
       if(me == current){
