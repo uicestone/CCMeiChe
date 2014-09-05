@@ -10,9 +10,11 @@ var preorder = require("./preorder");
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
+    $("body").css("position","fixed");
     $("body").addClass("openmenu");
   });
   $('.overlay').on("touchend",function(){
+    $("body").css("position","static");
     $("body").removeClass("openmenu");
   });
 })();

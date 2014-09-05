@@ -45,9 +45,11 @@ var preorder = require("./preorder");
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
+    $("body").css("position","fixed");
     $("body").addClass("openmenu");
   });
   $('.overlay').on("touchend",function(){
+    $("body").css("position","static");
     $("body").removeClass("openmenu");
   });
 })();
@@ -972,11 +974,10 @@ var i = 1;
 
 function SwipeModal(config){
   var self = this;
-  var submit = config.submit;
-  var elem = this.elem = $(config.template);
   var getData = this.getData = config.getData;
   var validate = this.validate = config.validate;
   var button = this.button = config.button;
+  this.config = config;
   this.name = config.name || "swipe-modal-" + i;
   this._show = config.show;
   i++;
@@ -995,6 +996,7 @@ function SwipeModal(config){
   }
 
   function viewCome(){
+    var elem = self.elem;
     setTimeout(function(){
       $("body").css("position","fixed");
     },300);
@@ -1006,6 +1008,15 @@ function SwipeModal(config){
   self.on("submit",viewReturn);
   self.on("cancel",viewReturn);
 
+}
+
+util.inherits(SwipeModal,events);
+
+SwipeModal.prototype.show = function(){
+  var self = this;
+  var config = this.config;
+  var submit = config.submit;
+  var elem = this.elem = $(config.template);
   elem.find(".submit").on("touchend",function(){
     var data = self.getData();
     var isValid = self.validate(data);
@@ -1024,11 +1035,7 @@ function SwipeModal(config){
   elem.find(".cancel").on("touchend", function(){
     self.emit("cancel");
   });
-}
 
-util.inherits(SwipeModal,events);
-
-SwipeModal.prototype.show = function(){
   hashState.setHash(this.name);
   this.emit("show");
   this._show();
