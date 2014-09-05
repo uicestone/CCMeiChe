@@ -9,7 +9,7 @@ module.exports = function(req,res,next){
   }
 
   if(req.isAuthenticated()){
-    res.redirect(redirect);
+    return res.redirect(redirect);
   }
 
   if(process.env.DEBUG){
