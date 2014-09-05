@@ -141,15 +141,12 @@ body
       border: none
       border-left: 2px solid orange
     .icon
-      width: 29px
-      height: 29px
-      position: absolute
-      top: 6px
-      left: 6px
-      background-image: url("../img/icons.png")
+      @extend $icon
   .row-phone
     .icon
-      background-position: 0 -145px
+      top: -4px
+      left: 2px
+      background-position: 0 -360px
     .pull-left
       margin-right: 75px
     .button
@@ -168,7 +165,8 @@ body
         color: #fff
   .row-code
     .icon
-      background-position: 0 -174px
+      left: 2px
+      background-position: 0 -400px
 
 
 .menu
@@ -456,7 +454,7 @@ body
           opacity: 0
   // 积分
   .section.credit
-    @extends #home .section.promo
+    @extend #home .section.promo
     .use
       float: right
       width: 100px
@@ -838,4 +836,6 @@ body
       .price
         font-size: 16px
       .promo
+        padding: 0 15px
         font-size: 12px
+        text-align: left

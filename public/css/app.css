@@ -1,3 +1,4 @@
+#login-form .row .icon,
 .aside .icon,
 #home .address .location .icon,
 #addcar .row .icon {
@@ -179,16 +180,10 @@ body.openmenu {
   border: none;
   border-left: 2px solid #fab44a;
 }
-#login-form .row .icon {
-  width: 29px;
-  height: 29px;
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  background-image: url("../img/icons.png");
-}
 #login-form .row-phone .icon {
-  background-position: 0 -145px;
+  top: -4px;
+  left: 2px;
+  background-position: 0 -360px;
 }
 #login-form .row-phone .pull-left {
   margin-right: 75px;
@@ -211,7 +206,8 @@ body.openmenu {
   color: #fff;
 }
 #login-form .row-code .icon {
-  background-position: 0 -174px;
+  left: 2px;
+  background-position: 0 -400px;
 }
 .menu {
   width: 26px;
@@ -1114,5 +1110,7 @@ body.openmenu {
   font-size: 16px;
 }
 #recharge .choices .row .promo {
+  padding: 0 15px;
   font-size: 12px;
+  text-align: left;
 }
