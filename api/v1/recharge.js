@@ -11,18 +11,40 @@ exports.post = function(req,res,next){
       return res.status(400).send("unexcepted price");
     }
 
-    User.update({
-      phone:req.user.phone
-    },{
-      $inc:{
-        credit: recharge.price
-      },
-      $push: {
-        promo: recharge.promo
-      }
+    User.findOne({
+      phone: req.user.phone
     },function(err,user){
-      if(err){return next(err);}
-      res.send("ok");
+      if(err || !user){
+        return next(err);
+      }
+
+      var userpromos = user.promo || [];
+
+      recharge.promo.forEach(function(promo){
+        var userpromo = userpromos.filter(function(item){
+          return item._id == promo._id;
+        })[0];
+        if(userpromo){
+          userpromo.amount += promo.amount;
+        }else{
+          promo.amount = promo.amount;
+          userpromos.push(promo);
+        }
+      });
+
+      User.update({
+        phone:req.user.phone
+      },{
+        $inc:{
+          credit: recharge.actual_price
+        },
+        $set: {
+          promo: userpromos
+        }
+      },function(err,user){
+        if(err){return next(err);}
+        res.send("ok");
+      });
     });
   });
 }

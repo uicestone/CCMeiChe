@@ -5,7 +5,6 @@ block content
     for choice in choices
       li.row(data-price="#{choice.price}")
         .price #{choice.price}cc
-        if choice.promo
-          .promo #{choice.promo.title}
+        .promo #{choice.title}
   .button 提交
   +facade('recharge')

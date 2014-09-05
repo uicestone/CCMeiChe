@@ -140,11 +140,11 @@ function judgePromo(){
   var mypromo = user.promo.filter(function(item){
     return item._id == currentService._id;
   })[0];
-  if(mypromo && mypromo.count){
+  if(mypromo && mypromo.amount){
     $(".promo").show();
     var html = "";
     $(".promo .text").html(1);
-    for(var i = 0; i < mypromo.count + 1; i++){
+    for(var i = 0; i < mypromo.amount + 1; i++){
       if(i==1){
         html += ("<option selected>" + i + "</option>");
       }else{
