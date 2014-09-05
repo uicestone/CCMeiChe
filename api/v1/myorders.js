@@ -6,6 +6,7 @@ var Worker = model.worker;
 var Order = model.order;
 var User = model.user;
 var moment = require("moment");
+var async = require("async");
 moment.locale('zh-cn');
 
 exports.get = function(req,res){
@@ -39,7 +40,6 @@ exports.post = function(req,res,next){
     latlng: req.body.latlng,
     worker: req.body.worker,
     carpark: req.body.carpark,
-    use_credit: req.body.use_credit == "true",
     credit: req.body.credit,
     promo_count: req.body.promo_count,
     order_time: new Date(),
@@ -56,54 +56,69 @@ exports.post = function(req,res,next){
     }
   }
 
+  var worker = data.worker;
+  var cars = data.cars;
 
-  Order.insert(data,function(err, results){
-    if(err){return next(err);}
-    var result = results[0];
-    var worker = data.worker;
-
-    user.cars = user.cars.map(function(car){
-      car["default"] = data.cars.some(function(postCar){
-        return postCar.number == car.number;
+  async.series([
+    function updateUserCars(done){
+      user.cars = user.cars.map(function(car){
+        car["default"] = cars.some(function(postCar){
+          return postCar.number == car.number;
+        });
+        return car;
       });
-      return car;
-    });
-    User.update({
-      phone: user.phone
-    },{
-      $set:{
-        cars: user.cars
-      }
-    });
-
-    Order.find({
-      "worker._id": worker._id,
-      "status": "todo"
-    }).toArray(function(err,orders){
-      if(err){return next(err);}
-      var message = "";
-      var url = "";
-
-      // 给车工发送消息
-      if(orders.length == 1){
-        url = config.host.worker + "/orders/" + orders[0]._id;
-        message = "你有一比新订单，点击查看：" + url;
-      }else{
-        message = "你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(data.estimated_finish_time).format("lll");
-      }
-
-      if(!worker.openid){
-        return next("worker " + worker._id + " doesn't have openid");
-      }
-
-      console.log("sendText to",worker.openid,message);
-      wechat_worker.sendText(worker.openid,message,function(err){
-        if(err){
-          return errortracking.other(err,req,res);
+      User.update({
+        phone: user.phone
+      },{
+        $set:{
+          cars: user.cars
         }
-        res.status(200).send(results[0]);
+      },done);
+    },
+    function insertOrder(done){
+      Order.insert(data, function(err, results){
+        if(err){
+          return done(err);
+        }
+        result = results[0];
+        done(null);
       });
-    });
+    },
+    function notifyWorker(done){
+      Order.find({
+        "worker._id": worker._id,
+        "status": "todo"
+      }).toArray(function(err,orders){
+        if(err){return done(err);}
+        var message = "";
+        var url = "";
 
+        // 给车工发送消息
+        if(orders.length == 1){
+          url = config.host.worker + "/orders/" + orders[0]._id;
+          message = "你有一比新订单，点击查看：" + url;
+        }else{
+          message = "你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(data.estimated_finish_time).format("lll");
+        }
+
+        if(!worker.openid){
+          return done("worker " + worker._id + " doesn't have openid");
+        }
+
+        console.log("sendText to",worker.openid,message);
+        wechat_worker.sendText(worker.openid,message,function(err){
+          if(err){
+            return errortracking.other(err,req,res);
+          }
+          done(null)
+        });
+      });
+    }
+  ],function(err){
+    if(err){
+      return next(err);
+    }
+
+    res.status(200).send(result);
   });
 }
