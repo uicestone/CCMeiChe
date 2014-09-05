@@ -30,7 +30,7 @@ function Autocomplete(input, pattern, parser, getVal){
         list.empty();
         data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
-          li.on("touchend",function(){
+          li.on("click",function(){
             input.val(getVal(data[i]));
             self.emit("select",data[i]);
             self.hide();
@@ -38,7 +38,7 @@ function Autocomplete(input, pattern, parser, getVal){
           $(list).append(li);
         });
         var packup = $("<li class='packup'>收起</li>");
-        packup.on("touchend",function(){
+        packup.on("click",function(){
           self.hide();
         });
         list.append(packup);
