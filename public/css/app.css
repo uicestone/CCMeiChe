@@ -181,9 +181,8 @@ body.openmenu {
   border-left: 2px solid #fab44a;
 }
 #login-form .row-phone .icon {
-  top: -4px;
   left: 2px;
-  background-position: 0 -360px;
+  background-position: 0 -400px;
 }
 #login-form .row-phone .pull-left {
   margin-right: 75px;
@@ -207,7 +206,7 @@ body.openmenu {
 }
 #login-form .row-code .icon {
   left: 2px;
-  background-position: 0 -400px;
+  background-position: 0 -440px;
 }
 .menu {
   width: 26px;
