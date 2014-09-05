@@ -24,11 +24,27 @@ module.exports = function(req,res,next){
   }else{
     oauth.getAccessToken(code,function(err, result){
       if(err){return next(err);}
-      res.render("login",{
-        id:"login",
-        title: "登录",
-        access_token: result.data.access_token,
+      User.findOne({
         openid: result.data.openid
+      },function(err,user){
+        if(err){
+          return next(err);
+        }
+        if(user){
+          req.login(user,function(err){
+            if(err){return next(err);}
+            res.locals.user = req.user = user;
+            res.redirect("/");
+            return;
+          });
+        }else{
+          res.render("login",{
+            id:"login",
+            title: "登录",
+            access_token: result.data.access_token,
+            openid: result.data.openid
+          });
+        }
       });
     });
   }
