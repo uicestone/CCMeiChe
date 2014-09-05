@@ -269,7 +269,10 @@ body.openmenu {
   margin-bottom: 30px;
 }
 .aside .menus {
-  margin-bottom: 100px;
+  margin-bottom: 40px;
+}
+.aside .button {
+  text-decoration: none;
 }
 .aside .item {
   position: relative;
