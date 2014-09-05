@@ -7,9 +7,9 @@
   top: 0px;
   left: 0px;
   position: absolute;
-  -webkit-background-size: 40px 440px;
-  -moz-background-size: 40px 440px;
-  background-size: 40px 440px;
+  -webkit-background-size: 40px 480px;
+  -moz-background-size: 40px 480px;
+  background-size: 40px 480px;
   background-image: url("/img/icons.png");
   background-repeat: no-repeat;
 }
