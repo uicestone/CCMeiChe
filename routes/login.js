@@ -1,5 +1,5 @@
 var wechat = require('../util/wechat');
-
+var User = require('../model/user');
 module.exports = function(req,res,next){
   var oauth = wechat.user.oauth;
   var code = req.query.code;
