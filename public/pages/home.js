@@ -269,7 +269,6 @@ $("#go-wash").on("touchend", function(e){
     service:currentService,
     promo_count: getPromoCount(),
     use_credit: $(".credit .use").hasClass("active"),
-    credit: user.credit - $(".credit .num").text().trim(),
     price: $(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
