@@ -207,15 +207,15 @@ exports.post = function (req, res, next) {
           $set:{
             last_available_time: result.finish_time,
             last_available_latlng: user_latlng
-          },
-          $addToSet:{
-            orders: order._id
           }
         },function(err){
           if(err){
             return next(err);
           }
-          res.status(200).send("ok");
+          res.status(200).send({
+            orderId: order._id,
+            price: priceAndCredit.price
+          });
         });
       });
 
