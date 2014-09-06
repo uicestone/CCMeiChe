@@ -207,6 +207,9 @@ exports.post = function (req, res, next) {
           $set:{
             last_available_time: result.finish_time,
             last_available_latlng: user_latlng
+          },
+          $addToSet: {
+            orders: order._id
           }
         },function(err){
           if(err){
