@@ -38,7 +38,7 @@ exports.confirm = function(req,res){
     }
 
 
-    var payment_args = wechat_user.generatePayArgs(req.ip,order);
+    var payment_args = wechat_user.pay_request(req.ip, order);
 
     res.status(200).send(payment_args);
 
