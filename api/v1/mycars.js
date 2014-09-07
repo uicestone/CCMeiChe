@@ -6,14 +6,7 @@ var User = model.user;
  * @param  number 车牌
  */
 exports.get = function (req, res, next) {
-
-  User.findByPhone(req.user.phone, function (err, user) {
-    if (err) {
-      return next(err);
-    }
-    res.status(200).send(user.cars||[]);
-  });
-
+  return req.user.cars || [];
 };
 
 /**
