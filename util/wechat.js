@@ -77,7 +77,7 @@ var user_generate_pay_args = function(ip, order){
   var package_str = string2 + '&sign=' + signValue;
 
   var nonce_str = MD5.hex(random.engines.nativeMath,16);
-  var timestamp = +new Date();
+  var timestamp = Math.floor(+new Date() / 1000);
 
   var pay_sign_data = {
     'appid': config.wechat.user.id,
