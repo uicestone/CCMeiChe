@@ -117,15 +117,3 @@ exports.worker = {
   api: worker_api,
   oauth: worker_oauth
 };
-
-
-
-// var args = exports.user.generatePayArgs("127.0.0.1",{
-//   _id: "123",
-//   cars:[{},{}],
-//   service:{title:"service abc"},
-//   price: "782"
-// });
-
-// console.log(args);
-// process.exit();

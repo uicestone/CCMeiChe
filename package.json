@@ -31,7 +31,8 @@
     "colors": "^0.6.2",
     "han": "0.0.7",
     "random-js": "^1.0.4",
-    "jshashes": "^1.0.5"
+    "jshashes": "^1.0.5",
+    "wechat-payment": "0.0.5"
   },
   "devDependencies": {
     "nib": "~1.0.3",

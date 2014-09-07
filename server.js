@@ -81,6 +81,8 @@ if(SERVICE == "worker"){
   app.namespace('/test', require('./test')(app));
 }
 
+
+app.use('/wechat/notify', requrie('./wechat').notify);
 app.namespace("/api/v1", require("./api/v1")(app));
 
 app.get("/error.gif",require("./errortracking").frontend);

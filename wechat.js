@@ -34,9 +34,7 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
   if(message.Event == "subscribe"){
     res.reply("欢迎关注CC美车 \\(^o^)/");
   }else{
-    User.findOne({
-      openid: openid
-    },function(err,user){
+    User.findByOpenId(openid, function(err,user){
       if(err || !user){
         res.reply("");
         return;
@@ -57,9 +55,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   var openid = message.FromUserName;
 
   console.log("worker wechat recieves message %s",JSON.stringify(message,null,2));
-  Worker.findOne({
-    openid: openid
-  },function(err,user){
+  Worker.findByOpenId(openid, function(err,user){
     if(err){
       console.error(err);
       return res.reply("");
@@ -96,52 +92,24 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       if(user.status == "on_duty"){
         return res.reply("你已经在上班了，好好干！");
       }
-      Worker.findOne({
-        openid: openid
-      },function(err, worker){
-        if(err){return res.reply(err)}
-        var now = new Date();
-        var last_available_time;
-        if(worker.last_available_time && worker.last_available_time > now){
-          last_available_time = worker.last_available_time;
-        }else{
-          last_available_time = now;
-        }
-        Worker.update({
-          openid: openid
-        },{
-          $set:{
-            last_available_time: last_available_time,
-            status:"on_duty"
-          }
-        },function(err){
-          if(err){
-            console.error(err);
-            return res.reply("");
-          }
-          return res.reply("你已经在上班了，好好干！");
-        });
-      });
-    }else if(message.EventKey == "OFF_DUTY"){
-      // 下班
-
-      if(user.status == "off_duty"){
-        return res.reply("你已经下班了，享受生活吧。");
-      }
-
-      Worker.update({
-        openid: openid
-      },{
-        $set:{
-          status:"off_duty",
-          last_available_time: null
-        }
-      },function(err){
+      Worker.onDuty(openid, function(err){
         if(err){
           console.error(err);
           return res.reply("");
         }
+        res.reply("你已经在上班了，好好干！");
+      });
+    }else if(message.EventKey == "OFF_DUTY"){
+      // 下班
+      if(user.status == "off_duty"){
         return res.reply("你已经下班了，享受生活吧。");
+      }
+      Worker.offDuty(openid, function(err){
+        if(err){
+          console.error(err);
+          return res.reply("");
+        }
+        res.reply("你已经下班了，享受生活吧。");
       });
     }else if(message.EventKey == "VIEW_HISTORY"){
       if(user){
@@ -168,4 +136,15 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       return res.reply("");
     }
   });
+});
+
+exports.notify = Notify(
+  config.wechat.user.id,
+  config.wechat.user.pay_sign_key,
+  config.wechat.user.partner_id,
+  config.wechat.user.partner_key
+).done(function (message, req, res, next) {
+  var openid = message.OpenId;
+  var order_id = req.query.out_trade_no;
+  res.reply('');
 });
