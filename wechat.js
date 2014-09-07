@@ -3,10 +3,12 @@ var config = require('config');
 var worker_api = require('./util/wechat').worker.api;
 var user_api = require('./util/wechat').worker.api;
 var model = require("./model");
+var async = require('async');
 var UserMessage = model.usermessage;
 var Worker = model.worker;
 var User = model.user;
 var Order = model.order;
+var moment = require('moment');
 
 function updateInfo(openid,Model,api,callback){
   api.getUser(openid, function(err, result){
@@ -137,16 +139,51 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   });
 });
 
+
+var wechat_worker = require('../../util/wechat').worker.api;
+var errortracking = require('../../errortracking');
 exports.notify = function(req,res,next){
   var order_id = req.body.orderId;
-  Order.confirm(order_id, function(err){
+
+  async.waterfall([
+    function(done){
+      Order.confirm(order_id, done);
+    },
+    function(order, done){
+      Order.find({
+        "worker._id": order.worker._id,
+        "status": "todo"
+      }).toArray(done);
+    },
+    function(orders, done){
+      var url = config.host.worker + "/orders/" + orders[0]._id;
+      var message;
+      // 给车工发送消息
+      if(orders.length == 1){
+        message = "你有一比新订单，点击查看：" + url;
+      }else{
+        message = "你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(data.estimated_finish_time).format("lll");
+      }
+
+      if(!worker.openid){
+        return done("worker " + worker._id + " doesn't have openid");
+      }
+
+      console.log("sendText to",worker.openid,message);
+      wechat_worker.sendText(worker.openid,message,function(err){
+        if(err){
+          return errortracking.other(err,req,res);
+        }
+        done(null)
+      });
+    }
+  ],function(err){
     if(err){
       return next(err);
     }else{
       res.status(200).send("ok");
     }
   });
-
 };
 
 // exports.notify = Notify(
