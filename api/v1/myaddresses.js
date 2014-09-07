@@ -7,9 +7,7 @@ var User = model.user;
  */
 exports.get = function (req, res, next) {
 
-  User.findOne({
-    phone: req.user.phone
-  }, function (err, user) {
+  User.findByPhone(req.user.phone, function (err, user) {
     if (err) {
       return next(err);
     }

@@ -56,19 +56,11 @@ if(process.env.SERVICE == "worker"){
     done(null, user.openid);
   });
 
-  passport.deserializeUser(function (openid, done) {
-    Worker.findOne({
-      openid: openid
-    }, done);
-  });
+  passport.deserializeUser(Worker.findByOpenId);
 }else{
   passport.serializeUser(function (user, done) {
     done(null, user.phone);
   });
 
-  passport.deserializeUser(function (phone, done) {
-    User.findOne({
-      phone: phone
-    }, done);
-  });
+  passport.deserializeUser(User.findByPhone);
 }

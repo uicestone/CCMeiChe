@@ -11,9 +11,7 @@ exports.post = function(req,res,next){
       return res.status(400).send("unexcepted price");
     }
 
-    User.findOne({
-      phone: req.user.phone
-    },function(err,user){
+    User.findByPhone(req.user.phone, function(err,user){
       if(err || !user){
         return next(err);
       }

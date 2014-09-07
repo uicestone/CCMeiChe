@@ -7,9 +7,7 @@ var User = model.user;
  */
 exports.get = function (req, res, next) {
 
-  User.findOne({
-    phone: req.user.phone
-  }, function (err, user) {
+  User.findByPhone(req.user.phone, function (err, user) {
     if (err) {
       return next(err);
     }
@@ -46,6 +44,7 @@ exports.post = function (req, res, next) {
     return res.status(400).send("bad request");
   }
 
+
   User.findOne({
     phone: phone,
     "cars.number": number
@@ -66,13 +65,7 @@ exports.post = function (req, res, next) {
       car["default"] = true;
     }
 
-    User.update({
-      phone: phone
-    }, {
-      $addToSet: {
-        cars: car
-      }
-    }, function (err) {
+    User.addCar(phone, car, function (err) {
       if (err) {
         return next(err);
       }
