@@ -23,5 +23,26 @@ db.bind('user',{
         cars: car
       }
     }, callback);
+  },
+  updateDefaultCars: function(phone, cars, callback){
+    var self = this;
+    self.findByPhone(phone, function(err, user){
+      if(err){
+        return callback(err);
+      }
+      user.cars = user.cars.map(function(car){
+        car["default"] = cars.some(function(postCar){
+          return postCar.number == car.number;
+        });
+        return car;
+      });
+      self.update({
+        phone: phone
+      },{
+        $set:{
+          cars: user.cars
+        }
+      }, callback);
+    });
   }
 });

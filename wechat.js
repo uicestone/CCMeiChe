@@ -25,7 +25,6 @@ function updateInfo(openid,Model,api,callback){
   });
 }
 
-
 exports.user = wechat(config.wechat.user.token, function(req,res){
   var message = req.weixin;
   var openid = message.FromUserName;
@@ -138,13 +137,25 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   });
 });
 
-exports.notify = Notify(
-  config.wechat.user.id,
-  config.wechat.user.pay_sign_key,
-  config.wechat.user.partner_id,
-  config.wechat.user.partner_key
-).done(function (message, req, res, next) {
-  var openid = message.OpenId;
-  var order_id = req.query.out_trade_no;
-  res.reply('');
-});
+exports.notify = function(req,res,next){
+  var order_id = req.body.orderId;
+  Order.confirm(order_id, function(err){
+    if(err){
+      return next(err);
+    }else{
+      res.status(200).send("ok");
+    }
+  });
+
+};
+
+// exports.notify = Notify(
+//   config.wechat.user.id,
+//   config.wechat.user.pay_sign_key,
+//   config.wechat.user.partner_id,
+//   config.wechat.user.partner_key
+// ).done(function (message, req, res, next) {
+//   var openid = message.OpenId;
+//   var order_id = req.query.out_trade_no;
+//   res.reply('');
+// });
