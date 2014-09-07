@@ -5,8 +5,8 @@ var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
 var hashState = require('hashstate')();
-var addcar = require("./addcar");
-var preorder = require("./preorder");
+var panelAddcar = require("./addcar");
+var panelPreOrder = require("./preorder");
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
@@ -63,40 +63,35 @@ $(".cars .selected-cars").on("touchend", function(){
 var panelAddCar;
 var carsList = $(".cars ul");
 // 添加车辆
+panelAddCar.on("cancel",function(){
+  $("body").css("position","static");
+});
+panelAddCar.on("submit",function(data){
+  $("body").css("position","static");
+  carsSelect.add(data);
+  var template = "<li data='" + JSON.stringify(data) + "'>"
+    +"<div class='detail'>"
+      +"<div class='type'>@{it.type}@{it.color}</div>"
+      +"<div class='number'>@{it.number}</div>"
+    +"</div></li>";
+  var html = tpl.render(template,data);
+  var li = $(html);
+  carsList.append(li);
+  addbtn.prop("disabled",false);
+  if($(".cars-cell li").length >= 5){
+    addbtn.remove();
+  }
+  calculate();
+});
 $(".cars .add").on("touchend", function(e){
   e.preventDefault();
   var addbtn = $(this);
   addbtn.prop("disabled",true);
-  // require.async("./addcar.js",function(addcar){
-    $("body").css("position","fixed");
-    if(!panelAddCar){
-      panelAddCar = addcar;
-      panelAddCar.on("cancel",function(){
-        $("body").css("position","static");
-      });
-      panelAddCar.on("submit",function(data){
-        $("body").css("position","static");
-        carsSelect.add(data);
-        var template = "<li data='" + JSON.stringify(data) + "'>"
-          +"<div class='detail'>"
-            +"<div class='type'>@{it.type}@{it.color}</div>"
-            +"<div class='number'>@{it.number}</div>"
-          +"</div></li>";
-        var html = tpl.render(template,data);
-        var li = $(html);
-        carsList.append(li);
-        addbtn.prop("disabled",false);
-        if($(".cars-cell li").length >= 5){
-          addbtn.remove();
-        }
-        calculate();
-      });
-    }
-    panelAddCar.show();
-    setTimeout(function(){
-      $(".blank").hide();
-    },400);
-  // });
+  $("body").css("position","fixed");
+  panelAddCar.show();
+  setTimeout(function(){
+    $(".blank").hide();
+  },400);
 });
 
 // 选择服务
@@ -256,6 +251,34 @@ $(".location .input").on("click",function(){
 })();
 
 var panelPreOrder;
+panelPreOrder.on("confirm",function(order){
+  var self = this;
+  el.prop("disabled",false);
+  $.post("/api/v1/myorders/confirm",{
+    "orderId": order._id
+  },'json').done(function(paymentargs){
+    WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
+      var message = res.err_msg;
+      if(message == "get_brand_wcpay_request:ok"){
+        alert("支付成功！");
+        location.href = "/myorders";
+      }else{
+        popMessage("支付失败，请重试");
+        self.emit("cancel",order,message);
+      }
+    });
+  });
+}).on("cancel",function(order,reason){
+  $.post("/api/v1/myorders/cancel",{
+    "orderId": order._id,
+    "reason": reason
+  },'json').done(function(){
+    $("#go-wash").prop("disabled",false);
+  }).fail(function(xhr){
+    popMessage(xhr);
+    $("#go-wash").prop("disabled",false);
+  });
+});
 $("#go-wash").on("touchend", function(e){
   var el = $(this);
   if(el.prop("disabled")){
@@ -294,36 +317,8 @@ $("#go-wash").on("touchend", function(e){
   }
 
   el.prop("disabled",true);
-  $.post("/api/v1/preorder",data,"json").done(function(estimate){
-    // require.async("./preorder.js",function(preorder){
-      if(!panelPreOrder){
-        panelPreOrder = preorder;
-        panelPreOrder.on("confirm",function(){
-          el.prop("disabled",false);
-          data.worker = estimate.worker;
-          data.estimated_drive_time = estimate.drive_time;
-          data.estimated_wash_time = estimate.wash_time;
-          data.estimated_finish_time = estimate.finish_time;
-          $.post("/api/v1/myorders",data).done(function(){
-            location.href = "/myorders";
-          });
-        }).on("cancel",function(){
-          el.prop("disabled",false);
-        });
-      }
-      panelPreOrder.show({
-        service: data.service,
-        phone: user.phone,
-        cars: data.cars,
-        address: data.address,
-        price: data.price,
-        worker: estimate.worker,
-        carpark: data.carpark,
-        drive_time: estimate.drive_time,
-        wash_time: estimate.wash_time,
-        finish_time: estimate.finish_time
-      });
-    // });
+  $.post("/api/v1/preorder",data,"json").done(function(order){
+    panelPreOrder.show(order);
   }).fail(popMessage);
 
 });

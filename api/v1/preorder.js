@@ -56,7 +56,7 @@ function validatePromoCount(data){
     return promo._id == service._id;
   });
 
-  if(!my_promo || !my_promo.amount < promo_count){
+  if(!my_promo || my_promo.amount < promo_count){
     return false;
   }
 
@@ -215,11 +215,24 @@ exports.post = function (req, res, next) {
           if(err){
             return next(err);
           }
-          res.status(200).send({
-            orderId: order._id,
-            price: priceAndCredit.price
-          });
+          res.status(200).send(order);
         });
+
+        // 超时取消订单
+        setTimeout(function(){
+          Order.findById(order._id, function(err,order){
+            if(order && order.status == "preorder"){
+              Order.updateById(order._id, {
+                $set: {
+                  "status":"cancel",
+                  "cancel_reason": "timeout",
+                  "cancel_time": new Date()
+                }
+              });
+            }
+          });
+        },10 * 60 * 1000);
+
       });
 
     });
