@@ -142,9 +142,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
 var wechat_worker = require('../../util/wechat').worker.api;
 var errortracking = require('../../errortracking');
-exports.notify = function(req,res,next){
-  var order_id = req.body.orderId;
-
+function recieveNotify(orderId, req, res, next){
   async.waterfall([
     function(done){
       Order.confirm(order_id, done);
@@ -184,6 +182,11 @@ exports.notify = function(req,res,next){
       res.status(200).send("ok");
     }
   });
+}
+
+exports.notify = function(req,res,next){
+  var order_id = req.body.orderId;
+  recieveNotify(order_id, req, res, next);
 };
 
 // exports.notify = Notify(
@@ -194,5 +197,5 @@ exports.notify = function(req,res,next){
 // ).done(function (message, req, res, next) {
 //   var openid = message.OpenId;
 //   var order_id = req.query.out_trade_no;
-//   res.reply('');
+//   recieveNotify(order_id, req, req, next);
 // });

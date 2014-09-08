@@ -59,16 +59,24 @@ exports.cancel = function(req,res,next){
   var order = req.order;
   var reason = req.body.reason;
 
-  Order.updateById(orderId, {
-    $set: {
-      "status":"cancel",
-      "cancel_reason": reason,
-      "cancel_time": new Date()
+  async.waterfall([
+    function(done){
+      Order.cancel(order._id, reason, done);
+    },
+    function(needAdjust,done){
+      if(needAdjust){
+        // 查询worker为该车工，状态为preorder和todo，且preorder_time在该单之后的订单，将所有预估时间点按该单的预估完整时间提前
+        Order.adjustRests(order.worker._id,done);
+      }else{
+        done(null);
+      }
+    },
+    function(done){
+      // 更新车工的最后可用时间为最后一单的完成时间，如果没有后续订单了，更新车工最后可用时间为当前时间。
+      Worker.updateTimeAndLatlng(order.worker._id);
     }
-  },function(err){
+  ],function(err, needAdjust){
     if(err){
       return next(err);
-      res.status(200).send("ok");
     }
   });
-}
