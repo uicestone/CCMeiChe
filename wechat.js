@@ -9,6 +9,7 @@ var Worker = model.worker;
 var User = model.user;
 var Order = model.order;
 var moment = require('moment');
+var Notify = require('wechat-payment').Notify;
 
 function updateInfo(openid,Model,api,callback){
   api.getUser(openid, function(err, result){
@@ -79,13 +80,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     }
 
     if(message.Event == "LOCATION"){
-      Worker.update({
-        openid: openid
-      },{
-        $set:{
-          latlng:[+message.Latitude,+message.Longitude]
-        }
-      });
+      Worker.updateStatus(openid, [+message.Latitude,+message.Longitude]);
     }
 
     if(message.EventKey == "ON_DUTY"){
@@ -140,46 +135,26 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 });
 
 
-var wechat_worker = require('../../util/wechat').worker.api;
-var errortracking = require('../../errortracking');
+var wechat_worker = require('./util/wechat').worker.api;
+var errortracking = require('./errortracking');
 function recieveNotify(orderId, req, res, next){
+  var currentOrder;
   async.waterfall([
     function(done){
-      Order.confirm(order_id, done);
+      Order.confirm(orderId, done);
     },
     function(order, done){
-      Order.find({
-        "worker._id": order.worker._id,
-        "status": "todo"
-      }).toArray(done);
+      currentOrder = order;
+      Worker.getMessage(order.worker._id, {action:"new"}, done);
     },
-    function(orders, done){
-      var url = config.host.worker + "/orders/" + orders[0]._id;
-      var message;
-      // 给车工发送消息
-      if(orders.length == 1){
-        message = "你有一比新订单，点击查看：" + url;
-      }else{
-        message = "你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(data.estimated_finish_time).format("lll");
-      }
-
-      if(!worker.openid){
-        return done("worker " + worker._id + " doesn't have openid");
-      }
-
-      console.log("sendText to",worker.openid,message);
-      wechat_worker.sendText(worker.openid,message,function(err){
-        if(err){
-          return errortracking.other(err,req,res);
-        }
-        done(null)
-      });
+    function(message, done){
+      wechat_worker.sendText(currentOrder.worker.openid,message,done);
     }
   ],function(err){
     if(err){
       return next(err);
     }else{
-      res.status(200).send("ok");
+      res.status(200).send({message:"ok"});
     }
   });
 }

@@ -6,17 +6,17 @@ module.exports = User;
 
 db.bind('user',{
   findByOpenId: function(openid, callback){
-    this.findOne({
+    User.findOne({
       openid: openid
     }, callback);
   },
   findByPhone: function(phone, callback){
-    this.findOne({
+    User.findOne({
       phone: phone
     }, callback);
   },
   addCar: function(phone, car, callback){
-    this.update({
+    User.update({
       phone: phone
     }, {
       $addToSet: {
@@ -25,8 +25,7 @@ db.bind('user',{
     }, callback);
   },
   updateDefaultCars: function(phone, cars, callback){
-    var self = this;
-    self.findByPhone(phone, function(err, user){
+    User.findByPhone(phone, function(err, user){
       if(err){
         return callback(err);
       }
@@ -36,7 +35,7 @@ db.bind('user',{
         });
         return car;
       });
-      self.update({
+      User.update({
         phone: phone
       },{
         $set:{

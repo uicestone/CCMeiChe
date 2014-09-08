@@ -1,5 +1,5 @@
 mixin item(data)
-  li(data-id="#{data._id}")
+  li(data-id="#{data._id}",worker-id="#{data.worker._id}")
     .details
       for item in data.cars
         .row
@@ -16,7 +16,7 @@ mixin item(data)
         .view-result 查看结果
       else
         .text 倒计时间
-        .time(data-finish="#{data.estimated_finish_time}")
+        .time(data-finish="#{data.estimated_finish_time}") #{data.time}
         if data.status == "todo"
           .cancel 取消订单
 

@@ -5,7 +5,7 @@ var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
 var hashState = require('hashstate')();
-var panelAddcar = require("./addcar");
+var panelAddCar = require("./addcar");
 var panelPreOrder = require("./preorder");
 // 菜单展开收起
 (function(){
@@ -60,7 +60,6 @@ $(".cars .selected-cars").on("touchend", function(){
 });
 
 
-var panelAddCar;
 var carsList = $(".cars ul");
 // 添加车辆
 panelAddCar.on("cancel",function(){
@@ -230,7 +229,6 @@ navigator.geolocation.getCurrentPosition(function(position){
 // 地址提示
 (function(){
 function updateLatlng(data){
-  ac.hide();
   if(!data || !data.location){
     return;
   }
@@ -246,14 +244,15 @@ var ac = autocomplete.init($(".location .input"),function(item){
 $(".location .input").on("click",function(){
   $(this)[0].focus();
   $(this)[0].select();
-}).on("blur",updateLatlng);
+});
 
 })();
 
 var panelPreOrder;
+var goWashButton = $("#go-wash");
 panelPreOrder.on("confirm",function(order){
   var self = this;
-  el.prop("disabled",false);
+  goWashButton.prop("disabled",false);
   $.post("/api/v1/myorders/confirm",{
     "orderId": order._id
   },'json').done(function(paymentargs){
@@ -278,10 +277,10 @@ panelPreOrder.on("confirm",function(order){
     "orderId": order._id,
     "reason": reason
   },'json').done(function(){
-    $("#go-wash").prop("disabled",false);
+    goWashButton.prop("disabled",false);
   }).fail(function(xhr){
     popMessage(xhr);
-    $("#go-wash").prop("disabled",false);
+    goWashButton.prop("disabled",false);
   });
 });
 $("#go-wash").on("touchend", function(e){
@@ -297,7 +296,7 @@ $("#go-wash").on("touchend", function(e){
     service:currentService,
     promo_count: getPromoCount(),
     use_credit: $(".credit .use").hasClass("active"),
-    price: $(".payment .count").html(),
+    price: +$(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
 
@@ -324,7 +323,9 @@ $("#go-wash").on("touchend", function(e){
   el.prop("disabled",true);
   $.post("/api/v1/preorder",data,"json").done(function(order){
     panelPreOrder.show(order);
-  }).fail(popMessage);
+  }).fail(function(xhr){
+    popMessage(xhr);el.prop("disabled",false);
+  });
 
 });
 

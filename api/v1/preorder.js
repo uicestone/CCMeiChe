@@ -1,4 +1,6 @@
-var worker = require("../../model/worker");
+var models = require("../../model/");
+var worker = models.worker;
+var Order = models.order;
 var config = require("config");
 var baidumap = require("../../util/baidumap");
 var moment = require("moment");
@@ -18,7 +20,8 @@ function calculatePriceAndCredit(data){
 
   var cars_count = cars.length;
   var price = 0;
-  var credit = user.credit;
+  var credit = 0;
+  var user_credit = user.credit;
 
   for(var i = 0; i < cars_count; i++){
     if(promo_count){
@@ -29,12 +32,12 @@ function calculatePriceAndCredit(data){
   }
 
   if(use_credit){
-    if(credit < price){
-      price = price - credit;
-      credit = 0;
-    }else{
-      credit = credit - price;
+    if(user_credit > price){
+      credit = price;
       price = 0;
+    }else{
+      credit = user_credit;
+      price = price - credit;
     }
   }
 
@@ -91,7 +94,7 @@ function nearestWorker(latlng, workers, callback){
     var speedInMin = motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
 
     // 通过百度api查询路线
-    console.log("查询baidu地图路线 %s 到 %s",worker_latlng,user_latlng);
+    console.log("查询baidu地图路线 %s 到 %s",worker_latlng,latlng);
     baidumap.direction({
       origin: worker_latlng.join(","),
       destination: latlng.join(","),
@@ -104,13 +107,15 @@ function nearestWorker(latlng, workers, callback){
         return done("solution parse error " + JSON.stringify(solution));
       }
 
-      if(!worker.last_available_time){
-        return done("worker " + worker._id + " do not have last_available_time");
-      }
-
       var drive_time = solution.result.routes[0].distance / speedInMin;
       var wash_time = washtime();
-      var base_time = Math.max(new Date(worker.last_available_time), new Date());
+      var base_time;
+      if(worker.last_available_time){
+        base_time = Math.max(new Date(worker.last_available_time), new Date());
+      }else{
+        base_time = new Date();
+      }
+
       done(null,{
         worker: worker,
         drive_time: drive_time,
@@ -120,7 +125,7 @@ function nearestWorker(latlng, workers, callback){
       });
     });
   },function(err,results){
-    if(err){return next(err);}
+    if(err){return callback(err);}
     function compare_nearest(a,b){
       return b.finish_time > a.finish_time ? -1 : 1;
     }
@@ -135,7 +140,7 @@ exports.post = function (req, res, next) {
   var user_latlng = req.body.latlng;
   var service = req.body.service;
   var use_credit = req.body.use_credit == "true";
-  var promo_count = req.body.promo_count;
+  var promo_count = +req.body.promo_count;
   var address = req.body.address;
   var cars = req.body.cars;
   var carpark = req.body.carpark;
@@ -156,6 +161,7 @@ exports.post = function (req, res, next) {
   }
 
   var valid = validatePromoCount({
+    service: service,
     user: user,
     promo_count: promo_count
   });
@@ -198,20 +204,13 @@ exports.post = function (req, res, next) {
         estimated_finish_time: result.finish_time,  // 预估完成时间
         estimated_arrive_time: result.arrive_time, // 预估到达时间
         status: "preorder"
-      },function(err, order){
+      },function(err, orders){
         if(err){
           return next(err);
         }
 
-        worker.updateById(result.worker._id,{
-          $set:{
-            last_available_time: result.finish_time,
-            last_available_latlng: user_latlng
-          },
-          $addToSet: {
-            orders: order._id
-          }
-        },function(err){
+        var order = orders[0];
+        worker.addOrder(order.worker._id,order,function(err){
           if(err){
             return next(err);
           }
@@ -222,13 +221,7 @@ exports.post = function (req, res, next) {
         setTimeout(function(){
           Order.findById(order._id, function(err,order){
             if(order && order.status == "preorder"){
-              Order.updateById(order._id, {
-                $set: {
-                  "status":"cancel",
-                  "cancel_reason": "timeout",
-                  "cancel_time": new Date()
-                }
-              });
+              Order.cancel(order._id,"timeout");
             }
           });
         },10 * 60 * 1000);

@@ -1,6 +1,7 @@
 var db = require('../db');
 var Model = require('./base');
 var Order = Model("order");
+var async = require('async');
 
 module.exports = Order;
 
@@ -14,7 +15,7 @@ db.bind('order', {
       }
       var now = new Date();
       order.status = "todo";
-      order.order_time = now();
+      order.order_time = new Date();
       self.updateById(id, order, function (err) {
         if (err) {
           return callback(err);
@@ -30,6 +31,12 @@ db.bind('order', {
       return callback("invalid reason:" + reason);
     }
     self.findById(id, function(err, order){
+      if(order.status == "doing"){
+        return next({
+          code: 400,
+          message: "工人已到达，不可取消"
+        });
+      }
       self.updateById(id, {
         $set: {
           "status": "cancel",
@@ -40,14 +47,14 @@ db.bind('order', {
         if(err){
           return callback(err);
         }
-        var needAdjust = order.status !== "preorder";
-        callback(null, needAdjust);
+        self._adjustRests(order, callback);
       });
     });
   },
-  adjustRests: function(order, callback){
-    var full_time = order.estimate_finish_time - order.preorder_time;
-    this.update({
+  _adjustRests: function(order, callback){
+
+    var full_time = order.estimated_finish_time - new Date();
+    Order.find({
       $and: [
         {
           "worker._id": order.worker._id
@@ -57,21 +64,26 @@ db.bind('order', {
             {status:"preorder"},
             {status:"todo"}
           ]
-        },
-        {
-          $gt:{
-            preorder_time: order.preorder_time
-          }
         }
       ]
-    },{
-      $mul: {
-        estimate_arrive_time: full_time,
-        estimate_finish_time: full_time
-      },
-      $addToSet:{
-        cancelled_former_order: order
+    }).toArray(function(err,orders){
+      orders = orders.filter(function(doc){
+        return doc.preorder_time > order.preorder_time
+      });
+      if(err){
+        return callback(err);
       }
-    }, callback);
+      async.map(orders,function(order,done){
+        Order.updateById(order._id,{
+          $set: {
+            estimated_arrive_time: new Date(order.estimated_arrive_time - full_time),
+            estimated_finish_time: new Date(order.estimated_finish_time - full_time)
+          },
+          $addToSet:{
+            cancelled_former_order: order
+          }
+        }, done);
+      }, callback);
+    });
   }
 });

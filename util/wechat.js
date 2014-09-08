@@ -1,12 +1,7 @@
 var redis = require('../redis');
 var wechat = require('wechat');
-var payment = require('wechat-payment');
 var config = require('config');
-var Hashes = require('jshashes');
-var MD5 = new Hashes.MD5;
-var SHA1 = new Hashes.SHA1;
-var random = require('random-js');
-var qs = require('querystring');
+var Payment = require('wechat-payment').Payment;
 var API = wechat.API;
 var OAuth = wechat.OAuth;
 
@@ -69,15 +64,30 @@ var pay_request = function(ip, order){
 
 var worker_api = new API(config.wechat.worker.id, config.wechat.worker.secret, getToken(worker_store_key), setToken(worker_store_key));
 var worker_oauth = new OAuth(config.wechat.worker.id, config.wechat.worker.secret);
+var DEBUG = !!process.env.DEBUG;
 
+function notifyProxy(service){
+  return {
+    sendText: function(openid, message, callback){
+      var Notification = require('node-notifier');
+      var notifier = new Notification();
+      notifier.notify({
+        title: service + ' ' + openid,
+        sound: "Funk",
+        message: message
+      });
+      callback(null);
+    }
+  }
+}
 
 exports.user = {
-  generatePayArgs: user_generate_pay_args,
-  api: user_api,
+  pay_request: pay_request,
+  api: DEBUG ? notifyProxy("user") : user_api,
   oauth: user_oauth
 };
 
 exports.worker = {
-  api: worker_api,
+  api: DEBUG ? notifyProxy("worker") : worker_api,
   oauth: worker_oauth
 };

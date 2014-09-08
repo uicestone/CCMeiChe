@@ -27,12 +27,11 @@ var _23 = "hashstate@~0.1.0";
 var _24 = "util@^1.0.4";
 var _25 = "events@^1.0.5";
 var _26 = "view-swipe@~0.1.4";
-var _27 = "moment@^2.7.0";
-var _28 = "uploader@~0.1.4";
+var _27 = "uploader@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_2, [_21,_22,_23,_4,_9,_8,_7,_0,_15], function(require, exports, module, __filename, __dirname) {
+define(_2, [_21,_22,_23,_4,_8,_9,_7,_0,_15], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
@@ -40,8 +39,8 @@ var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
 var hashState = require('hashstate')();
-var addcar = require("./addcar");
-var preorder = require("./preorder");
+var panelAddCar = require("./addcar");
+var panelPreOrder = require("./preorder");
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){
@@ -95,43 +94,37 @@ $(".cars .selected-cars").on("touchend", function(){
 });
 
 
-var panelAddCar;
 var carsList = $(".cars ul");
 // 添加车辆
+panelAddCar.on("cancel",function(){
+  $("body").css("position","static");
+});
+panelAddCar.on("submit",function(data){
+  $("body").css("position","static");
+  carsSelect.add(data);
+  var template = "<li data='" + JSON.stringify(data) + "'>"
+    +"<div class='detail'>"
+      +"<div class='type'>@{it.type}@{it.color}</div>"
+      +"<div class='number'>@{it.number}</div>"
+    +"</div></li>";
+  var html = tpl.render(template,data);
+  var li = $(html);
+  carsList.append(li);
+  addbtn.prop("disabled",false);
+  if($(".cars-cell li").length >= 5){
+    addbtn.remove();
+  }
+  calculate();
+});
 $(".cars .add").on("touchend", function(e){
   e.preventDefault();
   var addbtn = $(this);
   addbtn.prop("disabled",true);
-  // require.async("./addcar.js",function(addcar){
-    $("body").css("position","fixed");
-    if(!panelAddCar){
-      panelAddCar = addcar;
-      panelAddCar.on("cancel",function(){
-        $("body").css("position","static");
-      });
-      panelAddCar.on("submit",function(data){
-        $("body").css("position","static");
-        carsSelect.add(data);
-        var template = "<li data='" + JSON.stringify(data) + "'>"
-          +"<div class='detail'>"
-            +"<div class='type'>@{it.type}@{it.color}</div>"
-            +"<div class='number'>@{it.number}</div>"
-          +"</div></li>";
-        var html = tpl.render(template,data);
-        var li = $(html);
-        carsList.append(li);
-        addbtn.prop("disabled",false);
-        if($(".cars-cell li").length >= 5){
-          addbtn.remove();
-        }
-        calculate();
-      });
-    }
-    panelAddCar.show();
-    setTimeout(function(){
-      $(".blank").hide();
-    },400);
-  // });
+  $("body").css("position","fixed");
+  panelAddCar.show();
+  setTimeout(function(){
+    $(".blank").hide();
+  },400);
 });
 
 // 选择服务
@@ -270,7 +263,6 @@ navigator.geolocation.getCurrentPosition(function(position){
 // 地址提示
 (function(){
 function updateLatlng(data){
-  ac.hide();
   if(!data || !data.location){
     return;
   }
@@ -286,11 +278,45 @@ var ac = autocomplete.init($(".location .input"),function(item){
 $(".location .input").on("click",function(){
   $(this)[0].focus();
   $(this)[0].select();
-}).on("blur",updateLatlng);
+});
 
 })();
 
 var panelPreOrder;
+var goWashButton = $("#go-wash");
+panelPreOrder.on("confirm",function(order){
+  var self = this;
+  goWashButton.prop("disabled",false);
+  $.post("/api/v1/myorders/confirm",{
+    "orderId": order._id
+  },'json').done(function(paymentargs){
+    $.post("/wechat/notify",{
+      orderId: order._id
+    },'json').done(function(){
+      location.href = "/myorders";
+    });
+    // WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
+    //   var message = res.err_msg;
+    //   if(message == "get_brand_wcpay_request:ok"){
+    //     alert("支付成功！");
+    //     location.href = "/myorders";
+    //   }else{
+    //     popMessage("支付失败，请重试");
+    //     self.emit("cancel",order,message);
+    //   }
+    // });
+  });
+}).on("cancel",function(order,reason){
+  $.post("/api/v1/myorders/cancel",{
+    "orderId": order._id,
+    "reason": reason
+  },'json').done(function(){
+    goWashButton.prop("disabled",false);
+  }).fail(function(xhr){
+    popMessage(xhr);
+    goWashButton.prop("disabled",false);
+  });
+});
 $("#go-wash").on("touchend", function(e){
   var el = $(this);
   if(el.prop("disabled")){
@@ -304,8 +330,7 @@ $("#go-wash").on("touchend", function(e){
     service:currentService,
     promo_count: getPromoCount(),
     use_credit: $(".credit .use").hasClass("active"),
-    credit: user.credit - $(".credit .num").text().trim(),
-    price: $(".payment .count").html(),
+    price: +$(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
 
@@ -330,37 +355,11 @@ $("#go-wash").on("touchend", function(e){
   }
 
   el.prop("disabled",true);
-  $.post("/api/v1/preorder",data,"json").done(function(estimate){
-    // require.async("./preorder.js",function(preorder){
-      if(!panelPreOrder){
-        panelPreOrder = preorder;
-        panelPreOrder.on("confirm",function(){
-          el.prop("disabled",false);
-          data.worker = estimate.worker;
-          data.estimated_drive_time = estimate.drive_time;
-          data.estimated_wash_time = estimate.wash_time;
-          data.estimated_finish_time = estimate.finish_time;
-          $.post("/api/v1/myorders",data).done(function(){
-            location.href = "/myorders";
-          });
-        }).on("cancel",function(){
-          el.prop("disabled",false);
-        });
-      }
-      panelPreOrder.show({
-        service: data.service,
-        phone: user.phone,
-        cars: data.cars,
-        address: data.address,
-        price: data.price,
-        worker: estimate.worker,
-        carpark: data.carpark,
-        drive_time: estimate.drive_time,
-        wash_time: estimate.wash_time,
-        finish_time: estimate.finish_time
-      });
-    // });
-  }).fail(popMessage);
+  $.post("/api/v1/preorder",data,"json").done(function(order){
+    panelPreOrder.show(order);
+  }).fail(function(xhr){
+    popMessage(xhr);el.prop("disabled",false);
+  });
 
 });
 
@@ -375,7 +374,7 @@ if(!user.cars.length){
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_4,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7,"./addcar":_0,"./preorder":_15},globalMap)
+    map:mix({"./mod/autocomplete":_4,"./mod/popselect":_8,"./mod/singleselect":_9,"./mod/popmessage":_7,"./addcar":_0,"./preorder":_15},globalMap)
 });
 
 define(_4, [_21,_24,_25], function(require, exports, module, __filename, __dirname) {
@@ -447,49 +446,6 @@ exports.init = function(input, parser, getVal){
   var pattern = input.attr("data-pattern");
   if(!pattern){return;}
   return new Autocomplete(input, pattern, parser, getVal);
-}
-}, {
-    entries:entries,
-    map:globalMap
-});
-
-define(_9, [_21,_25,_24], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var events = require("events");
-var util = require("util");
-
-function SingleSelect(elem,selector){
-  var self = this;
-  (function(){
-    var current = null;
-    var items = self.items = elem.find(selector);
-    items.on("click",function(){
-      elem.find(".active").removeClass("active");
-      var me = $(this);
-      if(me == current){
-        me.removeClass("active");
-        current = null;
-      }else{
-        current && current.removeClass("active");
-        me.addClass("active");
-        current = me;
-      }
-      self.emit("change",this);
-    });
-  })();
-  return this;
-}
-
-util.inherits(SingleSelect,events);
-
-SingleSelect.prototype.select = function(data){
-  this.items.filter(function(i){
-    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
-  }).addClass("active");
-}
-
-module.exports = function(elem,selector){
-  return new SingleSelect(elem,selector);
 }
 }, {
     entries:entries,
@@ -596,6 +552,49 @@ module.exports = function(choices,options){
 }, {
     entries:entries,
     map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
+});
+
+define(_9, [_21,_25,_24], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var events = require("events");
+var util = require("util");
+
+function SingleSelect(elem,selector){
+  var self = this;
+  (function(){
+    var current = null;
+    var items = self.items = elem.find(selector);
+    items.on("click",function(){
+      elem.find(".active").removeClass("active");
+      var me = $(this);
+      if(me == current){
+        me.removeClass("active");
+        current = null;
+      }else{
+        current && current.removeClass("active");
+        me.addClass("active");
+        current = me;
+      }
+      self.emit("change",this);
+    });
+  })();
+  return this;
+}
+
+util.inherits(SingleSelect,events);
+
+SingleSelect.prototype.select = function(data){
+  this.items.filter(function(i){
+    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+  }).addClass("active");
+}
+
+module.exports = function(elem,selector){
+  return new SingleSelect(elem,selector);
+}
+}, {
+    entries:entries,
+    map:globalMap
 });
 
 define(_7, [_21], function(require, exports, module, __filename, __dirname) {
@@ -744,18 +743,22 @@ module.exports = swipeModal.create({
     map:mix({"./mod/uploader":_11,"./mod/autocomplete":_4,"./mod/popmessage":_7,"./mod/swipe-modal":_10,"./tpl/addcar.html":_17},globalMap)
 });
 
-define(_15, [_21,_25,_24,_22,_26,_27,_20], function(require, exports, module, __filename, __dirname) {
+define(_15, [_21,_25,_24,_22,_26,_20], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var template = require("./tpl/preorder.html");
 var events = require("events");
 var util = require("util");
 var tpl = require("tpl");
 var viewSwipe = require("view-swipe");
-var moment = require("moment");
 
 function PreOrder(){
 
 }
+
+formatTime({
+  preorder_time: new Date(),
+  estimated_finish_time: new Date(2014,9,7,6,50,2)
+})
 
 util.inherits(PreOrder,events);
 
@@ -763,16 +766,32 @@ function addZero(num){
   return num < 10 ? ("0" + num) : num;
 }
 
-function formatTime(data){
-  var milliseconds = data.drive_time + data.wash_time;
-  var duration = moment.duration({milliseconds:milliseconds});
-  var hours = duration.hours() ? ( addZero(duration.hours()) + "小时" ) : "";
-  return hours + addZero(duration.minutes()) + "分钟" + addZero(duration.seconds()) + "秒";
+function formatTime(order){
+  var preorder_time = order.preorder_time;
+  var estimated_finish_time = order.estimated_finish_time;
+
+  var hour = 1000 * 60 * 60;
+  var minute = 1000 * 60;
+  var second = 1000;
+
+  var milliseconds = new Date(estimated_finish_time) - new Date(preorder_time);
+
+  var hours = Math.floor(milliseconds / hour);
+  milliseconds = milliseconds - hours * hour;
+  var minutes = Math.floor(milliseconds / minute);
+  milliseconds = milliseconds - minutes * minute;
+  var seconds = Math.floor(milliseconds / second);
+
+  hours = hours ? ( addZero(hours) + "小时" ) : "";
+  return hours + addZero(minutes) + "分钟" + addZero(seconds) + "秒";
 }
 
-PreOrder.prototype.show = function(data){
-  if(!data.drive_time || !data.wash_time){
-    throw "data.drive_time and data.wash_time are required";
+
+
+PreOrder.prototype.show = function(order){
+  var data = {};
+  for(var k in order){
+    data[k] = order[k];
   }
   data.time = formatTime(data);
   var html = tpl.render(template,data);
@@ -781,20 +800,17 @@ PreOrder.prototype.show = function(data){
   viewSwipe.in(elem[0],"bottom");
 
   elem.find(".submit").on("touchend", function(){
-    self.confirm();
+    self.emit("confirm",order);
+    viewSwipe.out("bottom");
   });
 
   elem.find(".cancel").on("touchend", function(){
-    self.emit("cancel");
+    self.emit("cancel",order,"preorder_cancel");
     viewSwipe.out("bottom");
   });
   return this;
 }
 
-PreOrder.prototype.confirm = function(data){
-  viewSwipe.out("bottom");
-  this.emit("confirm");
-}
 
 module.exports = new PreOrder();
 }, {
@@ -835,7 +851,7 @@ module.exports = function(container,itemSelector){
     map:globalMap
 });
 
-define(_11, [_21,_28], function(require, exports, module, __filename, __dirname) {
+define(_11, [_21,_27], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -1057,7 +1073,7 @@ module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆
 });
 
 define(_20, [], function(require, exports, module, __filename, __dirname) {
-module.exports = '<div id="preorder" class="container"><h2 class="h2">提交订单</h2><div class="order"><div class="inner"><div class="row"><div class="label">手机：</div><div class="text">@{it.phone}</div></div><?js it.cars.forEach(function(car,index){ ?><div class="row"><div class="label">车型：</div><div class="text"><p>@{car.type}</p><p>@{car.number}</p></div></div><?js }); ?><div class="row"><div class="label">地址：</div><div class="text">@{it.address} @{it.carpark}</div></div><div class="row"><div class="label">服务：</div><div class="text">@{it.service.title}</div></div></div></div><h2 class="h2">预估时间</h2><div class="estimate"><div class="time">@{it.time}</div><div class="text"><p>我们将在预估时间内完成洗车，预估时间以付款后为准</p><p>您也可在我们达到前随时取消订单</p></div></div><h2 class="h2">应付金额<div class="price">￥@{it.price}</div></h2><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
+module.exports = '<div id="preorder" class="container"><h2 class="h2">提交订单</h2><div class="order"><div class="inner"><div class="row"><div class="label">手机：</div><div class="text">@{it.user.phone}</div></div><?js it.cars.forEach(function(car,index){ ?><div class="row"><div class="label">车型：</div><div class="text"><p>@{car.type}</p><p>@{car.number}</p></div></div><?js }); ?><div class="row"><div class="label">地址：</div><div class="text">@{it.address} @{it.carpark}</div></div><div class="row"><div class="label">服务：</div><div class="text">@{it.service.title}</div></div></div></div><h2 class="h2">预估时间</h2><div class="estimate"><div class="time">@{it.time}</div><div class="text"><p>我们将在预估时间内完成洗车，预估时间以付款后为准</p><p>您也可在我们达到前随时取消订单</p></div></div><h2 class="h2">应付金额<div class="price">￥@{it.price}</div></h2><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap

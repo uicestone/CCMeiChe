@@ -16,7 +16,7 @@ exports.frontend = function(req,res,next){
 }
 
 exports.other = function(err,req,res,next){
-  console.log("track error other %s".red, err.message);
+  console.log("track error other %s".red, err.stack || err.message || err.toString());
   errmodel.insert({
     type:"other",
     time: new Date(),
@@ -38,6 +38,7 @@ exports.backend = function(err,req,res,next){
   errmodel.insert({
     type:"backend",
     time: new Date(),
+    name: err.name,
     message: err.message,
     stack: err.stack,
     req: {
@@ -47,5 +48,10 @@ exports.backend = function(err,req,res,next){
     }
   });
 
-  next(err);
+  if(err.name == "WeChatAPIError" && process.env.DEBUG){
+    res.status(200).send({message:"ok"});
+  }else{
+    next(err);
+  }
+
 }

@@ -43,14 +43,18 @@ function formatTime(order){
 
 
 PreOrder.prototype.show = function(order){
-  data.time = formatTime(order);
+  var data = {};
+  for(var k in order){
+    data[k] = order[k];
+  }
+  data.time = formatTime(data);
   var html = tpl.render(template,data);
   var elem = $(html);
   var self = this;
   viewSwipe.in(elem[0],"bottom");
 
   elem.find(".submit").on("touchend", function(){
-    this.emit("confirm",order);
+    self.emit("confirm",order);
     viewSwipe.out("bottom");
   });
 

@@ -66,11 +66,7 @@ exports.done = function(req,res,next){
       },
       // 更新车工最后可用时间
       function(done){
-        Worker.updateById(worker._id, {
-          $set:{
-            last_available_time: new Date(worker.last_available_time - (order.estimate_finish_time - order.finish_time))
-          }
-        },done);
+        Worker.removeOrder(worker._id, order, done);
       },
       // 更新订单状态
       function(done){

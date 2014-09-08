@@ -25,15 +25,35 @@ var _21 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_13, [_21,_5], function(require, exports, module, __filename, __dirname) {
+define(_13, [_21,_5,_7], function(require, exports, module, __filename, __dirname) {
 require("./mod/countdown");
 var $ = require("zepto");
-$(".cancel").on("touchend",function(){
-  alert("取消功能施工中");
+var popMessage = require("./mod/popmessage");
+$("li").each(function(i,el){
+  var $el = $(el);
+  var id = $el.attr("data-id");
+  var clickable = true;
+  $el.find(".cancel").on("click",function(){
+    if(!clickable){return;}
+    clickable = false;
+    $.post("/api/v1/myorders/cancel",{
+      orderId: id,
+      reason: "order_cancel"
+    },'json').done(function(){
+      location.reload();
+    }).fail(function(xhr){
+      popMessage(xhr);
+      clickable = true;
+      setTimeout(function(){
+        location.reload();
+      },1000)
+    });
+  });
 });
+
 }, {
     entries:entries,
-    map:mix({"./mod/countdown":_5},globalMap)
+    map:mix({"./mod/countdown":_5,"./mod/popmessage":_7},globalMap)
 });
 
 define(_5, [_21], function(require, exports, module, __filename, __dirname) {
@@ -63,6 +83,73 @@ function calculateTime(){
 
 setInterval(calculateTime,1000);
 calculateTime();
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_7, [_21], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message){
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+      json = {
+        error:{
+          message: message.responseText
+        }
+      }
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    zIndex: "30",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px"
+  });
+  pop.appendTo($("body"));
+  var width = pop.width()
+    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    //   return parseInt(pop.css(prop));
+    // }).reduce(function(a,b){
+    //   return a+b;
+    // },0);
+  pop.css({
+    "margin-left": - width / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
+    });
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },1500)
+}
+
+module.exports = popMessage
 }, {
     entries:entries,
     map:globalMap

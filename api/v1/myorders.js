@@ -1,6 +1,9 @@
 var config = require('config');
 var model = require('../../model');
 var wechat_user = require('../../util/wechat').user;
+var wechat_worker = require('../../util/wechat').worker;
+var WechatUserApi = wechat_user.api;
+var WechatWorkerApi = wechat_worker.api;
 var Worker = model.worker;
 var Order = model.order;
 var User = model.user;
@@ -10,6 +13,7 @@ moment.locale('zh-cn');
 
 exports.assure_match = function(req,res,next){
   var orderId = req.body.orderId;
+  var user = req.user;
   if(!orderId){
     return next({
       status: 400,
@@ -43,12 +47,13 @@ exports.list = function(req,res){
   });
 };
 
-exports.confirm = function(req,res){
+exports.confirm = function(req,res,next){
   var user = req.user;
   var order = req.order;
 
-  User.updateDefaultCars(phone, cars, function(err){
+  User.updateDefaultCars(user.phone, order.cars, function(err){
     if(err){return next(err)}
+
     var payment_args = wechat_user.pay_request(req.ip, order);
     res.status(200).send(payment_args);
   });
@@ -59,24 +64,37 @@ exports.cancel = function(req,res,next){
   var order = req.order;
   var reason = req.body.reason;
 
-  async.waterfall([
+  async.series([
     function(done){
       Order.cancel(order._id, reason, done);
     },
-    function(needAdjust,done){
-      if(needAdjust){
-        // 查询worker为该车工，状态为preorder和todo，且preorder_time在该单之后的订单，将所有预估时间点按该单的预估完整时间提前
-        Order.adjustRests(order.worker._id,done);
+    function(done){
+      Worker.removeOrder(order.worker._id, order, done);
+    },
+    function(done){
+      if(reason == "order_cancel"){
+        // 向腾讯发起退款请求
+        done(null);
       }else{
         done(null);
       }
     },
     function(done){
-      // 更新车工的最后可用时间为最后一单的完成时间，如果没有后续订单了，更新车工最后可用时间为当前时间。
-      Worker.updateTimeAndLatlng(order.worker._id);
+      WechatUserApi.sendText(user.openid, "您的订单已被取消，退款申请已经提交。", done);
+    },
+    function(done){
+      Worker.getMessage(order.worker._id, {
+        action: "cancel",
+        order: order
+      }, function(err, message){
+        if(err){return done(err);}
+        WechatWorkerApi.sendText(order.worker.openid, message, done);
+      });
     }
-  ],function(err, needAdjust){
+  ],function(err){
     if(err){
       return next(err);
     }
+    res.status(200).send({message:"ok"});
   });
+};
