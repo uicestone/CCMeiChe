@@ -15,11 +15,13 @@ db.bind('worker',{
   },
   updateTimeAndLatlng: function(workerId, callback){
     Order.find({
-      "worker._id": workerId,
-      $or: [
-        {"status": "preorder"},
-        {"status": "todo"},
-        {"status": "doing"},
+      $and: [
+        {"worker._id": workerId},
+        {$or:[
+          {"status":"preorder"},
+          {"status":"todo"},
+          {"status":"doing"}
+        ]}
       ]
     }).sort({
       "estimate_finish_time" : -1
