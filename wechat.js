@@ -4,6 +4,7 @@ var worker_api = require('./util/wechat').worker.api;
 var user_api = require('./util/wechat').worker.api;
 var model = require("./model");
 var async = require('async');
+var RechargeOrder = model.rechargeorder;
 var UserMessage = model.usermessage;
 var Worker = model.worker;
 var User = model.user;
@@ -137,7 +138,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
 var wechat_worker = require('./util/wechat').worker.api;
 var errortracking = require('./errortracking');
-function recieveNotify(orderId, req, res, next){
+function dealWashCar(orderId, req, res, next){
   var currentOrder;
   async.waterfall([
     function(done){
@@ -159,9 +160,56 @@ function recieveNotify(orderId, req, res, next){
   });
 }
 
+function dealRecharge(orderId, req, res, next){
+  console.log("orderId", orderId);
+  RechargeOrder.findById(orderId, function(err, order){
+    if(err || !order){
+      return next(err);
+    }
+    var recharge = order.recharge;
+    var user = req.user;
+    var userpromos = user.promo || [];
+
+    recharge.promo.forEach(function(promo){
+      var userpromo = userpromos.filter(function(item){
+        return item._id == promo._id;
+      })[0];
+      if(userpromo){
+        userpromo.amount += promo.amount;
+      }else{
+        promo.amount = promo.amount;
+        userpromos.push(promo);
+      }
+    });
+
+    User.update({
+      phone:user.phone
+    },{
+      $inc:{
+        credit: recharge.actual_price
+      },
+      $set: {
+        promo: userpromos
+      }
+    },function(err,user){
+      if(err){return next(err);}
+      res.status(200).send({message:"ok"});
+    });
+  });
+}
+
+function recieveNotify(orderId, type, req, res, next){
+  if(type == "washcar"){
+    dealWashCar(orderId,req,res,next);
+  }else if(type == "recharge"){
+    dealRecharge(orderId,req,res,next);
+  }
+}
+
 exports.notify = function(req,res,next){
   var order_id = req.body.orderId;
-  recieveNotify(order_id, req, res, next);
+  var type = req.body.type;
+  recieveNotify(order_id, type, req, res, next);
 };
 
 // exports.notify = Notify(
@@ -172,5 +220,9 @@ exports.notify = function(req,res,next){
 // ).done(function (message, req, res, next) {
 //   var openid = message.OpenId;
 //   var order_id = req.query.out_trade_no;
-//   recieveNotify(order_id, req, req, next);
+//   var attach = {};
+//   try{
+//    attach = JSON.parse(req.query.attach);
+//   }catch(e){}
+//   recieveNotify(order_id, attach.type, req, req, next);
 // });

@@ -36,13 +36,15 @@ var user_oauth = new OAuth(config.wechat.user.id, config.wechat.user.secret);
 
 var pay_request = function(ip, order){
   var notify_url = config.wechat.user.notify_url;
-  var order_id = order._id;
+  var order_id = order.id;
   var total_price = order.price;
-  var order_name = order.service.title + " * " + order.cars.length;
+  var order_name = order.name;
+  var order_attach = order.attach ? JSON.stringify(order.attach) : '';
 
   var package_data = {
     'bank_type':'WX',
     'body': order_name,
+    'attach': order_attach,
     'partner': config.wechat.user.partner_id,
     'out_trade_no': order_id,
     'total_fee': (total_price * 100).toString(),

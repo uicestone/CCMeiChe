@@ -9,9 +9,7 @@ module.exports = function(req,res,next){
 
   Service.find().toArray(function(err,services){
     if(err){return next(err);}
-    services = services.map(function(service){
-      return service;
-    });
+
     res.render("index",{
       id: "home",
       title: "CC美车",

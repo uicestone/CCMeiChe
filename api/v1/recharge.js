@@ -1,48 +1,41 @@
 var User = require("../../model/user");
 var Recharge = require("../../model/recharge");
+var RechargeOrder = require("../../model/rechargeorder");
+var wechat_user = require("../../util/wechat").user;
 
 exports.post = function(req,res,next){
   var price = +req.params.price;
   Recharge.findOne({
     price: price
   },function(err,recharge){
-    if(err){return next(err);}
-    if(!recharge){
-      return res.status(400).send("unexcepted price");
+    if(err || !recharge){
+      return next(err);
     }
 
-    User.findByPhone(req.user.phone, function(err,user){
-      if(err || !user){
+    RechargeOrder.insert({
+      recharge: recharge,
+      user: req.user
+    }, function(err, orders){
+      if(err){
         return next(err);
       }
-
-      var userpromos = user.promo || [];
-
-      recharge.promo.forEach(function(promo){
-        var userpromo = userpromos.filter(function(item){
-          return item._id == promo._id;
-        })[0];
-        if(userpromo){
-          userpromo.amount += promo.amount;
-        }else{
-          promo.amount = promo.amount;
-          userpromos.push(promo);
+      var order = orders[0];
+      var payment_args = wechat_user.pay_request(req.ip, {
+        id: order._id,
+        price: order.recharge.price,
+        name: order.recharge.title,
+        attach: {
+          type: "recharge"
         }
       });
 
-      User.update({
-        phone:req.user.phone
-      },{
-        $inc:{
-          credit: recharge.actual_price
-        },
-        $set: {
-          promo: userpromos
-        }
-      },function(err,user){
-        if(err){return next(err);}
-        res.send("ok");
+      res.status(200).send({
+        orderId: order._id,
+        payment_args:payment_args,
       });
+
     });
+
+
   });
 }

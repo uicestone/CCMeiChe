@@ -5,7 +5,6 @@ module.exports = function(req,res,next){
     if(err){
       return next(err);
     }
-    console.log(results);
     res.render("recharge",{
       id:"recharge",
       choices:results

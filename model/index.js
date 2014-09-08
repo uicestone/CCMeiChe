@@ -7,6 +7,7 @@ var models = [
   "error",
   "cartype",
   "usermessage",
+  "rechargeorder"
 ];
 
 models.forEach(function(name){
