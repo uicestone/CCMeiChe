@@ -1,12 +1,12 @@
 var $ = require("zepto");
-var uploader = require("./mod/uploader");
-var autocomplete = require("./mod/autocomplete");
-var popMessage = require("./mod/popmessage");
-var swipeModal = require("./mod/swipe-modal");
+var uploader = require("../mod/uploader");
+var autocomplete = require("../mod/autocomplete");
+var popMessage = require("../mod/popmessage");
+var swipeModal = require("../mod/swipe-modal");
 
 module.exports = swipeModal.create({
   button: $("#go-wash"),
-  template:  require("./tpl/addcar.html"),
+  template:  require("../tpl/addcar.html"),
   show: function(){
     var elem = this.elem;
     uploader.init(".add-photo",{

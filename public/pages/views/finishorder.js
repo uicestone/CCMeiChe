@@ -1,12 +1,12 @@
 var $ = require("zepto");
-var template = require("./tpl/finishorder.html");
-var uploader = require("./mod/uploader");
+var template = require("../tpl/finishorder.html");
+var uploader = require("../mod/uploader");
 var events = require("events");
 var util = require("util");
 var tpl = require("tpl");
 var viewSwipe = require("view-swipe");
-var singleSelect = require("./mod/singleselect");
-var popMessage = require("./mod/popmessage");
+var singleSelect = require("../mod/singleselect");
+var popMessage = require("../mod/popmessage");
 var uploading = false;
 
 function FinishOrder(){

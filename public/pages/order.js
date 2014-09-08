@@ -1,10 +1,20 @@
 var $ = require("zepto");
-var popMessage = require('./mod/popmessage')
+var popMessage = require('./mod/popmessage');
+var finishPanel = require('./views/finishorder');
 require("./mod/countdown");
 
 var button = $(".button");
 var posting = false;
-var finishPanel = null;
+
+finishPanel.on("confirm",function(data){
+  posting = true;
+  $("#order").css("position","static");
+  $.post("/api/v1/orders/" + order._id + "/done",data,"json").done(function(){
+    location.href = "/orders";
+  }).fail(popMessage);
+}).on("cancel",function(){
+  $("#order").css("position","static");
+});
 button.on("touchend",function(e){
   if(posting){return;}
   if(button.hasClass("arrive")){
@@ -15,24 +25,7 @@ button.on("touchend",function(e){
       button.removeClass("arrive").addClass("done");
     });
   }else if(button.hasClass("done")){
-
-    require.async("./finishorder.js",function(finishorder){
-      $("#order").css("position","fixed");
-      if(!finishPanel){
-        finishPanel = finishorder;
-        finishPanel.on("confirm",function(data){
-          posting = true;
-          $("#order").css("position","static");
-          $.post("/api/v1/orders/" + order._id + "/done",data,"json").done(function(){
-            location.href = "/orders";
-          }).fail(popMessage);
-        }).on("cancel",function(){
-          $("#order").css("position","static");
-        });
-      }
-      finishPanel.show();
-    });
+    $("#order").css("position","fixed");
+    finishPanel.show();
   }
 });
-
-require.async("./finishorder.js",function(finishorder){});

@@ -15,8 +15,6 @@
     "email": "supersheepxjy@gmail.com"
   },
   "entries": [
-    "./pages/addcar.js",
-    "./pages/finishorder.js",
     "./pages/home.js",
     "./pages/login.js",
     "./pages/mod/autocomplete.js",
@@ -30,12 +28,14 @@
     "./pages/myinfos.js",
     "./pages/myorders.js",
     "./pages/order.js",
-    "./pages/preorder.js",
     "./pages/recharge.js",
     "./pages/tpl/addcar.html.js",
     "./pages/tpl/finishorder.html.js",
     "./pages/tpl/mixins.html.js",
-    "./pages/tpl/preorder.html.js"
+    "./pages/tpl/preorder.html.js",
+    "./pages/views/addcar.js",
+    "./pages/views/finishorder.js",
+    "./pages/views/preorder.js"
   ],
   "bugs": {
     "url": "http://github.com/uicestone/CCMeiChe/issues"

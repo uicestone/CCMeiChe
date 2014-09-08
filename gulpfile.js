@@ -33,7 +33,7 @@ gulp.task('tpl2mod', function(){
 });
 
 gulp.task('uglify', function(){
-  return gulp.src([__dirname + '/public/dest/pages/**/*.js'])
+  return gulp.src([__dirname + '/public/bundle/pages/*.js'])
     .pipe(uglify()).on("Error",console.log)
     .pipe(gulp.dest(__dirname + '/public/dest/pages'));
 });

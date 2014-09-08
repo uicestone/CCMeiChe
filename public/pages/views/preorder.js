@@ -1,5 +1,5 @@
 var $ = require("zepto");
-var template = require("./tpl/preorder.html");
+var template = require("../tpl/preorder.html");
 var events = require("events");
 var util = require("util");
 var tpl = require("tpl");

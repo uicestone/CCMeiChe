@@ -5,8 +5,8 @@ var singleSelect = require('./mod/singleselect');
 var popselect = require('./mod/popselect');
 var popMessage = require('./mod/popmessage');
 var hashState = require('hashstate')();
-var panelAddCar = require("./addcar");
-var panelPreOrder = require("./preorder");
+var panelAddCar = require("./views/addcar");
+var panelPreOrder = require("./views/preorder");
 // 菜单展开收起
 (function(){
   $(".menu").on("touchend",function(){

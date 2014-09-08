@@ -1,6 +1,9 @@
 cd public
 gulp tpl2mod
 cortex build
-cortex bundle -d dest
+rm -rf dest
+mkdir -p bundle
+cortex bundle -d bundle --no-neuron
 gulp stylus
 gulp uglify
+rm -rf bundle
