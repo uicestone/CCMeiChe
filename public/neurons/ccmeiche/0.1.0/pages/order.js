@@ -134,7 +134,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_19, [_21,_22,_23,_24,_25,_15,_9,_5,_4], function(require, exports, module, __filename, __dirname) {
+define(_19, [_21,_22,_23,_24,_25,_15,_9,_4,_5], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var template = require("../tpl/finishorder.html");
 var uploader = require("../mod/uploader");
@@ -262,7 +262,7 @@ FinishOrder.prototype.confirm = function(){
 module.exports = new FinishOrder();
 }, {
     entries:entries,
-    map:mix({"../tpl/finishorder.html":_15,"../mod/uploader":_9,"../mod/popmessage":_5,"../mod/multiselect":_4},globalMap)
+    map:mix({"../tpl/finishorder.html":_15,"../mod/uploader":_9,"../mod/multiselect":_4,"../mod/popmessage":_5},globalMap)
 });
 
 define(_3, [_21], function(require, exports, module, __filename, __dirname) {

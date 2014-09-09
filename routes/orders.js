@@ -2,8 +2,9 @@ var Order = require("../model/order");
 
 
 exports.list = function(req,res,next){
+
   Order.find({
-    "worker._id": (req.user && req.user._id).toString(),
+    "worker._id": req.user && req.user._id,
   }).toArray(function(err,orders){
     if(err){
       return next(err);

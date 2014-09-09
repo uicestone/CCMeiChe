@@ -13,7 +13,10 @@ mixin item(data)
         .text #{data.service.title}
     .control
       if data.status == "done"
-        a(href="/myorders/#{data._id}",style="text-decoration:none").view-result 查看结果
+        if role == "worker"
+          a(href="/orders/#{data._id}",style="text-decoration:none").view-result 查看结果
+        else
+          a(href="/myorders/#{data._id}",style="text-decoration:none").view-result 查看结果
       else
         .text 倒计时间
         .time(data-finish="#{data.estimated_finish_time}") #{data.time}
