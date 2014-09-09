@@ -95,7 +95,22 @@ function nearestWorker(latlng, workers, callback){
 
     // 通过百度api查询路线
     console.log("查询baidu地图路线 %s 到 %s",worker_latlng,latlng);
-    baidumap.direction({
+
+    var getBaiduWalkSolution = baidumap.direction;
+    var getFakeWalkSolution = function(args, callback){
+      var solution = {
+        result:{
+          routes:[{
+            distance: 5000
+          }]
+        }
+      };
+      callback(null, solution);
+    };
+
+    var getWalkSolution = process.env.DEBUG ? getFakeWalkSolution : getBaiduWalkSolution;
+
+    getWalkSolution({
       origin: worker_latlng.join(","),
       destination: latlng.join(","),
       mode:"walking",

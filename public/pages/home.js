@@ -297,10 +297,11 @@ panelPreOrder.on("confirm",function(order){
     "orderId": order._id
   },'json').done(function(paymentargs){
     $.post("/wechat/notify",{
-      orderId: order._id
+      orderId: order._id,
+      type: "washcar"
     },'json').done(function(){
       location.href = "/myorders";
-    });
+    }).fail(popMessage);
     // WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
     //   var message = res.err_msg;
     //   if(message == "get_brand_wcpay_request:ok"){

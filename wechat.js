@@ -203,6 +203,11 @@ function recieveNotify(orderId, type, req, res, next){
     dealWashCar(orderId,req,res,next);
   }else if(type == "recharge"){
     dealRecharge(orderId,req,res,next);
+  }else{
+    next({
+      status: 400,
+      message: "wrong type"
+    });
   }
 }
 
