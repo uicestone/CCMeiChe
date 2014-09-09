@@ -79,7 +79,7 @@ db.bind('worker',{
         last_available_latlng: order.latlng
       },
       $addToSet: {
-        orders: order
+        orders: _.pick(order,'_id','preorder_time','latlng','estimated_finish_time')
       }
     }, callback);
   },
