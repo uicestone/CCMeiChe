@@ -235,13 +235,53 @@ function updateLatlng(data){
   $("#latlng").val(data.location.lat + "," + data.location.lng);
 }
 
-var ac = autocomplete.init($(".location .input"),function(item){
+var addressInput = $("#address");
+var latlngInput = $("#latlng");
+var carparkInput = $("#carpark");
+var ac = autocomplete.init(addressInput,function(item){
   return item.name + (item.address ? ("<span class='small'>" + item.address + "</span>") : "");
 },function(item){
   return item.name
 }).on("select",updateLatlng);
+var defaultLocationList = initDefaultLocationList();
 
-$(".location .input").on("click",function(){
+function initDefaultLocationList(){
+
+  var list = $("<ul class='autocomplete' />");
+  list.appendTo($(".location"));
+
+  user.addresses.forEach(function(item){
+    var li = $("<li />");
+    li.html(item.address + "<span class='small'>" + item.carpark + "</span>");
+    li.appendTo(list);
+    li.on("click", function(){
+      addressInput.val(item.address);
+      latlngInput.val(item.latlng);
+      carparkInput.val(item.carpark);
+      list.hide();
+    });
+  });
+
+  var packup = $("<li class='packup'>收起</li>");
+  packup.on("click",function(){
+    list.hide();
+  });
+  packup.appendTo(list);
+
+  list.hide();
+  return list
+}
+function popDefault(){
+  var el = $(this);
+  if(!el.val().trim() && user.addresses){
+    defaultLocationList.show();
+  }else{
+    defaultLocationList.hide();
+  }
+}
+addressInput.on('focus',popDefault);
+addressInput.on('keyup',popDefault);
+addressInput.on("click",function(){
   $(this)[0].focus();
   $(this)[0].select();
 });
