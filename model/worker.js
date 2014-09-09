@@ -17,7 +17,7 @@ function lastOrder(orders){
 
 db.bind('worker',{
   findByOpenId: function(openid, callback){
-    this.findOne({
+    Worker.findOne({
       openid: openid
     }, callback);
   },
@@ -60,7 +60,7 @@ db.bind('worker',{
     });
   },
   updateStatus: function(openid, latlng, callback){
-    this.findByOpenId(openid, function(err, worker){
+    Worker.findByOpenId(openid, function(err, worker){
       Worker.update({
         openid: openid
       },{
@@ -112,7 +112,7 @@ db.bind('worker',{
     });
   },
   onDuty: function(openid, callback){
-    this.findByOpenId(openid, function(err, worker){
+    Worker.findByOpenId(openid, function(err, worker){
       if(err){return callback(err)}
       var now = new Date();
       var last_available_time;
@@ -132,7 +132,7 @@ db.bind('worker',{
     });
   },
   offDuty: function(openid, callback){
-    this.update({
+    Worker.update({
       openid: openid
     },{
       $set:{

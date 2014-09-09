@@ -20,6 +20,8 @@ function addZero(num){
 exports.list = function(req,res,next){
   Order.find({
     "user.phone": req.user.phone
+  }).sort({
+    "estimated_finish_time": -1
   }).toArray(function(err,orders){
     if(err){
       return next(err);
@@ -41,6 +43,8 @@ exports.detail = function(req,res,next){
     if(err || !order){
       return next(err);
     }
+
+    console.log(order);
 
     res.render('order-result',{
       id:"order-result",

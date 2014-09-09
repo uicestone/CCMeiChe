@@ -21,13 +21,12 @@ exports.worker = function(req,res,next){
   var worker_oauth = require("../util/wechat").worker.oauth;
 
   if(process.env.DEBUG){
-    Worker.findOne({
-      name:"spud"
-    },function(err,spud){
+    Worker.findById(process.env.WORKERID,function(err,worker){
       if(err){return next(err);}
-      req.login(spud,function(err){
+      console.log(worker);
+      req.login(worker,function(err){
         if(err){return next(err);}
-        res.locals.user = req.user = spud;
+        res.locals.user = req.user = worker;
         next();
       });
     });

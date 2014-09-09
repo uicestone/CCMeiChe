@@ -30,7 +30,7 @@ var _26 = "uploader@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_19, [_21,_22,_23,_24,_25,_15,_9,_7,_5], function(require, exports, module, __filename, __dirname) {
+define(_19, [_21,_22,_23,_24,_25,_15,_9,_4,_5], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var template = require("../tpl/finishorder.html");
 var uploader = require("../mod/uploader");
@@ -38,7 +38,7 @@ var events = require("events");
 var util = require("util");
 var tpl = require("tpl");
 var viewSwipe = require("view-swipe");
-var singleSelect = require("../mod/singleselect");
+var multiSelect = require("../mod/multiselect");
 var popMessage = require("../mod/popmessage");
 var uploading = false;
 
@@ -113,7 +113,7 @@ FinishOrder.prototype.show = function(data){
     viewSwipe.out("bottom");
   });
 
-  singleSelect($("#finishorder"),".breakage");
+  multiSelect($("#finishorder"),".breakage");
 
   return this;
 }
@@ -131,7 +131,9 @@ FinishOrder.prototype.confirm = function(){
     })
   };
 
-  var breakage = $(".breakages .active").attr("data-index");
+  var breakage = $(".breakages .active").map(function(i,el){
+    return $(el).attr("data-index");
+  });
 
   if(breakage){
     data.breakage = breakage;
@@ -145,6 +147,10 @@ FinishOrder.prototype.confirm = function(){
     return popMessage("请上传车损照片");
   }
 
+  if(!data.breakage && data.breakage_pics.length){
+    return popMessage("请选择车损位置");
+  }
+
   viewSwipe.out("bottom");
   this.emit("confirm",data);
 }
@@ -152,7 +158,7 @@ FinishOrder.prototype.confirm = function(){
 module.exports = new FinishOrder();
 }, {
     entries:entries,
-    map:mix({"../tpl/finishorder.html":_15,"../mod/uploader":_9,"../mod/singleselect":_7,"../mod/popmessage":_5},globalMap)
+    map:mix({"../tpl/finishorder.html":_15,"../mod/uploader":_9,"../mod/multiselect":_4,"../mod/popmessage":_5},globalMap)
 });
 
 define(_15, [], function(require, exports, module, __filename, __dirname) {
@@ -289,43 +295,33 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_7, [_21,_22,_23], function(require, exports, module, __filename, __dirname) {
+define(_4, [_21], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
-var events = require("events");
-var util = require("util");
 
-function SingleSelect(elem,selector){
-  var self = this;
-  (function(){
-    var current = null;
-    var items = self.items = elem.find(selector);
-    items.on("click",function(){
-      elem.find(".active").removeClass("active");
-      var me = $(this);
-      if(me == current){
-        me.removeClass("active");
-        current = null;
-      }else{
-        current && current.removeClass("active");
-        me.addClass("active");
-        current = me;
-      }
-      self.emit("change",this);
-    });
-  })();
+function MultiSelect(container,itemSelector){
+  container = $(container);
+  var items = this.items = container.find(itemSelector);
+  items.each(function(i,item){
+    $(item).on("touchend",function(){
+      $(this).toggleClass("active");
+    })
+  });
   return this;
 }
 
-util.inherits(SingleSelect,events);
+MultiSelect.prototype.select = function(dataList){
+  var items = this.items;
+  var jsonList = dataList.map(function(data){return JSON.stringify(data);});
+  dataList.forEach(function(data){
+    items.filter(function(i){
+      return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+    }).addClass("active");
+  });
+};
 
-SingleSelect.prototype.select = function(data){
-  this.items.filter(function(i){
-    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
-  }).addClass("active");
-}
 
-module.exports = function(elem,selector){
-  return new SingleSelect(elem,selector);
+module.exports = function(container,itemSelector){
+  return new MultiSelect(container,itemSelector);
 }
 }, {
     entries:entries,

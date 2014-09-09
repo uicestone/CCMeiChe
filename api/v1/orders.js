@@ -56,9 +56,6 @@ exports.done = function(req,res,next){
       },
       // 给用户发送消息
       function(done){
-        if(!order.user.openid){
-          return done("订单 %s 的用户没有openid",order._id);
-        }
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
         console.log("send text to %s %s",order.user.openid, message);

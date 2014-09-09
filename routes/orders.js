@@ -25,7 +25,8 @@ exports.detail = function(req,res,next){
       return next(err);
     }
 
-    if(order.worker._id !== req.user._id.toString()){
+    // console.log("worker",order.worker, req.user._id,"user");
+    if(order.worker._id.toString() !== req.user._id.toString()){
       return res.send(403,"not your order");
     }
     order.status = order.status || "todo";

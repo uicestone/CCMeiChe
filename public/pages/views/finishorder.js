@@ -5,7 +5,7 @@ var events = require("events");
 var util = require("util");
 var tpl = require("tpl");
 var viewSwipe = require("view-swipe");
-var singleSelect = require("../mod/singleselect");
+var multiSelect = require("../mod/multiselect");
 var popMessage = require("../mod/popmessage");
 var uploading = false;
 
@@ -80,7 +80,7 @@ FinishOrder.prototype.show = function(data){
     viewSwipe.out("bottom");
   });
 
-  singleSelect($("#finishorder"),".breakage");
+  multiSelect($("#finishorder"),".breakage");
 
   return this;
 }
@@ -98,7 +98,9 @@ FinishOrder.prototype.confirm = function(){
     })
   };
 
-  var breakage = $(".breakages .active").attr("data-index");
+  var breakage = $(".breakages .active").map(function(i,el){
+    return $(el).attr("data-index");
+  });
 
   if(breakage){
     data.breakage = breakage;
@@ -110,6 +112,10 @@ FinishOrder.prototype.confirm = function(){
 
   if(data.breakage && !data.breakage_pics.length){
     return popMessage("请上传车损照片");
+  }
+
+  if(!data.breakage && data.breakage_pics.length){
+    return popMessage("请选择车损位置");
   }
 
   viewSwipe.out("bottom");
