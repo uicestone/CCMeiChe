@@ -65,8 +65,8 @@ db.bind('worker',{
         openid: openid
       },{
         $set:{
-          last_available_time: worker.orders.length ? worker.last_available_time : new Date(),
-          last_available_latlng: worker.orders.length ? worker.last_available_latlng : latlng,
+          last_available_time: worker.orders && worker.orders.length ? worker.last_available_time : new Date(),
+          last_available_latlng: worker.orders && worker.orders.length ? worker.last_available_latlng : latlng,
           latlng:latlng
         }
       });
