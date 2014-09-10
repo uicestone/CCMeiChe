@@ -7,7 +7,8 @@ var models = [
   "error",
   "cartype",
   "usermessage",
-  "rechargeorder"
+  "rechargeorder",
+  "admin"
 ];
 
 models.forEach(function(name){

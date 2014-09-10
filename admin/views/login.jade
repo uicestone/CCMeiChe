@@ -1,0 +1,14 @@
+block content
+  .middle-box.text-center.loginscreen.animated.fadeInDown
+    div
+      div
+        h1.logo-name IN+
+      h3 CC美车管理后台
+      form.m-t(role='form', method='post', action='/login')
+        .form-group
+          input.form-control(type='text', name='username', placeholder='Username', required='')
+        .form-group
+          input.form-control(type='password', name='password', placeholder='Password', required='')
+        button.btn.btn-primary.block.full-width.m-b(type='submit') Login
+      p.m-t
+        small CC美车 © 2014
