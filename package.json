@@ -30,9 +30,7 @@
     "uuid": "^1.4.1",
     "colors": "^0.6.2",
     "han": "0.0.7",
-    "wechat-payment": "0.0.5",
-    "md5": "^1.0.0",
-    "sha1": "^1.1.0"
+    "wechat-payment": "https://github.com/supersheep/wechat-payment/tarball/master"
   },
   "devDependencies": {
     "nib": "~1.0.3",
