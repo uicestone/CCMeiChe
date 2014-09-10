@@ -9,22 +9,52 @@ function Autocomplete(input, pattern, parser, getVal){
   this.list = list;
   input.after(list);
   var delay = 350;
-  var timeout = null;
   parser = parser || function(item){return item;}
   getVal = getVal || function(item){return item;}
   var needRequest = function(value){
     return value.match(/\w{3,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
   }
 
-  input.on("keyup", function(){
-    clearTimeout(timeout);
-    timeout = setTimeout(function(){
-      var value = input.val().trim();
-      if(!needRequest(value)){return;}
+  function Watcher(options){
+    var interval = this.interval = options.interval;
+    var getter = this.getter = options.getter;
+    var oldValue = this.oldValue = getter();
+  }
+
+  util.inherits(Watcher,events);
+  Watcher.prototype.start = function(){
+    this.stop();
+    var self = this;
+    self.itv = setInterval(function(){
+      var v = self.getter();
+      if(v !== self.oldValue){
+        self.emit("change",v,self.oldValue);
+      }
+      self.oldValue = v;
+    },self.interval);
+  };
+  Watcher.prototype.stop = function(){
+    var self = this;
+    clearInterval(this.itv);
+  };
+
+  var watcher = this.watcher = new Watcher({
+    interval: 100,
+    getter: function(){
+      return input.val().trim();
+    }
+  });
+
+  input.on("keydown",function(){
+    watcher.start();
+  });
+
+  watcher.on('change', function(v){
+      if(!needRequest(v)){return;}
       $.ajax({
         method: "GET",
         dataType: "json",
-        url: pattern.replace("{q}",value)
+        url: pattern.replace("{q}",v)
       }).done(function(data){
         if(!data.length){return;}
         list.empty();
@@ -33,6 +63,7 @@ function Autocomplete(input, pattern, parser, getVal){
           li.on("click",function(){
             input.val(getVal(data[i]));
             self.emit("select",data[i]);
+            watcher.stop();
             self.hide();
           });
           $(list).append(li);
@@ -46,7 +77,6 @@ function Autocomplete(input, pattern, parser, getVal){
       }).fail(function(){
         console.log("failed");
       });
-    },delay);
   });
 }
 
