@@ -9,5 +9,7 @@ module.exports = function(req,res){
     return res.redirect(redirect);
   }
 
-  res.sendfile( path.join(__dirname, '..', 'pages', 'login.html') );
+  res.render('login', {
+    bodyClass: "gray-bg"
+  });
 }

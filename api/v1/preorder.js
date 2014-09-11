@@ -161,7 +161,8 @@ exports.post = function (req, res, next) {
   var cars = req.body.cars;
   var carpark = req.body.carpark;
 
-  var user = req.user;
+
+  // more validations here
   if (!user_latlng) {
     return next({
       status: 400,
@@ -176,6 +177,7 @@ exports.post = function (req, res, next) {
     });
   }
 
+  var user = req.user;
   var valid = validatePromoCount({
     service: service,
     user: user,
@@ -191,11 +193,14 @@ exports.post = function (req, res, next) {
 
   user_latlng = user_latlng.split(",").map(function(item){return +item});
 
-  findWorkers(user_latlng,function(err, workers){
-    if(err){return next(err);}
-    nearestWorker(user_latlng,workers,function(err,result){
-      if(err){return next(err);}
-
+  async.waterfall([
+    function(done){
+      findWorkers(user_latlng,done);
+    },
+    function(workers, done){
+      nearestWorker(user_latlng,workers, done);
+    },
+    function(result, done){
       var priceAndCredit = calculatePriceAndCredit({
         service: service,
         use_credit: use_credit,
@@ -220,30 +225,33 @@ exports.post = function (req, res, next) {
         estimated_finish_time: result.finish_time,  // 预估完成时间
         estimated_arrive_time: result.arrive_time, // 预估到达时间
         status: "preorder"
-      },function(err, orders){
+      },done);
+    },
+    function(orders, done){
+      var order = orders[0];
+      worker.addOrder(order.worker._id,order,function(err){
         if(err){
           return next(err);
         }
-
-        var order = orders[0];
-        worker.addOrder(order.worker._id,order,function(err){
-          if(err){
-            return next(err);
-          }
-          res.status(200).send(order);
-        });
-
-        // 超时取消订单
-        setTimeout(function(){
-          Order.findById(order._id, function(err,order){
-            if(order && order.status == "preorder"){
-              Order.cancel(order._id,"timeout");
-            }
-          });
-        },10 * 60 * 1000);
-
+        done(null,order);
       });
+    },
+    function(order, done){
+      user.storeAddress(user._id, order, done);
+    }
+  ], function(err, order){
+    if(err){
+      return next(err);
+    }
 
-    });
+    res.status(200).send(order);
+    // 超时取消订单
+    setTimeout(function(){
+      Order.findById(order._id, function(err,order){
+        if(order && order.status == "preorder"){
+          Order.cancel(order._id,"timeout");
+        }
+      });
+    }, 10 * 60 * 1000);
   });
 }

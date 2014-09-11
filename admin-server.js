@@ -10,6 +10,7 @@ var config = require('config');
 var wechat = require('wechat');
 var uuid = require('uuid').v1;
 var routes = require('./admin/routes');
+var apis = require('./admin/apis');
 require('colors');
 var app = express();
 
@@ -44,7 +45,15 @@ app.use(express.static(__dirname + '/admin/public'))
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', routes.home);
+app.get('/', routes.worker);
+app.get('/worker', routes.worker);
+app.get('/user', routes.user);
+app.get('/order', routes.order);
+app.get('/api/worker', apis.worker);
+app.get('/api/user', apis.user);
+app.get('/api/order', apis.order);
+
+app.get('/logout', routes.logout);
 app.get('/login', routes.login);
 app.post('/login', passport.authenticate('local', {
   successRedirect: '/',
