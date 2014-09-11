@@ -273,7 +273,7 @@ function initDefaultLocationList(){
 }
 function popDefault(){
   var el = $(this);
-  if(!el.val().trim() && user.addresses){
+  if(!el.val().trim() && user.addresses && user.addresses.length){
     defaultLocationList.show();
   }else{
     defaultLocationList.hide();

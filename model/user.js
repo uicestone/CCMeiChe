@@ -24,6 +24,19 @@ db.bind('user',{
       }
     }, callback);
   },
+  storeAddress: function(phone, order, callback){
+    User.update({
+      phone: phone
+    }, {
+      $addToSet: {
+        addresses : {
+          address: order.address,
+          latlng: order.latlng,
+          carpark: order.carpark
+        }
+      }
+    }, callback);
+  },
   updateDefaultCars: function(phone, cars, callback){
     User.findByPhone(phone, function(err, user){
       if(err){

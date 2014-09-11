@@ -1,6 +1,7 @@
 var models = require("../../model/");
-var worker = models.worker;
+var Worker = models.worker;
 var Order = models.order;
+var User = models.user;
 var config = require("config");
 var baidumap = require("../../util/baidumap");
 var moment = require("moment");
@@ -68,7 +69,7 @@ function validatePromoCount(data){
 }
 
 function findWorkers(latlng,callback){
-  worker.find({
+  Worker.find({
     openid:{
       $ne: null
     },
@@ -229,7 +230,7 @@ exports.post = function (req, res, next) {
     },
     function(orders, done){
       var order = orders[0];
-      worker.addOrder(order.worker._id,order,function(err){
+      Worker.addOrder(order.worker._id,order,function(err){
         if(err){
           return next(err);
         }
@@ -237,7 +238,12 @@ exports.post = function (req, res, next) {
       });
     },
     function(order, done){
-      user.storeAddress(user._id, order, done);
+      User.storeAddress(user.phone, order, function(err){
+        if(err){
+          return done(err);
+        }
+        return done(null, order);
+      });
     }
   ], function(err, order){
     if(err){
