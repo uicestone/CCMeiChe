@@ -1,135 +1,126 @@
 extends layout
 
-mixin datatable(data, keys)
-  table.table.table-striped.table-bordered.table-hover.dataTables-example
-    thead
-      tr
-        each field,title in keys
-          th #{title}
-    tbody
-      each row in data
-        tr(data-id="row['_id']")
-          each field,title in keys
-            - var field = keys[title]
-            - console.log(field);
-            td #{row[field]}
+block main
+    div
+      a.btn.btn-primary#button-add(style="margin-right:10px") 新增车工
+      a.btn.btn-primary#button-remove 删除选中车工
+    table#worker-table.table.table-striped.table-bordered.table-hover
+      thead
+        tr
+          th 姓名
+          th 微信用户名
+          th 手机号
+          th 本月接单数
+          th 总接单数
+          th 订单列表链接
+    .modal.fade#modal-create-worker
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal')
+              span(aria-hidden='true') ×
+              span.sr-only Close
+            h4.modal-title 新增车工
 
-
-block content
-  style.
-    .selected td{
-      background-color: #18a689 !important;
-      color: #fff !important
-    }
-    .selected td a{
-      color: #fff !important
-    }
-  #wrapper
-    nav.navbar-default.navbar-static-side(role='navigation')
-      .sidebar-collapse
-        ul#side-menu.nav
-          li.nav-header
-            .dropdown.profile-element
-              span
-                img.img-circle(alt='image', src='img/profile_small.jpg')
-              a.dropdown-toggle(data-toggle='dropdown', href='#')
-                span.clear
-                  span.block.m-t-xs
-                    strong.font-bold #{user.username}
-                  a.text-muted.text-xs.block(href="/logout") 登出
-            .logo-element
-              | IN+
-          li.active
-            a(href='/worker')
-              i.fa.fa-group
-              span.nav-label 车工
-          li
-            a(href='/user')
-              i.fa.fa-child
-              span.nav-label 用户
-          li
-            a(href='/order')
-              i.fa.fa-cny
-              span.nav-label 订单
-    #page-wrapper.gray-bg.dashbard-1
-      .row.wrapper.border-bottom.white-bg.page-heading
-        .col-lg-10
-          h2= title
-      .row
-        .col-lg-12
-          .ibox.float-e-margins
-            .ibox-title
-            .ibox-content
-              div
-                a.btn.btn-primary(style="margin-right:10px") 新增车工
-                a.btn.btn-primary#button-remove 删除选中车工
-              table#example.table.table-striped.table-bordered.table-hover.dataTables-example
-                thead
-                  tr
-                    th 姓名
-                    th 微信用户名
-                    th 手机号
-                    th 本月接单数
-                    th 总接单数
-                    th 订单列表链接
+          form#create-worker-form
+            .modal-body
+                .form-group
+                  label(for='ipt-worker-openid') OpenId
+                  input#ipt-worker-openid.form-control(type='text',name='openid',required)
+                .form-group
+                  label(for='ipt-worker-name') 姓名
+                  input#ipt-worker-name.form-control(type='text',name='name',required)
+                .form-group
+                  label(for='ipt-worker-phone') 手机
+                  input#ipt-worker-phone.form-control(type='text',name='phone',required)
+            .modal-footer
+              button.btn.btn-default(type='button', data-dismiss='modal') 取消
+              button.btn#btn-add-worker-submit.btn-primary(type='submit') 添加
 block scripts
   script(src="js/plugins/dataTables/jquery.dataTables.js")
   script(src="js/plugins/dataTables/dataTables.bootstrap.js")
   script.
-      $(document).ready(function() {
-        var table = $('#example').DataTable({
-          "processing": true,
-          "ajax": "/api/worker",
-          "columns": [
-            {
-              data: null,
-              render: function(data){
-                return data.name || "--"
-              }
-            },
-            {
-              data: null,
-              render: function(data){
-                return (data.wechat_info && data.wechat_info.name) || "--"
-              }
-            },
-            {
-              data: null,
-              render: function(data){
-                return data.phone || "--"
-              }
-            },
-            {
-              data: null,
-              render: function(data){
-                return data.order_count || "--";
-              }
-            },
-            {
-              data: null,
-              render: function(data){
-                return data.order_count || "--";
-              }
-            },
-            {
-              data: null,
-              render: function(data){
-                return "<a target='_blank' href='/orders?user=" + data._id + "' >点击查看</a>"
-              }
+      var table = $('#worker-table').DataTable({
+        "processing": true,
+        "ajax": "/api/worker",
+        "columns": [
+          {
+            data: null,
+            render: function(data){
+              return data.name || "--"
             }
-          ]
-        });
-        $('#example').on('click', 'tbody tr', function () {
-          if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-          } else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
+          },
+          {
+            data: null,
+            render: function(data){
+              return (data.wechat_info && data.wechat_info.name) || "--"
+            }
+          },
+          {
+            data: null,
+            render: function(data){
+              return data.phone || "--"
+            }
+          },
+          {
+            data: null,
+            render: function(data){
+              return data.order_count || "--";
+            }
+          },
+          {
+            data: null,
+            render: function(data){
+              return data.order_count || "--";
+            }
+          },
+          {
+            data: null,
+            render: function(data){
+              return "<a target='_blank' href='/order?worker=" + data._id + "' >点击查看</a>"
+            }
           }
-        });
-        $('#button-remove').click(function () {
-          table.row('.selected').remove().draw(false);
-        });
+        ]
       });
 
+      $('#worker-table').on('click', 'tbody tr', function () {
+        if ($(this).hasClass('selected')) {
+          $(this).removeClass('selected');
+        } else {
+          table.$('tr.selected').removeClass('selected');
+          $(this).addClass('selected');
+        }
+      });
 
+      $('#button-remove').click(function () {
+        table.row('.selected').remove().draw(false);
+      });
+      $("#button-add").click(function(){
+        $('#modal-create-worker').modal('show');
+      });
+
+      $("#create-worker-form").on("submit",function(){
+        var valid = $("#create-worker-form")[0].checkValidity();
+        var modal = $('#modal-create-worker');
+        var phone = modal.find("[name='phone']").val();
+        var name = modal.find("[name='name']").val();
+        var openid = modal.find("[name='openid']").val();
+
+        if(!valid){
+          return false;
+        }
+
+        $.post("/api/worker/",{
+          openid: openid,
+          name: name,
+          phone: phone
+        }).done(function(worker){
+          table.row.add(worker).draw();
+        }).fail(function(){
+          alert(JSON.parse(xhr.responseText).message);
+        }).always(function(){
+          modal.modal('hide');
+        });
+
+        return false;
+      });

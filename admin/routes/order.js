@@ -6,7 +6,7 @@ module.exports = function(req,res,next){
 
   res.render('order',{
     user: req.user,
-    title: "用户查询"
+    title: "订单查询"
   });
 
 }

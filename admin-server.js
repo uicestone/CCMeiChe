@@ -49,7 +49,8 @@ app.get('/', routes.worker);
 app.get('/worker', routes.worker);
 app.get('/user', routes.user);
 app.get('/order', routes.order);
-app.get('/api/worker', apis.worker);
+app.get('/api/worker', apis.worker.list);
+app.post('/api/worker', apis.worker.create);
 app.get('/api/user', apis.user);
 app.get('/api/order', apis.order);
 
