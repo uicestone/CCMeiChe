@@ -3,7 +3,7 @@ extends layout
 block main
     div
       a.btn.btn-primary#button-add(style="margin-right:10px") 新增车工
-      a.btn.btn-primary#button-remove 删除选中车工
+      //- a.btn.btn-primary#button-remove 删除选中车工
     table#worker-table.table.table-striped.table-bordered.table-hover
       thead
         tr
@@ -92,9 +92,10 @@ block scripts
         }
       });
 
-      $('#button-remove').click(function () {
-        table.row('.selected').remove().draw(false);
-      });
+      //- $('#button-remove').click(function () {
+      //-   table.row('.selected').remove().draw(false);
+      //- });
+
       $("#button-add").click(function(){
         $('#modal-create-worker').modal('show');
       });
@@ -116,10 +117,9 @@ block scripts
           phone: phone
         }).done(function(worker){
           table.row.add(worker).draw();
-        }).fail(function(){
-          alert(JSON.parse(xhr.responseText).message);
-        }).always(function(){
           modal.modal('hide');
+        }).fail(function(xhr){
+          alert(JSON.parse(xhr.responseText).message);
         });
 
         return false;

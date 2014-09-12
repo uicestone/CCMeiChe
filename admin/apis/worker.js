@@ -21,15 +21,24 @@ exports.create = function(req,res,next){
   if(!req.body.name || !req.body.phone || !req.body.openid){
     return res.send(400,{
       code: 400,
-      message: "wrong args"
+      message: "参数不完整"
     });
   }
 
-  Worker.insert({
+  var data = {
     name: req.body.name,
     phone: req.body.phone,
     openid: req.body.openid
-  }, function(err, workers){
+  }
+
+  if(!data.phone.match(/^1\d{10}/)){
+    return res.send(400,{
+      code: 400,
+      message: "错误的手机格式"
+    });
+  }
+
+  Worker.insert(data, function(err, workers){
     if(err){
       return next(err);
     }
