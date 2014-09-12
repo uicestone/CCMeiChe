@@ -62,6 +62,7 @@ exports.confirm = function(req,res,next){
         type: "washcar"
       }
     });
+    console.log('pay_request',payment_args);
     res.status(200).send(payment_args);
   });
 }
