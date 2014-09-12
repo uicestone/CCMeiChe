@@ -1,7 +1,25 @@
 var Order = require('../../model').order;
 var _ = require('underscore');
 module.exports = function(req,res,next){
-  Order.find().toArray(function(err, orders){
+  var query = req.query;
+
+  var conditions = [];
+
+  if(query.user){
+    conditions.push({
+      "user._id": Order.id(query.user)
+    });
+  }
+
+  if(query.worker){
+    conditions.push({
+      "worker._id": Order.id(query.worker)
+    });
+  }
+
+  Order.find({
+    $and: conditions
+  }).toArray(function(err, orders){
     if(err){
       return next(err);
     }

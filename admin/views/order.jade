@@ -18,9 +18,10 @@ block scripts
   script(src="js/plugins/dataTables/dataTables.bootstrap.js")
   script.
       $(document).ready(function() {
+
         var table = $('#order-table').DataTable({
           "processing": true,
-          "ajax": "/api/order",
+          "ajax": "/api/order" + location.search,
           "columns": [
             {
               "data": "service.title"
