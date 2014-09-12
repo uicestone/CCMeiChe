@@ -215,23 +215,26 @@ function recieveNotify(orderId, type, req, res, next){
   }
 }
 
+if(process.env.DEBUG){
 exports.notify = function(req,res,next){
   var order_id = req.body.orderId;
   var type = req.body.type;
   recieveNotify(order_id, type, req, res, next);
 };
+}else{
 
-// exports.notify = Notify(
-//   config.wechat.user.id,
-//   config.wechat.user.pay_sign_key,
-//   config.wechat.user.partner_id,
-//   config.wechat.user.partner_key
-// ).done(function (message, req, res, next) {
-//   var openid = message.OpenId;
-//   var order_id = req.query.out_trade_no;
-//   var attach = {};
-//   try{
-//    attach = JSON.parse(req.query.attach);
-//   }catch(e){}
-//   recieveNotify(order_id, attach.type, req, req, next);
-// });
+exports.notify = Notify(
+  config.wechat.user.id,
+  config.wechat.user.pay_sign_key,
+  config.wechat.user.partner_id,
+  config.wechat.user.partner_key
+).done(function (message, req, res, next) {
+  var openid = message.OpenId;
+  var order_id = req.query.out_trade_no;
+  var attach = {};
+  try{
+   attach = JSON.parse(req.query.attach);
+  }catch(e){}
+  recieveNotify(order_id, attach.type, req, req, next);
+});
+}

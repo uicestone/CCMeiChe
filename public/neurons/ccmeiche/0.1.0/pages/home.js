@@ -330,22 +330,25 @@ panelPreOrder.on("confirm",function(order){
   $.post("/api/v1/myorders/confirm",{
     "orderId": order._id
   },'json').done(function(paymentargs){
-    $.post("/wechat/notify",{
-      orderId: order._id,
-      type: "washcar"
-    },'json').done(function(){
-      location.href = "/myorders";
-    }).fail(popMessage);
-    // WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
-    //   var message = res.err_msg;
-    //   if(message == "get_brand_wcpay_request:ok"){
-    //     alert("支付成功！");
-    //     location.href = "/myorders";
-    //   }else{
-    //     popMessage("支付失败，请重试");
-    //     self.emit("cancel",order,message);
-    //   }
-    // });
+    if(env !== "product"){
+      $.post("/wechat/notify",{
+        orderId: order._id,
+        type: "washcar"
+      },'json').done(function(){
+        location.href = "/myorders";
+      }).fail(popMessage);
+    }else{
+      WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
+        var message = res.err_msg;
+        if(message == "get_brand_wcpay_request:ok"){
+          alert("支付成功！");
+          location.href = "/myorders";
+        }else{
+          popMessage("支付失败，请重试");
+          self.emit("cancel",order,message);
+        }
+      });
+    }
   });
 }).on("cancel",function(order,reason){
   $.post("/api/v1/myorders/cancel",{
