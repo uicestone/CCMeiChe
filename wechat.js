@@ -10,7 +10,7 @@ var Worker = model.worker;
 var User = model.user;
 var Order = model.order;
 var moment = require('moment');
-var Notify = require('wechat-payment').Notify;
+var Notify = require('wechat-payment').middleware.Notify;
 
 function updateInfo(openid,Model,api,callback){
   api.getUser(openid, function(err, result){
