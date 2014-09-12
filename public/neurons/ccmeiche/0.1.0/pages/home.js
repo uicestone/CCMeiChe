@@ -330,7 +330,7 @@ panelPreOrder.on("confirm",function(order){
   $.post("/api/v1/myorders/confirm",{
     "orderId": order._id
   },'json').done(function(paymentargs){
-    if(env !== "product"){
+    if(appConfig.env !== "product"){
       $.post("/wechat/notify",{
         orderId: order._id,
         type: "washcar"

@@ -49,7 +49,7 @@ $(".button").on("touchend",function(){
   $.post("/api/v1/recharge/" + price).done(function(result){
     var paymentargs = result.paymentargs;
     var orderId = result.orderId;
-    if(env !== "product"){
+    if(appConfig.env !== "product"){
       $.post("/wechat/notify",{
         orderId: orderId,
         type: 'recharge'
