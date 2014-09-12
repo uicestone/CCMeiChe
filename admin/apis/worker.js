@@ -1,12 +1,39 @@
 var Worker = require('../../model').worker;
+var Order = require('../../model').order;
+var moment = require('moment');
+var async = require('async');
+var _ = require('underscore');
+
 exports.list = function(req,res,next){
-  Worker.find().toArray(function(err, workers){
+  async.waterfall([
+    function(done){
+      Worker.find().toArray(done);
+    },
+    function(workers, done){
+      async.map(workers, function(worker, done){
+        Order.find({
+          "worker._id": worker._id,
+          "status": "done"
+        }).toArray(function(err, orders){
+          if(err){done(err);}
+
+          worker.monthly_order_count = orders.filter(function(order){
+            var ft = new Date(order.finish_time);
+            return moment().startOf('month').toDate() < ft && moment().endOf('month').toDate() > ft;
+          }).length;
+          worker.totally_order_count = orders.length;
+          done(null, _.pick(worker,'_id','wechat_info','name','phone','monthly_order_count','totally_order_count'));
+        });
+      }, done);
+    }
+  ], function(err, workers){
     if(err){
       return next(err);
     }
     res.send({
       data: workers
     });
+
   });
 }
 

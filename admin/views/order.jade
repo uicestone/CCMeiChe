@@ -36,7 +36,7 @@ block scripts
               "data": null,
               render: function(data){
                 return (data.worker && data.worker.wechat_info && data.worker.wechat_info.name)
-                  ? data.worker.wechat_info.name : '--';
+                  ? data.worker.name : '--';
               }
             },
             {

@@ -1,5 +1,6 @@
 var db = require('../db');
 var Model = require('./base');
+var _ = require('underscore');
 var Order = Model("order");
 var async = require('async');
 
@@ -80,7 +81,7 @@ db.bind('order', {
             estimated_finish_time: new Date(order.estimated_finish_time - full_time)
           },
           $addToSet:{
-            cancelled_former_order: order
+            cancelled_former_order: _.pick(order,"_id")
           }
         }, done);
       }, callback);
