@@ -61,7 +61,7 @@ var pay_request = function(ip, order){
     notifyUrl: config.wechat.user.notify_url
   });
 
-  return payment.getWCPayRequest(package_data);
+  return payment.getBrandWCPayRequestParams(package_data);
 }
 
 var worker_api = new API(config.wechat.worker.id, config.wechat.worker.secret, getToken(worker_store_key), setToken(worker_store_key));
