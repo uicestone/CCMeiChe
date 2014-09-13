@@ -75,7 +75,7 @@ function notifyProxy(service){
       var notifier = new Notification();
       notifier.notify({
         title: service + ' ' + openid,
-        sound: "Funk",
+        sound: "default",
         message: message
       });
       callback(null);

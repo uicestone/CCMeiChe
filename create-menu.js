@@ -46,7 +46,7 @@ var user_menu = {
   "button": [{
     "type": "view",
     "name": "我要洗车",
-    "url": config.host.user + '/wechat/'
+    "url": config.host.user + '/wechat/?showwxpaytitle=1'
   },{
     "name": "CC乐享",
     "sub_button": [
