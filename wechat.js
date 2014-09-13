@@ -229,11 +229,11 @@ exports.notify = Notify({
   mchId: config.wechat.user.mch_id,
   notifyUrl: config.wechat.user.notify_url
 }).done(function (message, req, res, next) {
-  var openid = message.OpenId;
-  var order_id = req.query.out_trade_no;
+  var openid = message.openid;
+  var order_id = out_trade_no.out_trade_no;
   var attach = {};
   try{
-   attach = JSON.parse(req.query.attach);
+   attach = JSON.parse(message.attach);
   }catch(e){}
   recieveNotify(order_id, attach.type, req, req, next);
 });
