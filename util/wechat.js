@@ -45,7 +45,7 @@ var pay_request = function(req, order, callback){
     'body': order_name,
     'attach': order_attach,
     'out_trade_no': order_id,
-    'total_fee': (total_price * 100).toString(),
+    'total_fee': (total_price * 1).toString(),
     'spbill_create_ip': req.ip,
     "openid": req.user.openid,
     "trade_type": "JSAPI"
