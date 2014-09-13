@@ -1,7 +1,7 @@
 var redis = require('../redis');
 var wechat = require('wechat');
 var config = require('config');
-var Payment = require('wechat-payment').Payment;
+var Payment = require('wechat-pay').Payment;
 var API = wechat.API;
 var OAuth = wechat.OAuth;
 
