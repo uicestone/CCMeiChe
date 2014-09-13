@@ -153,6 +153,7 @@ function dealWashCar(orderId, req, res, next){
       Worker.getMessage(order.worker._id, {action:"new"}, done);
     },
     function(message, done){
+      console.log("sendText",currentOrder.worker.openid,message);
       wechat_worker.sendText(currentOrder.worker.openid,message,done);
     }
   ],function(err){
