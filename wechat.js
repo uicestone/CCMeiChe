@@ -223,12 +223,12 @@ exports.notify = function(req,res,next){
 };
 }else{
 
-exports.notify = Notify(
-  config.wechat.user.id,
-  config.wechat.user.pay_sign_key,
-  config.wechat.user.partner_id,
-  config.wechat.user.partner_key
-).done(function (message, req, res, next) {
+exports.notify = Notify({
+  partnerKey: config.wechat.user.partner_key,
+  appId: config.wechat.user.id,
+  mchId: config.wechat.user.mch_id,
+  notifyUrl: config.wechat.user.notify_url
+}).done(function (message, req, res, next) {
   var openid = message.OpenId;
   var order_id = req.query.out_trade_no;
   var attach = {};

@@ -54,12 +54,12 @@ var pay_request = function(ip, order){
     'input_charset':'UTF-8'
   };
 
-  var payment = new Payment(
-    config.wechat.user.id,
-    config.wechat.user.pay_sign_key,
-    config.wechat.user.partner_id,
-    config.wechat.user.partner_key
-  );
+  var payment = new Payment({
+    partnerKey: config.wechat.user.partner_key,
+    appId: config.wechat.user.id,
+    mchId: config.wechat.user.mch_id,
+    notifyUrl: config.wechat.user.notify_url
+  });
 
   return payment.getWCPayRequest(package_data);
 }
