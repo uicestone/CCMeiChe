@@ -20,7 +20,7 @@ exports.post = function(req,res,next){
         return next(err);
       }
       var order = orders[0];
-      var payment_args = wechat_user.pay_request(req.ip, {
+      var payment_args = wechat_user.pay_request(req, {
         id: order._id,
         price: order.recharge.price,
         name: order.recharge.title,
