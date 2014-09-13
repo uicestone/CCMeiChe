@@ -230,7 +230,7 @@ exports.notify = Notify({
   notifyUrl: config.wechat.user.notify_url
 }).done(function (message, req, res, next) {
   var openid = message.openid;
-  var order_id = out_trade_no.out_trade_no;
+  var order_id = message.out_trade_no;
   var attach = {};
   try{
    attach = JSON.parse(message.attach);
