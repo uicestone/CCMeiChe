@@ -34,7 +34,7 @@ var worker_store_key = 'wechat-access-token-worker';
 var user_api = new API(config.wechat.user.id, config.wechat.user.secret, getToken(user_store_key), setToken(user_store_key));
 var user_oauth = new OAuth(config.wechat.user.id, config.wechat.user.secret);
 
-var pay_request = function(req, order){
+var pay_request = function(req, order, callback){
   var notify_url = config.wechat.user.notify_url;
   var order_id = order.id.toString();
   var total_price = order.price;
@@ -59,7 +59,7 @@ var pay_request = function(req, order){
     notifyUrl: config.wechat.user.notify_url
   });
 
-  return payment.getBrandWCPayRequestParams(package_data);
+  return payment.getBrandWCPayRequestParams(package_data, callback);
 }
 
 var worker_api = new API(config.wechat.worker.id, config.wechat.worker.secret, getToken(worker_store_key), setToken(worker_store_key));

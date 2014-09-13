@@ -20,22 +20,20 @@ exports.post = function(req,res,next){
         return next(err);
       }
       var order = orders[0];
-      var payment_args = wechat_user.pay_request(req, {
+      wechat_user.pay_request(req, {
         id: order._id,
         price: order.recharge.price,
         name: order.recharge.title,
         attach: {
           type: "recharge"
         }
+      },function(err,payment_args){
+        if(err){return next(err);}
+        res.status(200).send({
+          orderId: order._id,
+          payment_args:payment_args
+        });
       });
-
-      res.status(200).send({
-        orderId: order._id,
-        payment_args:payment_args,
-      });
-
     });
-
-
   });
 }

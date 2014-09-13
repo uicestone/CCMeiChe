@@ -54,15 +54,17 @@ exports.confirm = function(req,res,next){
   User.updateDefaultCars(user.phone, order.cars, function(err){
     if(err){return next(err)}
 
-    var payment_args = wechat_user.pay_request(req, {
+    wechat_user.pay_request(req, {
       id: order._id,
       price: order.price,
       name: order.service.title + " * " + order.cars.length,
       attach: {
         type: "washcar"
       }
+    }, function(err, payment_args){
+      if(err){return next(err);}
+      res.status(200).send(payment_args);
     });
-    res.status(200).send(payment_args);
   });
 }
 
