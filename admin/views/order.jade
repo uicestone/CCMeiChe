@@ -29,15 +29,15 @@ block scripts
             {
               "data": null,
               render: function(data){
-                return (data.user && data.user.wechat_info && data.user.wechat_info.name)
-                  ? data.user.wechat_info.name : '--';
+                return (data.user && data.user.wechat_info && data.user.wechat_info.nickname)
+                  ? data.user.wechat_info.nickname : '--';
               }
             },
             {
               "data": null,
               render: function(data){
-                return (data.worker && data.worker.wechat_info && data.worker.wechat_info.name)
-                  ? data.worker.name : '--';
+                return (data.worker && data.worker.wechat_info && data.worker.wechat_info.nickname)
+                  ? data.worker.nickname : '--';
               }
             },
             {
