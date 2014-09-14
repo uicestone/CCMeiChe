@@ -252,13 +252,5 @@ exports.post = function (req, res, next) {
     }
 
     res.status(200).send(order);
-    // 超时取消订单
-    setTimeout(function(){
-      Order.findById(order._id, function(err,order){
-        if(order && order.status == "preorder"){
-          Order.cancel(order._id,"timeout");
-        }
-      });
-    }, 10 * 60 * 1000);
   });
 }

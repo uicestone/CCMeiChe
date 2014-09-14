@@ -25,12 +25,29 @@ db.bind('order', {
       });
     });
   },
+  // 超过十分钟取消订单
+  cancelTimeout: function(){
+    Order.find({
+      "status":"preorder",
+      "preorder_time": {
+        $lt: new Date( +new Date() - 10 * 60 * 1000)
+      }
+    }).toArray(function(err,orders){
+      if(err){
+        return;
+      }
+      async.map(orders, function(order, done){
+        Order.cancel(order._id, "timeout", done);
+      });
+    });
+  },
   cancel: function(id, reason, callback){
     var self = this;
     var reasons = ["payment_cancel","payment_fail","preorder_cancel","order_cancel","timeout"];
     if(reasons.indexOf(reason) == -1){
       return callback("invalid reason:" + reason);
     }
+    console.log("cancel order",id,reason);
     self.findById(id, function(err, order){
       if(order.status == "doing"){
         return next({
@@ -88,3 +105,10 @@ db.bind('order', {
     });
   }
 });
+
+// 每分钟检查一次超时订单
+setInterval(function(){
+  Order.cancelTimeout();
+}, 60 * 1000);
+
+Order.cancelTimeout();

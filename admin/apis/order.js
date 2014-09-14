@@ -3,23 +3,17 @@ var _ = require('underscore');
 module.exports = function(req,res,next){
   var query = req.query;
 
-  var conditions = [];
+  var conditions = {};
 
   if(query.user){
-    conditions.push({
-      "user._id": Order.id(query.user)
-    });
+    conditions["user._id"] = Order.id(query.user);
   }
 
   if(query.worker){
-    conditions.push({
-      "worker._id": Order.id(query.worker)
-    });
+    conditions["worker._id"] = Order.id(query.worker);
   }
 
-  Order.find({
-    $and: conditions
-  }).toArray(function(err, orders){
+  Order.find(conditions).toArray(function(err, orders){
     if(err){
       return next(err);
     }
