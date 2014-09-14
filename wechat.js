@@ -160,7 +160,7 @@ function handleResponse(res, options){
         return res.status(500).send(err);
       }
     }else{
-      if(err.name == "OrderProcessed"){
+      if(err && err.name == "OrderProcessed"){
         console.log("已处理的" + options.title + "订单请求");
       }
       if(res.reply){
