@@ -59,8 +59,21 @@ db.bind('worker',{
       callback(null, message);
     });
   },
+  updateLastIntraction: function(openid, callback){
+    Worker.update({
+      openid: openid
+    }, {
+      $set: {
+        last_intraction_time: new Date()
+      }
+    }, callback)
+  },
   updateStatus: function(openid, latlng, callback){
     Worker.findByOpenId(openid, function(err, worker){
+      if(err){
+        return callback(err);
+      }
+
       Worker.update({
         openid: openid
       },{
@@ -69,7 +82,7 @@ db.bind('worker',{
           last_available_latlng: worker.orders && worker.orders.length ? worker.last_available_latlng : latlng,
           latlng:latlng
         }
-      });
+      },callback);
     });
   },
   addOrder: function(workerId, order, callback){

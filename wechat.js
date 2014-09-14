@@ -84,8 +84,17 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       });
     }
 
+    Worker.updateLastIntraction(openid, function(err){
+      if(err){
+        console.log("update worker last intraction time fail");
+      }
+    });
+
     if(message.Event == "LOCATION"){
-      Worker.updateStatus(openid, [+message.Latitude,+message.Longitude]);
+      Worker.updateStatus(openid, [+message.Latitude,+message.Longitude], function(){
+        return res.reply("");
+      });
+      return;
     }
 
     if(message.EventKey == "ON_DUTY"){
