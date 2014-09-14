@@ -151,7 +151,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
 var wechat_worker = require('./util/wechat').worker.api;
 var errortracking = require('./errortracking');
-function handleResponse(res){
+function handleResponse(res, options){
   return function(err){
     if(err && err.name !== "OrderProcessed"){
       if(res.reply){
@@ -160,6 +160,9 @@ function handleResponse(res){
         return res.status(500).send(err);
       }
     }else{
+      if(err.name == "OrderProcessed"){
+        console.log("已处理的" + options.title + "订单请求");
+      }
       if(res.reply){
         console.log('reply success');
         res.reply('success');
@@ -185,7 +188,9 @@ function dealWashCar(openid, orderId, req, res, next){
       console.log("sendText",currentOrder.worker.openid,message);
       wechat_worker.sendText(currentOrder.worker.openid,message,done);
     }
-  ],handleResponse(res));
+  ],handleResponse(res,{
+    title: '洗车'
+  }));
 }
 
 function dealRecharge(openid, orderId, req, res, next){
@@ -250,7 +255,9 @@ function dealRecharge(openid, orderId, req, res, next){
         },done);
       });
     }
-  ],handleResponse(res));
+  ],handleResponse(res,{
+    title: '充值'
+  }));
 }
 
 function recieveNotify(openid, orderId, type, req, res, next){
