@@ -18,19 +18,19 @@ passport.use(new LocalStrategy({
     });
   }
 
-  vcode.verify({
-    code: code,
-    key: phone
-  }, function (err, match) {
-    if (err) {
-      return done(err);
-    }
-    if (!match) {
-      return done({
-        message: "验证码不正确或已失效",
-        status: 400
-      });
-    } else {
+  // vcode.verify({
+  //   code: code,
+  //   key: phone
+  // }, function (err, match) {
+  //   if (err) {
+  //     return done(err);
+  //   }
+  //   if (!match) {
+  //     return done({
+  //       message: "验证码不正确或已失效",
+  //       status: 400
+  //     });
+  //   } else {
       var user = {
         phone: phone,
         access_token: access_token,
@@ -46,8 +46,10 @@ passport.use(new LocalStrategy({
         if(err){return done(err);}
         done(null,user);
       });
-    }
-  });
+  //   }
+  // });
+
+
 }));
 
 
