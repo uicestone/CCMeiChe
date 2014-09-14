@@ -64,7 +64,7 @@ db.bind('worker',{
       openid: openid
     }, {
       $set: {
-        last_intraction_time: new Date()
+        last_interaction_time: new Date()
       }
     }, callback)
   },
