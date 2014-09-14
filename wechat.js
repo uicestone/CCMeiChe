@@ -167,9 +167,17 @@ function dealWashCar(orderId, req, res, next){
     }
   ],function(err){
     if(err){
-      return next(err);
+      if(res.reply){
+        res.reply(err);
+      }else{
+        return next(err);
+      }
     }else{
-      res.status(200).send({message:"ok"});
+      if(res.reply){
+        res.reply('success');
+      }else{
+        res.status(200).send({message:"ok"});
+      }
     }
   });
 }
@@ -206,8 +214,19 @@ function dealRecharge(orderId, req, res, next){
         promo: userpromos
       }
     },function(err,user){
-      if(err){return next(err);}
-      res.status(200).send({message:"ok"});
+      if(err){
+        if(res.reply){
+          res.reply(err);
+        }else{
+          return next(err);
+        }
+      }else{
+        if(res.reply){
+          res.reply('success');
+        }else{
+          res.status(200).send({message:"ok"});
+        }
+      }
     });
   });
 }
