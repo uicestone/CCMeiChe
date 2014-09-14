@@ -48,7 +48,7 @@ $(".button").on("touchend",function(){
   }
 
   $.post("/api/v1/recharge/" + price).done(function(result){
-    var paymentargs = result.paymentargs;
+    var payment_args = result.payment_args;
     var orderId = result.orderId;
     if(appConfig.env !== "product"){
       $.post("/wechat/notify",{
@@ -58,14 +58,13 @@ $(".button").on("touchend",function(){
         location.href = "/";
       });
     }else{
-      WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
+      WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){
         var message = res.err_msg;
         if(message == "get_brand_wcpay_request:ok"){
           popMessage("支付成功！");
           location.href = "/";
         }else{
           popMessage("支付失败，请重试");
-          self.emit("cancel",order,message);
         }
       });
     }
