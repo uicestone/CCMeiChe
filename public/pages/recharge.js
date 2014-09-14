@@ -27,14 +27,14 @@ $(".button").on("touchend",function(){
         orderId: orderId,
         type: 'recharge'
       },'json').done(function(){
-        location.href = "/";
+        location.href = "/wechat/?showwxpaytitle=1";
       });
     }else{
       WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){
         var message = res.err_msg;
         if(message == "get_brand_wcpay_request:ok"){
           popMessage("支付成功！");
-          location.href = "/";
+          location.href = "/wechat/?showwxpaytitle=1";
         }else{
           popMessage("支付失败，请重试");
         }

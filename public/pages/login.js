@@ -71,7 +71,7 @@ $(function(){
       access_token: window.access_token,
       openid: window.openid
     },'json').done(function(response, status, xhr){
-      location.href = "/";
+      location.href = "/wechat/?showwxpaytitle=1";
     }).fail(function(xhr){
       popMessage(xhr);
       btn_signin.prop("disabled",false);

@@ -11,7 +11,7 @@ var User = model.user;
 var Order = model.order;
 var moment = require('moment');
 var Notify = require('wechat-pay').middleware.Notify;
-
+var DEBUG = process.env.DEBUG;
 function updateInfo(openid,Model,api,callback){
   api.getUser(openid, function(err, result){
     if(err){return callback(err);}
@@ -151,7 +151,25 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
 var wechat_worker = require('./util/wechat').worker.api;
 var errortracking = require('./errortracking');
-function dealWashCar(orderId, req, res, next){
+function handleResponse(res){
+  return function(err){
+    if(err){
+      if(res.reply){
+        res.reply(err);
+      }else{
+        return res.status(500).send(err);
+      }
+    }else{
+      if(res.reply){
+        res.reply('success');
+      }else{
+        res.status(200).send({message:"ok"});
+      }
+    }
+  }
+}
+
+function dealWashCar(openid, orderId, req, res, next){
   var currentOrder;
   async.waterfall([
     function(done){
@@ -165,77 +183,67 @@ function dealWashCar(orderId, req, res, next){
       console.log("sendText",currentOrder.worker.openid,message);
       wechat_worker.sendText(currentOrder.worker.openid,message,done);
     }
-  ],function(err){
-    if(err){
-      if(res.reply){
-        res.reply(err);
-      }else{
-        return next(err);
-      }
-    }else{
-      if(res.reply){
-        res.reply('success');
-      }else{
-        res.status(200).send({message:"ok"});
-      }
-    }
-  });
+  ],handleResponse(res));
 }
 
-function dealRecharge(orderId, req, res, next){
-  console.log("orderId", orderId);
-  RechargeOrder.findById(orderId, function(err, order){
-    if(err || !order){
-      return next(err);
+function dealRecharge(openid, orderId, req, res, next){
+  console.log("dealing recharge", openid, orderId);
+  var condition = DEBUG ? {
+    phone: req.user.phone
+  } : {
+    openid: openid
+  };
+  async.waterfall([
+    function(done){
+      User.findOne(condition, done);
+    },
+    function(user, done){
+      console.log("user", user);
+      RechargeOrder.findById(orderId, function(err, order){
+        if(err || !order){
+          return done(err);
+        }
+
+        var recharge = order.recharge;
+        var userpromos = user.promo || [];
+
+        recharge.promo.forEach(function(promo){
+          var userpromo = userpromos.filter(function(item){
+            return item._id == promo._id;
+          })[0];
+          if(userpromo){
+            userpromo.amount += promo.amount;
+          }else{
+            promo.amount = promo.amount;
+            userpromos.push(promo);
+          }
+        });
+
+        console.log("yoyo", userpromos, recharge.actual_price);
+        done(null, {
+          credit: recharge.actual_price,
+          promo: userpromos
+        });
+      });
+    },
+    function(recharge, done){
+      User.update(condition, {
+        $inc:{
+          credit: recharge.credit
+        },
+        $set: {
+          promo: recharge.promo
+        }
+      },done);
     }
-    var recharge = order.recharge;
-    var user = req.user;
-    var userpromos = user.promo || [];
-
-    recharge.promo.forEach(function(promo){
-      var userpromo = userpromos.filter(function(item){
-        return item._id == promo._id;
-      })[0];
-      if(userpromo){
-        userpromo.amount += promo.amount;
-      }else{
-        promo.amount = promo.amount;
-        userpromos.push(promo);
-      }
-    });
-
-    User.update({
-      phone:user.phone
-    },{
-      $inc:{
-        credit: recharge.actual_price
-      },
-      $set: {
-        promo: userpromos
-      }
-    },function(err,user){
-      if(err){
-        if(res.reply){
-          res.reply(err);
-        }else{
-          return next(err);
-        }
-      }else{
-        if(res.reply){
-          res.reply('success');
-        }else{
-          res.status(200).send({message:"ok"});
-        }
-      }
-    });
-  });
+  ],handleResponse(res));
 }
 
-function recieveNotify(orderId, type, req, res, next){
+function recieveNotify(openid, orderId, type, req, res, next){
   if(type == "washcar"){
-    dealWashCar(orderId,req,res,next);
+    dealWashCar(openid, orderId,req,res,next);
   }else if(type == "recharge"){
-    dealRecharge(orderId,req,res,next);
+    dealRecharge(openid, orderId,req,res,next);
   }else{
     next({
       status: 400,
@@ -244,11 +252,11 @@ function recieveNotify(orderId, type, req, res, next){
   }
 }
 
-if(process.env.DEBUG){
+if(DEBUG){
 exports.notify = function(req,res,next){
   var order_id = req.body.orderId;
   var type = req.body.type;
-  recieveNotify(order_id, type, req, res, next);
+  recieveNotify(req.user.openid, order_id, type, req, res, next);
 };
 }else{
 
@@ -264,6 +272,6 @@ exports.notify = Notify({
   try{
    attach = JSON.parse(message.attach);
   }catch(e){}
-  recieveNotify(order_id, attach.type, req, res, next);
+  recieveNotify(openid, order_id, attach.type, req, res, next);
 });
 }
