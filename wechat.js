@@ -153,7 +153,7 @@ var wechat_worker = require('./util/wechat').worker.api;
 var errortracking = require('./errortracking');
 function handleResponse(res){
   return function(err){
-    if(err){
+    if(err && err.name !== "OrderProcessed"){
       if(res.reply){
         res.reply(err);
       }else{
@@ -161,8 +161,10 @@ function handleResponse(res){
       }
     }else{
       if(res.reply){
+        console.log('reply success');
         res.reply('success');
       }else{
+        console.log('normal reply');
         res.status(200).send({message:"ok"});
       }
     }
@@ -204,6 +206,12 @@ function dealRecharge(openid, orderId, req, res, next){
           return done(err);
         }
 
+        if(order.processed == true){
+          var error = new Error();
+          error.name = "OrderProcessed";
+          return done(error);
+        }
+
         var recharge = order.recharge;
         var userpromos = user.promo || [];
 
@@ -219,7 +227,6 @@ function dealRecharge(openid, orderId, req, res, next){
           }
         });
 
-        console.log("yoyo", userpromos, recharge.actual_price);
         done(null, {
           credit: recharge.actual_price,
           promo: userpromos
@@ -234,7 +241,14 @@ function dealRecharge(openid, orderId, req, res, next){
         $set: {
           promo: recharge.promo
         }
-      },done);
+      },function(err){
+        if(err){return done(err);}
+        RechargeOrder.updateById(orderId, {
+          $set:{
+            processed: true
+          }
+        },done);
+      });
     }
   ],handleResponse(res));
 }

@@ -14,7 +14,15 @@ db.bind('order', {
       if (err) {
         return callback(err);
       }
+
+      if(order.processed){
+        var error = new Error();
+        error.name = "OrderProcessed";
+        return callback(error);
+      }
+
       var now = new Date();
+      order.processed = true;
       order.status = "todo";
       order.order_time = new Date();
       self.updateById(id, order, function (err) {
