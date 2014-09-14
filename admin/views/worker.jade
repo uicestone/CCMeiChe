@@ -65,13 +65,13 @@ block scripts
           {
             data: null,
             render: function(data){
-              return data.monthly_order_count;
+              return data.monthly_order_count || 0;
             }
           },
           {
             data: null,
             render: function(data){
-              return data.totally_order_count;
+              return data.totally_order_count || 0;
             }
           },
           {
