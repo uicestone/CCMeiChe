@@ -99,7 +99,11 @@ body.openmenu {
   z-index: 20;
 }
 .swipe-container .swipe-inner {
-  background-color: #f39600;
+  background-image: -webkit-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -moz-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -o-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -ms-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: linear-gradient(215deg, #fab44a, #f39600);
 }
 .popselect {
   position: fixed;
