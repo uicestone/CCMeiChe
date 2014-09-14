@@ -264,6 +264,6 @@ exports.notify = Notify({
   try{
    attach = JSON.parse(message.attach);
   }catch(e){}
-  recieveNotify(order_id, attach.type, req, req, next);
+  recieveNotify(order_id, attach.type, req, res, next);
 });
 }

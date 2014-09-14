@@ -1,4 +1,5 @@
 var $ = require("zepto");
+var popMessage = require("./mod/popmessage");
 var current = null;
 $(".choices .row").on("touchend",function(){
   if(current){
@@ -14,7 +15,7 @@ $(".button").on("touchend",function(){
   var price = $(".row.active").attr("data-price");
 
   if(!price){
-    alert("请选择充值金额");
+    popMessage("请选择充值金额");
     return;
   }
 
@@ -32,7 +33,7 @@ $(".button").on("touchend",function(){
       WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
         var message = res.err_msg;
         if(message == "get_brand_wcpay_request:ok"){
-          alert("支付成功！");
+          popMessage("支付成功！");
           location.href = "/";
         }else{
           popMessage("支付失败，请重试");
