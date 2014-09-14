@@ -52,7 +52,11 @@ function calculatePriceAndCredit(data){
 function validatePromoCount(data){
   var service = data.service;
   var user = data.user;
-  var promo_count = data.promo_count;
+  var promo_count = +data.promo_count;
+  if(!promo_count){
+    return true;
+  }
+
   if(!user.promo){
     return false;
   }
