@@ -114,10 +114,10 @@ var serverStartedHandler = function(){
   console.log("server started at %d", port || config.port);
 }
 
-if(process.env.DEBUG){
+// if(process.env.DEBUG){
   http.createServer(app).listen(port,serverStartedHandler);
-}else{
-  https.createServer({
-    pfx: fs.readFileSync('server.pfx')
-  }, app).listen(port,serverStartedHandler);
-}
+// }else{
+//   https.createServer({
+//     pfx: fs.readFileSync('server.pfx')
+//   }, app).listen(port,serverStartedHandler);
+// }
