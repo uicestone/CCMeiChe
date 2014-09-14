@@ -39,11 +39,11 @@ body {
   width: 100%;
   color: #fff;
   background-color: #fab44a;
-  background-image: -webkit-linear-gradient(#fab44a, #f39600);
-  background-image: -moz-linear-gradient(#fab44a, #f39600);
-  background-image: -o-linear-gradient(#fab44a, #f39600);
-  background-image: -ms-linear-gradient(#fab44a, #f39600);
-  background-image: linear-gradient(#fab44a, #f39600);
+  background-image: -webkit-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -moz-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -o-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -ms-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: linear-gradient(215deg, #fab44a, #f39600);
   background-repeat: no-repeat;
 }
 body.openmenu {
@@ -394,9 +394,11 @@ body.openmenu {
 }
 .add-photo .camera img {
   display: block;
+  height: 105px;
+  width: auto;
 }
 .container {
-  width: 260px;
+  width: 82%;
   margin: 0 auto;
 }
 #home {
@@ -409,6 +411,12 @@ body.openmenu {
   line-height: 40px;
   text-align: center;
   font-size: 20px;
+}
+#home .go-wash-section {
+  padding-bottom: 15px;
+}
+#home .go-wash-section .button {
+  margin-bottom: 0;
 }
 #home .section h2 {
   padding: 15px 0;
@@ -694,7 +702,7 @@ body.openmenu {
   font-size: 14px;
   height: 25px;
   line-height: 25px;
-  padding-left: 30px;
+  padding: 7px 0 7px 30px;
   overflow: hidden;
 }
 .autocomplete .packup {
