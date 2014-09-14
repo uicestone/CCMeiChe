@@ -4,6 +4,7 @@ var config = require('config');
 var Payment = require('wechat-pay').Payment;
 var API = wechat.API;
 var OAuth = wechat.OAuth;
+var DEBUG = !!process.env.DEBUG;
 
 function getToken(store_key){
   return function(done){
@@ -51,20 +52,21 @@ var pay_request = function(req, order, callback){
     "trade_type": "JSAPI"
   };
 
-
-  var payment = new Payment({
-    partnerKey: config.wechat.user.partner_key,
-    appId: config.wechat.user.id,
-    mchId: config.wechat.user.mch_id,
-    notifyUrl: config.wechat.user.notify_url
-  });
-
-  return payment.getBrandWCPayRequestParams(package_data, callback);
+  if(DEBUG){
+    callback(null);
+  }else{
+    var payment = new Payment({
+      partnerKey: config.wechat.user.partner_key,
+      appId: config.wechat.user.id,
+      mchId: config.wechat.user.mch_id,
+      notifyUrl: config.wechat.user.notify_url
+    });
+    payment.getBrandWCPayRequestParams(package_data, callback);
+  }
 }
 
 var worker_api = new API(config.wechat.worker.id, config.wechat.worker.secret, getToken(worker_store_key), setToken(worker_store_key));
 var worker_oauth = new OAuth(config.wechat.worker.id, config.wechat.worker.secret);
-var DEBUG = !!process.env.DEBUG;
 
 function notifyProxy(service){
   return {

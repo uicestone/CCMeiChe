@@ -24,15 +24,17 @@ var _20 = "ccmeiche@0.1.0/pages/views/preorder.js";
 var _21 = "util@^1.0.4";
 var _22 = "events@^1.0.5";
 var _23 = "view-swipe@~0.1.4";
-var _24 = "hashstate@~0.1.0";
-var _25 = "zepto@^1.1.3";
+var _24 = "tpl@~0.2.1";
+var _25 = "hashstate@~0.1.0";
+var _26 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_8, [_21,_22,_23,_24,_25], function(require, exports, module, __filename, __dirname) {
+define(_8, [_21,_22,_23,_24,_25,_26], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
+var tpl = require("tpl");
 var hashState = require('hashstate')();
 var $ = require("zepto");
 
@@ -42,7 +44,7 @@ var i = 1;
 function SwipeModal(config){
   var self = this;
   var getData = this.getData = config.getData;
-  var validate = this.validate = config.validate;
+  var validate = this.validate = config.validate || function(){return true};
   var button = this.button = config.button;
   this.config = config;
   this.name = config.name || "swipe-modal-" + i;
@@ -78,12 +80,16 @@ function SwipeModal(config){
 }
 
 util.inherits(SwipeModal,events);
-
-SwipeModal.prototype.show = function(){
+SwipeModal.prototype.santitize = function(data){
+  return (this.config.santitize || function(v){return v}).bind(this)(data);
+}
+SwipeModal.prototype.show = function(data){
+  data = this.santitize(data);
   var self = this;
   var config = this.config;
   var submit = config.submit;
-  var elem = this.elem = $(config.template);
+  var cancel = config.cancel;
+  var elem = this.elem = $(tpl.render(config.template,data));
   elem.find(".submit").on("touchend",function(){
     var data = self.getData();
     var isValid = self.validate(data);
@@ -92,7 +98,7 @@ SwipeModal.prototype.show = function(){
       if(!submit){
         self.emit("submit",data);
       }else{
-        submit(data,function(result){
+        submit.bind(self)(data,function(result){
           self.emit("submit",result);
         });
       }
@@ -105,7 +111,7 @@ SwipeModal.prototype.show = function(){
 
   hashState.setHash(this.name);
   this.emit("show");
-  this._show();
+  this._show && this._show();
 }
 
 exports.create = function(config){

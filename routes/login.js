@@ -5,7 +5,7 @@ module.exports = function(req,res,next){
   var code = req.query.code;
   var redirect = req.query.redirect;
   if(!redirect || redirect == req.url){
-    redirect = "/";
+    redirect = "/wechat";
   }
 
   if(req.isAuthenticated()){

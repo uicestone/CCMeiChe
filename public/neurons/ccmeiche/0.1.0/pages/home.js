@@ -95,6 +95,7 @@ $(".cars .selected-cars").on("touchend", function(){
 
 
 var carsList = $(".cars ul");
+var addbtn = $(".cars .add");
 // 添加车辆
 panelAddCar.on("cancel",function(){
   $("body").css("position","static");
@@ -110,16 +111,13 @@ panelAddCar.on("submit",function(data){
   var html = tpl.render(template,data);
   var li = $(html);
   carsList.append(li);
-  addbtn.prop("disabled",false);
   if($(".cars-cell li").length >= 5){
     addbtn.remove();
   }
   calculate();
 });
-$(".cars .add").on("touchend", function(e){
+addbtn.on("touchend", function(e){
   e.preventDefault();
-  var addbtn = $(this);
-  addbtn.prop("disabled",true);
   $("body").css("position","fixed");
   panelAddCar.show();
   setTimeout(function(){
@@ -293,6 +291,7 @@ function initDefaultLocationList(){
       latlngInput.val(item.latlng);
       carparkInput.val(item.carpark);
       list.hide();
+      ac.stopWatch();
     });
   });
 
@@ -308,8 +307,10 @@ function initDefaultLocationList(){
 function popDefault(){
   var el = $(this);
   if(!el.val().trim() && user.addresses && user.addresses.length){
+    $(".location .autocomplete").hide();
     defaultLocationList.show();
   }else{
+    $(".location .autocomplete").show();
     defaultLocationList.hide();
   }
 }
@@ -322,45 +323,6 @@ addressInput.on("click",function(){
 
 })();
 
-var panelPreOrder;
-var goWashButton = $("#go-wash");
-panelPreOrder.on("confirm",function(order){
-  var self = this;
-  goWashButton.prop("disabled",false);
-  $.post("/api/v1/myorders/confirm",{
-    "orderId": order._id
-  },'json').done(function(paymentargs){
-    if(appConfig.env !== "product"){
-      $.post("/wechat/notify",{
-        orderId: order._id,
-        type: "washcar"
-      },'json').done(function(){
-        location.href = "/myorders";
-      }).fail(popMessage);
-    }else{
-      WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
-        var message = res.err_msg;
-        if(message == "get_brand_wcpay_request:ok"){
-          alert("支付成功！");
-          location.href = "/myorders";
-        }else{
-          popMessage("支付失败，请重试");
-          self.emit("cancel",order,message);
-        }
-      });
-    }
-  });
-}).on("cancel",function(order,reason){
-  $.post("/api/v1/myorders/cancel",{
-    "orderId": order._id,
-    "reason": reason
-  },'json').done(function(){
-    goWashButton.prop("disabled",false);
-  }).fail(function(xhr){
-    popMessage(xhr);
-    goWashButton.prop("disabled",false);
-  });
-});
 $("#go-wash").on("touchend", function(e){
   var el = $(this);
   if(el.prop("disabled")){
@@ -402,7 +364,8 @@ $("#go-wash").on("touchend", function(e){
   $.post("/api/v1/preorder",data,"json").done(function(order){
     panelPreOrder.show(order);
   }).fail(function(xhr){
-    popMessage(xhr);el.prop("disabled",false);
+    popMessage(xhr);
+    el.prop("disabled",false);
   });
 
 });
@@ -510,6 +473,9 @@ Autocomplete.prototype.show = function(){
   this.list.show();
 }
 
+Autocomplete.prototype.stopWatch = function(){
+  this.watcher.stop();
+}
 
 Autocomplete.prototype.hide = function(){
   this.list.hide();
@@ -746,7 +712,7 @@ var popMessage = require("../mod/popmessage");
 var swipeModal = require("../mod/swipe-modal");
 
 module.exports = swipeModal.create({
-  button: $("#go-wash"),
+  button: $(".add"),
   template:  require("../tpl/addcar.html"),
   show: function(){
     var elem = this.elem;
@@ -817,30 +783,71 @@ module.exports = swipeModal.create({
     map:mix({"../mod/uploader":_9,"../mod/autocomplete":_2,"../mod/popmessage":_5,"../mod/swipe-modal":_8,"../tpl/addcar.html":_14},globalMap)
 });
 
-define(_20, [_21,_25,_24,_22,_26,_17], function(require, exports, module, __filename, __dirname) {
+define(_20, [_21,_26,_8,_5,_17], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
-var template = require("../tpl/preorder.html");
-var events = require("events");
-var util = require("util");
-var tpl = require("tpl");
 var viewSwipe = require("view-swipe");
+var swipeModal = require("../mod/swipe-modal");
+var popMessage = require("../mod/popmessage");
 
-function PreOrder(){
+var preorderPanel = swipeModal.create({
+  button: $("#go-wash"),
+  template:  require("../tpl/preorder.html"),
+  santitize: function(order){
+    this.order = order;
+    var data = {};
+    for(var k in order){
+      data[k] = order[k];
+    }
+    data.time = formatTime(data);
+    return data;
+  },
+  getData: function(){
+    return this.order;
+  },
+  submit: function(order,callback){
+    popMessage("请求支付中");
 
-}
+    $.post("/api/v1/myorders/confirm",{
+      "orderId": order._id
+    },'json').done(function(paymentargs){
+      if(appConfig.env !== "product"){
+        $.post("/wechat/notify",{
+          orderId: order._id,
+          type: "washcar"
+        },'json').done(function(){
+          location.href = "/myorders";
+        }).fail(popMessage);
+      }else{
+        WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
+          var message = res.err_msg;
+          if(message == "get_brand_wcpay_request:ok"){
+            popMessage("支付成功，正在跳转");
+            location.href = "/myorders";
+          }else{
+            popMessage("支付失败，请重试");
+            self.emit("cancel",order,message);
+          }
+        });
+      }
+    });
+  }
+});
 
-formatTime({
-  preorder_time: new Date(),
-  estimated_finish_time: new Date(2014,9,7,6,50,2)
-})
+preorderPanel.on("cancel",function(reason){
+  reason = reason || "preorder_cancel";
+  var order = this.order;
+  $.post("/api/v1/myorders/cancel",{
+    "orderId": order._id,
+    "reason": reason
+  },'json').fail(popMessage);
+});
 
-util.inherits(PreOrder,events);
-
-function addZero(num){
-  return num < 10 ? ("0" + num) : num;
-}
+module.exports = preorderPanel;
 
 function formatTime(order){
+  function addZero(num){
+    return num < 10 ? ("0" + num) : num;
+  }
   var preorder_time = order.preorder_time;
   var estimated_finish_time = order.estimated_finish_time;
 
@@ -859,37 +866,9 @@ function formatTime(order){
   hours = hours ? ( addZero(hours) + "小时" ) : "";
   return hours + addZero(minutes) + "分钟" + addZero(seconds) + "秒";
 }
-
-
-
-PreOrder.prototype.show = function(order){
-  var data = {};
-  for(var k in order){
-    data[k] = order[k];
-  }
-  data.time = formatTime(data);
-  var html = tpl.render(template,data);
-  var elem = $(html);
-  var self = this;
-  viewSwipe.in(elem[0],"bottom");
-
-  elem.find(".submit").on("touchend", function(){
-    self.emit("confirm",order);
-    viewSwipe.out("bottom");
-  });
-
-  elem.find(".cancel").on("touchend", function(){
-    self.emit("cancel",order,"preorder_cancel");
-    viewSwipe.out("bottom");
-  });
-  return this;
-}
-
-
-module.exports = new PreOrder();
 }, {
     entries:entries,
-    map:mix({"../tpl/preorder.html":_17},globalMap)
+    map:mix({"../mod/swipe-modal":_8,"../mod/popmessage":_5,"../tpl/preorder.html":_17},globalMap)
 });
 
 define(_4, [_21], function(require, exports, module, __filename, __dirname) {
@@ -1052,10 +1031,11 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_8, [_24,_25,_26,_23,_21], function(require, exports, module, __filename, __dirname) {
+define(_8, [_24,_25,_26,_22,_23,_21], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
+var tpl = require("tpl");
 var hashState = require('hashstate')();
 var $ = require("zepto");
 
@@ -1065,7 +1045,7 @@ var i = 1;
 function SwipeModal(config){
   var self = this;
   var getData = this.getData = config.getData;
-  var validate = this.validate = config.validate;
+  var validate = this.validate = config.validate || function(){return true};
   var button = this.button = config.button;
   this.config = config;
   this.name = config.name || "swipe-modal-" + i;
@@ -1101,12 +1081,16 @@ function SwipeModal(config){
 }
 
 util.inherits(SwipeModal,events);
-
-SwipeModal.prototype.show = function(){
+SwipeModal.prototype.santitize = function(data){
+  return (this.config.santitize || function(v){return v}).bind(this)(data);
+}
+SwipeModal.prototype.show = function(data){
+  data = this.santitize(data);
   var self = this;
   var config = this.config;
   var submit = config.submit;
-  var elem = this.elem = $(config.template);
+  var cancel = config.cancel;
+  var elem = this.elem = $(tpl.render(config.template,data));
   elem.find(".submit").on("touchend",function(){
     var data = self.getData();
     var isValid = self.validate(data);
@@ -1115,7 +1099,7 @@ SwipeModal.prototype.show = function(){
       if(!submit){
         self.emit("submit",data);
       }else{
-        submit(data,function(result){
+        submit.bind(self)(data,function(result){
           self.emit("submit",result);
         });
       }
@@ -1128,7 +1112,7 @@ SwipeModal.prototype.show = function(){
 
   hashState.setHash(this.name);
   this.emit("show");
-  this._show();
+  this._show && this._show();
 }
 
 exports.create = function(config){

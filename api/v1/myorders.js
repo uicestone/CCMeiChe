@@ -89,16 +89,24 @@ exports.cancel = function(req,res,next){
       }
     },
     function(done){
-      WechatUserApi.sendText(user.openid, "您的订单已被取消，退款申请已经提交。", done);
+      if(reason == "order_cancel"){
+        WechatUserApi.sendText(user.openid, "您的订单已被取消，退款申请已经提交。", done);
+      }else{
+        done(null);
+      }
     },
     function(done){
-      Worker.getMessage(order.worker._id, {
-        action: "cancel",
-        order: order
-      }, function(err, message){
-        if(err){return done(err);}
-        WechatWorkerApi.sendText(order.worker.openid, message, done);
-      });
+      if(reason == "order_cancel"){
+        Worker.getMessage(order.worker._id, {
+          action: "cancel",
+          order: order
+        }, function(err, message){
+          if(err){return done(err);}
+          WechatWorkerApi.sendText(order.worker.openid, message, done);
+        });
+      }else{
+        done(null);
+      }
     }
   ],function(err){
     if(err){

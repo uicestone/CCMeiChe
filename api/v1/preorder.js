@@ -73,9 +73,7 @@ function findWorkers(latlng,callback){
     openid:{
       $ne: null
     },
-    last_intraction_time:{
-      $gt: new Date(+new Date() - 24 * 60 * 60 * 1000)
-    },
+    last_interaction_time:{$gt: new Date(+new Date() - 24 * 60 * 60 * 1000)},
     status:"on_duty",
     latlng:{
       $near: latlng

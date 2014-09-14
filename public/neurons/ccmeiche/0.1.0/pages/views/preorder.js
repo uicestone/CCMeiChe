@@ -22,37 +22,79 @@ var _18 = "ccmeiche@0.1.0/pages/views/addcar.js";
 var _19 = "ccmeiche@0.1.0/pages/views/finishorder.js";
 var _20 = "ccmeiche@0.1.0/pages/views/preorder.js";
 var _21 = "zepto@^1.1.3";
-var _22 = "events@^1.0.5";
+var _22 = "view-swipe@~0.1.4";
 var _23 = "util@^1.0.4";
-var _24 = "tpl@~0.2.1";
-var _25 = "view-swipe@~0.1.4";
+var _24 = "events@^1.0.5";
+var _25 = "tpl@~0.2.1";
+var _26 = "hashstate@~0.1.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_20, [_21,_22,_23,_24,_25,_17], function(require, exports, module, __filename, __dirname) {
+define(_20, [_21,_22,_8,_5,_17], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
-var template = require("../tpl/preorder.html");
-var events = require("events");
-var util = require("util");
-var tpl = require("tpl");
 var viewSwipe = require("view-swipe");
+var swipeModal = require("../mod/swipe-modal");
+var popMessage = require("../mod/popmessage");
 
-function PreOrder(){
+var preorderPanel = swipeModal.create({
+  button: $("#go-wash"),
+  template:  require("../tpl/preorder.html"),
+  santitize: function(order){
+    this.order = order;
+    var data = {};
+    for(var k in order){
+      data[k] = order[k];
+    }
+    data.time = formatTime(data);
+    return data;
+  },
+  getData: function(){
+    return this.order;
+  },
+  submit: function(order,callback){
+    popMessage("请求支付中");
 
-}
+    $.post("/api/v1/myorders/confirm",{
+      "orderId": order._id
+    },'json').done(function(paymentargs){
+      if(appConfig.env !== "product"){
+        $.post("/wechat/notify",{
+          orderId: order._id,
+          type: "washcar"
+        },'json').done(function(){
+          location.href = "/myorders";
+        }).fail(popMessage);
+      }else{
+        WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
+          var message = res.err_msg;
+          if(message == "get_brand_wcpay_request:ok"){
+            popMessage("支付成功，正在跳转");
+            location.href = "/myorders";
+          }else{
+            popMessage("支付失败，请重试");
+            self.emit("cancel",order,message);
+          }
+        });
+      }
+    });
+  }
+});
 
-formatTime({
-  preorder_time: new Date(),
-  estimated_finish_time: new Date(2014,9,7,6,50,2)
-})
+preorderPanel.on("cancel",function(reason){
+  reason = reason || "preorder_cancel";
+  var order = this.order;
+  $.post("/api/v1/myorders/cancel",{
+    "orderId": order._id,
+    "reason": reason
+  },'json').fail(popMessage);
+});
 
-util.inherits(PreOrder,events);
-
-function addZero(num){
-  return num < 10 ? ("0" + num) : num;
-}
+module.exports = preorderPanel;
 
 function formatTime(order){
+  function addZero(num){
+    return num < 10 ? ("0" + num) : num;
+  }
   var preorder_time = order.preorder_time;
   var estimated_finish_time = order.estimated_finish_time;
 
@@ -71,37 +113,168 @@ function formatTime(order){
   hours = hours ? ( addZero(hours) + "小时" ) : "";
   return hours + addZero(minutes) + "分钟" + addZero(seconds) + "秒";
 }
+}, {
+    entries:entries,
+    map:mix({"../mod/swipe-modal":_8,"../mod/popmessage":_5,"../tpl/preorder.html":_17},globalMap)
+});
+
+define(_8, [_23,_24,_22,_25,_26,_21], function(require, exports, module, __filename, __dirname) {
+var util = require("util");
+var events = require("events");
+var viewSwipe = require("view-swipe");
+var tpl = require("tpl");
+var hashState = require('hashstate')();
+var $ = require("zepto");
+
+var i = 1;
 
 
-
-PreOrder.prototype.show = function(order){
-  var data = {};
-  for(var k in order){
-    data[k] = order[k];
-  }
-  data.time = formatTime(data);
-  var html = tpl.render(template,data);
-  var elem = $(html);
+function SwipeModal(config){
   var self = this;
-  viewSwipe.in(elem[0],"bottom");
+  var getData = this.getData = config.getData;
+  var validate = this.validate = config.validate || function(){return true};
+  var button = this.button = config.button;
+  this.config = config;
+  this.name = config.name || "swipe-modal-" + i;
+  this._show = config.show;
+  i++;
 
-  elem.find(".submit").on("touchend", function(){
-    self.emit("confirm",order);
+  hashState.on('hashchange', function(e){
+    if(!e.newHash){
+      viewReturn();
+    }
+  });
+
+  function viewReturn(){
+    hashState.setHash("");
+    $("body").css("position","static");
     viewSwipe.out("bottom");
+    button.prop("disabled",false);
+  }
+
+  function viewCome(){
+    var elem = self.elem;
+    setTimeout(function(){
+      $("body").css("position","fixed");
+    },300);
+    viewSwipe.in(elem[0],"bottom");
+    button.prop("disabled",true);
+  }
+
+  self.on("show",viewCome);
+  self.on("submit",viewReturn);
+  self.on("cancel",viewReturn);
+
+}
+
+util.inherits(SwipeModal,events);
+SwipeModal.prototype.santitize = function(data){
+  return (this.config.santitize || function(v){return v}).bind(this)(data);
+}
+SwipeModal.prototype.show = function(data){
+  data = this.santitize(data);
+  var self = this;
+  var config = this.config;
+  var submit = config.submit;
+  var cancel = config.cancel;
+  var elem = this.elem = $(tpl.render(config.template,data));
+  elem.find(".submit").on("touchend",function(){
+    var data = self.getData();
+    var isValid = self.validate(data);
+
+    if(isValid){
+      if(!submit){
+        self.emit("submit",data);
+      }else{
+        submit.bind(self)(data,function(result){
+          self.emit("submit",result);
+        });
+      }
+    }
   });
 
   elem.find(".cancel").on("touchend", function(){
-    self.emit("cancel",order,"preorder_cancel");
-    viewSwipe.out("bottom");
+    self.emit("cancel");
   });
-  return this;
+
+  hashState.setHash(this.name);
+  this.emit("show");
+  this._show && this._show();
 }
 
-
-module.exports = new PreOrder();
+exports.create = function(config){
+  return new SwipeModal(config);
+}
 }, {
     entries:entries,
-    map:mix({"../tpl/preorder.html":_17},globalMap)
+    map:globalMap
+});
+
+define(_5, [_21], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message){
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+      json = {
+        error:{
+          message: message.responseText
+        }
+      }
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    zIndex: "30",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px"
+  });
+  pop.appendTo($("body"));
+  var width = pop.width()
+    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    //   return parseInt(pop.css(prop));
+    // }).reduce(function(a,b){
+    //   return a+b;
+    // },0);
+  pop.css({
+    "margin-left": - width / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
+    });
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },1500)
+}
+
+module.exports = popMessage
+}, {
+    entries:entries,
+    map:globalMap
 });
 
 define(_17, [], function(require, exports, module, __filename, __dirname) {

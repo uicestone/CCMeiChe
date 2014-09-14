@@ -86,6 +86,9 @@ Autocomplete.prototype.show = function(){
   this.list.show();
 }
 
+Autocomplete.prototype.stopWatch = function(){
+  this.watcher.stop();
+}
 
 Autocomplete.prototype.hide = function(){
   this.list.hide();

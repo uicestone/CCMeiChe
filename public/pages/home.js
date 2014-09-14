@@ -61,6 +61,7 @@ $(".cars .selected-cars").on("touchend", function(){
 
 
 var carsList = $(".cars ul");
+var addbtn = $(".cars .add");
 // 添加车辆
 panelAddCar.on("cancel",function(){
   $("body").css("position","static");
@@ -76,16 +77,13 @@ panelAddCar.on("submit",function(data){
   var html = tpl.render(template,data);
   var li = $(html);
   carsList.append(li);
-  addbtn.prop("disabled",false);
   if($(".cars-cell li").length >= 5){
     addbtn.remove();
   }
   calculate();
 });
-$(".cars .add").on("touchend", function(e){
+addbtn.on("touchend", function(e){
   e.preventDefault();
-  var addbtn = $(this);
-  addbtn.prop("disabled",true);
   $("body").css("position","fixed");
   panelAddCar.show();
   setTimeout(function(){
@@ -259,6 +257,7 @@ function initDefaultLocationList(){
       latlngInput.val(item.latlng);
       carparkInput.val(item.carpark);
       list.hide();
+      ac.stopWatch();
     });
   });
 
@@ -274,8 +273,10 @@ function initDefaultLocationList(){
 function popDefault(){
   var el = $(this);
   if(!el.val().trim() && user.addresses && user.addresses.length){
+    $(".location .autocomplete").hide();
     defaultLocationList.show();
   }else{
+    $(".location .autocomplete").show();
     defaultLocationList.hide();
   }
 }
@@ -288,45 +289,6 @@ addressInput.on("click",function(){
 
 })();
 
-var panelPreOrder;
-var goWashButton = $("#go-wash");
-panelPreOrder.on("confirm",function(order){
-  var self = this;
-  goWashButton.prop("disabled",false);
-  $.post("/api/v1/myorders/confirm",{
-    "orderId": order._id
-  },'json').done(function(paymentargs){
-    if(appConfig.env !== "product"){
-      $.post("/wechat/notify",{
-        orderId: order._id,
-        type: "washcar"
-      },'json').done(function(){
-        location.href = "/myorders";
-      }).fail(popMessage);
-    }else{
-      WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
-        var message = res.err_msg;
-        if(message == "get_brand_wcpay_request:ok"){
-          alert("支付成功！");
-          location.href = "/myorders";
-        }else{
-          popMessage("支付失败，请重试");
-          self.emit("cancel",order,message);
-        }
-      });
-    }
-  });
-}).on("cancel",function(order,reason){
-  $.post("/api/v1/myorders/cancel",{
-    "orderId": order._id,
-    "reason": reason
-  },'json').done(function(){
-    goWashButton.prop("disabled",false);
-  }).fail(function(xhr){
-    popMessage(xhr);
-    goWashButton.prop("disabled",false);
-  });
-});
 $("#go-wash").on("touchend", function(e){
   var el = $(this);
   if(el.prop("disabled")){
@@ -368,7 +330,8 @@ $("#go-wash").on("touchend", function(e){
   $.post("/api/v1/preorder",data,"json").done(function(order){
     panelPreOrder.show(order);
   }).fail(function(xhr){
-    popMessage(xhr);el.prop("disabled",false);
+    popMessage(xhr);
+    el.prop("disabled",false);
   });
 
 });
