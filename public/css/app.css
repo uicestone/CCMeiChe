@@ -65,10 +65,11 @@ body.openmenu {
 }
 .input {
   font-size: 14px;
-  border: 1px solid #ddd;
+  border: none;
   border-left: 2px solid #fab44a;
   text-align: right;
   padding-right: 18px;
+  padding-left: 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -114,10 +115,12 @@ body.openmenu {
   -webkit-background-size: 19px 19px;
   -moz-background-size: 19px 19px;
   background-size: 19px 19px;
-  right: 12px;
-  top: 12px;
-  width: 19px;
-  height: 19px;
+  right: 2px;
+  top: 3px;
+  width: 32px;
+  height: 32px;
+  background-repeat: no-repeat;
+  background-position: 7px 6px;
 }
 .popselect .choices {
   padding: 50px 14px 36px 14px;
@@ -383,6 +386,7 @@ body.openmenu {
 .add-photo .area .text .title {
   padding-top: 30px;
   font-size: 18px;
+  margin-bottom: 6px;
 }
 .add-photo .area .text .desc {
   font-size: 12px;
@@ -442,8 +446,8 @@ body.openmenu {
 #home .section .cars .selected-cars:after {
   clear: both;
 }
-#home .section .cars .selected-cars .cars-cell {
-  width: 200px;
+#home .section .cars .selected-cars .arrow-cell {
+  width: 60px;
 }
 #home .section .cars .selected-cars .arrow {
   position: relative;
@@ -645,12 +649,17 @@ body.openmenu {
 #home .payment {
   margin-top: 8px;
   padding: 3px;
-  background-color: #d9db50;
+  background-color: #dade3d;
 }
 #home .payment .inner {
   padding-top: 8px;
   border: 1px solid #fff;
   text-align: center;
+}
+#home .payment .inner .num {
+  font-size: 30px;
+  line-height: 1;
+  padding: 8px;
 }
 #home .address {
   margin-bottom: 17px;
