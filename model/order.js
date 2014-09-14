@@ -11,7 +11,7 @@ db.bind('order', {
   confirm: function (id, callback) {
     var self = this;
     self.findById(id, function (err, order) {
-      if (err) {
+      if (err || !order) {
         return callback(err);
       }
 
