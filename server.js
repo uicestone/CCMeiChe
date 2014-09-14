@@ -75,7 +75,7 @@ if(SERVICE == "worker"){
   app.get('/myorders/:orderid', assureUserLogin, require("./routes/myorders").detail);
   app.get('/myorders', assureUserLogin, require("./routes/myorders").list);
   app.get('/myinfos', assureUserLogin, require("./routes/myinfos"));
-  app.get('/recharge', assureUserLogin, require("./routes/recharge"));
+  app.get('/wechat/recharge', assureUserLogin, require("./routes/recharge"));
   app.get('/help', require("./routes/help"));
 }
 

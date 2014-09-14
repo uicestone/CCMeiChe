@@ -24,10 +24,6 @@ var worker_menu = {
         "key": "VIEW_HISTORY"
       },{
         "type": "view",
-        "name": "测试订单",
-        "url" : config.host.worker + "/orders/53f08240113a19650e000002"
-      },{
-        "type": "view",
         "name": "退出登录",
         "url" : config.host.worker + "/logout"
       }]
@@ -53,12 +49,12 @@ var user_menu = {
       {
         "name": "充值有礼",
         "type": "view",
-        "url": config.host.user + "/recharge"
+        "url": config.host.user + "/wechat/recharge?showwxpaytitle=1"
       },
       {
         "name": "服务礼包",
         "type": "view",
-        "url": config.host.user + "/packages"
+        "url": config.host.user + "/wechat/packages?showwxpaytitle=1"
       }
     ]
   },{
