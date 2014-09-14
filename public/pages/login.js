@@ -55,14 +55,14 @@ $(function(){
 
   ipt_vcode.on("keyup",setBtnGo).on("blur",setBtnGo);
 
-  btn_send_code.on("touchend",function(){
+  btn_send_code.on("click",function(){
     if(btn_send_code.prop("disabled")){return;}
     stepTwo();
     setBtnGo();
   });
 
 
-  btn_signin.on("touchend",function(){
+  btn_signin.on("click",function(){
     if(btn_signin.prop("disabled")){return;}
     btn_signin.prop("disabled",true);
     $.post("/api/v1/signin",{

@@ -39,7 +39,7 @@ var popMessage = require("../mod/popmessage");
 var swipeModal = require("../mod/swipe-modal");
 
 module.exports = swipeModal.create({
-  button: $(".add"),
+  button: $(".addcar"),
   template:  require("../tpl/addcar.html"),
   show: function(){
     var elem = this.elem;
@@ -472,7 +472,7 @@ SwipeModal.prototype.show = function(data){
   var submit = config.submit;
   var cancel = config.cancel;
   var elem = this.elem = $(tpl.render(config.template,data));
-  elem.find(".submit").on("touchend",function(){
+  elem.find(".submit").on("click",function(){
     var data = self.getData();
     var isValid = self.validate(data);
 
@@ -487,7 +487,7 @@ SwipeModal.prototype.show = function(data){
     }
   });
 
-  elem.find(".cancel").on("touchend", function(){
+  elem.find(".cancel").on("click", function(){
     self.emit("cancel");
   });
 

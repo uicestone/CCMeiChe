@@ -1,7 +1,8 @@
 #login-form .row .icon,
 .aside .icon,
 #home .address .location .icon,
-#addcar .row .icon {
+#addcar .row .icon,
+#myinfos .addaddress-panel .icon-location {
   width: 40px;
   height: 40px;
   top: 0px;
@@ -934,6 +935,29 @@ body.openmenu {
   padding: 5px;
   border-bottom: 1px solid #fab44a;
   color: #b6b6b6;
+}
+#myinfos .addaddress-panel {
+  background-color: #f0f0f0;
+}
+#myinfos .addaddress-panel .title {
+  text-align: center;
+  font-size: 19px;
+  padding: 14px 0 11px 0;
+}
+#myinfos .addaddress-panel .input-row {
+  position: relative;
+}
+#myinfos .addaddress-panel .icon-location {
+  background-position: 0 -160px;
+}
+#myinfos .addaddress-panel .input {
+  width: 100%;
+  border: 1px solid #f0f0f0;
+  border-left: 2px solid #fab44a;
+}
+#myinfos .addaddress-panel .button-wrap {
+  padding-top: 40px;
+  padding-bottom: 33px;
 }
 #order {
   background-image: none;

@@ -15,7 +15,7 @@ finishPanel.on("confirm",function(data){
 }).on("cancel",function(){
   $("#order").css("position","static");
 });
-button.on("touchend",function(e){
+button.on("click",function(e){
   if(posting){return;}
   if(button.hasClass("arrive")){
     posting = true;

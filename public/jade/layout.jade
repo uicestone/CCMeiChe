@@ -1,7 +1,7 @@
 - var sitename = "CC美车"
 mixin facade(name)
   if env == "product"
-    script(src="/dest/pages/#{name}.js")
+    script(src="/dest/pages/#{name}.js?t=#{config.start_time}")
   script.
     facade({
       entry: "ccmeiche@#{package_version}/pages/#{name}.js"
@@ -12,14 +12,14 @@ html
   head
     title= title || sitename
 
-    script(src="/neurons/neuron/7.0.0/neuron.js")
+    script(src="/neurons/neuron/7.0.0/neuron.js?t=#{config.start_time}")
     if env !== "product"
-      script(src="/neurons/config.js")
+      script(src="/neurons/config.js?t=#{config.start_time}")
       script.
           neuron.config({
             path:"/neurons"
           });
-    link(href="/css/app.css", rel="stylesheet")
+    link(href="/css/app.css?t=#{config.start_time}", rel="stylesheet")
     meta(name="format-detection" content="telephone=no")
     meta(name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, initial-scale=1")
     meta(name="apple-mobile-web-app-status-bar-style", content="black")

@@ -43,11 +43,11 @@ var panelAddCar = require("./views/addcar");
 var panelPreOrder = require("./views/preorder");
 // 菜单展开收起
 (function(){
-  $(".menu").on("touchend",function(){
+  $(".menu").on("click",function(){
     $("body").css("position","fixed");
     $("body").addClass("openmenu");
   });
-  $('.overlay').on("touchend",function(){
+  $('.overlay').on("click",function(){
     $("body").css("position","static");
     $("body").removeClass("openmenu");
   });
@@ -89,7 +89,7 @@ carsSelect.on("close",function(){
   $("body").css("position","static");
 });
 // 选择车辆
-$(".cars .selected-cars").on("touchend", function(){
+$(".cars .selected-cars").on("click", function(){
   carsSelect.open();
 });
 
@@ -116,7 +116,7 @@ panelAddCar.on("submit",function(data){
   }
   calculate();
 });
-addbtn.on("touchend", function(e){
+addbtn.on("click", function(e){
   e.preventDefault();
   $("body").css("position","fixed");
   panelAddCar.show();
@@ -158,7 +158,7 @@ var currentService = window.services[0];
     $("body").css("position","static");
   });
 
-  $(".services").on('touchend',function(){
+  $(".services").on('click',function(){
     serviceSelect.open();
   });
 })();
@@ -192,7 +192,7 @@ $(".section.promo select").on("change",function(){
 });
 
 // 使用积分
-$(".credit .use").on("touchend",function(){
+$(".credit .use").on("click",function(){
   var el = $(this);
   var text = el.find(".text");
   if(el.hasClass("active")){
@@ -323,7 +323,7 @@ addressInput.on("click",function(){
 
 })();
 
-$("#go-wash").on("touchend", function(e){
+$("#go-wash").on("click", function(e){
   var el = $(this);
   if(el.prop("disabled")){
     e.preventDefault();
@@ -371,7 +371,7 @@ $("#go-wash").on("touchend", function(e){
 });
 
 if(!user.cars.length){
-  $(".cars .add").trigger("touchend");
+  $(".cars .add").trigger("click");
 }else{
   $(".blank").hide();
   $("body").css("position","static");
@@ -596,7 +596,7 @@ PopSelect.prototype.render = function() {
 PopSelect.prototype.bind = function(){
   var self = this;
   var container = this.container;
-  container.find(".submit").on("touchend",function(){
+  container.find(".submit").on("click",function(){
     var result = container.find(".active").map(function(i,el){
       return $(el).data("data");
     });
@@ -605,7 +605,7 @@ PopSelect.prototype.bind = function(){
     self.close();
   });
 
-  container.find(".close").on("touchend",function(){
+  container.find(".close").on("click",function(){
     self.close();
   });
 }
@@ -712,7 +712,7 @@ var popMessage = require("../mod/popmessage");
 var swipeModal = require("../mod/swipe-modal");
 
 module.exports = swipeModal.create({
-  button: $(".add"),
+  button: $(".addcar"),
   template:  require("../tpl/addcar.html"),
   show: function(){
     var elem = this.elem;
@@ -878,7 +878,7 @@ function MultiSelect(container,itemSelector){
   container = $(container);
   var items = this.items = container.find(itemSelector);
   items.each(function(i,item){
-    $(item).on("touchend",function(){
+    $(item).on("click",function(){
       $(this).toggleClass("active");
     })
   });
@@ -1091,7 +1091,7 @@ SwipeModal.prototype.show = function(data){
   var submit = config.submit;
   var cancel = config.cancel;
   var elem = this.elem = $(tpl.render(config.template,data));
-  elem.find(".submit").on("touchend",function(){
+  elem.find(".submit").on("click",function(){
     var data = self.getData();
     var isValid = self.validate(data);
 
@@ -1106,7 +1106,7 @@ SwipeModal.prototype.show = function(data){
     }
   });
 
-  elem.find(".cancel").on("touchend", function(){
+  elem.find(".cancel").on("click", function(){
     self.emit("cancel");
   });
 

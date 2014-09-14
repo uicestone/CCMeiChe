@@ -71,11 +71,11 @@ FinishOrder.prototype.show = function(data){
   });
 
 
-  elem.find(".submit").on("touchend", function(){
+  elem.find(".submit").on("click", function(){
     self.confirm();
   });
 
-  elem.find(".cancel").on("touchend", function(){
+  elem.find(".cancel").on("click", function(){
     self.emit("cancel");
     viewSwipe.out("bottom");
   });

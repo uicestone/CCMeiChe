@@ -9,6 +9,11 @@ var passport = require('passport');
 var config = require('config');
 var wechat = require('wechat');
 var uuid = require('uuid').v1;
+var https = require('https');
+var http = require('http');
+var fs = require('fs');
+
+var startTime = +new Date();
 require('colors');
 var app = express();
 
@@ -50,8 +55,10 @@ app.use(passport.session());
 app.use(function(req,res,next){
   res.locals.config = {
     qiniu_host: config.qiniu.host,
-    service: SERVICE
+    service: SERVICE,
+    start_time: startTime
   };
+  console.log(startTime);
   res.locals.env = process.env.NODE_ENV;
   res.locals.package_version = require('./public/cortex.json').version;
   next();
@@ -103,6 +110,14 @@ if(SERVICE == "worker"){
   port = process.env.PORT || config.port.user;
 }
 
-app.listen(port, function () {
+var serverStartedHandler = function(){
   console.log("server started at %d", port || config.port);
-});
+}
+
+if(process.env.DEBUG){
+  http.createServer(app).listen(port,serverStartedHandler);
+}else{
+  https.createServer({
+    pfx: fs.readFileSync('server.pfx')
+  }, app).listen(port,serverStartedHandler);
+}

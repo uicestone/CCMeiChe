@@ -5,7 +5,7 @@ var popMessage = require("../mod/popmessage");
 var swipeModal = require("../mod/swipe-modal");
 
 module.exports = swipeModal.create({
-  button: $(".add"),
+  button: $(".addcar"),
   template:  require("../tpl/addcar.html"),
   show: function(){
     var elem = this.elem;

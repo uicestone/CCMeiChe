@@ -58,7 +58,7 @@ PopSelect.prototype.render = function() {
 PopSelect.prototype.bind = function(){
   var self = this;
   var container = this.container;
-  container.find(".submit").on("touchend",function(){
+  container.find(".submit").on("click",function(){
     var result = container.find(".active").map(function(i,el){
       return $(el).data("data");
     });
@@ -67,7 +67,7 @@ PopSelect.prototype.bind = function(){
     self.close();
   });
 
-  container.find(".close").on("touchend",function(){
+  container.find(".close").on("click",function(){
     self.close();
   });
 }

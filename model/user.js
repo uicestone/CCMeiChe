@@ -24,15 +24,24 @@ db.bind('user',{
       }
     }, callback);
   },
-  storeAddress: function(phone, order, callback){
+  modifyAddress: function(phone, index, data, callback){
+    var updateDoc = {};
+    updateDoc["addresses." + index] = data;
+    User.update({
+      phone: phone
+    }, {
+      $set: updateDoc
+    }, callback);
+  },
+  storeAddress: function(phone, data, callback){
     User.update({
       phone: phone
     }, {
       $addToSet: {
         addresses : {
-          address: order.address,
-          latlng: order.latlng,
-          carpark: order.carpark
+          address: data.address,
+          latlng: data.latlng,
+          carpark: data.carpark
         }
       }
     }, callback);

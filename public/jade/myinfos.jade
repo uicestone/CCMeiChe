@@ -34,10 +34,25 @@ block content
   .section
     h2.h2 地址
     for address,i in user.addresses || []
-      .row #{address}
+      .row(data-addr="!{address}")
+        .addr
+          .span.address #{address.address}
+          .span.carpark #{address.carpark}
+        .func 修改
     .add.addaddress
       i.icon-add
       | 添加地址
+    .addaddress-panel
+      h2.title 添加地址信息
+      .form-group
+        input#input-latlng(type="hidden")
+        .input-row
+          i.icon-location
+          input.input#input-address(placeholder="地址",data-pattern="/api/v1/location/suggestion/{q}")
+        .input-row
+          input.input#input-carpark(placeholder="具体位置")
+      .button-wrap
+        .button#save-address 保存地址
 
   .button 保存
 

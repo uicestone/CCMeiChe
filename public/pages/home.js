@@ -9,11 +9,11 @@ var panelAddCar = require("./views/addcar");
 var panelPreOrder = require("./views/preorder");
 // 菜单展开收起
 (function(){
-  $(".menu").on("touchend",function(){
+  $(".menu").on("click",function(){
     $("body").css("position","fixed");
     $("body").addClass("openmenu");
   });
-  $('.overlay').on("touchend",function(){
+  $('.overlay').on("click",function(){
     $("body").css("position","static");
     $("body").removeClass("openmenu");
   });
@@ -55,7 +55,7 @@ carsSelect.on("close",function(){
   $("body").css("position","static");
 });
 // 选择车辆
-$(".cars .selected-cars").on("touchend", function(){
+$(".cars .selected-cars").on("click", function(){
   carsSelect.open();
 });
 
@@ -82,7 +82,7 @@ panelAddCar.on("submit",function(data){
   }
   calculate();
 });
-addbtn.on("touchend", function(e){
+addbtn.on("click", function(e){
   e.preventDefault();
   $("body").css("position","fixed");
   panelAddCar.show();
@@ -124,7 +124,7 @@ var currentService = window.services[0];
     $("body").css("position","static");
   });
 
-  $(".services").on('touchend',function(){
+  $(".services").on('click',function(){
     serviceSelect.open();
   });
 })();
@@ -158,7 +158,7 @@ $(".section.promo select").on("change",function(){
 });
 
 // 使用积分
-$(".credit .use").on("touchend",function(){
+$(".credit .use").on("click",function(){
   var el = $(this);
   var text = el.find(".text");
   if(el.hasClass("active")){
@@ -289,7 +289,7 @@ addressInput.on("click",function(){
 
 })();
 
-$("#go-wash").on("touchend", function(e){
+$("#go-wash").on("click", function(e){
   var el = $(this);
   if(el.prop("disabled")){
     e.preventDefault();
@@ -337,7 +337,7 @@ $("#go-wash").on("touchend", function(e){
 });
 
 if(!user.cars.length){
-  $(".cars .add").trigger("touchend");
+  $(".cars .add").trigger("click");
 }else{
   $(".blank").hide();
   $("body").css("position","static");

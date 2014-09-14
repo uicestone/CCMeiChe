@@ -4,7 +4,7 @@ function MultiSelect(container,itemSelector){
   container = $(container);
   var items = this.items = container.find(itemSelector);
   items.each(function(i,item){
-    $(item).on("touchend",function(){
+    $(item).on("click",function(){
       $(this).toggleClass("active");
     })
   });

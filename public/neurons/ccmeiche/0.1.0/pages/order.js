@@ -48,7 +48,7 @@ finishPanel.on("confirm",function(data){
 }).on("cancel",function(){
   $("#order").css("position","static");
 });
-button.on("touchend",function(e){
+button.on("click",function(e){
   if(posting){return;}
   if(button.hasClass("arrive")){
     posting = true;
@@ -208,11 +208,11 @@ FinishOrder.prototype.show = function(data){
   });
 
 
-  elem.find(".submit").on("touchend", function(){
+  elem.find(".submit").on("click", function(){
     self.confirm();
   });
 
-  elem.find(".cancel").on("touchend", function(){
+  elem.find(".cancel").on("click", function(){
     self.emit("cancel");
     viewSwipe.out("bottom");
   });
@@ -438,7 +438,7 @@ function MultiSelect(container,itemSelector){
   container = $(container);
   var items = this.items = container.find(itemSelector);
   items.each(function(i,item){
-    $(item).on("touchend",function(){
+    $(item).on("click",function(){
       $(this).toggleClass("active");
     })
   });
