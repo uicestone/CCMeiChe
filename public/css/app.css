@@ -559,15 +559,22 @@ body.openmenu {
 #home .services li .price,
 .service-select .choices .item .price {
   float: right;
-  padding-right: 25px;
+  padding-right: 32px;
   line-height: 42px;
   height: 42px;
 }
 #home .services li .arrow,
 .service-select .choices .item .arrow {
+  background-image: url("../img/arrow-right.png");
+  width: 10px;
+  height: 18px;
   position: absolute;
   right: 20px;
-  top: 12px;
+  top: 15px;
+  -webkit-background-size: 10px 18px;
+  -moz-background-size: 10px 18px;
+  background-size: 10px 18px;
+  background-repeat: no-repeat;
 }
 #home .services li .promo,
 .service-select .choices .item .promo {
