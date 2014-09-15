@@ -1126,6 +1126,11 @@ body.openmenu {
 #order-result .breakage ellipse {
   stroke: #fff;
 }
+#order-result .breakage svg {
+  position: relative;
+  top: -1px;
+  left: -1px;
+}
 #order-result .breakage.active {
   background-color: #c70462;
   border: 1px solid #c70462;
