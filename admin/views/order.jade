@@ -24,32 +24,36 @@ block scripts
           "ajax": "/api/order" + location.search,
           "columns": [
             {
-              "data": "service.title"
-            },
-            {
               "data": null,
               render: function(data){
-                return (data.user && data.user.wechat_info && data.user.wechat_info.nickname)
-                  ? data.user.wechat_info.nickname : '--';
+                return (data.service && data.service.title) ? data.service.title : "--";
               }
             },
             {
               "data": null,
               render: function(data){
-                return (data.worker && data.worker.wechat_info && data.worker.wechat_info.nickname)
-                  ? data.worker.nickname : '--';
+                return data.user_name || '--';
               }
             },
             {
               "data": null,
               render: function(data){
-                return data.cars.map(function(car){
+                return data.worker_name || '--';
+              }
+            },
+            {
+              "data": null,
+              render: function(data){
+                return data.cars ? data.cars.map(function(car){
                   return car.type + car.number
-                }).join(",")
+                }).join(",") : "--";
               }
             },
             {
-              "data": "address"
+              "data": null,
+              "render": function(data){
+                return data.address || "--";
+              }
             },
             {
               "data": null,

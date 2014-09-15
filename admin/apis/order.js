@@ -1,5 +1,9 @@
 var Order = require('../../model').order;
+var User = require('../../model').user;
+var Worker = require('../../model').worker;
 var _ = require('underscore');
+var async = require('async');
+
 module.exports = function(req,res,next){
   var query = req.query;
 
@@ -18,14 +22,33 @@ module.exports = function(req,res,next){
       return next(err);
     }
 
-    orders = orders.map(function(order){
-      order.worker = _.pick(order.worker, 'name');
-      order.user = _.pick(order.user,'wechat_info');
-      order = _.omit(order,'cancelled_former_order');
-      return order;
-    });
-    res.send({
-      data: orders
+    async.map(orders, function(order, done){
+
+      async.parallel([
+        function(done){
+          User.findById(order.user._id,function(err, user){
+            order.user_name = user.wechat_info && user.wechat_info.nickname;
+            done(err);
+          });
+        },
+        function(done){
+          Worker.findById(order.worker._id,function(err, worker){
+            order.worker_name = worker.name
+              ? worker.name
+              : ( worker.wechat_info && worker.wechat_info.nickname );
+            done(err);
+          });
+        }
+      ], function(){
+        order = _.omit(order,'cancelled_former_order','user','worker');
+        done(null,order);
+      })
+
+    }, function(err, orders){
+
+      res.send({
+        data: orders
+      });
     });
   });
 }
