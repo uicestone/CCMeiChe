@@ -3,6 +3,7 @@ extends layout
 block main
     div
       a.btn.btn-primary#button-add(style="margin-right:10px") 新增车工
+      a.btn.btn-primary#button-clear(style="margin-right:10px") 清空
       //- a.btn.btn-primary#button-remove 删除选中车工
     table#worker-table.table.table-striped.table-bordered.table-hover
       thead
@@ -124,3 +125,25 @@ block scripts
 
         return false;
       });
+
+      $("#button-clear").click(function(){
+        var sure = confirm("确定要清空数据么");
+        if(sure){
+          $.post("/api/worker/clear").done(function(){
+            location.reload();
+          });
+        }
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+

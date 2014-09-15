@@ -3,8 +3,23 @@ var Order = require('../../model').order;
 var async = require('async');
 var _ = require('underscore');
 
+exports.clear = function(req,res,next){
+  if(!req.isAuthenticated()){
+    return res.send(403,{
+      code: 403,
+      message: "denied"
+    });
+  }
+  User.remove(function(err){
+    if(err){
+      return next(err)
+    }else{
+      res.status(200).send({message:"ok"});
+    }
+  });
+}
 
-module.exports = function(req,res,next){
+exports.list = function(req,res,next){
   async.waterfall([
 
     function(done){
@@ -36,6 +51,4 @@ module.exports = function(req,res,next){
       data: users
     });
   });
-
-
 }

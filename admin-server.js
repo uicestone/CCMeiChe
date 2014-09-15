@@ -51,8 +51,11 @@ app.get('/user', routes.user);
 app.get('/order', routes.order);
 app.get('/api/worker', apis.worker.list);
 app.post('/api/worker', apis.worker.create);
-app.get('/api/user', apis.user);
-app.get('/api/order', apis.order);
+app.post('/api/worker/clear', apis.worker.clear);
+app.get('/api/user', apis.user.list);
+app.post('/api/user/clear', apis.user.clear);
+app.get('/api/order', apis.order.list);
+app.post('/api/order/clear', apis.order.clear);
 
 app.get('/logout', routes.logout);
 app.get('/login', routes.login);

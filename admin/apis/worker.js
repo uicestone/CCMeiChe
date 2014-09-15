@@ -4,6 +4,23 @@ var moment = require('moment');
 var async = require('async');
 var _ = require('underscore');
 
+exports.clear = function(req,res,next){
+  if(!req.isAuthenticated()){
+    return res.send(403,{
+      code: 403,
+      message: "denied"
+    });
+  }
+  Worker.remove(function(err){
+    if(err){
+      return next(err)
+    }else{
+      res.status(200).send({message:"ok"});
+    }
+  });
+}
+
+
 exports.list = function(req,res,next){
   async.waterfall([
     function(done){

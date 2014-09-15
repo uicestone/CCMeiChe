@@ -1,6 +1,8 @@
 extends layout
 
 block main
+  div
+    a.btn.btn-primary#button-clear(style="margin-right:10px") 清空
   table#order-table.table.table-striped.table-bordered.table-hover
     thead
       tr
@@ -93,4 +95,12 @@ block scripts
         });
       });
 
+      $("#button-clear").click(function(){
+        var sure = confirm("确定要清空数据么");
+        if(sure){
+          $.post("/api/order/clear").done(function(){
+            location.reload();
+          });
+        }
+      });
 
