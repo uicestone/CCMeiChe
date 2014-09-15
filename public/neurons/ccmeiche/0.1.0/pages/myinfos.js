@@ -41,18 +41,22 @@ var carsList = $(".cars ul");
 var popMessage = require("./mod/popmessage");
 
 panelAddCar.on("submit",function(data){
-  var template = "<li class='row'><div class='label'>车型</div>"
-    +"<div class='text cartype'>"
-      +"<p class='type'>@{it.type}</p>"
-      +"<p class='number'>@{it.number}</p>"
-    +"</div></li>";
+  var template = "<div class='text'>"
+      +"<p class='title'>@{it.type} @{it.color}</p>"
+      +"<p class='desc'>@{it.number}</p>"
+    +"</div>"
+    +"<div class='edit'>修改</div>";
   var html = tpl.render(template,data);
-  var li = $(html);
-  li.on("click", function(){
-    $(this).toggleClass("active");
-  });
-  li.data("car", data);
-  carsList.append(li);
+  var content = $(html);
+  var li;
+  if("index" in data){
+    li = $(".cars li:eq(" + data.index + ")");
+    delete data.index;
+    li.attr('data',JSON.stringify(data)).html(content);
+  }else{
+    li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(content);
+    carsList.append(li);
+  }
 });
 
 var addbtn = $(".addcar");
@@ -62,6 +66,13 @@ addbtn.on("click", function(){
     return;
   }
   panelAddCar.show();
+});
+
+$(".cars").on("click", ".edit", function(){
+  var data = $(this).parent().attr('data');
+  data = JSON.parse(data);
+  data.index = $(".cars .edit").index(this);
+  panelAddCar.show(data);
 });
 
 var addaddress = $(".addaddress");
@@ -121,8 +132,9 @@ var swipeModal = require("../mod/swipe-modal");
 module.exports = swipeModal.create({
   button: $(".addcar"),
   template:  require("../tpl/addcar.html"),
-  show: function(){
+  show: function(data){
     var elem = this.elem;
+
     uploader.init(".add-photo",{
       type:"single",
       prefix:"userpic/"
@@ -148,10 +160,30 @@ module.exports = swipeModal.create({
     if(!user.cars.length){
       elem.find(".cancel").hide();
     }
+
+    if(data){
+      if(data.pic){
+        var img = $("<img />").attr('src',
+          appConfig.qiniu_host
+          + data.pic
+          + "?imageView/1/w/155/h/105"
+        );
+        var result_elem = elem.find(".result");
+        elem.find(".text").hide();
+        result_elem.attr("data-key", data.pic);
+        result_elem.empty().append(img);
+      }
+      elem.find(".type .input").val(data.type||"");
+      elem.find(".number .input").val(data.number||"");
+      elem.find(".color .input").val(data.color||"");
+      elem.find(".comment .input").val(data.comment||"");
+      elem.data("index",data.index);
+    }
   },
   getData: function(){
     var elem = this.elem;
     return {
+      index: elem.data("index"),
       pic: elem.find(".result").attr("data-key"),
       type: elem.find(".type input").val(),
       color: elem.find(".color input").val(),
@@ -573,7 +605,7 @@ SwipeModal.prototype.show = function(data){
 
   hashState.setHash(this.name);
   this.emit("show");
-  this._show && this._show();
+  this._show && this._show(data);
 }
 
 exports.create = function(config){

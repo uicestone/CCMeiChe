@@ -23,8 +23,8 @@ exports.post = function (req, res, next) {
   var type = req.body.type;
   var color = req.body.color;
   var comment = req.body.comment;
+  var index = req.body.index;
   var phone = req.user.phone;
-  var action = req.body.action;
   var car = {
     pic: pic,
     number: number,
@@ -37,34 +37,42 @@ exports.post = function (req, res, next) {
     return res.status(400).send("bad request");
   }
 
-
-  User.findOne({
-    phone: phone,
-    "cars.number": number
-  }, function (err, user) {
-    if (err) {
-      return next(err);
-    }
-
-    if (user) {
-      return res.status(400).send("您已添加过该车牌");
-    }
-
-    if(req.user.cars && req.user.cars.length >= 5){
-      return res.status(400).send("无法添加更多车辆");
-    }
-
-    if(!req.user.cars || !req.user.cars.length){
-      car["default"] = true;
-    }
-
-    User.addCar(phone, car, function (err) {
-      if (err) {
+  if (index){
+    User.modifyCar(phone, index, car, function(err){
+      if(err){
         return next(err);
       }
       res.status(200).send({message:"ok"});
     });
-  });
+  }else{
+    User.findOne({
+      phone: phone,
+      "cars.number": number
+    }, function (err, user) {
+      if (err) {
+        return next(err);
+      }
+
+      if (user) {
+        return res.status(400).send("您已添加过该车牌");
+      }
+
+      if(req.user.cars && req.user.cars.length >= 5){
+        return res.status(400).send("无法添加更多车辆");
+      }
+
+      if(!req.user.cars || !req.user.cars.length){
+        car["default"] = true;
+      }
+
+      User.addCar(phone, car, function (err) {
+        if (err) {
+          return next(err);
+        }
+        res.status(200).send({message:"ok"});
+      });
+    });
+  }
 
 
 };

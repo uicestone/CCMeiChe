@@ -714,8 +714,9 @@ var swipeModal = require("../mod/swipe-modal");
 module.exports = swipeModal.create({
   button: $(".addcar"),
   template:  require("../tpl/addcar.html"),
-  show: function(){
+  show: function(data){
     var elem = this.elem;
+
     uploader.init(".add-photo",{
       type:"single",
       prefix:"userpic/"
@@ -741,10 +742,30 @@ module.exports = swipeModal.create({
     if(!user.cars.length){
       elem.find(".cancel").hide();
     }
+
+    if(data){
+      if(data.pic){
+        var img = $("<img />").attr('src',
+          appConfig.qiniu_host
+          + data.pic
+          + "?imageView/1/w/155/h/105"
+        );
+        var result_elem = elem.find(".result");
+        elem.find(".text").hide();
+        result_elem.attr("data-key", data.pic);
+        result_elem.empty().append(img);
+      }
+      elem.find(".type .input").val(data.type||"");
+      elem.find(".number .input").val(data.number||"");
+      elem.find(".color .input").val(data.color||"");
+      elem.find(".comment .input").val(data.comment||"");
+      elem.data("index",data.index);
+    }
   },
   getData: function(){
     var elem = this.elem;
     return {
+      index: elem.data("index"),
       pic: elem.find(".result").attr("data-key"),
       type: elem.find(".type input").val(),
       color: elem.find(".color input").val(),
@@ -1112,7 +1133,7 @@ SwipeModal.prototype.show = function(data){
 
   hashState.setHash(this.name);
   this.emit("show");
-  this._show && this._show();
+  this._show && this._show(data);
 }
 
 exports.create = function(config){

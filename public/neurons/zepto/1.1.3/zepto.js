@@ -9,7 +9,7 @@ module.exports = require('./dist/zepto');
 
 }, {
     main:true,
-    map:mix(globalMap,{"./dist/zepto":_0})
+    map:mix({"./dist/zepto":_0},globalMap)
 });
 
 define(_0, [], function(require, exports, module, __filename, __dirname) {

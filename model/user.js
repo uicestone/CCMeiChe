@@ -1,5 +1,6 @@
 var Model = require('./base');
 var User =  Model("user");
+var _ = require('underscore');
 var db = require("../db");
 
 module.exports = User;
@@ -23,6 +24,20 @@ db.bind('user',{
         cars: car
       }
     }, callback);
+  },
+  modifyCar: function(phone, index, data, callback){
+    var updateDoc = {};
+    User.findByPhone(phone, function(err, user){
+      if(err || !user){
+        return callback(err);
+      }
+      updateDoc["cars." + index] = _.extend(user.cars[index], data);
+      User.update({
+        phone: phone
+      }, {
+        $set: updateDoc
+      }, callback);
+    });
   },
   modifyAddress: function(phone, index, data, callback){
     var updateDoc = {};

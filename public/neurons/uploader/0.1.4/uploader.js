@@ -306,7 +306,7 @@ Uploader.prototype._successCount = function(){
 
 Uploader.prototype.reachMax = function(){
     var maxItems = this.get("maxItems");
-    return maxItems > 0 && maxItems <= this._successCount();
+    return maxItems <= this._successCount();
 }
 
 /**
@@ -354,7 +354,7 @@ Uploader.prototype._getType = function(){
 
 }, {
     main:true,
-    map:mix(globalMap,{"./queue":_5,"./errors":_6,"./adapter/ajax":_7,"./adapter/flash":_8,"./theme/default":_9})
+    map:mix({"./queue":_5,"./errors":_6,"./adapter/ajax":_7,"./adapter/flash":_8,"./theme/default":_9},globalMap)
 });
 
 define(_5, [_0,_1,_4,_3,_10], function(require, exports, module, __filename, __dirname) {
@@ -452,7 +452,7 @@ Queue.prototype.add = function(file){
 
 
 }, {
-    map:mix(globalMap,{"./uid":_10})
+    map:mix({"./uid":_10},globalMap)
 });
 
 define(_6, [], function(require, exports, module, __filename, __dirname) {
@@ -645,7 +645,7 @@ attributes.patch(AjaxUploader, {
   }
 });
 }, {
-    map:mix(globalMap,{"../errors":_6})
+    map:mix({"../errors":_6},globalMap)
 });
 
 define(_8, [_2,_12,_0,_3,_1,_13,_6,_14], function(require, exports, module, __filename, __dirname) {
@@ -815,7 +815,7 @@ FlashUploader._renderButton = function(elem){
     return id;
 };
 }, {
-    map:mix(globalMap,{"../errors":_6,"./flash_default_options":_14})
+    map:mix({"../errors":_6,"./flash_default_options":_14},globalMap)
 });
 
 define(_9, [], function(require, exports, module, __filename, __dirname) {

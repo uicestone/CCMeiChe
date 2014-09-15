@@ -7,18 +7,22 @@ var carsList = $(".cars ul");
 var popMessage = require("./mod/popmessage");
 
 panelAddCar.on("submit",function(data){
-  var template = "<li class='row'><div class='label'>车型</div>"
-    +"<div class='text cartype'>"
-      +"<p class='type'>@{it.type}</p>"
-      +"<p class='number'>@{it.number}</p>"
-    +"</div></li>";
+  var template = "<div class='text'>"
+      +"<p class='title'>@{it.type} @{it.color}</p>"
+      +"<p class='desc'>@{it.number}</p>"
+    +"</div>"
+    +"<div class='edit'>修改</div>";
   var html = tpl.render(template,data);
-  var li = $(html);
-  li.on("click", function(){
-    $(this).toggleClass("active");
-  });
-  li.data("car", data);
-  carsList.append(li);
+  var content = $(html);
+  var li;
+  if("index" in data){
+    li = $(".cars li:eq(" + data.index + ")");
+    delete data.index;
+    li.attr('data',JSON.stringify(data)).html(content);
+  }else{
+    li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(content);
+    carsList.append(li);
+  }
 });
 
 var addbtn = $(".addcar");
@@ -28,6 +32,13 @@ addbtn.on("click", function(){
     return;
   }
   panelAddCar.show();
+});
+
+$(".cars").on("click", ".edit", function(){
+  var data = $(this).parent().attr('data');
+  data = JSON.parse(data);
+  data.index = $(".cars .edit").index(this);
+  panelAddCar.show(data);
 });
 
 var addaddress = $(".addaddress");

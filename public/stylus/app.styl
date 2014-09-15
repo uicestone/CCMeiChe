@@ -2,6 +2,7 @@ orange=#fab44a
 deeporange=#f39600
 grey=#b6b6b6
 light-grey=#ddd
+green=rgb(218, 221, 80)
 pink=#c70462
 
 $icon
@@ -187,7 +188,7 @@ body
   text-align: center
   height: 40px
   line-height: 40px
-  color: rgb(218, 221, 80)
+  color: green
   .icon-add
     display: inline-block
     background-image: url(./img/add.png)
@@ -533,8 +534,6 @@ body
       padding-right: 12px
 
 .autocomplete
-  position: absolute
-  top: 41px
   z-index: 9
   width: 100%
   background: #fff
@@ -711,19 +710,25 @@ body
         border-top: 1px solid orange
       .label
         float: left
-        padding: 0 20px
         border-right: 1px solid light-grey
+        width: 74px
+        text-align: center
       .text
         float: left
-        padding-left: 38px
-        &.cartype
+        padding-left: 23px
+        .title
           line-height: 1
-          .type
-            font-size: 15px
-            margin-top: 5px
-            margin-bottom: 3px
-          .number
-            font-size: 12px
+          font-size: 15px
+          margin-top: 5px
+          margin-bottom: 3px
+        .desc
+          line-height: 1
+          font-size: 12px
+      .edit
+        float: right
+        border-left: 1px solid light-grey
+        color: green
+        padding: 0 20px
     .promos
       li:first-child
         border-top: 1px solid orange

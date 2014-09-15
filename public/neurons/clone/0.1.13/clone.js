@@ -1,7 +1,7 @@
 (function(){
 function mix(a,b){for(var k in b){a[k]=b[k];}return a;}
 var _0 = "util@~1.0.2";
-var _1 = "clone@0.1.12/clone.js";
+var _1 = "clone@0.1.13/clone.js";
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
 define(_1, [_0], function(require, exports, module, __filename, __dirname) {

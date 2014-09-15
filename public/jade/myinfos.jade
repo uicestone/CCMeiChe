@@ -15,18 +15,18 @@ block content
     h2.h2 优惠券
     ul.promos
       each promo,i in user.promo || []
-        li(data="#{JSON.stringify(promo)}")
-          .title #{promo.title}
+        li.row(data="#{JSON.stringify(promo)}")
+          .text #{promo.title}
 
   .section.cars
     h2.h2 车型
     ul
       for car,i in user.cars || []
-        li.row
-          .label 车型
-          .text.cartype
-            p.type #{car.type}
-            p.number #{car.number}
+        li.row(data="#{JSON.stringify(car)}")
+          .text
+            p.title #{car.type} #{car.color}
+            p.desc #{car.number}
+          .edit 修改
     .add.addcar
       i.icon-add
       | 添加车辆
@@ -35,10 +35,10 @@ block content
     h2.h2 地址
     for address,i in user.addresses || []
       .row(data-addr="!{address}")
-        .addr
-          .span.address #{address.address}
-          .span.carpark #{address.carpark}
-        .func 修改
+        .text
+          .span.title #{address.address}
+          .span.desc #{address.carpark}
+        .edit 修改
     .add.addaddress
       i.icon-add
       | 添加地址

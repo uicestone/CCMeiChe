@@ -705,8 +705,6 @@ body.openmenu {
   padding-right: 12px;
 }
 .autocomplete {
-  position: absolute;
-  top: 41px;
   z-index: 9;
   width: 100%;
   background: #fff;
@@ -947,23 +945,29 @@ body.openmenu {
 }
 #myinfos .section .row .label {
   float: left;
-  padding: 0 20px;
   border-right: 1px solid #ddd;
+  width: 74px;
+  text-align: center;
 }
 #myinfos .section .row .text {
   float: left;
-  padding-left: 38px;
+  padding-left: 23px;
 }
-#myinfos .section .row .text.cartype {
+#myinfos .section .row .text .title {
   line-height: 1;
-}
-#myinfos .section .row .text.cartype .type {
   font-size: 15px;
   margin-top: 5px;
   margin-bottom: 3px;
 }
-#myinfos .section .row .text.cartype .number {
+#myinfos .section .row .text .desc {
+  line-height: 1;
   font-size: 12px;
+}
+#myinfos .section .row .edit {
+  float: right;
+  border-left: 1px solid #ddd;
+  color: #dadd50;
+  padding: 0 20px;
 }
 #myinfos .section .promos li:first-child {
   border-top: 1px solid #fab44a;

@@ -78,7 +78,7 @@ SwipeModal.prototype.show = function(data){
 
   hashState.setHash(this.name);
   this.emit("show");
-  this._show && this._show();
+  this._show && this._show(data);
 }
 
 exports.create = function(config){

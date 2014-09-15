@@ -48,8 +48,8 @@ neuron.config({
         "util@~1.0.4": 2,
         "attributes@~1.4.0": 8,
         "jquery@~1.9.1": 10,
-        "json@~1.0.1": 3,
         "simple-mime@^0.0.8": 11,
+        "json@~1.0.1": 3,
         "swfupload@~0.1.0": 12,
         "underscore@~1.6.0": 13
       }
@@ -62,7 +62,7 @@ neuron.config({
       }
     ],
     "9": [
-      "0.1.12",
+      "0.1.13",
       {
         "util@~1.0.2": 2
       }
