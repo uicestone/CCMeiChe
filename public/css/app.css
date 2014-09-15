@@ -906,6 +906,10 @@ body.openmenu {
   text-align: center;
   margin: 50px auto 10px auto;
 }
+#myinfos .add {
+  position: relative;
+  left: -14px;
+}
 #myinfos .section {
   background-color: #fff;
   padding: 15px 30px;
