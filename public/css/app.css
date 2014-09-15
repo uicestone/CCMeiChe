@@ -909,17 +909,22 @@ body.openmenu {
 #myinfos .add {
   position: relative;
   left: -14px;
+  padding: 5px 0;
+}
+#myinfos .promos,
+#myinfos .account {
+  padding-bottom: 10px;
 }
 #myinfos .section {
   background-color: #fff;
-  padding: 15px 30px;
+  padding: 0 30px;
   margin-bottom: 40px;
 }
 #myinfos .section .h2 {
   color: #fab44a;
   text-align: center;
   font-size: 18px;
-  margin-bottom: 10px;
+  padding: 10px 0;
 }
 #myinfos .section .row {
   zoom: 1;
@@ -1175,5 +1180,5 @@ body.openmenu {
 #recharge .choices .row .promo {
   padding: 0 15px;
   font-size: 12px;
-  text-align: left;
+  text-align: center;
 }

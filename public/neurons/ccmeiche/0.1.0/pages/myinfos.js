@@ -88,6 +88,18 @@ $("#save-address").on("click",function(){
     carpark: $("#input-carpark").val()
   };
 
+  if(!data.address){
+    return popMessage("请输入地址");
+  }
+
+  if(!data.carpark){
+    return popMessage("请输入车位");
+  }
+
+  if(!data.latlng){
+    return popMessage("无法定位该地址");
+  }
+
   $.post("/api/v1/myaddresses",data,"json")
   .done(function(){
   })

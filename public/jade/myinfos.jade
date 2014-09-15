@@ -3,7 +3,7 @@ block content
   h1.h1 我的信息
   .section
     h2.h2 账户
-    ul
+    ul.account
       li.row
         .label 手机
         .text #{user.phone}
@@ -42,7 +42,7 @@ block content
     .add.addaddress
       i.icon-add
       | 添加地址
-    .addaddress-panel
+    .addaddress-panel(style="display:none")
       h2.title 添加地址信息
       .form-group
         input#input-latlng(type="hidden")

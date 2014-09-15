@@ -44,7 +44,9 @@ exports.detail = function(req,res,next){
       return next(err);
     }
 
-    console.log(order);
+    if(order.status !== "done"){
+      return res.status(200).send("order status " + order.status);
+    }
 
     res.render('order-result',{
       id:"order-result",
