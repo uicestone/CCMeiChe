@@ -47,14 +47,13 @@ panelAddCar.on("submit",function(data){
     +"</div>"
     +"<div class='edit'>修改</div>";
   var html = tpl.render(template,data);
-  var content = $(html);
   var li;
   if("index" in data){
     li = $(".cars li:eq(" + data.index + ")");
     delete data.index;
-    li.attr('data',JSON.stringify(data)).html(content);
+    li.attr('data',JSON.stringify(data)).html(html);
   }else{
-    li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(content);
+    li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(html);
     carsList.append(li);
   }
 });
@@ -76,6 +75,7 @@ $(".cars").on("click", ".edit", function(){
 });
 
 var addaddress = $(".addaddress");
+var addressesList = $(".addresses ul");
 var addaddressPanel = $(".addaddress-panel");
 var ac = autocomplete.init($("#input-address"),function(item){
   return item.name + (item.address ? ("<span class='small'>" + item.address + "</span>") : "");
@@ -113,9 +113,21 @@ $("#save-address").on("click",function(){
 
   $.post("/api/v1/myaddresses",data,"json")
   .done(function(){
+    var template = "<div class='text'>"
+      +"<p class='title'>@{it.address}</p>"
+      +"<p class='desc'>@{it.carpark}</p>"
+    +"</div>"
+    +"<div class='edit'>修改</div>";
+
+    var html = tpl.render(template,data);
+    li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(html);
+    addressesList.append(li);
+    $("#input-latlng").val('');
+    $("#input-address").val('');
+    $("#input-carpark").val('');
+    addaddressPanel.hide();
   })
   .fail(popMessage);
-  addaddressPanel.hide();
 });
 }, {
     entries:entries,

@@ -13,7 +13,11 @@ exports.add = function(req,res,next){
 
   User.storeAddress(req.user.phone, req.body, function(err){
     if(err){
-      return next(err);
+      if(err.name == "EEXISTS"){
+        return res.status(400).send("该地址已存在");
+      }else{
+        return next(err);
+      }
     }
     res.status(200).send({message:"ok"});
   });

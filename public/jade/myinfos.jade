@@ -31,14 +31,15 @@ block content
       i.icon-add
       | 添加车辆
 
-  .section
+  .section.addresses
     h2.h2 地址
-    for address,i in user.addresses || []
-      .row(data-addr="!{address}")
-        .text
-          .span.title #{address.address}
-          .span.desc #{address.carpark}
-        .edit 修改
+    ul
+      for address,i in user.addresses || []
+        li.row(data-addr="#{JSON.stringify(address)}")
+          .text
+            .span.title #{address.address}
+            .span.desc #{address.carpark}
+          .edit 修改
     .add.addaddress
       i.icon-add
       | 添加地址

@@ -49,17 +49,34 @@ db.bind('user',{
     }, callback);
   },
   storeAddress: function(phone, data, callback){
-    User.update({
-      phone: phone
-    }, {
-      $addToSet: {
-        addresses : {
-          address: data.address,
-          latlng: data.latlng,
-          carpark: data.carpark
-        }
+    User.findOne({
+      phone: phone,
+      "addresses.address": data.address,
+      "addresses.carpark": data.carpark
+    },function(err, user){
+      if(err){
+        return callback(err);
       }
-    }, callback);
+
+      console.log("USER",user);
+      if(user){
+        var error = new Error();
+        error.name = "EEXISTS";
+        return callback(error);
+      }
+
+      User.update({
+        phone: phone
+      }, {
+        $addToSet: {
+          addresses : {
+            address: data.address,
+            latlng: data.latlng,
+            carpark: data.carpark
+          }
+        }
+      }, callback);
+    });
   },
   updateDefaultCars: function(phone, cars, callback){
     User.findByPhone(phone, function(err, user){
