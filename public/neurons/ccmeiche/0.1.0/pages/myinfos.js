@@ -194,14 +194,18 @@ module.exports = swipeModal.create({
   },
   getData: function(){
     var elem = this.elem;
-    return {
-      index: elem.data("index"),
+    var index = elem.data("index");
+    var data = {
       pic: elem.find(".result").attr("data-key"),
       type: elem.find(".type input").val(),
       color: elem.find(".color input").val(),
       number: elem.find(".number input").val(),
       comment: elem.find(".comment input").val()
+    };
+    if(index){
+      data.index = index;
     }
+    return data;
   },
   validate: function(data){
     if(!data.pic){

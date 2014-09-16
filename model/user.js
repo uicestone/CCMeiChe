@@ -27,6 +27,9 @@ db.bind('user',{
   },
   modifyCar: function(phone, index, data, callback){
     var updateDoc = {};
+    if(!index){
+      return callback(null);
+    }
     User.findByPhone(phone, function(err, user){
       if(err || !user){
         return callback(err);
