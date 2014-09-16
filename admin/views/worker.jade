@@ -14,6 +14,7 @@ block main
           th 本月接单数
           th 总接单数
           th 订单列表链接
+          th 状态
     .modal.fade#modal-create-worker
       .modal-dialog
         .modal-content
@@ -79,6 +80,15 @@ block scripts
             data: null,
             render: function(data){
               return "<a target='_blank' href='/order?worker=" + data._id + "' >点击查看</a>"
+            }
+          },
+          {
+            data: null,
+            render: function(data){
+              if(!data.status){
+                return "--";
+              }
+              return data.status == "on_duty" ? "上班中" : "已下班";
             }
           }
         ]

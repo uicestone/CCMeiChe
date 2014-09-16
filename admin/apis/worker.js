@@ -39,7 +39,7 @@ exports.list = function(req,res,next){
             return moment().startOf('month').toDate() < ft && moment().endOf('month').toDate() > ft;
           }).length;
           worker.totally_order_count = orders.length;
-          done(null, _.pick(worker,'_id','wechat_info','name','phone','monthly_order_count','totally_order_count'));
+          done(null, _.pick(worker,'_id','wechat_info','status','name','phone','monthly_order_count','totally_order_count'));
         });
       }, done);
     }
