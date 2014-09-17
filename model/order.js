@@ -60,7 +60,7 @@ db.bind('order', {
     console.log("取消订单%s，原因:%s",id,reason);
     self.findById(id, function(err, order){
       if(order.status == "doing"){
-        return next({
+        return callback({
           code: 400,
           message: "工人已到达，不可取消"
         });
