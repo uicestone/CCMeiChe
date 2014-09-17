@@ -27,68 +27,19 @@ var _23 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_7, [_23], function(require, exports, module, __filename, __dirname) {
+define(_2, [_23], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
-function popMessage(message){
-  var json = {}
-  if(message.constructor == XMLHttpRequest){
-    try{
-      json = JSON.parse(message.responseText);
-    }catch(e){
-      json = {
-        error:{
-          message: message.responseText
-        }
-      }
-    }
-  }else if(typeof message == "string"){
-    json = {
-      error:{
-        message:message
-      }
-    };
-  }
-
-  var text = json.error && json.error.message;
-
-  var pop = $("<div>" + text + "</div>");
-  pop.css({
-    position:"fixed",
-    opacity:"0",
-    transition:"opacity linear .4s",
-    top: "140px",
-    left: "50%",
-    zIndex: "30",
-    padding: "10px 25px",
-    backgroundColor: "rgba(0,0,0,0.8)",
-    borderRadius:"5px"
+// 菜单展开收起
+(function(){
+  $(".menu").on("click",function(){
+    $("body").css("position","fixed");
+    $("body").addClass("openmenu");
   });
-  pop.appendTo($("body"));
-  var width = pop.width()
-    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
-    //   return parseInt(pop.css(prop));
-    // }).reduce(function(a,b){
-    //   return a+b;
-    // },0);
-  pop.css({
-    "margin-left": - width / 2
+  $('.overlay').on("click",function(){
+    $("body").css("position","static");
+    $("body").removeClass("openmenu");
   });
-  setTimeout(function(){
-    pop.css({
-      "opacity":1
-    });
-  });
-  setTimeout(function(){
-    pop.css({
-      "opacity":0
-    });
-    setTimeout(function(){
-      pop.remove();
-    },400);
-  },1500)
-}
-
-module.exports = popMessage
+})();
 }, {
     entries:entries,
     map:globalMap

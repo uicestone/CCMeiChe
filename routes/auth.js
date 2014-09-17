@@ -6,9 +6,9 @@ exports.user = function(req,res,next){
 
   if(!req.isAuthenticated()){
     if(process.env.DEBUG){
-      return res.redirect("/login");
+      return res.redirect("/login?redirect=" + req.url);
     }else{
-      var url = user_oauth.getAuthorizeURL(config.host.user + '/login');
+      var url = user_oauth.getAuthorizeURL(config.host.user + '/login?redirect=' + req.url);
       return res.redirect(url);
     }
   }

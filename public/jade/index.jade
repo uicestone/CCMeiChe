@@ -3,27 +3,7 @@ block content
 
   .blank
 
-  .menu
-
-  .aside
-    h2.h2 手机 #{user.phone}
-    .credit 积分：#{user.credit || 0}
-    ul.menus
-      li.item
-        a(href="/myorders") 我的订单
-        i.icon.icon-orders
-      li.item
-        a(href="/myinfos") 我的信息
-        i.icon.icon-info
-      li.item
-        a(href="/wechat/recharge?showwxpaytitle=1") 充值
-        i.icon.icon-recharge
-      li.item
-        a(href="/help") 帮助
-        i.icon.icon-help
-    a.button(href="/logout") 退出登录
-
-  .overlay
+  include menu
 
   .container
     h1.title 洗车啦
@@ -93,4 +73,5 @@ block content
       #go-wash.button 欧耶洗车啦
   script.
     var services = !{JSON.stringify(services)};
+  +facade("menu")
   +facade("home")

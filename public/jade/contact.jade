@@ -1,0 +1,15 @@
+extends layout
+block content
+
+  include menu
+  .container
+    h1.title 联系我们
+    .texts
+      p 电话：021-50477987
+      p 地址：上海市浦东新区居家桥路737弄金杨一街坊33号102室
+    .map
+      img(src="/img/map.png")
+    .button-wrap
+      a.button(href="/myorders") 返回订单
+
+  +facade("menu")

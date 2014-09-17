@@ -5,7 +5,7 @@ module.exports = function(req,res,next){
   var code = req.query.code;
   var redirect = req.query.redirect;
   if(!redirect || redirect == req.url){
-    redirect = "/wechat";
+    redirect = "/wechat?showwxpaytitle=1";
   }
 
   if(req.isAuthenticated()){
