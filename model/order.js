@@ -1,6 +1,7 @@
 var db = require('../db');
 var Model = require('./base');
 var _ = require('underscore');
+var Worker = Model('worker');
 var Order = Model("order");
 var async = require('async');
 
@@ -45,6 +46,7 @@ db.bind('order', {
         return;
       }
       async.map(orders, function(order, done){
+        console.log("取消超时订单", order._id);
         Order.cancel(order._id, "timeout", done);
       });
     });
@@ -55,7 +57,7 @@ db.bind('order', {
     if(reasons.indexOf(reason) == -1){
       return callback("invalid reason:" + reason);
     }
-    console.log("cancel order",id,reason);
+    console.log("取消订单%s，原因:%s",id,reason);
     self.findById(id, function(err, order){
       if(order.status == "doing"){
         return next({
@@ -63,19 +65,61 @@ db.bind('order', {
           message: "工人已到达，不可取消"
         });
       }
-      self.updateById(id, {
-        $set: {
-          "status": "cancel",
-          "cancel_reason": reason,
-          "cancel_time": new Date()
+      async.series([
+        function cancelOrder(done){
+          self.updateById(id, {
+            $set: {
+              "status": "cancel",
+              "cancel_reason": reason,
+              "cancel_time": new Date()
+            }
+          }, done);
+        },
+        function removeFromWorkerQueue(done){
+          Worker.removeOrder(order.worker._id, order._id, done);
+        },
+        function adjustRests(done){
+          self._adjustRests(order, done);
         }
-      }, function(err){
-        if(err){
-          return callback(err);
-        }
-        self._adjustRests(order, callback);
-      });
+      ], callback);
     });
+  },
+  finish: function(orderId, data, callback){
+    // if(!data.breakage || !data.finish_pics || !data.breakage_pics){
+    //   return callback("missing params");
+    // }
+
+    Order.findById(orderId, function(err, order){
+      if(err){
+        return callback(err);
+      }
+      if(!order){
+        return callback({
+          status: 404,
+          message: "not found"
+        });
+      }
+
+      async.series([
+        function(done){
+          Order.updateById(orderId,{
+            $set:{
+              breakage: data.breakage,
+              finish_pics: data.finish_pics,
+              breakage_pics: data.breakage_pics,
+              status: "done",
+              finish_time: new Date()
+            }
+          }, done);
+        },
+        function(done){
+          Worker.removeOrder(order.worker._id, order._id, done);
+        }
+      ], callback);
+
+    });
+
+
   },
   _adjustRests: function(order, callback){
 
@@ -100,6 +144,7 @@ db.bind('order', {
         return callback(err);
       }
       async.map(orders,function(order,done){
+        console.log("更正后续订单:%s",order._id);
         Order.updateById(order._id,{
           $set: {
             estimated_arrive_time: new Date(order.estimated_arrive_time - full_time),

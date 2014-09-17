@@ -85,23 +85,33 @@ block scripts
           {
             data: null,
             render: function(data){
-              if(!data.status){
-                return "--";
+              if(data.status !== "on_duty"){
+                return "不可用（未上班）";
               }
-              return data.status == "on_duty" ? "上班中" : "已下班";
+              if(!data.latlng){
+                return "不可用（未开启上报位置）";
+              }
+              if(!data.last_interaction_time){
+                return "不可用（车工未与微信号产生交互）";
+              }
+              if((+new Date() - (+new Date(data.last_interaction_time))) > 24 * 60 * 60 * 1000 ){
+                return "不可用（车工太久未打开微信号）";
+              }
+
+              return "可用";
             }
           }
         ]
       });
 
-      $('#worker-table').on('click', 'tbody tr', function () {
-        if ($(this).hasClass('selected')) {
-          $(this).removeClass('selected');
-        } else {
-          table.$('tr.selected').removeClass('selected');
-          $(this).addClass('selected');
-        }
-      });
+      //- $('#worker-table').on('click', 'tbody tr', function () {
+      //-   if ($(this).hasClass('selected')) {
+      //-     $(this).removeClass('selected');
+      //-   } else {
+      //-     table.$('tr.selected').removeClass('selected');
+      //-     $(this).addClass('selected');
+      //-   }
+      //- });
 
       //- $('#button-remove').click(function () {
       //-   table.row('.selected').remove().draw(false);

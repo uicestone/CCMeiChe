@@ -11,7 +11,7 @@ exports.add = function(req,res,next){
     return res.status(400).send("missing params");
   }
 
-  User.storeAddress(req.user.phone, req.body, function(err){
+  User.addAddress(req.user.phone, req.body, function(err){
     if(err){
       if(err.name == "EEXISTS"){
         return res.status(400).send("该地址已存在");

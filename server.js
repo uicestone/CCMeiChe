@@ -68,6 +68,9 @@ var assureUserLogin = require("./routes/auth").user;
 var assureWorkerLogin = require("./routes/auth").worker;
 if(SERVICE == "worker"){
   console.log("service worker");
+  if(process.env.DEBUG){
+    app.get("/", require('./routes/worker-orders-debug'));
+  }
   app.use("/wechat/worker", require("./wechat").worker);
   app.get("/authworker", require("./routes/authworker"));
   app.get("/orders/:orderid", assureWorkerLogin, require("./routes/orders").detail);
@@ -110,14 +113,6 @@ if(SERVICE == "worker"){
   port = process.env.PORT || config.port.user;
 }
 
-var serverStartedHandler = function(){
+app.listen(port,function(){
   console.log("server started at %d", port || config.port);
-}
-
-// if(process.env.DEBUG){
-  http.createServer(app).listen(port,serverStartedHandler);
-// }else{
-//   https.createServer({
-//     pfx: fs.readFileSync('server.pfx')
-//   }, app).listen(port,serverStartedHandler);
-// }
+});

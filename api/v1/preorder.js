@@ -99,10 +99,6 @@ function nearestWorker(latlng, workers, callback){
     var motor_speed = 20; // km/h
     var worker_latlng = worker.last_available_latlng || worker.latlng ;
     var speedInMin = motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
-
-    // 通过百度api查询路线
-    console.log("查询baidu地图路线 %s 到 %s",worker_latlng,latlng);
-
     var getBaiduWalkSolution = baidumap.direction.bind(baidumap);
     var getFakeWalkSolution = function(args, callback){
       var solution = {
@@ -138,12 +134,23 @@ function nearestWorker(latlng, workers, callback){
         base_time = new Date();
       }
 
+      var arrive_time = new Date(+base_time + drive_time);
+      var finish_time = new Date(+base_time + drive_time + wash_time);
+      console.log(drive_time, wash_time);
+      console.log("车工%s可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
+        worker.name,
+        moment(base_time).format("lll"),
+        moment.duration(drive_time).humanize(),
+        moment.duration(wash_time).humanize(),
+        moment(finish_time).format("lll"),
+        moment.duration(+finish_time - (+ new Date())).humanize()
+      );
       done(null,{
         worker: worker,
         drive_time: drive_time,
         wash_time: wash_time,
-        arrive_time: new Date(base_time + drive_time),
-        finish_time: new Date(base_time + drive_time + wash_time)
+        arrive_time: arrive_time,
+        finish_time: finish_time
       });
     });
   },function(err,results){
@@ -152,7 +159,7 @@ function nearestWorker(latlng, workers, callback){
       return b.finish_time > a.finish_time ? -1 : 1;
     }
     results = results.sort(compare_nearest);
-
+    console.log("选择车工%s",results[0].worker.name);
     var result = results[0];
     callback(null,result);
   });
@@ -243,8 +250,8 @@ exports.post = function (req, res, next) {
       });
     },
     function(order, done){
-      User.storeAddress(user.phone, order, function(err){
-        if(err){
+      User.addAddress(user.phone, order, function(err){
+        if(err && err.name !== "EEXISTS"){
           return done(err);
         }
         return done(null, order);

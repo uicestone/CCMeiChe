@@ -32,25 +32,21 @@ exports.done = function(req,res,next){
   };
   var worker = req.user;
 
-  if(!data.finish_pics){
-    res.status(400).send("wrong params");
-  }
-
   Order.findById(req.params.orderid,function(err,order){
     if(err){return next(err);}
 
     async.series([
       // 给车工发送消息
       function(done){
-        Order.findOne({
-          "worker._id": worker._id.toString(),
-          "status":"todo"
-        },function(err,new_order){
+        Worker.getNextOrder(worker._id, function(err, new_order){
           if(err){return done(err);}
-          if(!new_order){return done(null);}
-          var url = config.host.worker + "/orders/" + new_order._id;
-          var message = "查看下一笔订单：" + url;
-          console.log("send text to %s %s",worker.openid,message);
+          var url, message;
+          if(new_order){
+            url = config.host.worker + "/orders/" + new_order._id;
+            message = "查看下一笔订单：" + url;
+          }else{
+            message = "您没有后续订单，请原地等待";
+          }
           wechat_worker.sendText(worker.openid, message, done);
         });
       },
@@ -58,24 +54,11 @@ exports.done = function(req,res,next){
       function(done){
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
-        console.log("send text to %s %s",order.user.openid, message);
         wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
-      },
-      // 更新车工最后可用时间
-      function(done){
-        Worker.removeOrder(worker._id, order, done);
       },
       // 更新订单状态
       function(done){
-        Order.updateById(order._id,{
-          $set:{
-            breakage: data.breakage,
-            finish_pics: data.finish_pics,
-            breakage_pics: data.breakage_pics,
-            status: "done",
-            finish_time: new Date()
-          }
-        },done);
+        Order.finish(order._id, data, done);
       }
     ],function(err){
       if(err){
@@ -95,7 +78,6 @@ exports.arrive = function(req,res,next){
     async.series([
       function(done){
         var message = "车工已到达并开始为您洗车";
-        console.log("send text to user %s %s",order.user.openid,message);
         wechat_user.sendText(order.user.openid, message, done);
       },
       function(done){

@@ -51,7 +51,7 @@ db.bind('user',{
       $set: updateDoc
     }, callback);
   },
-  storeAddress: function(phone, data, callback){
+  addAddress: function(phone, data, callback){
     User.findOne({
       phone: phone,
       "addresses.address": data.address,
@@ -61,7 +61,6 @@ db.bind('user',{
         return callback(err);
       }
 
-      console.log("USER",user);
       if(user){
         var error = new Error();
         error.name = "EEXISTS";

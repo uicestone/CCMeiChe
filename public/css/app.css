@@ -1060,6 +1060,7 @@ body.openmenu {
 }
 #order .swipe-inner {
   background-color: #fff;
+  background-image: none;
 }
 #order-result .order {
   background-color: #fff;

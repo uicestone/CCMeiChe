@@ -7,7 +7,7 @@ block content
         .row
           .label 手机
           .text #{order.user.phone}
-        for car in order.cars
+        for car in (order.cars || [])
           .row
             .label 车型
             .text
@@ -21,13 +21,13 @@ block content
           .text #{order.service.title}
   h2.title 已完成
   .finish_pics.container
-    for pic in order.finish_pics
+    for pic in (order.finish_pics || [])
       .pic
         img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")
   h2.title 车损部位
   .container
     include ./breakages
   .breakage_pics.container
-    for pic in order.breakage_pics
+    for pic in (order.breakage_pics || [])
       .pic
         img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")

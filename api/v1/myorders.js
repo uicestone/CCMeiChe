@@ -78,9 +78,6 @@ exports.cancel = function(req,res,next){
       Order.cancel(order._id, reason, done);
     },
     function(done){
-      Worker.removeOrder(order.worker._id, order, done);
-    },
-    function(done){
       if(reason == "order_cancel"){
         // 向腾讯发起退款请求
         done(null);
