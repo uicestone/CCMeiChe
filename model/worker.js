@@ -11,6 +11,7 @@ Worker.ensureIndex({"latlng":"2d"}, function(err, replies){
 });
 
 function lastOrder(orders){
+  console.log("getting last order of ", orders);
   return orders.sort(function(a,b){
     return b.preorder_time > a.preorder_time ? 1 : -1;
   })[0];
@@ -30,7 +31,9 @@ db.bind('worker',{
       if(err){
         return callback(err);
       }
-      var orders = worker.orders;
+      var orders = worker.orders.filter(function(order){
+        return order.status !== "preorder";
+      });
       var last_order = lastOrder(orders);
       var message;
       var cancelMessage = _.template("用户<%=user.phone%>取消了<%=address%> <%=cars.map(function(car){return car.type + car.number;}).join(',')%>车辆的清洗，请原地等待后续订单");
@@ -93,7 +96,7 @@ db.bind('worker',{
         last_available_latlng: order.latlng
       },
       $addToSet: {
-        orders: _.pick(order,'_id','preorder_time','latlng','estimated_finish_time')
+        orders: _.pick(order,'_id','preorder_time','latlng','estimated_finish_time','status')
       }
     }, callback);
   },
@@ -132,6 +135,16 @@ db.bind('worker',{
         }, callback);
       });
     });
+  },
+  updateOrderStatus: function(id, order, callback){
+    Worker.update({
+      _id: id,
+      "orders._id": order._id
+    }, {
+      $set:{
+        "orders.$.status": order.status
+      }
+    }, callback);
   },
   getNextOrder: function(workerId, callback){
     Order.findOne({

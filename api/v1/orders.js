@@ -81,12 +81,7 @@ exports.arrive = function(req,res,next){
         wechat_user.sendText(order.user.openid, message, done);
       },
       function(done){
-        Order.updateById(order._id,{
-          $set:{
-            status: "doing",
-            arrive_time: new Date()
-          }
-        }, done);
+        Order.arrive(order._id, done);
       }
     ],function(err){
       if(err){

@@ -3,6 +3,7 @@ var Model = require('./base');
 var _ = require('underscore');
 var Worker = Model('worker');
 var Order = Model("order");
+var Service = Model("service");
 var async = require('async');
 
 module.exports = Order;
@@ -26,12 +27,32 @@ db.bind('order', {
       order.processed = true;
       order.status = "todo";
       order.order_time = new Date();
-      self.updateById(id, order, function (err) {
-        if (err) {
+      async.series([
+        function(done){
+          Order.updateById(id, order, done);
+        },
+        function(done){
+          Worker.updateOrderStatus(order.worker._id, order, done);
+        }
+      ], function(err){
+        if(err){
           return callback(err);
         }
         callback(null, order);
       });
+    });
+  },
+  arrive: function(id, callback){
+    Order.updateById(id,{
+      $set:{
+        status: "doing",
+        arrive_time: new Date()
+      }
+    }, function(err){
+      if(err){
+        return callback(err);
+      }
+      Worker.updateOrderStatus(order.worker._id, order, callback);
     });
   },
   // 超过十分钟取消订单
@@ -99,7 +120,7 @@ db.bind('order', {
           message: "not found"
         });
       }
-
+      var finish_time = new Date();
       async.series([
         function(done){
           Order.updateById(orderId,{
@@ -108,12 +129,21 @@ db.bind('order', {
               finish_pics: data.finish_pics,
               breakage_pics: data.breakage_pics,
               status: "done",
-              finish_time: new Date()
+              finish_time: finish_time
             }
           }, done);
         },
         function(done){
           Worker.removeOrder(order.worker._id, order._id, done);
+        },
+        function(done){
+          var former_avg_time = order.service.average_time || 30;
+          var current_avg_time = finish_time - order.order_time;
+          Service.updateById(order._id, {
+            $set :{
+              average_time: (former_avg_time + current_avg_time) / 2
+            }
+          }, done);
         }
       ], callback);
 
