@@ -242,14 +242,6 @@ exports.post = function (req, res, next) {
     },
     function(orders, done){
       var order = orders[0];
-      Worker.addOrder(order.worker._id,order,function(err){
-        if(err){
-          return next(err);
-        }
-        done(null,order);
-      });
-    },
-    function(order, done){
       User.addAddress(user.phone, order, function(err){
         if(err && err.name !== "EEXISTS"){
           return done(err);

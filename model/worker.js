@@ -90,6 +90,9 @@ db.bind('worker',{
     });
   },
   addOrder: function(workerId, order, callback){
+    if(order.status !== "todo"){
+      callback("order status is not todo!");
+    }
     Worker.updateById(workerId, {
       $set:{
         last_available_time: order.estimated_finish_time,
