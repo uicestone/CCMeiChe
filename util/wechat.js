@@ -1,6 +1,8 @@
 var redis = require('../redis');
 var wechat = require('wechat');
 var config = require('config');
+var path = require('path');
+var fs = require('fs');
 var Payment = require('wechat-pay').Payment;
 var API = wechat.API;
 var OAuth = wechat.OAuth;
@@ -35,6 +37,20 @@ var worker_store_key = 'wechat-access-token-worker';
 var user_api = new API(config.wechat.user.id, config.wechat.user.secret, getToken(user_store_key), setToken(user_store_key));
 var user_oauth = new OAuth(config.wechat.user.id, config.wechat.user.secret);
 
+console.log(config.wechat.user);
+console.log({
+  partnerKey: config.wechat.user.partner_key,
+  appId: config.wechat.user.id,
+  mchId: config.wechat.user.mch_id,
+  notifyUrl: config.wechat.user.notify_url
+});
+var payment = new Payment({
+  partnerKey: config.wechat.user.partner_key,
+  appId: config.wechat.user.id,
+  mchId: config.wechat.user.mch_id,
+  notifyUrl: config.wechat.user.notify_url,
+  pfx: fs.readFileSync( path.join(__dirname, '..', 'apiclient_cert.p12') )
+});
 var pay_request = function(req, order, callback){
   var notify_url = config.wechat.user.notify_url;
   var order_id = order.id.toString();
@@ -46,7 +62,7 @@ var pay_request = function(req, order, callback){
     'body': order_name,
     'attach': order_attach,
     'out_trade_no': order_id,
-    'total_fee': (total_price * 1).toString(),
+    'total_fee': (total_price * 1),
     'spbill_create_ip': req.ip,
     "openid": req.user.openid,
     "trade_type": "JSAPI"
@@ -55,14 +71,12 @@ var pay_request = function(req, order, callback){
   if(DEBUG){
     callback(null);
   }else{
-    var payment = new Payment({
-      partnerKey: config.wechat.user.partner_key,
-      appId: config.wechat.user.id,
-      mchId: config.wechat.user.mch_id,
-      notifyUrl: config.wechat.user.notify_url
-    });
     payment.getBrandWCPayRequestParams(package_data, callback);
   }
+}
+
+var refund = function(detail, callback){
+  payment.refund(detail, callback);
 }
 
 var worker_api = new API(config.wechat.worker.id, config.wechat.worker.secret, getToken(worker_store_key), setToken(worker_store_key));
@@ -85,6 +99,7 @@ function notifyProxy(service){
 
 exports.user = {
   pay_request: pay_request,
+  refund: refund,
   api: DEBUG ? notifyProxy("user") : user_api,
   oauth: user_oauth
 };

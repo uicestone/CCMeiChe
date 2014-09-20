@@ -7,6 +7,7 @@ var WechatWorkerApi = wechat_worker.api;
 var Worker = model.worker;
 var Order = model.order;
 var User = model.user;
+var Refund = model.refund;
 var moment = require("moment");
 var async = require("async");
 moment.locale('zh-cn');
@@ -88,15 +89,42 @@ exports.cancel = function(req,res,next){
 
   async.series([
     function(done){
-      Order.cancel(order._id, reason, done);
-    },
-    function(done){
       if(reason == "order_cancel"){
         // 向腾讯发起退款请求
-        done(null);
+
+        async.waterfall([
+          function(done){
+            Refund.insert({}, function(err, refunds){
+              if(err){
+                return done(err);
+              }
+              done(null, refunds[0]._id);
+            })
+          },
+          function(refundId, done){
+            wechat_user.refund({
+              out_trade_no: order._id,
+              out_refund_no: refundId,
+              total_fee: order.price /* 100 */,
+              refund_fee: order.price
+            }, function(err, data){
+              if(err){
+                if(err.name == "BusinessError"){
+                  done(data.err_code_des);
+                }
+                return done(err);
+              }
+
+              done(null, data);
+            });
+          }
+        ], done);
       }else{
         done(null);
       }
+    },
+    function(done){
+      Order.cancel(order._id, reason, done);
     },
     function(done){
       if(reason == "order_cancel"){
