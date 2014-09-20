@@ -317,7 +317,10 @@ $("#go-wash").on("click", function(e){
 
   el.prop("disabled",true);
   $.post("/api/v1/preorder",data,"json").done(function(order){
-    panelPreOrder.show(order);
+    panelPreOrder.show({
+      data: data,
+      order: order
+    });
   }).fail(function(xhr){
     popMessage(xhr);
     el.prop("disabled",false);

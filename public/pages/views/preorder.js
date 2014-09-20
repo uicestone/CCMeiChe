@@ -6,8 +6,9 @@ var popMessage = require("../mod/popmessage");
 var preorderPanel = swipeModal.create({
   button: $("#go-wash"),
   template:  require("../tpl/preorder.html"),
-  santitize: function(order){
-    this.order = order;
+  santitize: function(config){
+    var order = this.order = config.order;
+    this.data = config.data;
     var data = {};
     for(var k in order){
       data[k] = order[k];
@@ -16,23 +17,26 @@ var preorderPanel = swipeModal.create({
     return data;
   },
   getData: function(){
-    return this.order;
+    return {
+      data: this.data,
+      order: this.order
+    };
   },
-  submit: function(order,callback){
+  submit: function(config,callback){
     popMessage("请求支付中");
+    var order = config.order;
+    var data = config.data;
 
-    $.post("/api/v1/myorders/confirm",{
-      "orderId": order._id
-    },'json').done(function(paymentargs){
+    $.post("/api/v1/myorders/confirm", order, 'json').done(function(result){
       if(appConfig.env !== "product"){
         $.post("/wechat/notify",{
-          orderId: order._id,
+          orderId: result.orderId,
           type: "washcar"
         },'json').done(function(){
           location.href = "/myorders";
         }).fail(popMessage);
       }else{
-        WeixinJSBridge.invoke('getBrandWCPayRequest',paymentargs,function(res){
+        WeixinJSBridge.invoke('getBrandWCPayRequest',result.payargs,function(res){
           var message = res.err_msg;
           if(message == "get_brand_wcpay_request:ok"){
             popMessage("支付成功，正在跳转");
@@ -45,15 +49,6 @@ var preorderPanel = swipeModal.create({
       }
     });
   }
-});
-
-preorderPanel.on("cancel",function(reason){
-  reason = reason || "preorder_cancel";
-  var order = this.order;
-  $.post("/api/v1/myorders/cancel",{
-    "orderId": order._id,
-    "reason": reason
-  },'json').fail(popMessage);
 });
 
 module.exports = preorderPanel;

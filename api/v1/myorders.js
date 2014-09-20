@@ -49,21 +49,34 @@ exports.list = function(req,res){
 
 exports.confirm = function(req,res,next){
   var user = req.user;
-  var order = req.order;
+  var order = req.body;
 
-  User.updateDefaultCars(user.phone, order.cars, function(err){
-    if(err){return next(err)}
-
-    wechat_user.pay_request(req, {
-      id: order._id,
-      price: order.price,
-      name: order.service.title + " * " + order.cars.length,
-      attach: {
-        type: "washcar"
-      }
-    }, function(err, payment_args){
-      if(err){return next(err);}
-      res.status(200).send(payment_args);
+  async.series([
+    function(done){
+      Order.insert(order, function(err, orders){
+        if(err) return done(err);
+        order._id = orders[0]._id;
+        done(null);
+      });
+    },
+    function(done){
+      User.updateDefaultCars(user.phone, order.cars, done);
+    },
+    function(done){
+      wechat_user.pay_request(req, {
+        id: order._id,
+        price: order.price,
+        name: order.service.title + " * " + order.cars.length,
+        attach: {
+          type: "washcar"
+        }
+      }, done);
+    }
+  ],function(err, payment_args){
+    if(err){return next(err);}
+    res.status(200).send({
+      payargs: payment_args,
+      orderId: order._id
     });
   });
 }

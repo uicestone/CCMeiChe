@@ -24,6 +24,7 @@ db.bind('order', {
       }
 
       var now = new Date();
+
       order.processed = true;
       order.status = "todo";
       order.order_time = new Date();

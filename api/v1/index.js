@@ -11,7 +11,7 @@ module.exports = function(app){
 
     app.get("myorders", auth, myorders.list);
     app.post("myorders/cancel", auth, myorders.assure_match, myorders.cancel);
-    app.post("myorders/confirm", auth, myorders.assure_match, myorders.confirm);
+    app.post("myorders/confirm", auth, myorders.confirm);
     app.post("preorder", auth, require("./preorder").post);
     app.post("orders/:orderid", require("./orders").detail);
     app.post("orders/:orderid/arrive", require("./orders").arrive);

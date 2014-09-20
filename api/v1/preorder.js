@@ -236,8 +236,7 @@ exports.post = function (req, res, next) {
         credit: priceAndCredit.credit, // 支付积分
         preorder_time: new Date(), // 下单时间
         estimated_finish_time: result.finish_time,  // 预估完成时间
-        estimated_arrive_time: result.arrive_time, // 预估到达时间
-        status: "preorder"
+        estimated_arrive_time: result.arrive_time // 预估到达时间
       };
 
       done(null, order);
