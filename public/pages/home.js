@@ -16,6 +16,13 @@ var carsSelect = popselect(user.cars,{
     return car.type + car.color + "<br />" + car.number;
   }
 });
+carsSelect.validate = function(dataList){
+  if(!dataList.length){
+    popMessage("请选择车辆");
+    return false;
+  }
+  return true;
+}
 carsSelect.on("submit",function(dataList){
   $("body").css("position","static");
   var ul = $(".selected-cars ul");
@@ -291,22 +298,22 @@ $("#go-wash").on("click", function(e){
   };
 
   if(!order.cars.length){
-    alert("请添加车辆");
+    popMessage("请添加车辆");
     return;
   }
 
   if(!order.address){
-    alert("请填写地址");
+    popMessage("请填写地址");
     return;
   }
 
   if(!order.latlng){
-    alert("请选择确切位置");
+    popMessage("请选择确切位置");
     return;
   }
 
   if(!order.carpark){
-    alert("请填写具体车位");
+    popMessage("请填写具体车位");
     return;
   }
 

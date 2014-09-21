@@ -20,7 +20,8 @@ html
           path:"/neurons"
         });
     link(href="/css/app.css?t=#{config.start_time}", rel="stylesheet")
-    meta(name="format-detection" content="telephone=no")
+    if config.service == "user"
+      meta(name="format-detection" content="telephone=no")
     meta(name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, initial-scale=1")
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     meta(name="apple-mobile-web-app-capable", content="yes")

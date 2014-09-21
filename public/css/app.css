@@ -252,7 +252,11 @@ body.openmenu {
   left: 0;
   height: 100%;
   z-index: 10;
-  background-color: #fab44a;
+  background-image: -webkit-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -moz-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -o-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: -ms-linear-gradient(235deg, #fab44a, #f39600);
+  background-image: linear-gradient(215deg, #fab44a, #f39600);
   padding-top: 70px;
   -webkit-transform: translateX(-241px);
   -moz-transform: translateX(-241px);
@@ -479,7 +483,6 @@ body.openmenu {
   zoom: 1;
   background-color: #fff;
   color: #ccc;
-  height: 48px;
   border-bottom: 1px solid #ccc;
 }
 #home .section .cars .selected-cars li:before,
@@ -496,7 +499,7 @@ body.openmenu {
 #home .section .cars .selected-cars li .detail {
   text-align: left;
   height: 48px;
-  padding-left: 15px;
+  padding: 5px 5px 5px 15px;
   max-width: 180px;
   white-space: nowrap;
   overflow: hidden;
@@ -667,6 +670,7 @@ body.openmenu {
 }
 #home .address .location {
   position: relative;
+  margin-bottom: 1px;
 }
 #home .address .location .icon {
   background-position: 0 -160px;
@@ -674,7 +678,6 @@ body.openmenu {
 #home .address .input {
   border: none;
   width: 100%;
-  margin-bottom: 1px;
 }
 #home .address .note {
   margin-top: 5px;
@@ -698,7 +701,6 @@ body.openmenu {
   z-index: 9;
   width: 100%;
   background: #fff;
-  border-left: 2px solid #fab44a;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;

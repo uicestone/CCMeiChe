@@ -206,7 +206,7 @@ body
   left: 0
   height: 100%
   z-index: 10
-  background-color: orange
+  background-image: linear-gradient(215deg,orange,deeporange)
   padding-top: 70px
   transform: translateX(-241px)
   transition: all .4s linear
@@ -370,14 +370,13 @@ body
           clearfix()
           background-color: #fff
           color: #ccc
-          height: 48px
           border-bottom: 1px solid #ccc
           &:last-child
             border-bottom: none
           .detail
             text-align: left
             height: 48px
-            padding-left: 15px
+            padding: 5px 5px 5px 15px
             max-width: 180px
             overflow: ellipsis
             .type,.number
@@ -498,13 +497,13 @@ body
     margin-bottom: 17px
     .location
       position: relative
+      margin-bottom: 1px
       .icon
         @extend $icon
         background-position: 0 -160px
     .input
       border: none
       width: 100%
-      margin-bottom: 1px
     .note
       margin-top: 5px
       text-align: center
@@ -527,7 +526,6 @@ body
   z-index: 9
   width: 100%
   background: #fff
-  border-left: 2px solid orange
   box-sizing: border-box
   li
     border-bottom: 1px solid #eee

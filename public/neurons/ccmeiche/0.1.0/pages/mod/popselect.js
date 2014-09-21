@@ -94,9 +94,10 @@ PopSelect.prototype.bind = function(){
     var result = container.find(".active").map(function(i,el){
       return $(el).data("data");
     });
-
-    self.emit("submit", Array.prototype.slice.call(result));
-    self.close();
+    if(!self.validate || self.validate(result)){
+      self.emit("submit", Array.prototype.slice.call(result));
+      self.close();
+    }
   });
 
   container.find(".close").on("click",function(){

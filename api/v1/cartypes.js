@@ -3,11 +3,12 @@ var CarTypes = require("../../model/cartype");
 exports.get = function(req,res,next){
   var query = req.params.query;
   query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  var reg = new RegExp("^" + query.toLowerCase());
   CarTypes.find({
     $or:[{
-      spell: new RegExp("^" + query)
+      spell: reg
     },{
-      type: new RegExp("^" + query)
+      type: reg
     }]
   }).toArray(function(err,types){
     if(err){
