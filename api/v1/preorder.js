@@ -222,7 +222,7 @@ exports.post = function (req, res, next) {
         cars: cars
       });
 
-      var order = {
+      Order.insert({
         worker: _.pick(result.worker,'_id','openid'), //订单对应的车工
         user: _.pick(user,'_id','openid','phone'),  //下单用户
         cars: cars, //下单车辆
@@ -238,9 +238,12 @@ exports.post = function (req, res, next) {
         estimated_finish_time: result.finish_time,  // 预估完成时间
         estimated_arrive_time: result.arrive_time, // 预估到达时间
         status: "preorder"
-      };
-
-      done(null, order);
+      }, function(err, orders){
+        if(err){
+          return done(err);
+        }
+        done(null, orders[0]);
+      });
     },
     function(order, done){
       User.addAddress(user.phone, order, function(err){
