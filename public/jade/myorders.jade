@@ -17,7 +17,7 @@ mixin item(data)
           a(href="/orders/#{data._id}",style="text-decoration:none").view-result 查看结果
         else
           a(href="/myorders/#{data._id}",style="text-decoration:none").view-result 查看结果
-      else
+      else if data.status !== "cancel"
         .text 倒计时间
         .time(data-finish="#{data.estimated_finish_time}") #{data.time}
         if data.status == "todo"
@@ -44,10 +44,12 @@ block content
   - sections.todo = data.filter(filterStatus("todo"));
   - sections.doing = data.filter(filterStatus("doing"));
   - sections.done = data.filter(filterStatus("done"));
+  - sections.cancel = data.filter(filterStatus("cancel"));
 
   if role == "user"
     +section("在路上","todo")
     +section("进行中","doing")
   +section("已完成","done")
+  +section("已取消","cancel")
 
   +facade('myorders')
