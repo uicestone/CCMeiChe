@@ -83,6 +83,7 @@ function nearestWorker(latlng, workers, callback){
         moment.duration(+finish_time - (+ new Date())).humanize()
       );
       done(null,{
+        worker: worker,
         drive_time: drive_time,
         wash_time: wash_time,
         arrive_time: arrive_time,

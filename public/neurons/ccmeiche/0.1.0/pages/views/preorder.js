@@ -59,7 +59,6 @@ var preorderPanel = swipeModal.create({
     $.post("/api/v1/myorders/confirm", order, 'json').done(function(result){
       if(appConfig.env !== "product"){
         $.post("/wechat/notify",{
-          orderId: result.orderId,
           type: "washcar"
         },'json').done(function(){
           location.href = "/myorders";

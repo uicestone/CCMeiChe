@@ -141,18 +141,8 @@ FinishOrder.prototype.confirm = function(){
     data.breakage = breakage;
   }
 
-  if(appConfig.env !== "dev"){
-    if(!data.finish_pics.length){
-      return popMessage("请上传车辆照片");
-    }
-
-    if(data.breakage && !data.breakage_pics.length){
-      return popMessage("请上传车损照片");
-    }
-  }
-
-  if(!data.breakage && data.breakage_pics.length){
-    return popMessage("请选择车损位置");
+  if(!data.finish_pics.length){
+    return popMessage("请上传车辆照片");
   }
 
   viewSwipe.out("bottom");

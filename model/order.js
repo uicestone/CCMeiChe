@@ -44,16 +44,21 @@ db.bind('order', {
     });
   },
   arrive: function(id, callback){
-    Order.updateById(id,{
-      $set:{
-        status: "doing",
-        arrive_time: new Date()
-      }
-    }, function(err){
+    Order.findById(id, function(err, order){
       if(err){
-        return callback(err);
+        return done(err);
       }
-      Worker.updateOrderStatus(order.worker._id, order, callback);
+      Order.updateById(id,{
+        $set:{
+          status: "doing",
+          arrive_time: new Date()
+        }
+      }, function(err){
+        if(err){
+          return callback(err);
+        }
+        Worker.updateOrderStatus(order.worker._id, order, callback);
+      });
     });
   },
   // 超过十分钟取消订单

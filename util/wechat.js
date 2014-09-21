@@ -69,7 +69,7 @@ var pay_request = function(req, order, callback){
   };
 
   if(DEBUG){
-    callback(null);
+    callback(null,{});
   }else{
     payment.getBrandWCPayRequestParams(package_data, callback);
   }

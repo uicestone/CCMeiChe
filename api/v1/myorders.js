@@ -1,6 +1,6 @@
 var config = require('config');
 var model = require('../../model');
-var estimate = require("../../util/estimate");
+var estimateTime = require("../../util/estimate");
 var wechat_user = require('../../util/wechat').user;
 var wechat_worker = require('../../util/wechat').worker;
 var WechatUserApi = wechat_user.api;
@@ -11,6 +11,7 @@ var User = model.user;
 var Refund = model.refund;
 var moment = require("moment");
 var async = require("async");
+var _ = require("underscore");
 moment.locale('zh-cn');
 
 
@@ -155,14 +156,21 @@ exports.confirm = function(req,res,next){
 
   user_latlng = user_latlng.split(",").map(function(item){return +item});
 
+  var estimate = null;
+  var order = null;
   async.waterfall([
     function(done){
-      findWorkers(user_latlng,done);
+      console.log("estimate time");
+      estimateTime(user_latlng, function(err, result){
+        if(err){
+          return done(err);
+        }
+        estimate = result;
+        done(null);
+      });
     },
-    function(workers, done){
-      nearestWorker(user_latlng,workers, done);
-    },
-    function(result, done){
+    function(done){
+      console.log("add order");
       var priceAndCredit = calculatePriceAndCredit({
         service: service,
         use_credit: use_credit,
@@ -171,8 +179,8 @@ exports.confirm = function(req,res,next){
         cars: cars
       });
 
-      var order = {
-        worker: _.pick(result.worker,'_id','openid'), //订单对应的车工
+      var orderdata = {
+        worker: _.pick(estimate.worker,'_id','openid'), //订单对应的车工
         user: _.pick(user,'_id','openid','phone'),  //下单用户
         cars: cars, //下单车辆
         service: service, //选择的服务
@@ -184,31 +192,37 @@ exports.confirm = function(req,res,next){
         price: priceAndCredit.price, // 支付金额
         credit: priceAndCredit.credit, // 支付积分
         preorder_time: new Date(), // 下单时间
-        estimated_finish_time: result.finish_time,  // 预估完成时间
-        estimated_arrive_time: result.arrive_time // 预估到达时间
+        estimated_finish_time: estimate.finish_time,  // 预估完成时间
+        estimated_arrive_time: estimate.arrive_time // 预估到达时间
       };
 
-      done(null, order);
-    },
-    function(order, done){
-      User.addAddress(user.phone, order, function(err){
-        if(err && err.name !== "EEXISTS"){
-          return done(err);
-        }
-        return done(null, order);
-      });
-    },
-    function(done){
-      Order.insert(order, function(err, orders){
+      Order.insert(orderdata, function(err, orders){
         if(err) return done(err);
-        order._id = orders[0]._id;
+        order = orders[0];
         done(null);
       });
     },
     function(done){
-      User.updateDefaultCars(user.phone, order.cars, done);
+      console.log("update user address");
+      User.addAddress(user.phone, order, function(err){
+        if(err && err.name !== "EEXISTS"){
+          return done(err);
+        }
+        return done(null);
+      });
     },
     function(done){
+      console.log("update default cars");
+      User.updateDefaultCars(user.phone, order.cars, function(err){
+        if(err){
+          return done(err);
+        }
+
+        done(null);
+      });
+    },
+    function(done){
+      console.log("pay_request");
       wechat_user.pay_request(req, {
         id: order._id,
         price: order.price,
@@ -218,15 +232,18 @@ exports.confirm = function(req,res,next){
         }
       }, done);
     }
-  ], function(err, order){
+  ], function(err, payment_args){
     if(err){
       return next(err);
     }
 
-    res.json({
-      payargs: payment_args,
-      orderId: order._id
-    });
+    if(process.env.DEBUG){
+      res.json({
+        orderId: order._id
+      });
+    }else{
+      res.json(payment_args);
+    }
   });
 }
 
