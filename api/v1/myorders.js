@@ -92,33 +92,37 @@ exports.cancel = function(req,res,next){
       if(reason == "order_cancel"){
         // 向腾讯发起退款请求
 
-        async.waterfall([
-          function(done){
-            Refund.insert({}, function(err, refunds){
-              if(err){
-                return done(err);
-              }
-              done(null, refunds[0]._id);
-            })
-          },
-          function(refundId, done){
-            wechat_user.refund({
-              out_trade_no: order._id,
-              out_refund_no: refundId,
-              total_fee: order.price /* 100 */,
-              refund_fee: order.price
-            }, function(err, data){
-              if(err){
-                if(err.name == "BusinessError"){
-                  done(data.err_code_des);
+        if(process.env.DEBUG){
+          done(null);
+        }else{
+          async.waterfall([
+            function(done){
+              Refund.insert({}, function(err, refunds){
+                if(err){
+                  return done(err);
                 }
-                return done(err);
-              }
+                done(null, refunds[0]._id);
+              })
+            },
+            function(refundId, done){
+              wechat_user.refund({
+                out_trade_no: order._id,
+                out_refund_no: refundId,
+                total_fee: order.price /* 100 */,
+                refund_fee: order.price
+              }, function(err, data){
+                if(err){
+                  if(err.name == "BusinessError"){
+                    done(data.err_code_des);
+                  }
+                  return done(err);
+                }
 
-              done(null, data);
-            });
-          }
-        ], done);
+                done(null, data);
+              });
+            }
+          ], done);
+        }
       }else{
         done(null);
       }
