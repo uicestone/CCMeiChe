@@ -1,5 +1,7 @@
 extends layout
 block content
+
+  include menu
   h1.h1 我的信息
   .section
     h2.h2 账户
@@ -8,8 +10,8 @@ block content
         .label 手机
         .text #{user.phone}
       li.row
-        .label 余额
-        .text #{user.credit || 0}
+        .label 积分
+        .text #{user.credit || 0} cc
 
   .section
     h2.h2 优惠券
@@ -58,3 +60,4 @@ block content
   .button 保存
 
   +facade('myinfos')
+  +facade("menu")
