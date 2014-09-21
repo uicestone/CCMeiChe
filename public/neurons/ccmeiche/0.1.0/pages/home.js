@@ -352,21 +352,19 @@ $("#go-wash").on("click", function(e){
   }
 
   el.prop("disabled",true);
-  $.post("/api/v1/preorder", {
+  $.post("/api/v1/estimate", {
     latlng: order.latlng
   },"json").done(function(result){
     panelPreOrder.show({
-      data: {
-        phone: window.user.phone,
-        address: order.address,
-        carpark: order.carpark,
-        cars: order.cars,
-        price: order.price,
-        service: order.service,
-        finish_time: result.finish_time
-      },
-      order: order
+      phone: window.user.phone,
+      address: order.address,
+      carpark: order.carpark,
+      cars: order.cars,
+      price: order.price,
+      service: order.service,
+      finish_time: result.finish_time
     });
+    panelPreOrder.order = order;
   }).fail(function(xhr){
     popMessage(xhr);
     el.prop("disabled",false);
@@ -819,9 +817,7 @@ var popMessage = require("../mod/popmessage");
 var preorderPanel = swipeModal.create({
   button: $("#go-wash"),
   template:  require("../tpl/preorder.html"),
-  santitize: function(config){
-    var order = this.order = config.order;
-    var data = this.data = config.data;
+  santitize: function(data){
     data.time = formatTime(data.finish_time);
     return data;
   },

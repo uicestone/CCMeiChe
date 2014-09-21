@@ -6,9 +6,7 @@ var popMessage = require("../mod/popmessage");
 var preorderPanel = swipeModal.create({
   button: $("#go-wash"),
   template:  require("../tpl/preorder.html"),
-  santitize: function(config){
-    var order = this.order = config.order;
-    var data = this.data = config.data;
+  santitize: function(data){
     data.time = formatTime(data.finish_time);
     return data;
   },
