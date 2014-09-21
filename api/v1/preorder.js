@@ -146,7 +146,6 @@ function nearestWorker(latlng, workers, callback){
         moment.duration(+finish_time - (+ new Date())).humanize()
       );
       done(null,{
-        worker: worker,
         drive_time: drive_time,
         wash_time: wash_time,
         arrive_time: arrive_time,
@@ -159,7 +158,6 @@ function nearestWorker(latlng, workers, callback){
       return b.finish_time > a.finish_time ? -1 : 1;
     }
     results = results.sort(compare_nearest);
-    console.log("选择车工%s",results[0].worker.name);
     var result = results[0];
     callback(null,result);
   });
@@ -167,12 +165,12 @@ function nearestWorker(latlng, workers, callback){
 
 exports.post = function (req, res, next) {
   var user_latlng = req.body.latlng;
-  var service = req.body.service;
-  var use_credit = req.body.use_credit == "true";
-  var promo_count = +req.body.promo_count;
-  var address = req.body.address;
-  var cars = req.body.cars;
-  var carpark = req.body.carpark;
+  // var service = req.body.service;
+  // var use_credit = req.body.use_credit == "true";
+  // var promo_count = +req.body.promo_count;
+  // var address = req.body.address;
+  // var cars = req.body.cars;
+  // var carpark = req.body.carpark;
 
 
   // more validations here
@@ -183,26 +181,26 @@ exports.post = function (req, res, next) {
     });
   }
 
-  if (!service || !service._id){
-    return next({
-      status: 400,
-      message: "invalid service"
-    });
-  }
+  // if (!service || !service._id){
+  //   return next({
+  //     status: 400,
+  //     message: "invalid service"
+  //   });
+  // }
 
   var user = req.user;
-  var valid = validatePromoCount({
-    service: service,
-    user: user,
-    promo_count: promo_count
-  });
+  // var valid = validatePromoCount({
+  //   service: service,
+  //   user: user,
+  //   promo_count: promo_count
+  // });
 
-  if(!valid){
-    return next({
-      status: 401,
-      message: "您没有足够的优惠券"
-    });
-  }
+  // if(!valid){
+  //   return next({
+  //     status: 401,
+  //     message: "您没有足够的优惠券"
+  //   });
+  // }
 
   user_latlng = user_latlng.split(",").map(function(item){return +item});
 
@@ -213,42 +211,42 @@ exports.post = function (req, res, next) {
     function(workers, done){
       nearestWorker(user_latlng,workers, done);
     },
-    function(result, done){
-      var priceAndCredit = calculatePriceAndCredit({
-        service: service,
-        use_credit: use_credit,
-        promo_count: promo_count,
-        user: user,
-        cars: cars
-      });
+    // function(result, done){
+    //   var priceAndCredit = calculatePriceAndCredit({
+    //     service: service,
+    //     use_credit: use_credit,
+    //     promo_count: promo_count,
+    //     user: user,
+    //     cars: cars
+    //   });
 
-      var order = {
-        worker: _.pick(result.worker,'_id','openid'), //订单对应的车工
-        user: _.pick(user,'_id','openid','phone'),  //下单用户
-        cars: cars, //下单车辆
-        service: service, //选择的服务
-        address: address, //用户地址
-        latlng: user_latlng, //订单经纬度
-        carpark: carpark, //车辆停放位置
-        use_credit: use_credit, //是否使用积分
-        promo_count: promo_count, //使用几张优惠券
-        price: priceAndCredit.price, // 支付金额
-        credit: priceAndCredit.credit, // 支付积分
-        preorder_time: new Date(), // 下单时间
-        estimated_finish_time: result.finish_time,  // 预估完成时间
-        estimated_arrive_time: result.arrive_time // 预估到达时间
-      };
+    //   var order = {
+    //     worker: _.pick(result.worker,'_id','openid'), //订单对应的车工
+    //     user: _.pick(user,'_id','openid','phone'),  //下单用户
+    //     cars: cars, //下单车辆
+    //     service: service, //选择的服务
+    //     address: address, //用户地址
+    //     latlng: user_latlng, //订单经纬度
+    //     carpark: carpark, //车辆停放位置
+    //     use_credit: use_credit, //是否使用积分
+    //     promo_count: promo_count, //使用几张优惠券
+    //     price: priceAndCredit.price, // 支付金额
+    //     credit: priceAndCredit.credit, // 支付积分
+    //     preorder_time: new Date(), // 下单时间
+    //     estimated_finish_time: result.finish_time,  // 预估完成时间
+    //     estimated_arrive_time: result.arrive_time // 预估到达时间
+    //   };
 
-      done(null, order);
-    },
-    function(order, done){
-      User.addAddress(user.phone, order, function(err){
-        if(err && err.name !== "EEXISTS"){
-          return done(err);
-        }
-        return done(null, order);
-      });
-    }
+    //   done(null, order);
+    // },
+    // function(order, done){
+    //   User.addAddress(user.phone, order, function(err){
+    //     if(err && err.name !== "EEXISTS"){
+    //       return done(err);
+    //     }
+    //     return done(null, order);
+    //   });
+    // }
   ], function(err, order){
     if(err){
       return next(err);

@@ -320,7 +320,7 @@ $("#go-wash").on("click", function(e){
     e.preventDefault();
     return;
   }
-  var data = {
+  var order = {
     carpark:$(".carpark input").val(),
     address:$("#address").val(),
     latlng :$("#latlng").val(),
@@ -331,30 +331,40 @@ $("#go-wash").on("click", function(e){
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
 
-  if(!data.cars.length){
+  if(!order.cars.length){
     alert("请添加车辆");
     return;
   }
 
-  if(!data.address){
+  if(!order.address){
     alert("请填写地址");
     return;
   }
 
-  if(!data.latlng){
+  if(!order.latlng){
     alert("请选择确切位置");
     return;
   }
 
-  if(!data.carpark){
+  if(!order.carpark){
     alert("请填写具体车位");
     return;
   }
 
   el.prop("disabled",true);
-  $.post("/api/v1/preorder",data,"json").done(function(order){
+  $.post("/api/v1/preorder", {
+    latlng: order.latlng
+  },"json").done(function(result){
     panelPreOrder.show({
-      data: data,
+      data: {
+        phone: window.user.phone,
+        address: order.address,
+        carpark: order.carpark,
+        cars: order.cars,
+        price: order.price,
+        service: order.service,
+        finish_time: result.finish_time
+      },
       order: order
     });
   }).fail(function(xhr){
@@ -370,8 +380,6 @@ if(!user.cars.length){
   $(".blank").hide();
   $("body").css("position","static");
 }
-// require.async("./addcar.js",function(){});
-// require.async("./preorder.js",function(){});
 
 }, {
     entries:entries,
@@ -813,12 +821,8 @@ var preorderPanel = swipeModal.create({
   template:  require("../tpl/preorder.html"),
   santitize: function(config){
     var order = this.order = config.order;
-    this.data = config.data;
-    var data = {};
-    for(var k in order){
-      data[k] = order[k];
-    }
-    data.time = formatTime(data);
+    var data = this.data = config.data;
+    data.time = formatTime(data.finish_time);
     return data;
   },
   getData: function(){
@@ -858,18 +862,16 @@ var preorderPanel = swipeModal.create({
 
 module.exports = preorderPanel;
 
-function formatTime(order){
+function formatTime(estimated_finish_time){
   function addZero(num){
     return num < 10 ? ("0" + num) : num;
   }
-  var preorder_time = order.preorder_time;
-  var estimated_finish_time = order.estimated_finish_time;
 
   var hour = 1000 * 60 * 60;
   var minute = 1000 * 60;
   var second = 1000;
 
-  var milliseconds = new Date(estimated_finish_time) - new Date(preorder_time);
+  var milliseconds = +new Date(estimated_finish_time) - +new Date();
 
   var hours = Math.floor(milliseconds / hour);
   milliseconds = milliseconds - hours * hour;
@@ -1145,7 +1147,7 @@ module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆
 });
 
 define(_19, [], function(require, exports, module, __filename, __dirname) {
-module.exports = '<div id="preorder" class="container"><h2 class="h2">提交订单</h2><div class="order"><div class="inner"><div class="row"><div class="label">手机：</div><div class="text">@{it.user.phone}</div></div><?js it.cars.forEach(function(car,index){ ?><div class="row"><div class="label">车型：</div><div class="text"><p>@{car.type}</p><p>@{car.number}</p></div></div><?js }); ?><div class="row"><div class="label">地址：</div><div class="text">@{it.address} @{it.carpark}</div></div><div class="row"><div class="label">服务：</div><div class="text">@{it.service.title}</div></div></div></div><h2 class="h2">预估时间</h2><div class="estimate"><div class="time">@{it.time}</div><div class="text"><p>我们将在预估时间内完成洗车，预估时间以付款后为准</p><p>您也可在我们达到前随时取消订单</p></div></div><h2 class="h2">应付金额<div class="price">￥@{it.price}</div></h2><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
+module.exports = '<div id="preorder" class="container"><h2 class="h2">提交订单</h2><div class="order"><div class="inner"><div class="row"><div class="label">手机：</div><div class="text">@{it.phone}</div></div><?js it.cars.forEach(function(car,index){ ?><div class="row"><div class="label">车型：</div><div class="text"><p>@{car.type}</p><p>@{car.number}</p></div></div><?js }); ?><div class="row"><div class="label">地址：</div><div class="text">@{it.address} @{it.carpark}</div></div><div class="row"><div class="label">服务：</div><div class="text">@{it.service.title}</div></div></div></div><h2 class="h2">预估时间</h2><div class="estimate"><div class="time">@{it.time}</div><div class="text"><p>我们将在预估时间内完成洗车，预估时间以付款后为准</p><p>您也可在我们达到前随时取消订单</p></div></div><h2 class="h2">应付金额<div class="price">￥@{it.price}</div></h2><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap

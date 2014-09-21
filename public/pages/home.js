@@ -284,7 +284,7 @@ $("#go-wash").on("click", function(e){
     e.preventDefault();
     return;
   }
-  var data = {
+  var order = {
     carpark:$(".carpark input").val(),
     address:$("#address").val(),
     latlng :$("#latlng").val(),
@@ -295,30 +295,40 @@ $("#go-wash").on("click", function(e){
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
 
-  if(!data.cars.length){
+  if(!order.cars.length){
     alert("请添加车辆");
     return;
   }
 
-  if(!data.address){
+  if(!order.address){
     alert("请填写地址");
     return;
   }
 
-  if(!data.latlng){
+  if(!order.latlng){
     alert("请选择确切位置");
     return;
   }
 
-  if(!data.carpark){
+  if(!order.carpark){
     alert("请填写具体车位");
     return;
   }
 
   el.prop("disabled",true);
-  $.post("/api/v1/preorder",data,"json").done(function(order){
+  $.post("/api/v1/preorder", {
+    latlng: order.latlng
+  },"json").done(function(result){
     panelPreOrder.show({
-      data: data,
+      data: {
+        phone: window.user.phone,
+        address: order.address,
+        carpark: order.carpark,
+        cars: order.cars,
+        price: order.price,
+        service: order.service,
+        finish_time: result.finish_time
+      },
       order: order
     });
   }).fail(function(xhr){
@@ -334,5 +344,3 @@ if(!user.cars.length){
   $(".blank").hide();
   $("body").css("position","static");
 }
-// require.async("./addcar.js",function(){});
-// require.async("./preorder.js",function(){});

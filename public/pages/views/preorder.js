@@ -8,12 +8,8 @@ var preorderPanel = swipeModal.create({
   template:  require("../tpl/preorder.html"),
   santitize: function(config){
     var order = this.order = config.order;
-    this.data = config.data;
-    var data = {};
-    for(var k in order){
-      data[k] = order[k];
-    }
-    data.time = formatTime(data);
+    var data = this.data = config.data;
+    data.time = formatTime(data.finish_time);
     return data;
   },
   getData: function(){
@@ -53,18 +49,16 @@ var preorderPanel = swipeModal.create({
 
 module.exports = preorderPanel;
 
-function formatTime(order){
+function formatTime(estimated_finish_time){
   function addZero(num){
     return num < 10 ? ("0" + num) : num;
   }
-  var preorder_time = order.preorder_time;
-  var estimated_finish_time = order.estimated_finish_time;
 
   var hour = 1000 * 60 * 60;
   var minute = 1000 * 60;
   var second = 1000;
 
-  var milliseconds = new Date(estimated_finish_time) - new Date(preorder_time);
+  var milliseconds = +new Date(estimated_finish_time) - +new Date();
 
   var hours = Math.floor(milliseconds / hour);
   milliseconds = milliseconds - hours * hour;
