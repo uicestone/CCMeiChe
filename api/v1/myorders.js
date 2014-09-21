@@ -13,7 +13,6 @@ var async = require("async");
 moment.locale('zh-cn');
 
 
-
 function validatePromoCount(data){
   var service = data.service;
   var user = data.user;
