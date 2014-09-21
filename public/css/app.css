@@ -797,6 +797,7 @@ body.openmenu {
 #preorder .order .inner .row .label {
   text-align: right;
   line-height: 23px;
+  min-height: 23px;
   width: 60px;
   float: left;
 }
@@ -1171,29 +1172,35 @@ body.openmenu {
 #order-result .breakage.active ellipse {
   fill: #fff;
 }
-#recharge .h1 {
+#recharge .h1,
+#promos .h1 {
   font-size: 20px;
   text-align: center;
   margin: 50px auto 10px auto;
 }
-#recharge .choices {
+#recharge .choices,
+#promos .choices {
   margin: 0 30px 30px 30px;
 }
-#recharge .choices .row {
+#recharge .choices .row,
+#promos .choices .row {
   text-align: center;
   color: #b6b6b6;
   margin-bottom: 1px;
   background-color: #fff;
   padding: 10px 0;
 }
-#recharge .choices .row.active {
+#recharge .choices .row.active,
+#promos .choices .row.active {
   color: #fff;
   background-color: #c70462;
 }
-#recharge .choices .row .price {
+#recharge .choices .row .price,
+#promos .choices .row .price {
   font-size: 16px;
 }
-#recharge .choices .row .promo {
+#recharge .choices .row .promo,
+#promos .choices .row .promo {
   padding: 0 15px;
   font-size: 12px;
   text-align: center;

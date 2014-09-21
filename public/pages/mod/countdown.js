@@ -12,6 +12,11 @@ function calculateTime(){
   $(".time").forEach(function(elem,i){
     var el = $(elem);
     var finish_time = new Date(el.attr("data-finish"));
+
+    if(appConfig.service == "worker"){
+      finish_time = new Date( +finish_time - 15 * 60 * 1000 );
+    }
+
     var now = new Date();
     var duration = finish_time - now;
     var negative = now > finish_time ? "-" : "";

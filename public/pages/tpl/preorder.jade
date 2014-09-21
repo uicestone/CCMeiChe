@@ -7,7 +7,7 @@
         .text @{it.phone}
       | <?js it.cars.forEach(function(car,index){ ?>
       .row
-        .label 车型：
+        .label <?js if(index == 0){ ?>车型：<?js }else{ ?>   <?js } ?>
         .text
           p @{car.type}
           p @{car.number}

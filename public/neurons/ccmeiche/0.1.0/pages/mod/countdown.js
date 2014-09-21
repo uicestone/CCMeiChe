@@ -15,19 +15,20 @@ var _11 = "ccmeiche@0.1.0/pages/mod/uploader.js";
 var _12 = "ccmeiche@0.1.0/pages/myinfos.js";
 var _13 = "ccmeiche@0.1.0/pages/myorders.js";
 var _14 = "ccmeiche@0.1.0/pages/order.js";
-var _15 = "ccmeiche@0.1.0/pages/recharge.js";
-var _16 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _20 = "ccmeiche@0.1.0/pages/views/addcar.js";
-var _21 = "ccmeiche@0.1.0/pages/views/finishorder.js";
-var _22 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _23 = "zepto@^1.1.3";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22];
+var _15 = "ccmeiche@0.1.0/pages/promos.js";
+var _16 = "ccmeiche@0.1.0/pages/recharge.js";
+var _17 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _21 = "ccmeiche@0.1.0/pages/views/addcar.js";
+var _22 = "ccmeiche@0.1.0/pages/views/finishorder.js";
+var _23 = "ccmeiche@0.1.0/pages/views/preorder.js";
+var _24 = "zepto@^1.1.3";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_4, [_23], function(require, exports, module, __filename, __dirname) {
+define(_4, [_24], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 
 function addZero(num){
@@ -42,6 +43,11 @@ function calculateTime(){
   $(".time").forEach(function(elem,i){
     var el = $(elem);
     var finish_time = new Date(el.attr("data-finish"));
+
+    if(appConfig.service == "worker"){
+      finish_time = new Date( +finish_time - 15 * 60 * 1000 );
+    }
+
     var now = new Date();
     var duration = finish_time - now;
     var negative = now > finish_time ? "-" : "";

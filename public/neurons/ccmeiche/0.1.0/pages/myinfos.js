@@ -15,25 +15,26 @@ var _11 = "ccmeiche@0.1.0/pages/mod/uploader.js";
 var _12 = "ccmeiche@0.1.0/pages/myinfos.js";
 var _13 = "ccmeiche@0.1.0/pages/myorders.js";
 var _14 = "ccmeiche@0.1.0/pages/order.js";
-var _15 = "ccmeiche@0.1.0/pages/recharge.js";
-var _16 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _20 = "ccmeiche@0.1.0/pages/views/addcar.js";
-var _21 = "ccmeiche@0.1.0/pages/views/finishorder.js";
-var _22 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _23 = "zepto@^1.1.3";
-var _24 = "tpl@~0.2.1";
-var _25 = "util@^1.0.4";
-var _26 = "events@^1.0.5";
-var _27 = "uploader@~0.1.4";
-var _28 = "view-swipe@~0.1.4";
-var _29 = "hashstate@~0.1.0";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22];
+var _15 = "ccmeiche@0.1.0/pages/promos.js";
+var _16 = "ccmeiche@0.1.0/pages/recharge.js";
+var _17 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _21 = "ccmeiche@0.1.0/pages/views/addcar.js";
+var _22 = "ccmeiche@0.1.0/pages/views/finishorder.js";
+var _23 = "ccmeiche@0.1.0/pages/views/preorder.js";
+var _24 = "zepto@^1.1.3";
+var _25 = "tpl@~0.2.1";
+var _26 = "util@^1.0.4";
+var _27 = "events@^1.0.5";
+var _28 = "uploader@~0.1.4";
+var _29 = "view-swipe@~0.1.4";
+var _30 = "hashstate@~0.1.0";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_12, [_23,_24,_20,_3,_7], function(require, exports, module, __filename, __dirname) {
+define(_12, [_24,_25,_21,_3,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 
@@ -133,10 +134,10 @@ $("#save-address").on("tap",function(){
 });
 }, {
     entries:entries,
-    map:mix({"./views/addcar":_20,"./mod/autocomplete":_3,"./mod/popmessage":_7},globalMap)
+    map:mix({"./views/addcar":_21,"./mod/autocomplete":_3,"./mod/popmessage":_7},globalMap)
 });
 
-define(_20, [_23,_11,_3,_7,_10,_16], function(require, exports, module, __filename, __dirname) {
+define(_21, [_24,_11,_3,_7,_10,_17], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -233,10 +234,10 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_16},globalMap)
+    map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_17},globalMap)
 });
 
-define(_3, [_23,_25,_26], function(require, exports, module, __filename, __dirname) {
+define(_3, [_24,_26,_27], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -344,7 +345,7 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_7, [_23], function(require, exports, module, __filename, __dirname) {
+define(_7, [_24], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
   var json = {}
@@ -411,7 +412,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_11, [_23,_27], function(require, exports, module, __filename, __dirname) {
+define(_11, [_24,_28], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -502,7 +503,7 @@ exports.init = function(selector,options){
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
-    maxItems: type == "single" ? -1 : 2
+    maxItems: type == "single" ? -1 : options.maxItems
   });
 
   var elem = $(selector);
@@ -538,7 +539,7 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_10, [_25,_26,_28,_24,_29,_23], function(require, exports, module, __filename, __dirname) {
+define(_10, [_26,_27,_29,_25,_30,_24], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
@@ -637,7 +638,7 @@ exports.create = function(config){
     map:globalMap
 });
 
-define(_16, [], function(require, exports, module, __filename, __dirname) {
+define(_17, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,

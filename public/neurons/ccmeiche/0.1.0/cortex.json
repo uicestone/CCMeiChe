@@ -30,6 +30,7 @@
     "./pages/myinfos.js",
     "./pages/myorders.js",
     "./pages/order.js",
+    "./pages/promos.js",
     "./pages/recharge.js",
     "./pages/tpl/addcar.html.js",
     "./pages/tpl/finishorder.html.js",

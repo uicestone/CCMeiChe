@@ -27,8 +27,8 @@ var _23 = "ccmeiche@0.1.0/pages/views/preorder.js";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_19, [], function(require, exports, module, __filename, __dirname) {
-module.exports = ''
+define(_15, [], function(require, exports, module, __filename, __dirname) {
+promos.js
 }, {
     entries:entries,
     map:globalMap

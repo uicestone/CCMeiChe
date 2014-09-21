@@ -1,0 +1,12 @@
+extends layout
+block content
+  include menu
+  h1.h1 优惠券
+  ul.choices
+    for choice in choices
+      li.row(data-price="#{choice.price}")
+        .price #{choice.price}cc
+        .promo #{choice.title}
+  .button 提交
+  +facade('recharge')
+  +facade('menu')
