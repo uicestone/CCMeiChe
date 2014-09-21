@@ -12,6 +12,10 @@ module.exports = Order;
 db.bind('order', {
   confirm: function (id, callback) {
     var self = this;
+
+
+    console.log("confirm asdasd", id);
+
     self.findById(id, function (err, order) {
       if (err || !order) {
         return callback(err);
@@ -39,6 +43,9 @@ db.bind('order', {
         if(err){
           return callback(err);
         }
+
+        console.log("lalalalalal", order);
+
         callback(null, order);
       });
     });

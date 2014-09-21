@@ -73,7 +73,6 @@ function nearestWorker(latlng, workers, callback){
 
       var arrive_time = new Date(+base_time + drive_time);
       var finish_time = new Date(+base_time + drive_time + wash_time);
-      console.log(drive_time, wash_time);
       console.log("车工%s可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
         worker.name,
         moment(base_time).format("lll"),
