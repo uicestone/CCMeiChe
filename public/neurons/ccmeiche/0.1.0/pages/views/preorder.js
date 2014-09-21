@@ -65,7 +65,7 @@ var preorderPanel = swipeModal.create({
           location.href = "/myorders";
         }).fail(popMessage);
       }else{
-        WeixinJSBridge.invoke('getBrandWCPayRequest',result.payargs,function(res){
+        WeixinJSBridge.invoke('getBrandWCPayRequest', result, function(res){
           var message = res.err_msg;
           if(message == "get_brand_wcpay_request:ok"){
             popMessage("支付成功，正在跳转");
