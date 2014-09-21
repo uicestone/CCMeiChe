@@ -12,66 +12,6 @@ function washtime(){
   return config.wash_time * 60 * 1000;
 }
 
-// 实际需要支付的金额（由service，use_credit, promo_count，以及user.promo计算得到）
-function calculatePriceAndCredit(data){
-  var service = data.service;
-  var use_credit = data.use_credit;
-  var user = data.user;
-  var promo_count = data.promo_count;
-  var cars = data.cars;
-
-  var cars_count = cars.length;
-  var price = 0;
-  var credit = 0;
-  var user_credit = user.credit;
-
-  for(var i = 0; i < cars_count; i++){
-    if(promo_count){
-      promo_count--;
-    }else{
-      price += (+service.price);
-    }
-  }
-
-  if(use_credit){
-    if(user_credit > price){
-      credit = price;
-      price = 0;
-    }else{
-      credit = user_credit;
-      price = price - credit;
-    }
-  }
-
-  return {
-    credit: credit,
-    price: price
-  };
-}
-
-function validatePromoCount(data){
-  var service = data.service;
-  var user = data.user;
-  var promo_count = +data.promo_count;
-  if(!promo_count){
-    return true;
-  }
-
-  if(!user.promo){
-    return false;
-  }
-
-  var my_promo = user.promo.filter(function(promo){
-    return promo._id == service._id;
-  });
-
-  if(!my_promo || my_promo.amount < promo_count){
-    return false;
-  }
-
-  return true;
-}
-
 function findWorkers(latlng,callback){
   Worker.find({
     openid:{
@@ -165,13 +105,6 @@ function nearestWorker(latlng, workers, callback){
 
 exports.post = function (req, res, next) {
   var user_latlng = req.body.latlng;
-  // var service = req.body.service;
-  // var use_credit = req.body.use_credit == "true";
-  // var promo_count = +req.body.promo_count;
-  // var address = req.body.address;
-  // var cars = req.body.cars;
-  // var carpark = req.body.carpark;
-
 
   // more validations here
   if (!user_latlng) {
@@ -181,26 +114,7 @@ exports.post = function (req, res, next) {
     });
   }
 
-  // if (!service || !service._id){
-  //   return next({
-  //     status: 400,
-  //     message: "invalid service"
-  //   });
-  // }
-
   var user = req.user;
-  // var valid = validatePromoCount({
-  //   service: service,
-  //   user: user,
-  //   promo_count: promo_count
-  // });
-
-  // if(!valid){
-  //   return next({
-  //     status: 401,
-  //     message: "您没有足够的优惠券"
-  //   });
-  // }
 
   user_latlng = user_latlng.split(",").map(function(item){return +item});
 
@@ -210,43 +124,7 @@ exports.post = function (req, res, next) {
     },
     function(workers, done){
       nearestWorker(user_latlng,workers, done);
-    },
-    // function(result, done){
-    //   var priceAndCredit = calculatePriceAndCredit({
-    //     service: service,
-    //     use_credit: use_credit,
-    //     promo_count: promo_count,
-    //     user: user,
-    //     cars: cars
-    //   });
-
-    //   var order = {
-    //     worker: _.pick(result.worker,'_id','openid'), //订单对应的车工
-    //     user: _.pick(user,'_id','openid','phone'),  //下单用户
-    //     cars: cars, //下单车辆
-    //     service: service, //选择的服务
-    //     address: address, //用户地址
-    //     latlng: user_latlng, //订单经纬度
-    //     carpark: carpark, //车辆停放位置
-    //     use_credit: use_credit, //是否使用积分
-    //     promo_count: promo_count, //使用几张优惠券
-    //     price: priceAndCredit.price, // 支付金额
-    //     credit: priceAndCredit.credit, // 支付积分
-    //     preorder_time: new Date(), // 下单时间
-    //     estimated_finish_time: result.finish_time,  // 预估完成时间
-    //     estimated_arrive_time: result.arrive_time // 预估到达时间
-    //   };
-
-    //   done(null, order);
-    // },
-    // function(order, done){
-    //   User.addAddress(user.phone, order, function(err){
-    //     if(err && err.name !== "EEXISTS"){
-    //       return done(err);
-    //     }
-    //     return done(null, order);
-    //   });
-    // }
+    }
   ], function(err, order){
     if(err){
       return next(err);
