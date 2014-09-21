@@ -1,5 +1,6 @@
 var config = require('config');
 var model = require('../../model');
+var estimate = require("../../util/estimate");
 var wechat_user = require('../../util/wechat').user;
 var wechat_worker = require('../../util/wechat').worker;
 var WechatUserApi = wechat_user.api;
