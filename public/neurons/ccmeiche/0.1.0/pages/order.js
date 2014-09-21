@@ -210,11 +210,11 @@ FinishOrder.prototype.show = function(data){
   });
 
 
-  elem.find(".submit").on("click", function(){
+  elem.find(".submit").on("tap", function(){
     self.confirm();
   });
 
-  elem.find(".cancel").on("click", function(){
+  elem.find(".cancel").on("tap", function(){
     self.emit("cancel");
     viewSwipe.out("bottom");
   });
@@ -432,7 +432,7 @@ function MultiSelect(container,itemSelector){
   container = $(container);
   var items = this.items = container.find(itemSelector);
   items.each(function(i,item){
-    $(item).on("click",function(){
+    $(item).on("tap",function(){
       $(this).toggleClass("active");
     })
   });

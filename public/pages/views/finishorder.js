@@ -71,11 +71,11 @@ FinishOrder.prototype.show = function(data){
   });
 
 
-  elem.find(".submit").on("click", function(){
+  elem.find(".submit").on("tap", function(){
     self.confirm();
   });
 
-  elem.find(".cancel").on("click", function(){
+  elem.find(".cancel").on("tap", function(){
     self.emit("cancel");
     viewSwipe.out("bottom");
   });

@@ -64,7 +64,7 @@ SwipeModal.prototype.show = function(data){
   var submit = config.submit;
   var cancel = config.cancel;
   var elem = this.elem = $(tpl.render(config.template,data));
-  elem.find(".submit").on("click",function(){
+  elem.find(".submit").on("tap",function(){
     var data = self.getData();
     var isValid = self.validate(data);
 
@@ -79,7 +79,7 @@ SwipeModal.prototype.show = function(data){
     }
   });
 
-  elem.find(".cancel").on("click", function(){
+  elem.find(".cancel").on("tap", function(){
     self.emit("cancel");
   });
 

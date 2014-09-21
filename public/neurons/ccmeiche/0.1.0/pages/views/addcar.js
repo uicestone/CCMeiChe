@@ -327,7 +327,7 @@ function Autocomplete(input, pattern, parser, getVal){
         list.empty();
         data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
-          li.on("click",function(){
+          li.on("tap",function(){
             input.val(getVal(data[i]));
             self.emit("select",data[i]);
             watcher.stop();
@@ -336,7 +336,7 @@ function Autocomplete(input, pattern, parser, getVal){
           $(list).append(li);
         });
         var packup = $("<li class='packup'>收起</li>");
-        packup.on("click",function(){
+        packup.on("tap",function(){
           self.hide();
         });
         list.append(packup);
@@ -506,7 +506,7 @@ SwipeModal.prototype.show = function(data){
   var submit = config.submit;
   var cancel = config.cancel;
   var elem = this.elem = $(tpl.render(config.template,data));
-  elem.find(".submit").on("click",function(){
+  elem.find(".submit").on("tap",function(){
     var data = self.getData();
     var isValid = self.validate(data);
 
@@ -521,7 +521,7 @@ SwipeModal.prototype.show = function(data){
     }
   });
 
-  elem.find(".cancel").on("click", function(){
+  elem.find(".cancel").on("tap", function(){
     self.emit("cancel");
   });
 

@@ -51,7 +51,7 @@ carsSelect.on("close",function(){
   $("body").css("position","static");
 });
 // 选择车辆
-$(".cars .selected-cars").on("click", function(){
+$(".cars .selected-cars").on("tap", function(){
   carsSelect.open();
 });
 
@@ -74,7 +74,7 @@ panelAddCar.on("submit",function(data){
   }
   calculate();
 });
-addbtn.on("click", function(e){
+addbtn.on("tap", function(e){
   e.preventDefault();
   panelAddCar.show();
   setTimeout(function(){
@@ -115,7 +115,7 @@ var currentService = window.services[0];
     $("body").css("position","static");
   });
 
-  $(".services").on('click',function(){
+  $(".services").on('tap',function(){
     serviceSelect.open();
   });
 })();
@@ -149,7 +149,7 @@ $(".section.promo select").on("change",function(){
 });
 
 // 使用积分
-$(".credit .use").on("click",function(){
+$(".credit .use").on("tap",function(){
   var el = $(this);
   var text = el.find(".text");
   if(el.hasClass("active")){
@@ -243,7 +243,7 @@ function initDefaultLocationList(){
     var li = $("<li />");
     li.html(item.address + "<span class='small'>" + item.carpark + "</span>");
     li.appendTo(list);
-    li.on("click", function(){
+    li.on("tap", function(){
       addressInput.val(item.address);
       latlngInput.val(item.latlng);
       carparkInput.val(item.carpark);
@@ -253,7 +253,7 @@ function initDefaultLocationList(){
   });
 
   var packup = $("<li class='packup'>收起</li>");
-  packup.on("click",function(){
+  packup.on("tap",function(){
     list.hide();
   });
   packup.appendTo(list);
@@ -273,14 +273,14 @@ function popDefault(){
 }
 addressInput.on('focus',popDefault);
 addressInput.on('keyup',popDefault);
-addressInput.on("click",function(){
+addressInput.on("tap",function(){
   $(this)[0].focus();
   $(this)[0].select();
 });
 
 })();
 
-$("#go-wash").on("click", function(e){
+$("#go-wash").on("tap", function(e){
   var el = $(this);
   if(el.prop("disabled")){
     e.preventDefault();
@@ -339,7 +339,7 @@ $("#go-wash").on("click", function(e){
 });
 
 if(!user.cars.length){
-  $(".cars .add").trigger("click");
+  $(".cars .add").trigger("tap");
 }else{
   $(".blank").hide();
   $("body").css("position","static");

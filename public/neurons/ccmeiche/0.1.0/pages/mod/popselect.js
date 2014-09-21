@@ -90,7 +90,7 @@ PopSelect.prototype.render = function() {
 PopSelect.prototype.bind = function(){
   var self = this;
   var container = this.container;
-  container.find(".submit").on("click",function(){
+  container.find(".submit").on("tap",function(){
     var result = container.find(".active").map(function(i,el){
       return $(el).data("data");
     });
@@ -100,7 +100,7 @@ PopSelect.prototype.bind = function(){
     }
   });
 
-  container.find(".close").on("click",function(){
+  container.find(".close").on("tap",function(){
     self.close();
   });
 }
@@ -142,7 +142,7 @@ function SingleSelect(elem,selector){
   (function(){
     var current = null;
     var items = self.items = elem.find(selector);
-    items.on("click",function(){
+    items.on("tap",function(){
       elem.find(".active").removeClass("active");
       var me = $(this);
       if(me == current){
@@ -182,7 +182,7 @@ function MultiSelect(container,itemSelector){
   container = $(container);
   var items = this.items = container.find(itemSelector);
   items.each(function(i,item){
-    $(item).on("click",function(){
+    $(item).on("tap",function(){
       $(this).toggleClass("active");
     })
   });

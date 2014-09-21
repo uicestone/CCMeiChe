@@ -60,7 +60,7 @@ function Autocomplete(input, pattern, parser, getVal){
         list.empty();
         data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
-          li.on("click",function(){
+          li.on("tap",function(){
             input.val(getVal(data[i]));
             self.emit("select",data[i]);
             watcher.stop();
@@ -69,7 +69,7 @@ function Autocomplete(input, pattern, parser, getVal){
           $(list).append(li);
         });
         var packup = $("<li class='packup'>收起</li>");
-        packup.on("click",function(){
+        packup.on("tap",function(){
           self.hide();
         });
         list.append(packup);

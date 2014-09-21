@@ -31,11 +31,11 @@ define(_2, [_23], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 // 菜单展开收起
 (function(){
-  $(".menu").on("click",function(){
+  $(".menu").on("tap",function(){
     $("body").css("position","fixed");
     $("body").addClass("openmenu");
   });
-  $('.overlay').on("click",function(){
+  $('.overlay').on("tap",function(){
     $("body").css("position","static");
     $("body").removeClass("openmenu");
   });

@@ -33,7 +33,7 @@ var _29 = "uploader@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_23,_24,_25,_3,_9,_8,_7,_20,_22], function(require, exports, module, __filename, __dirname) {
+define(_0, [_23,_24,_25,_3,_9,_7,_8,_20,_22], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
@@ -87,7 +87,7 @@ carsSelect.on("close",function(){
   $("body").css("position","static");
 });
 // 选择车辆
-$(".cars .selected-cars").on("click", function(){
+$(".cars .selected-cars").on("tap", function(){
   carsSelect.open();
 });
 
@@ -110,7 +110,7 @@ panelAddCar.on("submit",function(data){
   }
   calculate();
 });
-addbtn.on("click", function(e){
+addbtn.on("tap", function(e){
   e.preventDefault();
   panelAddCar.show();
   setTimeout(function(){
@@ -151,7 +151,7 @@ var currentService = window.services[0];
     $("body").css("position","static");
   });
 
-  $(".services").on('click',function(){
+  $(".services").on('tap',function(){
     serviceSelect.open();
   });
 })();
@@ -185,7 +185,7 @@ $(".section.promo select").on("change",function(){
 });
 
 // 使用积分
-$(".credit .use").on("click",function(){
+$(".credit .use").on("tap",function(){
   var el = $(this);
   var text = el.find(".text");
   if(el.hasClass("active")){
@@ -279,7 +279,7 @@ function initDefaultLocationList(){
     var li = $("<li />");
     li.html(item.address + "<span class='small'>" + item.carpark + "</span>");
     li.appendTo(list);
-    li.on("click", function(){
+    li.on("tap", function(){
       addressInput.val(item.address);
       latlngInput.val(item.latlng);
       carparkInput.val(item.carpark);
@@ -289,7 +289,7 @@ function initDefaultLocationList(){
   });
 
   var packup = $("<li class='packup'>收起</li>");
-  packup.on("click",function(){
+  packup.on("tap",function(){
     list.hide();
   });
   packup.appendTo(list);
@@ -309,14 +309,14 @@ function popDefault(){
 }
 addressInput.on('focus',popDefault);
 addressInput.on('keyup',popDefault);
-addressInput.on("click",function(){
+addressInput.on("tap",function(){
   $(this)[0].focus();
   $(this)[0].select();
 });
 
 })();
 
-$("#go-wash").on("click", function(e){
+$("#go-wash").on("tap", function(e){
   var el = $(this);
   if(el.prop("disabled")){
     e.preventDefault();
@@ -375,7 +375,7 @@ $("#go-wash").on("click", function(e){
 });
 
 if(!user.cars.length){
-  $(".cars .add").trigger("click");
+  $(".cars .add").trigger("tap");
 }else{
   $(".blank").hide();
   $("body").css("position","static");
@@ -383,7 +383,7 @@ if(!user.cars.length){
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7,"./views/addcar":_20,"./views/preorder":_22},globalMap)
+    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_9,"./mod/popmessage":_7,"./mod/popselect":_8,"./views/addcar":_20,"./views/preorder":_22},globalMap)
 });
 
 define(_3, [_23,_26,_27], function(require, exports, module, __filename, __dirname) {
@@ -449,7 +449,7 @@ function Autocomplete(input, pattern, parser, getVal){
         list.empty();
         data.map(parser).forEach(function(item,i){
           var li = $("<li>" + item + "</li>");
-          li.on("click",function(){
+          li.on("tap",function(){
             input.val(getVal(data[i]));
             self.emit("select",data[i]);
             watcher.stop();
@@ -458,7 +458,7 @@ function Autocomplete(input, pattern, parser, getVal){
           $(list).append(li);
         });
         var packup = $("<li class='packup'>收起</li>");
-        packup.on("click",function(){
+        packup.on("tap",function(){
           self.hide();
         });
         list.append(packup);
@@ -504,7 +504,7 @@ function SingleSelect(elem,selector){
   (function(){
     var current = null;
     var items = self.items = elem.find(selector);
-    items.on("click",function(){
+    items.on("tap",function(){
       elem.find(".active").removeClass("active");
       var me = $(this);
       if(me == current){
@@ -535,109 +535,6 @@ module.exports = function(elem,selector){
 }, {
     entries:entries,
     map:globalMap
-});
-
-define(_8, [_23,_27,_26,_9,_6], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var singleSelect = require("./singleselect");
-var multiSelect = require("./multiselect");
-var events = require("events");
-var util = require("util");
-
-function PopSelect(choices, options){
-  this.parser = options.parser || function(v){return v;}
-  this.choices = choices;
-  this.type = options.type;
-  this.name = options.name;
-  var container = this.container =  $("<div class='popselect'>"
-      +"<div class='close'></div>"
-      +"<div class='choices'>"
-      +"<div class='inner'></div>"
-      +"</div>"
-    +"<div class='btn submit'>确认</div>"
-  +"</div>");
-  this.render();
-  this.bind();
-  var doc_height = $(window).height();
-  container.css("max-height",doc_height - 40);
-  container.find(".inner").css("max-height",doc_height - 200);
-  container.appendTo($("body"));
-  container.hide();
-  this.name && container.addClass(this.name);
-}
-
-util.inherits(PopSelect,events);
-
-
-PopSelect.prototype.render = function() {
-  var self = this;
-  var parser = this.parser;
-  var container = this.container;
-
-  var choices_elem = container.find(".choices .inner");
-  choices_elem.empty();
-  this.choices.forEach(function(choice){
-    var text = parser(choice);
-    var item = $("<div class='item'>" + text + "</div>");
-    item.data("data",choice);
-    choices_elem.append(item);
-  });
-
-  switch(this.type){
-    case "single":
-      this.selector = singleSelect(choices_elem,".item");
-      break;
-    case "multi":
-      this.selector = multiSelect(choices_elem,".item");
-      break;
-    default:
-      throw "invalid type " + this.type;
-  }
-};
-
-PopSelect.prototype.bind = function(){
-  var self = this;
-  var container = this.container;
-  container.find(".submit").on("click",function(){
-    var result = container.find(".active").map(function(i,el){
-      return $(el).data("data");
-    });
-    if(!self.validate || self.validate(result)){
-      self.emit("submit", Array.prototype.slice.call(result));
-      self.close();
-    }
-  });
-
-  container.find(".close").on("click",function(){
-    self.close();
-  });
-}
-
-PopSelect.prototype.select = function(item){
-  this.selector.select(item);
-}
-
-PopSelect.prototype.add = function(data){
-  this.choices.push(data);
-  this.render();
-}
-
-PopSelect.prototype.open = function(){
-  this.container.show();
-  this.emit("open");
-}
-
-PopSelect.prototype.close = function(){
-  this.container.hide();
-  this.emit("close");
-}
-
-module.exports = function(choices,options){
-  return new PopSelect(choices,options);
-}
-}, {
-    entries:entries,
-    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
 });
 
 define(_7, [_23], function(require, exports, module, __filename, __dirname) {
@@ -705,6 +602,109 @@ module.exports = popMessage
 }, {
     entries:entries,
     map:globalMap
+});
+
+define(_8, [_23,_27,_26,_9,_6], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var singleSelect = require("./singleselect");
+var multiSelect = require("./multiselect");
+var events = require("events");
+var util = require("util");
+
+function PopSelect(choices, options){
+  this.parser = options.parser || function(v){return v;}
+  this.choices = choices;
+  this.type = options.type;
+  this.name = options.name;
+  var container = this.container =  $("<div class='popselect'>"
+      +"<div class='close'></div>"
+      +"<div class='choices'>"
+      +"<div class='inner'></div>"
+      +"</div>"
+    +"<div class='btn submit'>确认</div>"
+  +"</div>");
+  this.render();
+  this.bind();
+  var doc_height = $(window).height();
+  container.css("max-height",doc_height - 40);
+  container.find(".inner").css("max-height",doc_height - 200);
+  container.appendTo($("body"));
+  container.hide();
+  this.name && container.addClass(this.name);
+}
+
+util.inherits(PopSelect,events);
+
+
+PopSelect.prototype.render = function() {
+  var self = this;
+  var parser = this.parser;
+  var container = this.container;
+
+  var choices_elem = container.find(".choices .inner");
+  choices_elem.empty();
+  this.choices.forEach(function(choice){
+    var text = parser(choice);
+    var item = $("<div class='item'>" + text + "</div>");
+    item.data("data",choice);
+    choices_elem.append(item);
+  });
+
+  switch(this.type){
+    case "single":
+      this.selector = singleSelect(choices_elem,".item");
+      break;
+    case "multi":
+      this.selector = multiSelect(choices_elem,".item");
+      break;
+    default:
+      throw "invalid type " + this.type;
+  }
+};
+
+PopSelect.prototype.bind = function(){
+  var self = this;
+  var container = this.container;
+  container.find(".submit").on("tap",function(){
+    var result = container.find(".active").map(function(i,el){
+      return $(el).data("data");
+    });
+    if(!self.validate || self.validate(result)){
+      self.emit("submit", Array.prototype.slice.call(result));
+      self.close();
+    }
+  });
+
+  container.find(".close").on("tap",function(){
+    self.close();
+  });
+}
+
+PopSelect.prototype.select = function(item){
+  this.selector.select(item);
+}
+
+PopSelect.prototype.add = function(data){
+  this.choices.push(data);
+  this.render();
+}
+
+PopSelect.prototype.open = function(){
+  this.container.show();
+  this.emit("open");
+}
+
+PopSelect.prototype.close = function(){
+  this.container.hide();
+  this.emit("close");
+}
+
+module.exports = function(choices,options){
+  return new PopSelect(choices,options);
+}
+}, {
+    entries:entries,
+    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
 });
 
 define(_20, [_23,_11,_3,_7,_10,_16], function(require, exports, module, __filename, __dirname) {
@@ -893,7 +893,7 @@ function MultiSelect(container,itemSelector){
   container = $(container);
   var items = this.items = container.find(itemSelector);
   items.each(function(i,item){
-    $(item).on("click",function(){
+    $(item).on("tap",function(){
       $(this).toggleClass("active");
     })
   });
@@ -1113,7 +1113,7 @@ SwipeModal.prototype.show = function(data){
   var submit = config.submit;
   var cancel = config.cancel;
   var elem = this.elem = $(tpl.render(config.template,data));
-  elem.find(".submit").on("click",function(){
+  elem.find(".submit").on("tap",function(){
     var data = self.getData();
     var isValid = self.validate(data);
 
@@ -1128,7 +1128,7 @@ SwipeModal.prototype.show = function(data){
     }
   });
 
-  elem.find(".cancel").on("click", function(){
+  elem.find(".cancel").on("tap", function(){
     self.emit("cancel");
   });
 

@@ -1,7 +1,7 @@
 var $ = require("zepto");
 var popMessage = require("./mod/popmessage");
 var current = null;
-$(".choices .row").on("click",function(){
+$(".choices .row").on("tap",function(){
   if(current){
     current.removeClass("active");
   }
@@ -10,7 +10,7 @@ $(".choices .row").on("click",function(){
   current = el;
 });
 
-$(".button").on("click",function(){
+$(".button").on("tap",function(){
 
   var price = $(".row.active").attr("data-price");
 

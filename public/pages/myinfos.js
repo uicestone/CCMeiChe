@@ -26,14 +26,14 @@ panelAddCar.on("submit",function(data){
 
 var addbtn = $(".addcar");
 // 添加车辆
-addbtn.on("click", function(){
+addbtn.on("tap", function(){
   if(addbtn.prop("disabled")){
     return;
   }
   panelAddCar.show();
 });
 
-$(".cars").on("click", ".edit", function(){
+$(".cars").on("tap", ".edit", function(){
   var data = $(this).parent().attr('data');
   data = JSON.parse(data);
   data.index = $(".cars .edit").index(this);
@@ -54,11 +54,11 @@ var ac = autocomplete.init($("#input-address"),function(item){
   $("#input-latlng").val(data.location.lat + "," + data.location.lng);
 });
 
-addaddress.on("click",function(){
+addaddress.on("tap",function(){
   addaddressPanel.show()
 });
 
-$("#save-address").on("click",function(){
+$("#save-address").on("tap",function(){
   var data = {
     latlng: $("#input-latlng").val(),
     address: $("#input-address").val(),
