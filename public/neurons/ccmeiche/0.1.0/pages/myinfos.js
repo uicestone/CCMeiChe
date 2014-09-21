@@ -210,20 +210,16 @@ module.exports = swipeModal.create({
     return data;
   },
   validate: function(data){
-    if(!data.pic){
-      alert("请上传照片");
-      return;
-    }
     if(!data.type){
-      alert("请填写车型");
+      popMessage("请填写车型");
       return;
     }
     if(!data.number){
-      alert("请填写车号");
+      popMessage("请填写车号");
       return;
     }
     if(!data.color){
-      alert("请填写颜色");
+      popMessage("请填写颜色");
       return;
     }
 

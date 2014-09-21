@@ -33,7 +33,7 @@ var _29 = "uploader@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_23,_24,_25,_3,_9,_7,_8,_20,_22], function(require, exports, module, __filename, __dirname) {
+define(_0, [_23,_24,_25,_3,_9,_8,_7,_20,_22], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
@@ -383,7 +383,7 @@ if(!user.cars.length){
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_9,"./mod/popmessage":_7,"./mod/popselect":_8,"./views/addcar":_20,"./views/preorder":_22},globalMap)
+    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7,"./views/addcar":_20,"./views/preorder":_22},globalMap)
 });
 
 define(_3, [_23,_26,_27], function(require, exports, module, __filename, __dirname) {
@@ -537,73 +537,6 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_7, [_23], function(require, exports, module, __filename, __dirname) {
-var $ = require('zepto');
-function popMessage(message){
-  var json = {}
-  if(message.constructor == XMLHttpRequest){
-    try{
-      json = JSON.parse(message.responseText);
-    }catch(e){
-      json = {
-        error:{
-          message: message.responseText
-        }
-      }
-    }
-  }else if(typeof message == "string"){
-    json = {
-      error:{
-        message:message
-      }
-    };
-  }
-
-  var text = json.error && json.error.message;
-
-  var pop = $("<div>" + text + "</div>");
-  pop.css({
-    position:"fixed",
-    opacity:"0",
-    transition:"opacity linear .4s",
-    top: "140px",
-    left: "50%",
-    zIndex: "30",
-    padding: "10px 25px",
-    backgroundColor: "rgba(0,0,0,0.8)",
-    borderRadius:"5px"
-  });
-  pop.appendTo($("body"));
-  var width = pop.width()
-    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
-    //   return parseInt(pop.css(prop));
-    // }).reduce(function(a,b){
-    //   return a+b;
-    // },0);
-  pop.css({
-    "margin-left": - width / 2
-  });
-  setTimeout(function(){
-    pop.css({
-      "opacity":1
-    });
-  });
-  setTimeout(function(){
-    pop.css({
-      "opacity":0
-    });
-    setTimeout(function(){
-      pop.remove();
-    },400);
-  },1500)
-}
-
-module.exports = popMessage
-}, {
-    entries:entries,
-    map:globalMap
-});
-
 define(_8, [_23,_27,_26,_9,_6], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
@@ -707,6 +640,73 @@ module.exports = function(choices,options){
     map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
 });
 
+define(_7, [_23], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message){
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+      json = {
+        error:{
+          message: message.responseText
+        }
+      }
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    zIndex: "30",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px"
+  });
+  pop.appendTo($("body"));
+  var width = pop.width()
+    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    //   return parseInt(pop.css(prop));
+    // }).reduce(function(a,b){
+    //   return a+b;
+    // },0);
+  pop.css({
+    "margin-left": - width / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
+    });
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },1500)
+}
+
+module.exports = popMessage
+}, {
+    entries:entries,
+    map:globalMap
+});
+
 define(_20, [_23,_11,_3,_7,_10,_16], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
@@ -781,20 +781,16 @@ module.exports = swipeModal.create({
     return data;
   },
   validate: function(data){
-    if(!data.pic){
-      alert("请上传照片");
-      return;
-    }
     if(!data.type){
-      alert("请填写车型");
+      popMessage("请填写车型");
       return;
     }
     if(!data.number){
-      alert("请填写车号");
+      popMessage("请填写车号");
       return;
     }
     if(!data.color){
-      alert("请填写颜色");
+      popMessage("请填写颜色");
       return;
     }
 
