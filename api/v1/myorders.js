@@ -249,10 +249,19 @@ exports.confirm = function(req,res,next){
 
 exports.cancel = function(req,res,next){
   var user = req.user;
-  var order = req.order;
+  var orderId = req.body.orderId;
   var reason = req.body.reason;
-
+  var order = null;
   async.series([
+    function(done){
+      Order.findById(orderId, function(err, result){
+        if(err){
+          return done(err);
+        }
+        order = result;
+        done(null);
+      });
+    },
     function(done){
       if(reason == "order_cancel"){
         // 向腾讯发起退款请求
@@ -294,6 +303,14 @@ exports.cancel = function(req,res,next){
     },
     function(done){
       Order.cancel(order._id, reason, done);
+    },
+    function(done){
+      Worker.removeOrder(order.worker._id, order._id, function(err){
+        if(err){
+          return done(err);
+        }
+        done(null);
+      });
     },
     function(done){
       if(reason == "order_cancel"){

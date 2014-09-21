@@ -5,6 +5,7 @@ var Order = Model('order');
 var config = require('config');
 var _ = require("underscore");
 var moment = require('moment');
+var async = require('async');
 
 Worker.ensureIndex({"latlng":"2d"}, function(err, replies){
   console.log("ensureIndex", arguments);
@@ -72,6 +73,7 @@ db.bind('worker',{
       }
     }, callback)
   },
+  /* 用于微信更新用户状态 */
   updateStatus: function(openid, latlng, callback){
     Worker.findByOpenId(openid, function(err, worker){
       if(err){
@@ -104,23 +106,44 @@ db.bind('worker',{
     }, callback);
   },
   removeOrder: function(workerId, orderId, callback){
-    Worker.updateById(workerId, {
-      $pull: {
-        "orders": {
-          _id: orderId
-        }
-      }
-    }, function(err, orders){
-      if(err){
-        return callback(err);
-      }
-      Worker.findById(workerId, function(err,worker){
-        if(err){
-          return callback(err);
-        }
 
-        var orders = worker.orders;
-        var last_order = lastOrder(orders);
+    var worker = null;
+    var last_order = null;
+    async.series([
+      function(done){
+        Worker.updateById(workerId, {
+          $pull: {
+            "orders": {
+              _id: orderId
+            }
+          }
+        }, done);
+      },
+      function(done){
+        Worker.findById(workerId, function(err, result){
+          if(err){
+            return done(err);
+          }
+          worker = result;
+          done(null);
+        });
+      },
+      function(done){
+        Order.find({
+          "worker._id": Worker.id(workerId),
+          "status": "todo"
+        }).toArray(function(err, orders){
+          if(err){
+            return done(err);
+          }
+
+          console.log("ORDERSSSSSSSSSSSSS", orders);
+          last_order = lastOrder(orders);
+          done(null);
+        });
+      },
+      function(done){
+        console.log("最后一笔订单",last_order);
         if(last_order){
           console.log("根据车工手头最后一笔订单",last_order._id);
         }else{
@@ -135,9 +158,9 @@ db.bind('worker',{
             last_available_latlng: last_available_latlng,
             last_available_time: last_available_time
           }
-        }, callback);
-      });
-    });
+        }, done);
+      }
+    ], callback);
   },
   updateOrderStatus: function(id, order, callback){
     Worker.update({

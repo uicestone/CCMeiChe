@@ -162,7 +162,6 @@ db.bind('order', {
 
   },
   _adjustRests: function(order, callback){
-
     var full_time = order.estimated_finish_time - new Date();
     Order.find({
       $and: [
