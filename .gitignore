@@ -3,3 +3,4 @@ demo
 test.js
 config/*.yml
 *.pfx
+*.p12

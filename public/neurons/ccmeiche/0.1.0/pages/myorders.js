@@ -38,6 +38,7 @@ $("li").each(function(i,el){
   $el.find(".cancel").on("click",function(){
     if(!clickable){return;}
     clickable = false;
+    popMessage('正在请求退款');
     $.post("/api/v1/myorders/cancel",{
       orderId: id,
       reason: "order_cancel"

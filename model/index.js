@@ -8,7 +8,8 @@ var models = [
   "cartype",
   "usermessage",
   "rechargeorder",
-  "admin"
+  "admin",
+  "refund"
 ];
 
 models.forEach(function(name){

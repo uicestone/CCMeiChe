@@ -3,8 +3,8 @@ var Order = require("../model/order");
 
 
 function calculateTime(order){
-  var finish_time = order.estimated_finish_time;
-  var now = new Date();
+  var finish_time = +new Date(order.estimated_finish_time);
+  var now = +new Date();
   var duration = finish_time - now;
   var negative = now > finish_time ? "-" : "";
   var minutes =  Math.floor( Math.abs( duration / (1000 * 60)));

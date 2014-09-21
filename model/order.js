@@ -12,6 +12,7 @@ module.exports = Order;
 db.bind('order', {
   confirm: function (id, callback) {
     var self = this;
+
     self.findById(id, function (err, order) {
       if (err || !order) {
         return callback(err);
@@ -24,6 +25,7 @@ db.bind('order', {
       }
 
       var now = new Date();
+
       order.processed = true;
       order.status = "todo";
       order.order_time = new Date();
@@ -32,12 +34,15 @@ db.bind('order', {
           Order.updateById(id, order, done);
         },
         function(done){
-          Worker.updateOrderStatus(order.worker._id, order, done);
+          Worker.addOrder(order.worker._id, order, done);
         }
       ], function(err){
         if(err){
           return callback(err);
         }
+
+        console.log("lalalalalal", order);
+
         callback(null, order);
       });
     });
@@ -45,7 +50,7 @@ db.bind('order', {
   arrive: function(id, callback){
     Order.findById(id, function(err, order){
       if(err){
-        return callback(err);
+        return done(err);
       }
       Order.updateById(id,{
         $set:{
@@ -157,7 +162,6 @@ db.bind('order', {
 
   },
   _adjustRests: function(order, callback){
-
     var full_time = order.estimated_finish_time - new Date();
     Order.find({
       $and: [
