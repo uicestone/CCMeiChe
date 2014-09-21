@@ -13,9 +13,6 @@ db.bind('order', {
   confirm: function (id, callback) {
     var self = this;
 
-
-    console.log("confirm asdasd", id);
-
     self.findById(id, function (err, order) {
       if (err || !order) {
         return callback(err);
@@ -37,7 +34,7 @@ db.bind('order', {
           Order.updateById(id, order, done);
         },
         function(done){
-          Worker.updateOrderStatus(order.worker._id, order, done);
+          Worker.addOrder(order.worker._id, order, done);
         }
       ], function(err){
         if(err){
