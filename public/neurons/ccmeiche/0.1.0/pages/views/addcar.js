@@ -468,7 +468,13 @@ function SwipeModal(config){
 
   function viewReturn(){
     hashState.setHash("");
-    $("body").css("position","static");
+    $("body>.container").css("display","block");
+    $("body").css("position","fixed");
+    $(".swipe-container").css("position","fixed");
+    setTimeout(function(){
+      $("body").css("position","");
+    },300);
+
     viewSwipe.out("bottom");
     button.prop("disabled",false);
   }
@@ -476,7 +482,8 @@ function SwipeModal(config){
   function viewCome(){
     var elem = self.elem;
     setTimeout(function(){
-      $("body").css("position","fixed");
+      $("body>.container").css("display","none");
+      $(".swipe-container").css("position","relative");
     },300);
     viewSwipe.in(elem[0],"bottom");
     button.prop("disabled",true);

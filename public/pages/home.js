@@ -52,11 +52,7 @@ $(".cars .selected-cars").on("click", function(){
 var carsList = $(".cars ul");
 var addbtn = $(".cars .add");
 // 添加车辆
-panelAddCar.on("cancel",function(){
-  $("body").css("position","static");
-});
 panelAddCar.on("submit",function(data){
-  $("body").css("position","static");
   carsSelect.add(data);
   var template = "<li data='" + JSON.stringify(data) + "'>"
     +"<div class='detail'>"
@@ -73,7 +69,6 @@ panelAddCar.on("submit",function(data){
 });
 addbtn.on("click", function(e){
   e.preventDefault();
-  $("body").css("position","fixed");
   panelAddCar.show();
   setTimeout(function(){
     $(".blank").hide();

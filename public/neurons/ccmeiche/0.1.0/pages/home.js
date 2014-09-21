@@ -88,11 +88,7 @@ $(".cars .selected-cars").on("click", function(){
 var carsList = $(".cars ul");
 var addbtn = $(".cars .add");
 // 添加车辆
-panelAddCar.on("cancel",function(){
-  $("body").css("position","static");
-});
 panelAddCar.on("submit",function(data){
-  $("body").css("position","static");
   carsSelect.add(data);
   var template = "<li data='" + JSON.stringify(data) + "'>"
     +"<div class='detail'>"
@@ -109,7 +105,6 @@ panelAddCar.on("submit",function(data){
 });
 addbtn.on("click", function(e){
   e.preventDefault();
-  $("body").css("position","fixed");
   panelAddCar.show();
   setTimeout(function(){
     $(".blank").hide();
@@ -1072,7 +1067,13 @@ function SwipeModal(config){
 
   function viewReturn(){
     hashState.setHash("");
-    $("body").css("position","static");
+    $("body>.container").css("display","block");
+    $("body").css("position","fixed");
+    $(".swipe-container").css("position","fixed");
+    setTimeout(function(){
+      $("body").css("position","");
+    },300);
+
     viewSwipe.out("bottom");
     button.prop("disabled",false);
   }
@@ -1080,7 +1081,8 @@ function SwipeModal(config){
   function viewCome(){
     var elem = self.elem;
     setTimeout(function(){
-      $("body").css("position","fixed");
+      $("body>.container").css("display","none");
+      $(".swipe-container").css("position","relative");
     },300);
     viewSwipe.in(elem[0],"bottom");
     button.prop("disabled",true);

@@ -409,9 +409,6 @@ body.openmenu {
   width: 82%;
   margin: 0 auto;
 }
-#home {
-  position: fixed;
-}
 #home >.container>.title,
 #order-result .title {
   padding-top: 10px;
@@ -496,26 +493,19 @@ body.openmenu {
 #home .section .cars .selected-cars li:last-child {
   border-bottom: none;
 }
-#home .section .cars .selected-cars li .index {
-  margin: 5px 0;
-  line-height: 38px;
-  text-align: center;
-  width: 72px;
-  float: left;
-  border-right: 1px solid #e4e4e5;
-}
 #home .section .cars .selected-cars li .detail {
-  text-align: center;
+  text-align: left;
   height: 48px;
-  padding-left: 20px;
-  line-height: 48px;
+  padding-left: 15px;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 #home .section .cars .selected-cars li .detail .type,
 #home .section .cars .selected-cars li .detail .number {
-  height: 18px;
-  line-height: 18px;
   font-size: 14px;
-  display: inline-block;
   margin-right: 10px;
 }
 #home .services .active {
@@ -734,6 +724,9 @@ body.openmenu {
   color: #ccc;
   font-size: 12px;
 }
+#addcar {
+  padding-bottom: 10px;
+}
 #addcar .h2 {
   font-size: 18px;
   text-align: center;
@@ -769,6 +762,10 @@ body.openmenu {
   padding: 2px;
   background-color: #fff;
   color: #b6b6b6;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 #preorder .order .inner {
   border: 2px solid #fab44a;
