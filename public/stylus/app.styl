@@ -760,12 +760,17 @@ body
 #order
   background-image: none
   background-color: #fff
+  padding-top: 20px
   .pic
     margin: 20px 30px
     padding: 5px
     img
       width: 100%
       margin: 0 auto
+  .user-photos
+    h3
+      color: #999
+      font-size: 14px
   .order
     padding: 2px
     background-color: orange
@@ -774,6 +779,8 @@ body
     .inner
       border:2px solid #fff
       padding: 14px
+      p
+        overflow: ellipsis
       .row
         clearfix()
         .label
@@ -782,7 +789,7 @@ body
           width: 60px
           float: left
         .text
-          width: 120px
+          width: 160px
           line-height: 23px
           float: left
   .remain

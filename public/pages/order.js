@@ -26,6 +26,8 @@ button.on("click",function(e){
     });
   }else if(button.hasClass("done")){
     $("#order").css("position","fixed");
-    finishPanel.show();
+    finishPanel.show({
+      cars: order.cars
+    });
   }
 });

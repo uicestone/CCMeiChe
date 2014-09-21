@@ -9,29 +9,33 @@ var multiSelect = require("../mod/multiselect");
 var popMessage = require("../mod/popmessage");
 var uploading = false;
 
-function FinishOrder(){
-
-}
+function FinishOrder(){}
 
 util.inherits(FinishOrder,events);
 
 FinishOrder.prototype.show = function(data){
+  console.log(data);
   var html = tpl.render(template,data);
   var elem = $(html);
   var self = this;
   viewSwipe.in(elem[0],"bottom");
 
-  uploader.init(".add-photo:eq(0)",{
-    type:"multiple",
-    prefix:"carwash/",
-    queueTarget:$(".finish_photos")
-  }).on("add",function(){
-    uploading = true;
-  }).on("complete",function(){
-    uploading = false;
+  $(".user-photos").each(function(i,el){
+    var $el = $(el);
+
+    uploader.init( $el.find(".add-photo"),{
+      type:"multiple",
+      prefix:"carwash/",
+      queueTarget:$el.find(".finish_photos"),
+      maxItems: 3
+    }).on("add",function(){
+      uploading = true;
+    }).on("complete",function(){
+      uploading = false;
+    });
   });
 
-  uploader.init(".add-photo:eq(1)",{
+  uploader.init(".breakage-upload .add-photo",{
     type:"multiple",
     prefix:"carbreak/",
     queueTarget:$(".breakage_photos")
@@ -90,8 +94,10 @@ FinishOrder.prototype.confirm = function(){
     return popMessage("图片尚未上传完毕，请稍等");
   }
   var data = {
-    finish_pics: $(".finish_photos li").get().map(function(el){
-      return $(el).attr("data-key");
+    finish_pics: $(".finish_photos").get().map(function(e,i){
+      return $(e).find("li").get().map(function(e){
+        return $(e).attr("data-key")
+      })
     }),
     breakage_pics: $(".breakage_photos li").get().map(function(el){
       return $(el).attr("data-key");

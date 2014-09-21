@@ -1,11 +1,16 @@
 include ./mixins
 #finishorder.container
   h2.h2 洗车已完成
-  ul.photo-list.finish_photos
-  +upload
+  | <?js it.cars.forEach(function(car){ ?>
+  .user-photos
+    h3 @{car.type + ' ' + car.number}
+    ul.photo-list.finish_photos
+    +upload
+  | <?js }); ?>
   h2.h2 车损部位
   include ../../jade/breakages
   ul.photo-list.breakage_photos
-  +upload
+  .breakage-upload
+    +upload
   input.button.submit(type="button",value="完成")
   input.button.cancel(type="button",value="取消")

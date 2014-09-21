@@ -1015,6 +1015,7 @@ body.openmenu {
 #order {
   background-image: none;
   background-color: #fff;
+  padding-top: 20px;
 }
 #order .pic {
   margin: 20px 30px;
@@ -1023,6 +1024,10 @@ body.openmenu {
 #order .pic img {
   width: 100%;
   margin: 0 auto;
+}
+#order .user-photos h3 {
+  color: #999;
+  font-size: 14px;
 }
 #order .order {
   padding: 2px;
@@ -1033,6 +1038,12 @@ body.openmenu {
 #order .order .inner {
   border: 2px solid #fff;
   padding: 14px;
+}
+#order .order .inner p {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 #order .order .inner .row {
   zoom: 1;
@@ -1052,7 +1063,7 @@ body.openmenu {
   float: left;
 }
 #order .order .inner .row .text {
-  width: 120px;
+  width: 160px;
   line-height: 23px;
   float: left;
 }

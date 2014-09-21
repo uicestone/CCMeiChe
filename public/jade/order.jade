@@ -1,8 +1,9 @@
 extends layout
 block content
   for car in order.cars
-    .pic
-      img(src="#{config.qiniu_host}#{car.pic}?imageView/2/w/640")
+    if car.pic
+      .pic
+        img(src="#{config.qiniu_host}#{car.pic}?imageView/2/w/640")
   .order
     .inner
       .row
