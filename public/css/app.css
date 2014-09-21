@@ -911,7 +911,7 @@ body.openmenu {
 #myinfos .h1 {
   font-size: 20px;
   text-align: center;
-  margin: 50px auto 10px auto;
+  margin: 30px auto 10px auto;
 }
 #myinfos .add {
   position: relative;
@@ -925,7 +925,7 @@ body.openmenu {
 #myinfos .section {
   background-color: #fff;
   padding: 0 30px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 #myinfos .section .h2 {
   color: #fab44a;
@@ -961,6 +961,8 @@ body.openmenu {
 #myinfos .section .row .text {
   float: left;
   padding-left: 23px;
+  width: 150px;
+  overflow: hidden;
 }
 #myinfos .section .row .text .title {
   line-height: 1;
