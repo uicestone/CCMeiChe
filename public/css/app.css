@@ -105,6 +105,15 @@ body.openmenu {
   background-image: -ms-linear-gradient(235deg, #fab44a, #f39600);
   background-image: linear-gradient(215deg, #fab44a, #f39600);
 }
+.swipe-container .button {
+  width: 120px;
+}
+.swipe-container .submit {
+  float: left;
+}
+.swipe-container .cancel {
+  float: right;
+}
 .popselect {
   position: fixed;
   top: 20px;
@@ -754,6 +763,7 @@ body.openmenu {
 }
 #addcar .button {
   margin-top: 15px;
+  width: 120px;
 }
 #preorder .h2 {
   font-size: 18px;

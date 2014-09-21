@@ -27,9 +27,9 @@ var _23 = "zepto@^1.1.3";
 var _24 = "tpl@~0.2.1";
 var _25 = "util@^1.0.4";
 var _26 = "events@^1.0.5";
-var _27 = "view-swipe@~0.1.4";
-var _28 = "hashstate@~0.1.0";
-var _29 = "uploader@~0.1.4";
+var _27 = "uploader@~0.1.4";
+var _28 = "view-swipe@~0.1.4";
+var _29 = "hashstate@~0.1.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
@@ -136,7 +136,7 @@ $("#save-address").on("click",function(){
     map:mix({"./views/addcar":_20,"./mod/autocomplete":_3,"./mod/popmessage":_7},globalMap)
 });
 
-define(_20, [_23,_3,_7,_10,_16,_11], function(require, exports, module, __filename, __dirname) {
+define(_20, [_23,_11,_3,_7,_10,_16], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -237,7 +237,7 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_16,"../mod/uploader":_11},globalMap)
+    map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_16},globalMap)
 });
 
 define(_3, [_23,_25,_26], function(require, exports, module, __filename, __dirname) {
@@ -415,113 +415,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_10, [_25,_26,_27,_24,_28,_23], function(require, exports, module, __filename, __dirname) {
-var util = require("util");
-var events = require("events");
-var viewSwipe = require("view-swipe");
-var tpl = require("tpl");
-var hashState = require('hashstate')();
-var $ = require("zepto");
-
-var i = 1;
-
-
-function SwipeModal(config){
-  var self = this;
-  var getData = this.getData = config.getData;
-  var validate = this.validate = config.validate || function(){return true};
-  var button = this.button = config.button;
-  this.config = config;
-  this.name = config.name || "swipe-modal-" + i;
-  this._show = config.show;
-  i++;
-
-  hashState.on('hashchange', function(e){
-    if(!e.newHash){
-      viewReturn();
-    }
-  });
-
-  function viewReturn(){
-    hashState.setHash("");
-    $("body>.container").css("display","block");
-    $("body").css("position","fixed");
-    $(".swipe-container").css("position","fixed");
-    setTimeout(function(){
-      $("body").css("position","");
-    },300);
-
-    viewSwipe.out("bottom");
-    button.prop("disabled",false);
-  }
-
-  function viewCome(){
-    var elem = self.elem;
-    setTimeout(function(){
-      $("body>.container").css("display","none");
-      $(".swipe-container").css("position","relative");
-    },300);
-    viewSwipe.in(elem[0],"bottom");
-    button.prop("disabled",true);
-  }
-
-  self.on("show",viewCome);
-  self.on("submit",viewReturn);
-  self.on("cancel",viewReturn);
-
-}
-
-util.inherits(SwipeModal,events);
-SwipeModal.prototype.santitize = function(data){
-  return (this.config.santitize || function(v){return v}).bind(this)(data);
-}
-SwipeModal.prototype.show = function(data){
-  data = this.santitize(data);
-  var self = this;
-  var config = this.config;
-  var submit = config.submit;
-  var cancel = config.cancel;
-  var elem = this.elem = $(tpl.render(config.template,data));
-  elem.find(".submit").on("click",function(){
-    var data = self.getData();
-    var isValid = self.validate(data);
-
-    if(isValid){
-      if(!submit){
-        self.emit("submit",data);
-      }else{
-        submit.bind(self)(data,function(result){
-          self.emit("submit",result);
-        });
-      }
-    }
-  });
-
-  elem.find(".cancel").on("click", function(){
-    self.emit("cancel");
-  });
-
-  hashState.setHash(this.name);
-  this.emit("show");
-  this._show && this._show(data);
-}
-
-exports.create = function(config){
-  return new SwipeModal(config);
-}
-}, {
-    entries:entries,
-    map:globalMap
-});
-
-define(_16, [], function(require, exports, module, __filename, __dirname) {
-module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
-}, {
-    entries:entries,
-    map:globalMap
-});
-
-define(_11, [_23,_29], function(require, exports, module, __filename, __dirname) {
+define(_11, [_23,_27], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -643,6 +537,112 @@ exports.init = function(selector,options){
 
   return uploader;
 }
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_10, [_25,_26,_28,_24,_29,_23], function(require, exports, module, __filename, __dirname) {
+var util = require("util");
+var events = require("events");
+var viewSwipe = require("view-swipe");
+var tpl = require("tpl");
+var hashState = require('hashstate')();
+var $ = require("zepto");
+
+var i = 1;
+
+
+function SwipeModal(config){
+  var self = this;
+  var getData = this.getData = config.getData;
+  var validate = this.validate = config.validate || function(){return true};
+  var button = this.button = config.button;
+  this.config = config;
+  this.name = config.name || "swipe-modal-" + i;
+  this._show = config.show;
+  i++;
+
+  hashState.on('hashchange', function(e){
+    if(!e.newHash){
+      viewReturn();
+    }
+  });
+
+  function viewReturn(){
+    hashState.setHash("");
+    $("body>.container").css("display","block");
+    $("body").css("position","fixed");
+    $(".swipe-container").css("position","fixed");
+    setTimeout(function(){
+      $("body").css("position","");
+    },300);
+
+    viewSwipe.out("bottom");
+    button.prop("disabled",false);
+  }
+
+  function viewCome(){
+    var elem = self.elem;
+    setTimeout(function(){
+      $("body>.container").css("display","none");
+      $(".swipe-container").css("position","relative");
+    },300);
+    viewSwipe.in(elem[0],"bottom");
+    button.prop("disabled",true);
+  }
+
+  self.on("show",viewCome);
+  self.on("submit",viewReturn);
+  self.on("cancel",viewReturn);
+
+}
+
+util.inherits(SwipeModal,events);
+SwipeModal.prototype.santitize = function(data){
+  return (this.config.santitize || function(v){return v}).bind(this)(data);
+}
+SwipeModal.prototype.show = function(data){
+  data = this.santitize(data);
+  var self = this;
+  var config = this.config;
+  var submit = config.submit;
+  var cancel = config.cancel;
+  var elem = this.elem = $(tpl.render(config.template,data));
+  elem.find(".submit").on("click",function(){
+    var data = self.getData();
+    var isValid = self.validate(data);
+
+    if(isValid){
+      if(!submit){
+        self.emit("submit",data);
+      }else{
+        submit.bind(self)(data,function(result){
+          self.emit("submit",result);
+        });
+      }
+    }
+  });
+
+  elem.find(".cancel").on("click", function(){
+    self.emit("cancel");
+  });
+
+  hashState.setHash(this.name);
+  this.emit("show");
+  this._show && this._show(data);
+}
+
+exports.create = function(config){
+  return new SwipeModal(config);
+}
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_16, [], function(require, exports, module, __filename, __dirname) {
+module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap
