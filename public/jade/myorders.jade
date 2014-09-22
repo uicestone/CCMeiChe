@@ -38,6 +38,7 @@ mixin section(title,field)
 
 extends layout
 block content
+  include menu
   h1.h1 我的订单
   - var filterStatus = function(status){ return function(item){return item.status == status;} };
   - var sections = {};
@@ -53,3 +54,4 @@ block content
   +section("已取消","cancel")
 
   +facade('myorders')
+  +facade('menu')
