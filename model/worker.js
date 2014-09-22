@@ -39,7 +39,7 @@ db.bind('worker',{
       var message;
       var cancelMessage = _.template("用户<%=user.phone%>取消了<%=address%> <%=cars.map(function(car){return car.type + car.number;}).join(',')%>车辆的清洗，请原地等待后续订单");
       var offDutyMessage = function(orders){
-        return ("你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment(last_order.estimated_finish_time).format("lll"));
+        return ("你现在有" + orders.length + "笔任务待完成，预计下班时间：" + moment( +new Date(last_order.estimated_finish_time) - 15 * 60 * 1000 * orders.length ).format("lll"));
       };
       var newOrder = function(prefix, order){
         return prefix + "：" + config.host.worker + "/orders/" + order._id;
