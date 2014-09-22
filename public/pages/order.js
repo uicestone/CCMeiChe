@@ -10,7 +10,7 @@ finishPanel.on("confirm",function(data){
   posting = true;
   $("#order").css("position","static");
   $.post("/api/v1/orders/" + order._id + "/done",data,"json").done(function(){
-    location.href = "/orders";
+    location.reload();
   }).fail(popMessage);
 }).on("cancel",function(){
   $("#order").css("position","static");

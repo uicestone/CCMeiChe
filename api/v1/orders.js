@@ -3,6 +3,7 @@ var config = require('config');
 var model = require('../../model');
 var Order = model.order;
 var Worker = model.worker;
+var User = model.user;
 var wechat_user = require('../../util/wechat').user.api;
 var wechat_worker = require('../../util/wechat').worker.api;
 
@@ -55,6 +56,16 @@ exports.done = function(req,res,next){
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
         wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
+      },
+      // 更新用户默认车辆
+      function(done){
+        var cars = order.cars.map(function(car, i){
+          return {
+            number: car.number,
+            pics: data.finish_pics[i]
+          };
+        });
+        User.updateCarPic(order.user._id, cars, done);
       },
       // 更新订单状态
       function(done){

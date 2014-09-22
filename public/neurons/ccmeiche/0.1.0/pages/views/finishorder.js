@@ -133,7 +133,7 @@ FinishOrder.prototype.confirm = function(){
     finish_pics: $(".finish_photos").get().map(function(e,i){
       return $(e).find("li").get().map(function(e){
         return $(e).attr("data-key")
-      })
+      });
     }),
     breakage_pics: $(".breakage_photos li").get().map(function(el){
       return $(el).attr("data-key");

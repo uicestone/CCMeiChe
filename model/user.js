@@ -42,6 +42,30 @@ db.bind('user',{
       }, callback);
     });
   },
+  updateCarPic: function(id, cars, callback){
+    User.findById(id, function(err, user){
+      if(err){
+        return callback(err);
+      }
+      var updateDoc = {};
+      cars.forEach(function(car){
+        var index = user.cars.map(function(car){
+          return car.number;
+        }).indexOf(car.number);
+        console.log(index, cars);
+        if(!user.cars[index].pic && cars[index].pics.length){
+          updateDoc["cars." + index] = _.extend(user.cars[index], {
+            pic: cars[index].pics[0]
+          });
+        }
+      });
+
+      console.log(updateDoc);
+      User.updateById(id,{
+        $set: updateDoc
+      }, callback);
+    });
+  },
   modifyAddress: function(phone, index, data, callback){
     var updateDoc = {};
     updateDoc["addresses." + index] = data;

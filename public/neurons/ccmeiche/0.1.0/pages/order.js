@@ -46,7 +46,7 @@ finishPanel.on("confirm",function(data){
   posting = true;
   $("#order").css("position","static");
   $.post("/api/v1/orders/" + order._id + "/done",data,"json").done(function(){
-    location.href = "/orders";
+    location.reload();
   }).fail(popMessage);
 }).on("cancel",function(){
   $("#order").css("position","static");
@@ -239,7 +239,7 @@ FinishOrder.prototype.confirm = function(){
     finish_pics: $(".finish_photos").get().map(function(e,i){
       return $(e).find("li").get().map(function(e){
         return $(e).attr("data-key")
-      })
+      });
     }),
     breakage_pics: $(".breakage_photos li").get().map(function(el){
       return $(el).attr("data-key");
