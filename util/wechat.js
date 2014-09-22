@@ -84,6 +84,17 @@ var worker_oauth = new OAuth(config.wechat.worker.id, config.wechat.worker.secre
 
 function notifyProxy(service){
   return {
+    sendNews: function(openid, articles, callback){
+      var message = articles[0];
+      var Notification = require('node-notifier');
+      var notifier = new Notification();
+      notifier.notify({
+        title: service + ' ' + openid,
+        sound: "default",
+        message: message
+      });
+      callback(null);
+    },
     sendText: function(openid, message, callback){
       var Notification = require('node-notifier');
       var notifier = new Notification();

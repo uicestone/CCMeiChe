@@ -55,7 +55,16 @@ exports.done = function(req,res,next){
       function(done){
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
-        wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
+        var news = order.cars.map(function(car,i){
+          return {
+            title: "您的服务已完成",
+            description: car.type + order.address + order.service.title + "已经完成，点击查看详情",
+            url: url,
+            picurl: order.finish_pics[i][0]
+          }
+        });
+        wechat_user.sendNews(order.user.openid, news, done);
+        // wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
       },
       // 更新用户默认车辆
       function(done){
