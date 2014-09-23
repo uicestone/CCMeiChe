@@ -6,6 +6,10 @@ var db = require("../db");
 module.exports = User;
 
 db.bind('user',{
+  // 针对订单进行扣款扣优惠券
+  charge: function(id, order, callback){
+
+  },
   findByOpenId: function(openid, callback){
     User.findOne({
       openid: openid

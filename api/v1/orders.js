@@ -27,11 +27,15 @@ exports.list = function(req,res,next){
 
 exports.done = function(req,res,next){
   var data = {
-    breakage: req.body.breakage,
-    finish_pics: req.body.finish_pics,
-    breakage_pics: req.body.breakage_pics
+    breakage: req.body.breakage || null,
+    finish_pics: req.body.finish_pics || [],
+    breakage_pics: req.body.breakage_pics || []
   };
   var worker = req.user;
+
+  if(!data.finish_pics || !data.finish_pics.length){
+    return res.status(400).send("请上传车辆照片");
+  }
 
   Order.findById(req.params.orderid,function(err,order){
     if(err){return next(err);}
@@ -55,16 +59,16 @@ exports.done = function(req,res,next){
       function(done){
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
+        console.log(data);
         var news = order.cars.map(function(car,i){
           return {
             title: "您的服务已完成",
             description: car.type + order.address + order.service.title + "已经完成，点击查看详情",
             url: url,
-            picurl: order.finish_pics[i][0]
+            picurl: config.qiniu.host + data.finish_pics[i][0]
           }
         });
         wechat_user.sendNews(order.user.openid, news, done);
-        // wechat_user.sendText(order.user.openid,"您的车已洗完：" + url, done);
       },
       // 更新用户默认车辆
       function(done){

@@ -833,24 +833,29 @@ var preorderPanel = swipeModal.create({
     var data = config.data;
 
     $.post("/api/v1/myorders/confirm", order, 'json').done(function(result){
-      if(appConfig.env !== "product"){
-        $.post("/wechat/notify",{
-          orderId: result.orderId,
-          type: "washcar"
-        },'json').done(function(){
-          location.href = "/myorders";
-        }).fail(popMessage);
-      }else{
-        WeixinJSBridge.invoke('getBrandWCPayRequest', result, function(res){
-          var message = res.err_msg;
-          if(message == "get_brand_wcpay_request:ok"){
-            popMessage("支付成功，正在跳转");
+      if(result.code == 200){
+        location.href = "/myorders";
+      }else if(result.code == 201){
+        if(appConfig.env !== "product"){
+          $.post("/wechat/notify",{
+            orderId: result.orderId,
+            type: "washcar"
+          },'json').done(function(){
             location.href = "/myorders";
-          }else{
-            popMessage("支付失败，请重试");
-            self.emit("cancel",order,message);
-          }
-        });
+          }).fail(popMessage);
+        }else{
+          // require payment
+          WeixinJSBridge.invoke('getBrandWCPayRequest', result.payargs, function(res){
+            var message = res.err_msg;
+            if(message == "get_brand_wcpay_request:ok"){
+              popMessage("支付成功，正在跳转");
+              location.href = "/myorders";
+            }else{
+              popMessage("支付失败，请重试");
+              self.emit("cancel",order,message);
+            }
+          });
+        }
       }
     });
   }

@@ -5,6 +5,7 @@ var Worker = Model('worker');
 var Order = Model("order");
 var Service = Model("service");
 var async = require('async');
+var moment = require('moment');
 
 module.exports = Order;
 
@@ -46,6 +47,18 @@ db.bind('order', {
         callback(null, order);
       });
     });
+  },
+  getMonthly: function(workerId, date, callback){
+    var start = moment(date).startOf('month').toDate();
+    var end = moment(date).endOf('month').toDate();
+    Order.find({
+      "worker._id": Worker.id(workerId),
+      "status": "done",
+      "finish_time":{
+        $gt: start,
+        $lt: end
+      }
+    }).toArray(callback);
   },
   arrive: function(id, callback){
     Order.findById(id, function(err, order){

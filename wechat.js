@@ -2,15 +2,18 @@ var wechat = require('wechat');
 var config = require('config');
 var worker_api = require('./util/wechat').worker.api;
 var user_api = require('./util/wechat').user.api;
+var moment = require('moment');
+var Notify = require('wechat-pay').middleware.Notify;
+var charge = require('./util/charge');
 var model = require("./model");
 var async = require('async');
+var _ = require('underscore');
+
 var RechargeOrder = model.rechargeorder;
 var UserMessage = model.usermessage;
 var Worker = model.worker;
 var User = model.user;
 var Order = model.order;
-var moment = require('moment');
-var Notify = require('wechat-pay').middleware.Notify;
 var DEBUG = process.env.DEBUG;
 function updateInfo(openid,Model,api,callback){
   api.getUser(openid, function(err, result){
@@ -58,6 +61,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   var openid = message.FromUserName;
 
   console.log("worker wechat recieves message %s",JSON.stringify(message,null,2));
+
   Worker.findByOpenId(openid, function(err,user){
     if(err){
       console.error(err);
@@ -123,22 +127,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       });
     }else if(message.EventKey == "VIEW_HISTORY"){
       if(user){
-        Order.find({
-          "worker._id":user._id.toString(),
-          "status":"done"
-        }).limit(15).toArray(function(err,orders){
-          if(err){
-            console.log(err);
-            return res.reply("");
-          }
-          var message = orders.map(function(order){
-            var cars = order.cars.map(function(){
-              return [car.number,car.type];
-            }).join("\n");
-            return [order.address,cars]
-          }).join("\n\n");
-          return res.reply(message);
-        });
+        Order.getMonthly(user._id, new Date(), sendMonthly(res));
       }else{
         res.reply("");
       }
@@ -148,9 +137,33 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   });
 });
 
+function sendMonthly(res){
+  return function(err, orders){
+    if(err){
+      console.log(err);
+      return res.reply("");
+    }
+    var services = {};
+    var count = 0;
+    orders.forEach(function(order){
+      if(!services[order.service.title]){
+        services[order.service.title] = 1;
+      }else{
+        services[order.service.title] += 1;
+      }
+      count += 1;
+    });
+    message = moment(orders[0].finish_time).format('YYYY年MM月订单汇总') + '\n';
+    message += Object.keys(services).map(function(name){
+      return name + ": " + services[name];
+    }).join("\n");
+    message += "\n" + "总订单数: " + count;
+    console.log(message);
+    process.exit(0);
+    return res.reply(message);
+  }
+}
 
-var wechat_worker = require('./util/wechat').worker.api;
-var errortracking = require('./errortracking');
 function handleResponse(res, options){
   return function(err){
     if(err && err.name !== "OrderProcessed"){
@@ -161,7 +174,7 @@ function handleResponse(res, options){
       }
     }else{
       if(err && err.name == "OrderProcessed"){
-        console.log("已处理的" + options.title + "订单请求");
+        console.log("已处理的" + options.type + "订单请求");
       }
       if(res.reply){
         console.log('reply success');
@@ -174,97 +187,11 @@ function handleResponse(res, options){
   }
 }
 
-function dealWashCar(openid, orderId, req, res, next){
-  var currentOrder;
-  async.waterfall([
-    function(done){
-      Order.confirm(orderId, done);
-    },
-    function(order, done){
-      currentOrder = order;
-      Worker.getMessage(order.worker._id, {action:"new"}, done);
-    },
-    function(message, done){
-      console.log("sendText",currentOrder.worker.openid,message);
-      wechat_worker.sendText(currentOrder.worker.openid,message,done);
-    }
-  ],handleResponse(res,{
-    title: '洗车'
-  }));
-}
-
-function dealRecharge(openid, orderId, req, res, next){
-  console.log("dealing recharge", openid, orderId);
-  var condition = DEBUG ? {
-    phone: req.user.phone
-  } : {
-    openid: openid
-  };
-  async.waterfall([
-    function(done){
-      User.findOne(condition, done);
-    },
-    function(user, done){
-      console.log("user", user);
-      RechargeOrder.findById(orderId, function(err, order){
-        if(err || !order){
-          return done(err);
-        }
-
-        if(order.processed == true){
-          var error = new Error();
-          error.name = "OrderProcessed";
-          return done(error);
-        }
-
-        var recharge = order.recharge;
-        var userpromos = user.promo || [];
-
-        recharge.promo.forEach(function(promo){
-          var userpromo = userpromos.filter(function(item){
-            return item._id == promo._id;
-          })[0];
-          if(userpromo){
-            userpromo.amount += promo.amount;
-          }else{
-            promo.amount = promo.amount;
-            userpromos.push(promo);
-          }
-        });
-
-        done(null, {
-          credit: recharge.actual_price,
-          promo: userpromos
-        });
-      });
-    },
-    function(recharge, done){
-      User.update(condition, {
-        $inc:{
-          credit: recharge.credit
-        },
-        $set: {
-          promo: recharge.promo
-        }
-      },function(err){
-        if(err){return done(err);}
-        RechargeOrder.updateById(orderId, {
-          $set:{
-            processed: true
-          }
-        },done);
-      });
-    }
-  ],handleResponse(res,{
-    title: '充值'
-  }));
-}
-
 function recieveNotify(openid, orderId, type, req, res, next){
-  if(type == "washcar"){
-    dealWashCar(openid, orderId,req,res,next);
-  }else if(type == "recharge"){
-    dealRecharge(openid, orderId,req,res,next);
+  var dealFunc = charge[type];
+
+  if(dealFunc && _.isFunction(dealFunc)){
+    dealFunc(openid, orderId, req, res, handleResponse(res, {type: type}));
   }else{
     next({
       status: 400,
@@ -280,7 +207,6 @@ exports.notify = function(req,res,next){
   recieveNotify(req.user.openid, order_id, type, req, res, next);
 };
 }else{
-
 exports.notify = Notify({
   partnerKey: config.wechat.user.partner_key,
   appId: config.wechat.user.id,

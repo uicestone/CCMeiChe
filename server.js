@@ -12,6 +12,8 @@ var uuid = require('uuid').v1;
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
+var moment = require("moment");
+moment.locale('zh-cn');
 
 var startTime = +new Date();
 require('colors');
