@@ -102,7 +102,15 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     }
 
     if(message.MsgType == "text"){
-      return
+      (function(content){
+        var year = +content.slice(0,4);
+        var month = +content.slice(4,6);
+        if(year.toString() == "NaN" || month.toString() == "NaN" || year < 2014 || year > 2050 || month < 0 || month > 12){
+          return res.reply("");
+        }
+
+        Order.getMonthly(user._id, new Date(year, month), sendMonthly(res));
+      })(message.Content);
     }
 
     if(message.EventKey == "ON_DUTY"){
@@ -141,7 +149,6 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   });
 });
 
-<<<<<<< HEAD
 function sendMonthly(res){
   return function(err, orders){
     if(err){
@@ -169,8 +176,6 @@ function sendMonthly(res){
   }
 }
 
-=======
->>>>>>> 237291ab17e5ec4d566b67247df871ffd175fa28
 function handleResponse(res, options){
   return function(err){
     if(err && err.name !== "OrderProcessed"){
