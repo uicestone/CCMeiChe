@@ -11,7 +11,10 @@ finishPanel.on("confirm",function(data){
   $("#order").css("position","static");
   $.post("/api/v1/orders/" + order._id + "/done",data,"json").done(function(){
     location.reload();
-  }).fail(popMessage);
+  }).fail(function(xhr){
+    posting = false;
+    popMessage(xhr);
+  });
 }).on("cancel",function(){
   $("#order").css("position","static");
 });

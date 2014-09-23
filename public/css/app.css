@@ -373,6 +373,9 @@ body.openmenu {
 .photo-list .loading .spin {
   margin: 0 auto;
 }
+.finish_photos img {
+  width: 100%;
+}
 .add-photo {
   zoom: 1;
   width: 100%;

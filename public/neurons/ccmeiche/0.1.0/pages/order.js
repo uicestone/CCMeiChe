@@ -47,7 +47,10 @@ finishPanel.on("confirm",function(data){
   $("#order").css("position","static");
   $.post("/api/v1/orders/" + order._id + "/done",data,"json").done(function(){
     location.reload();
-  }).fail(popMessage);
+  }).fail(function(xhr){
+    posting = false;
+    popMessage(xhr);
+  });
 }).on("cancel",function(){
   $("#order").css("position","static");
 });
@@ -254,7 +257,9 @@ FinishOrder.prototype.confirm = function(){
     data.breakage = breakage;
   }
 
-  if(!data.finish_pics.length){
+  if(data.finish_pics.some(function(item){
+    return !item.length;
+  })){
     return popMessage("请上传车辆照片");
   }
 

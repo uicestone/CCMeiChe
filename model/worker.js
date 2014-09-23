@@ -32,9 +32,7 @@ db.bind('worker',{
       if(err){
         return callback(err);
       }
-      var orders = worker.orders.filter(function(order){
-        return order.status !== "preorder";
-      });
+      var orders = worker.orders;
       var last_order = lastOrder(orders);
       var message;
       var cancelMessage = _.template("用户<%=user.phone%>取消了<%=address%> <%=cars.map(function(car){return car.type + car.number;}).join(',')%>车辆的清洗，请原地等待后续订单");

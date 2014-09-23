@@ -112,7 +112,9 @@ FinishOrder.prototype.confirm = function(){
     data.breakage = breakage;
   }
 
-  if(!data.finish_pics.length){
+  if(data.finish_pics.some(function(item){
+    return !item.length;
+  })){
     return popMessage("请上传车辆照片");
   }
 

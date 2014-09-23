@@ -3,6 +3,7 @@ var model = require('../../model');
 var estimateTime = require("../../util/estimate");
 var wechat_user = require('../../util/wechat').user;
 var wechat_worker = require('../../util/wechat').worker;
+var charge = require('../../util/charge');
 var WechatUserApi = wechat_user.api;
 var WechatWorkerApi = wechat_worker.api;
 var Worker = model.worker;
@@ -160,7 +161,6 @@ exports.confirm = function(req,res,next){
   var order = null;
   async.waterfall([
     function(done){
-      console.log("estimate time");
       estimateTime(user_latlng, function(err, result){
         if(err){
           return done(err);
@@ -170,7 +170,6 @@ exports.confirm = function(req,res,next){
       });
     },
     function(done){
-      console.log("add order");
       var priceAndCredit = calculatePriceAndCredit({
         service: service,
         use_credit: use_credit,
@@ -203,7 +202,6 @@ exports.confirm = function(req,res,next){
       });
     },
     function(done){
-      console.log("update user address");
       User.addAddress(user.phone, order, function(err){
         if(err && err.name !== "EEXISTS"){
           return done(err);
@@ -213,16 +211,24 @@ exports.confirm = function(req,res,next){
     },
     function(done){
       console.log("update default cars");
-      User.updateDefaultCars(user.phone, order.cars, function(err){
-        if(err){
-          return done(err);
-        }
-
-        done(null);
-      });
+      User.updateDefaultCars(user.phone, order.cars, done);
     },
     function(done){
       console.log("pay_request");
+
+      if(!order.price){
+        console.log("ORDER", order);
+        return charge.washcar(user.openid, order._id, req, res, function(err){
+          if(err){
+            return done(err);
+          }
+          return done(null, {
+            code: 200,
+            message: "ok"
+          });
+        });
+      }
+
       wechat_user.pay_request(req, {
         id: order._id,
         price: order.price,
@@ -230,19 +236,28 @@ exports.confirm = function(req,res,next){
         attach: {
           type: "washcar"
         }
-      }, done);
+      }, function(err, payargs){
+        if(err){
+          return done(err);
+        }
+        done(null, {
+          code: 201,
+          payargs: payargs
+        });
+      });
     }
-  ], function(err, payment_args){
+  ], function(err, result){
     if(err){
       return next(err);
     }
 
-    if(process.env.DEBUG){
+    if(result.code == 201 && process.env.DEBUG){
       res.json({
+        code: 201,
         orderId: order._id
       });
     }else{
-      res.json(payment_args);
+      res.json(result);
     }
   });
 }
