@@ -89,6 +89,9 @@ var currentService = window.services[0];
     type: 'single',
     name:"service-select",
     parser: function(service){
+      var haspromo = user.promo.some(function(promo){
+        return promo._id == service._id;
+      });
       return '<div>'
         + '<div class="detail">'
           + '<div class="title">' + service.title + '</div>'
@@ -96,6 +99,7 @@ var currentService = window.services[0];
         + '</div>'
         + '<div>'
           + '<div class="price">￥' + service.price + '</div>'
+          + ( haspromo ? '<div class="haspromo">有优惠券</div>' : '')
         + '</div>';
     }
   });

@@ -709,6 +709,11 @@ body.openmenu {
   font-size: 14px;
   padding-right: 12px;
 }
+.service-select .choices .item .haspromo {
+  float: right;
+  margin-right: 7px;
+  margin-top: -7px;
+}
 .autocomplete {
   z-index: 9;
   width: 100%;

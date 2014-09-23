@@ -126,6 +126,9 @@ var currentService = window.services[0];
     type: 'single',
     name:"service-select",
     parser: function(service){
+      var haspromo = user.promo.some(function(promo){
+        return promo._id == service._id;
+      });
       return '<div>'
         + '<div class="detail">'
           + '<div class="title">' + service.title + '</div>'
@@ -133,6 +136,7 @@ var currentService = window.services[0];
         + '</div>'
         + '<div>'
           + '<div class="price">￥' + service.price + '</div>'
+          + ( haspromo ? '<div class="haspromo">有优惠券</div>' : '')
         + '</div>';
     }
   });
@@ -808,7 +812,7 @@ module.exports = swipeModal.create({
     map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_17},globalMap)
 });
 
-define(_23, [_24,_29,_10,_7,_20], function(require, exports, module, __filename, __dirname) {
+define(_23, [_24,_29,_10,_20,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var viewSwipe = require("view-swipe");
 var swipeModal = require("../mod/swipe-modal");
@@ -885,7 +889,7 @@ function formatTime(estimated_finish_time){
 }
 }, {
     entries:entries,
-    map:mix({"../mod/swipe-modal":_10,"../mod/popmessage":_7,"../tpl/preorder.html":_20},globalMap)
+    map:mix({"../mod/swipe-modal":_10,"../tpl/preorder.html":_20,"../mod/popmessage":_7},globalMap)
 });
 
 define(_6, [_24], function(require, exports, module, __filename, __dirname) {
