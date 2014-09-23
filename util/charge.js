@@ -6,6 +6,8 @@ var User = model.user;
 var Worker = model.worker;
 var Order = model.order;
 var RechargeOrder = model.rechargeorder;
+var DEBUG = process.env.DEBUG;
+
 /**
  * 取消订单
  */
@@ -29,6 +31,12 @@ exports.washcar = function(openid, orderId, req, res, callback){
   ], callback);
 };
 
+// 购买优惠券
+exports.promo = function(openid, orderId, req, res, callback){
+
+}
+
+// 充值
 exports.recharge = function(openid, orderId, req, res, callback){
   console.log("dealing recharge", openid, orderId);
   var condition = DEBUG ? {
@@ -36,12 +44,14 @@ exports.recharge = function(openid, orderId, req, res, callback){
   } : {
     openid: openid
   };
+  var userId = null;
   async.waterfall([
     function(done){
       User.findOne(condition, done);
     },
     function(user, done){
       console.log("user", user);
+      userId = user._id;
       RechargeOrder.findById(orderId, function(err, order){
         if(err || !order){
           return done(err);
@@ -54,42 +64,27 @@ exports.recharge = function(openid, orderId, req, res, callback){
         }
 
         var recharge = order.recharge;
-        var userpromos = user.promo || [];
-
-        recharge.promo.forEach(function(promo){
-          var userpromo = userpromos.filter(function(item){
-            return item._id == promo._id;
-          })[0];
-          if(userpromo){
-            userpromo.amount += promo.amount;
-          }else{
-            promo.amount = promo.amount;
-            userpromos.push(promo);
-          }
-        });
 
         done(null, {
           credit: recharge.actual_price,
-          promo: userpromos
+          promo: recharge.promo
         });
       });
     },
     function(recharge, done){
-      User.update(condition, {
-        $inc:{
-          credit: recharge.credit
-        },
-        $set: {
-          promo: recharge.promo
+      User.recharge(userId, recharge, function(err){
+        if(err){
+          return done(err);
         }
-      },function(err){
-        if(err){return done(err);}
-        RechargeOrder.updateById(orderId, {
-          $set:{
-            processed: true
-          }
-        },done);
+        done(null);
       });
+    },
+    function(done){
+      RechargeOrder.updateById(orderId, {
+        $set:{
+          processed: true
+        }
+      }, done);
     }
   ], callback);
 };
