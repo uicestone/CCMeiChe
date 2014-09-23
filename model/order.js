@@ -2,6 +2,7 @@ var db = require('../db');
 var Model = require('./base');
 var _ = require('underscore');
 var Worker = Model('worker');
+var User = Model('user');
 var Order = Model("order");
 var Service = Model("service");
 var async = require('async');
@@ -36,13 +37,14 @@ db.bind('order', {
         },
         function(done){
           Worker.addOrder(order.worker._id, order, done);
+        },
+        function(done){
+          User.charge(order.user._id, order, done);
         }
       ], function(err){
         if(err){
           return callback(err);
         }
-
-        console.log("lalalalalal", order);
 
         callback(null, order);
       });

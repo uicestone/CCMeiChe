@@ -1,14 +1,61 @@
 var Model = require('./base');
 var User =  Model("user");
+var RechargeOrder = Model
 var _ = require('underscore');
 var db = require("../db");
 
 module.exports = User;
 
 db.bind('user',{
-  // 针对订单进行扣款扣优惠券
-  charge: function(id, order, callback){
+  // 充值
+  recharge: function(id, recharge, callback){
+    User.findById(id, function(err, user){
+      if(err){
+        return callback(err);
+      }
 
+      var userpromos = user.promo || [];
+      recharge.promo.forEach(function(promo){
+        var userpromo = userpromos.filter(function(item){
+          return item._id == promo._id;
+        })[0];
+        if(userpromo){
+          userpromo.amount += promo.amount;
+        }else{
+          promo.amount = promo.amount;
+          userpromos.push(promo);
+        }
+      });
+
+      User.updateById(id, {
+        $inc:{
+          credit: recharge.credit
+        },
+        $set: {
+          promo: recharge.promo
+        }
+      }, callback);
+    });
+  },
+  // 确认订单扣除优惠券积分
+  charge: function(id, order, callback){
+    User.findById(id, function(err, user){
+      var userpromo = user.promo || [];
+      userpromo = userpromo.map(function(promo){
+        if(promo._id == order.service._id && promo.amount > 0){
+          promo.amount -= 1;
+        }
+        return promo
+      });
+      User.updateById(id, {
+        $inc:{
+          credit: -order.credit
+        },
+        $set: {
+          promo: userpromo
+        }
+      }, callback);
+    });
   },
   findByOpenId: function(openid, callback){
     User.findOne({
