@@ -64,10 +64,23 @@ exports.recharge = function(openid, orderId, req, res, callback){
         }
 
         var recharge = order.recharge;
+        var userpromos = user.promo || [];
+
+        recharge.promo.forEach(function(promo){
+          var userpromo = userpromos.filter(function(item){
+            return item._id == promo._id;
+          })[0];
+          if(userpromo){
+            userpromo.amount += promo.amount;
+          }else{
+            promo.amount = promo.amount;
+            userpromos.push(promo);
+          }
+        });
 
         done(null, {
           credit: recharge.actual_price,
-          promo: recharge.promo
+          promo: userpromos
         });
       });
     },

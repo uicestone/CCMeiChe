@@ -101,6 +101,10 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       return;
     }
 
+    if(message.MsgType == "text"){
+      return
+    }
+
     if(message.EventKey == "ON_DUTY"){
       // 上班
       if(user.status == "on_duty"){
@@ -137,6 +141,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   });
 });
 
+<<<<<<< HEAD
 function sendMonthly(res){
   return function(err, orders){
     if(err){
@@ -164,6 +169,8 @@ function sendMonthly(res){
   }
 }
 
+=======
+>>>>>>> 237291ab17e5ec4d566b67247df871ffd175fa28
 function handleResponse(res, options){
   return function(err){
     if(err && err.name !== "OrderProcessed"){
