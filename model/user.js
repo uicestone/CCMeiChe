@@ -19,10 +19,12 @@ db.bind('user',{
         var userpromo = userpromos.filter(function(item){
           return item._id == promo._id;
         })[0];
+
+        // 用户有该优惠券
         if(userpromo){
           userpromo.amount += promo.amount;
+        // 用户没有该优惠券
         }else{
-          promo.amount = promo.amount;
           userpromos.push(promo);
         }
       });
@@ -32,7 +34,7 @@ db.bind('user',{
           credit: recharge.credit
         },
         $set: {
-          promo: recharge.promo
+          promo: userpromos
         }
       }, callback);
     });

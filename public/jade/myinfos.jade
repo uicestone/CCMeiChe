@@ -16,9 +16,10 @@ block content
   .section
     h2.h2 优惠券
     ul.promos
-      each promo,i in user.promo || []
+      each promo,i in promos
         li.row(data="#{JSON.stringify(promo)}")
           .text #{promo.title}
+          .edit(style="color:#b6b6b6") #{promo.amount}
 
   .section.cars
     h2.h2 车型
