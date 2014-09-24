@@ -31,26 +31,40 @@ block content
       h2 请选择您需要的服务
       ul.services
         - var service = services[0];
-        li.active
+        li
           .detail
             .title #{service.title}
             .desc #{service.describe}
           .arrow
           .price ￥#{service.price}
-    if user.promo
-      .section.promo(style="display:none")
-        | 使用服务优惠券
-        .count
-          span.num
-            .text 1
-            select
-          | 张
-    .section.credit
-      | 我的积分：
-      span.num #{user.credit||0}
-      .use
-        span.text 未使用
-        i.icon
+
+    .section.coupon
+      .credit
+        .text
+          .label 使用积分：
+          .num #{user.credit||0}
+        .use
+          i.icon
+      if user.promo
+        .promo
+          .text
+            | 已使用
+            br
+            | 优惠券
+          .count
+            span.num
+              .text 1
+              select
+      else
+        .promo.disabled
+          .text
+            | 使用
+            br
+            | 优惠券
+          .count
+            span.num
+              .text 0
+              select
 
     .section
       .payment

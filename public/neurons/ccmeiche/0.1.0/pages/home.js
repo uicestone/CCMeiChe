@@ -168,9 +168,9 @@ function judgePromo(){
     return item._id == currentService._id;
   })[0];
   if(mypromo && mypromo.amount){
-    $(".promo").show();
+    $(".promo").removeClass("disabled");
     var html = "";
-    $(".promo .text").html(1);
+    $(".promo .num .text").html(1);
     for(var i = 0; i < mypromo.amount + 1; i++){
       if(i==1){
         html += ("<option selected>" + i + "</option>");
@@ -180,13 +180,16 @@ function judgePromo(){
     }
 
     $(".promo select").html(html);
+    $(".promo>.text").html("已使用<br />优惠券");
   }else{
-    $(".promo").hide();
+    $(".promo").addClass("disabled");
+    $(".promo .num .text").text(0);
+    $(".promo>.text").html("使用<br />优惠券");
   }
 }
 judgePromo();
-$(".section.promo select").on("change",function(){
-  $(".section.promo .text").text($(this).val());
+$(".section .promo select").on("change",function(){
+  $(".section .promo .num .text").text($(this).val());
   calculate();
 });
 
@@ -205,11 +208,7 @@ $(".credit .use").on("tap",function(){
 });
 
 function getPromoCount(){
-  var promo_count = 0;
-  if($(".section.promo").is(":visible")){
-    promo_count = +$(".section.promo .text").text();
-  }
-  return promo_count;
+  return +$(".section .promo .num .text").text();
 }
 
 // 计算应付金额

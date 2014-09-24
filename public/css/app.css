@@ -524,10 +524,6 @@ body.openmenu {
   font-size: 14px;
   margin-right: 10px;
 }
-#home .services .active {
-  color: #fff;
-  background-color: #c70462;
-}
 #home .services li,
 .service-select .choices .item {
   zoom: 1;
@@ -571,7 +567,7 @@ body.openmenu {
 }
 #home .services li .arrow,
 .service-select .choices .item .arrow {
-  background-image: url("../img/arrow-right.png");
+  background-image: url("../img/arrow.png");
   width: 10px;
   height: 18px;
   position: absolute;
@@ -598,21 +594,68 @@ body.openmenu {
 .service-select .choices .item .promo .count {
   height: 19px;
 }
-#home .section.promo,
-#home .section.credit {
-  height: 35px;
-  line-height: 35px;
-  padding: 5px 15px;
-  background-color: #ccc;
-  margin-bottom: 1px;
+#home .section.coupon {
+  zoom: 1;
 }
-#home .section.promo .count,
-#home .section.credit .count {
+#home .section.coupon:before,
+#home .section.coupon:after {
+  content: "";
+  display: block;
+}
+#home .section.coupon:after {
+  clear: both;
+}
+#home .section.coupon .credit {
+  height: 46px;
+  float: left;
+  width: 50%;
+  background-color: #fff;
+}
+#home .section.coupon .credit .text {
+  padding: 5px 0 5px 15px;
+  font-size: 12px;
+  color: #b4b4b4;
+  float: left;
+}
+#home .section.coupon .credit .use {
+  float: right;
+  margin-top: 7px;
+}
+#home .section.coupon .credit .use .icon {
+  background-image: url("../img/checkbox.png");
+  width: 26px;
+  height: 27px;
+  display: block;
+  float: right;
+  margin-right: 8px;
+  position: relative;
+  top: 3px;
+}
+#home .section.coupon .credit .use.active .icon {
+  background-position: 0 -27px;
+}
+#home .section.coupon .promo {
+  height: 46px;
+  line-height: 35px;
+  padding: 5px 5px 5px 15px;
+  margin-bottom: 1px;
+  float: right;
+  width: 50%;
+  background-color: #c70462;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#home .section.coupon .promo .text {
+  font-size: 12px;
+  line-height: 1.5;
+  float: left;
+}
+#home .section.coupon .promo .count {
   float: right;
   color: #c70462;
 }
-#home .section.promo .count .num,
-#home .section.credit .count .num {
+#home .section.coupon .promo .count .num {
   position: relative;
   width: 50px;
   height: 25px;
@@ -623,15 +666,13 @@ body.openmenu {
   background-color: #fff;
   background-color: #fff;
 }
-#home .section.promo .count .num .text,
-#home .section.credit .count .num .text {
+#home .section.coupon .promo .count .num .text {
   text-align: center;
   position: relative;
-  top: -4px;
-  left: 0px;
+  top: 3px;
+  left: 19px;
 }
-#home .section.promo .count .num select,
-#home .section.credit .count .num select {
+#home .section.coupon .promo .count .num select {
   border: 0;
   position: absolute;
   top: 0;
@@ -642,26 +683,13 @@ body.openmenu {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
 }
-#home .section.credit .use {
-  float: right;
-  width: 100px;
+#home .section.coupon .promo.disabled {
+  background-color: #dbdcdc;
+  color: #b4b4b4;
 }
-#home .section.credit .use .icon {
-  background-image: url("../img/checkbox.png");
-  width: 26px;
-  height: 27px;
-  display: block;
-  float: right;
-  margin-right: 8px;
-  position: relative;
-  top: 3px;
-}
-#home .section.credit .use .text {
-  float: right;
-  color: #c70462;
-}
-#home .section.credit .use.active .icon {
-  background-position: 0 -27px;
+#home .section.coupon .promo.disabled .num {
+  border: 1px solid #b6b6b6;
+  color: #b6b6b6;
 }
 #home .payment {
   margin-top: 8px;
