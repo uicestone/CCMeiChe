@@ -50,7 +50,8 @@ hashState.setHash("");
 var carsSelect = popselect(user.cars,{
   type:"multi",
   parser: function(car){
-    return car.type + car.color + "<br />" + car.number;
+    return "<div class='title'>" + car.type + car.color + "</div>"
+      +"<div class='desc'>" + car.number + "</div>";
   }
 });
 carsSelect.validate = function(dataList){
@@ -812,7 +813,7 @@ module.exports = swipeModal.create({
     map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_17},globalMap)
 });
 
-define(_23, [_24,_29,_10,_20,_7], function(require, exports, module, __filename, __dirname) {
+define(_23, [_24,_29,_10,_7,_20], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var viewSwipe = require("view-swipe");
 var swipeModal = require("../mod/swipe-modal");
@@ -889,7 +890,7 @@ function formatTime(estimated_finish_time){
 }
 }, {
     entries:entries,
-    map:mix({"../mod/swipe-modal":_10,"../tpl/preorder.html":_20,"../mod/popmessage":_7},globalMap)
+    map:mix({"../mod/swipe-modal":_10,"../mod/popmessage":_7,"../tpl/preorder.html":_20},globalMap)
 });
 
 define(_6, [_24], function(require, exports, module, __filename, __dirname) {

@@ -13,7 +13,8 @@ hashState.setHash("");
 var carsSelect = popselect(user.cars,{
   type:"multi",
   parser: function(car){
-    return car.type + car.color + "<br />" + car.number;
+    return "<div class='title'>" + car.type + car.color + "</div>"
+      +"<div class='desc'>" + car.number + "</div>";
   }
 });
 carsSelect.validate = function(dataList){
