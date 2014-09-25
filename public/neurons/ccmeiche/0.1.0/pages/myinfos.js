@@ -92,15 +92,44 @@ var ac = autocomplete.init($("#input-address"),function(item){
 });
 
 addaddress.on("tap",function(){
-  addaddressPanel.show()
+  addaddressPanel.appendTo(".section.addresses");
+  addaddress.hide();
+  addaddressPanel.show();
+  addressesList.find("li .wrap").show();
+  addaddressPanel.find(".title").html("添加地址信息");
+});
+
+addressesList.on("tap",".edit",function(){
+  var li = $(this).closest('li');
+  var wrap = li.find(".wrap");
+  var wraps = addressesList.find("li .wrap");
+  var index = wraps.index(wrap);
+  var data = JSON.parse(li.attr("data-addr"));
+  wraps.show();
+  wrap.hide();
+  addaddress.show();
+  console.log(index);
+  $("#input-index").val(index);
+  $("#input-latlng").val(data.latlng && data.latlng.join(","));
+  $("#input-address").val(data.address);
+  $("#input-carpark").val(data.carpark);
+  addaddressPanel.appendTo(li);
+  addaddressPanel.find(".title").html("修改地址信息");
+  addaddressPanel.show();
 });
 
 $("#save-address").on("tap",function(){
+  var index = $("#input-index").val();
   var data = {
     latlng: $("#input-latlng").val(),
     address: $("#input-address").val(),
     carpark: $("#input-carpark").val()
   };
+  var type = "add";
+
+  if(index!==""){
+    type = "edit";
+  }
 
   if(!data.address){
     return popMessage("请输入地址");
@@ -114,17 +143,30 @@ $("#save-address").on("tap",function(){
     return popMessage("无法定位该地址");
   }
 
-  $.post("/api/v1/myaddresses",data,"json")
-  .done(function(){
-    var template = "<div class='text'>"
-      +"<p class='title'>@{it.address}</p>"
-      +"<p class='desc'>@{it.carpark}</p>"
-    +"</div>"
-    +"<div class='edit'>修改</div>";
+  var url = (type == "edit") ? ("/api/v1/myaddresses/" + index) : "/api/v1/myaddresses";
 
-    var html = tpl.render(template,data);
-    li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(html);
-    addressesList.append(li);
+  $.post(url, data, "json")
+  .done(function(){
+
+    if(type == "add"){
+      var template = "<div class='text'>"
+        +"<p class='title'>@{it.address}</p>"
+        +"<p class='desc'>@{it.carpark}</p>"
+      +"</div>"
+      +"<div class='edit'>修改</div>";
+
+      var html = tpl.render(template,data);
+      li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(html);
+      addressesList.append(li);
+    }else{
+      data.latlng = data.latlng.split(",");
+      var li = $(".addresses .row").eq(index);
+      li.attr("data-addr", JSON.stringify(data));
+      li.find(".title").text(data.address);
+      li.find(".desc").text(data.carpark);
+    }
+
+    $(".addresses .wrap").show();
     $("#input-latlng").val('');
     $("#input-address").val('');
     $("#input-carpark").val('');

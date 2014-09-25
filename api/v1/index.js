@@ -20,6 +20,7 @@ module.exports = function(app){
     app.get("mycars", auth, require("./mycars").get);
     app.post("mycars", auth, require("./mycars").post);
     app.post("myaddresses", auth, require("./myaddresses").add);
+    app.post("myaddresses/:index", auth, require("./myaddresses").update);
 
     app.get("cartypes/:query", require("./cartypes").get);
     app.post("recharge/:price", require("./recharge").post);

@@ -990,11 +990,25 @@ body.openmenu {
 #myinfos .section .row:first-child {
   border-top: 1px solid #fab44a;
 }
+#myinfos .section .row .addaddress-panel {
+  margin-top: 4px;
+}
 #myinfos .section .row .label {
   float: left;
   border-right: 1px solid #ddd;
   width: 74px;
   text-align: center;
+}
+#myinfos .section .row .wrap {
+  zoom: 1;
+}
+#myinfos .section .row .wrap:before,
+#myinfos .section .row .wrap:after {
+  content: "";
+  display: block;
+}
+#myinfos .section .row .wrap:after {
+  clear: both;
 }
 #myinfos .section .row .text {
   float: left;

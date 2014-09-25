@@ -25,7 +25,7 @@ exports.add = function(req,res,next){
 
 
 exports.update = function(req,res,next){
-  var index = req.body.index;
+  var index = req.params.index;
   var carpark = req.body.carpark;
   var address = req.body.address;
   var latlng = req.body.latlng && req.body.latlng.split(",").map(function(item){
@@ -37,9 +37,9 @@ exports.update = function(req,res,next){
   }
 
   User.modifyAddress(req.user.phone, index, {
+    address: address,
     carpark: carpark,
-    latlng: latlng,
-    address: address
+    latlng: latlng
   }, function(err){
     if(err){
       return next(err);

@@ -39,10 +39,11 @@ block content
     ul
       for address,i in user.addresses || []
         li.row(data-addr="#{JSON.stringify(address)}")
-          .text
-            .span.title #{address.address}
-            .span.desc #{address.carpark}
-          .edit 修改
+          .wrap
+            .text
+              .span.title #{address.address}
+              .span.desc #{address.carpark}
+            .edit 修改
     .add.addaddress
       i.icon-add
       | 添加地址
@@ -50,6 +51,7 @@ block content
       h2.title 添加地址信息
       .form-group
         input#input-latlng(type="hidden")
+        input#input-index(type="hidden")
         .input-row
           i.icon-location
           input.input#input-address(placeholder="地址",data-pattern="/api/v1/location/suggestion/{q}")
