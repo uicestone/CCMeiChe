@@ -99,7 +99,7 @@ db.bind('order', {
   },
   cancel: function(id, reason, callback){
     var self = this;
-    var reasons = ["payment_cancel","payment_fail","preorder_cancel","order_cancel","timeout"];
+    var reasons = ["payment_cancel","payment_fail","preorder_cancel","order_cancel","admin_cancel","timeout"];
     if(reasons.indexOf(reason) == -1){
       return callback("invalid reason:" + reason);
     }

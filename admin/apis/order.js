@@ -1,9 +1,13 @@
 var Order = require('../../model').order;
 var User = require('../../model').user;
 var Worker = require('../../model').worker;
+
+var myorders = require('../../api/v1/myorders');
 var _ = require('underscore');
 var async = require('async');
 
+
+console.log(myorders);
 
 exports.clear = function(req,res,next){
   if(!req.isAuthenticated()){
@@ -21,6 +25,16 @@ exports.clear = function(req,res,next){
   });
 }
 
+exports.cancel = function(req,res,next){
+  var id = req.body.id;
+
+  myorders._cancel(id, "admin_cancel", function(err){
+    if(err){
+      return next(err);
+    }
+    res.status(200).send({message:"ok"});
+  });
+}
 
 exports.list = function(req,res,next){
   var query = req.query;

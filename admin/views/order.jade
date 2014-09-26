@@ -15,6 +15,7 @@ block main
         th 在途耗时
         th 洗车耗时
         th 状态
+        th(style="50px") 操作
 block scripts
   script(src="js/plugins/dataTables/jquery.dataTables.js")
   script(src="js/plugins/dataTables/dataTables.bootstrap.js")
@@ -90,8 +91,34 @@ block scripts
                 }
                 return status;
               }
+            },
+            {
+              "data": null,
+              render: function(data){
+                if(data.status !== "cancel"){
+                  return "<a class='cancel' href='javascript:;'>取消</a>";
+                }else{
+                  return "";
+                }
+              }
             }
           ]
+        });
+
+
+        $('#order-table').on('click', '.cancel', function(){
+          var tr = $(this).closest('tr');
+          var row = table.row(tr);
+          var data = row.data();
+          var _id = data._id;
+          var sure = confirm("确定要取消该订单么");
+          if(sure){
+            $.post("/api/order/cancel", {
+              id: _id
+            }, function(){
+              tr.remove();
+            });
+          }
         });
       });
 

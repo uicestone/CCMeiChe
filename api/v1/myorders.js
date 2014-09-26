@@ -260,11 +260,13 @@ exports.confirm = function(req,res,next){
   });
 }
 
-exports.cancel = function(req,res,next){
-  var user = req.user;
-  var orderId = req.body.orderId;
-  var reason = req.body.reason;
+exports._cancel = function(orderId, reason, callback){
   var order = null;
+
+  function needProcess(){
+    return reason == "order_cancel" || reason == "admin_cancel" && order.status == "todo";
+  }
+
   async.series([
     function(done){
       Order.findById(orderId, function(err, result){
@@ -276,9 +278,8 @@ exports.cancel = function(req,res,next){
       });
     },
     function(done){
-      if(reason == "order_cancel"){
+      if(needProcess()){
         // 向腾讯发起退款请求
-
         if(process.env.DEBUG){
           done(null);
         }else{
@@ -326,14 +327,14 @@ exports.cancel = function(req,res,next){
       });
     },
     function(done){
-      if(reason == "order_cancel"){
-        WechatUserApi.sendText(user.openid, "您的订单已被取消，退款申请已经提交。", done);
+      if(needProcess()){
+        WechatUserApi.sendText(order.user.openid, "您的订单已被取消，退款申请已经提交。", done);
       }else{
         done(null);
       }
     },
     function(done){
-      if(reason == "order_cancel"){
+      if(needProcess()){
         Worker.getMessage(order.worker._id, {
           action: "cancel",
           order: order
@@ -345,7 +346,16 @@ exports.cancel = function(req,res,next){
         done(null);
       }
     }
-  ],function(err){
+  ], callback);
+}
+
+exports.cancel = function(req,res,next){
+  var user = req.user;
+  var orderId = req.body.orderId;
+  var reason = req.body.reason;
+
+
+  exports._cancel(orderId, reason, function(err){
     if(err){
       return next(err);
     }
