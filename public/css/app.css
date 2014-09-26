@@ -248,6 +248,9 @@ body.openmenu {
 .add .icon-add {
   display: inline-block;
   background-image: url("./img/add.png");
+  -webkit-background-size: 18px 18px;
+  -moz-background-size: 18px 18px;
+  background-size: 18px 18px;
   width: 18px;
   height: 18px;
   margin-right: 10px;
@@ -477,10 +480,13 @@ body.openmenu {
   position: absolute;
   margin-top: -9px;
   top: 50%;
-  left: 24px;
-  width: 10px;
+  left: 22px;
+  width: 18px;
   height: 18px;
   background-image: url("../img/arrow.png");
+  -webkit-background-size: 18px 18px;
+  -moz-background-size: 18px 18px;
+  background-size: 18px 18px;
 }
 #home .section .cars .selected-cars ul {
   width: 100%;
@@ -568,14 +574,14 @@ body.openmenu {
 #home .services li .arrow,
 .service-select .choices .item .arrow {
   background-image: url("../img/arrow.png");
-  width: 10px;
+  width: 18px;
   height: 18px;
   position: absolute;
   right: 20px;
-  top: 15px;
-  -webkit-background-size: 10px 18px;
-  -moz-background-size: 10px 18px;
-  background-size: 10px 18px;
+  top: 16px;
+  -webkit-background-size: 18px 18px;
+  -moz-background-size: 18px 18px;
+  background-size: 18px 18px;
   background-repeat: no-repeat;
 }
 #home .services li .promo,
