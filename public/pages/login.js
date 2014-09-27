@@ -1,4 +1,5 @@
 var $ = require('zepto');
+var agreement = require("./views/agreement");
 var popMessage = require("./mod/popmessage");
 $(function(){
   var COUNT = 90;
@@ -78,4 +79,6 @@ $(function(){
       btn_signin.prop("disabled",false);
     });
   });
+
+  // agreement.show();
 });

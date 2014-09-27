@@ -18,23 +18,25 @@ var _14 = "ccmeiche@0.1.0/pages/order.js";
 var _15 = "ccmeiche@0.1.0/pages/promos.js";
 var _16 = "ccmeiche@0.1.0/pages/recharge.js";
 var _17 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _20 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _21 = "ccmeiche@0.1.0/pages/views/addcar.js";
-var _22 = "ccmeiche@0.1.0/pages/views/finishorder.js";
-var _23 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _24 = "zepto@^1.1.3";
-var _25 = "uploader@~0.1.4";
-var _26 = "util@^1.0.4";
-var _27 = "events@^1.0.5";
-var _28 = "view-swipe@~0.1.4";
-var _29 = "tpl@~0.2.1";
-var _30 = "hashstate@~0.1.0";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23];
+var _18 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _21 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _22 = "ccmeiche@0.1.0/pages/views/addcar.js";
+var _23 = "ccmeiche@0.1.0/pages/views/agreement.js";
+var _24 = "ccmeiche@0.1.0/pages/views/finishorder.js";
+var _25 = "ccmeiche@0.1.0/pages/views/preorder.js";
+var _26 = "zepto@^1.1.3";
+var _27 = "uploader@~0.1.4";
+var _28 = "util@^1.0.4";
+var _29 = "events@^1.0.5";
+var _30 = "view-swipe@~0.1.4";
+var _31 = "tpl@~0.2.1";
+var _32 = "hashstate@~0.1.0";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_21, [_24,_11,_3,_7,_10,_17], function(require, exports, module, __filename, __dirname) {
+define(_22, [_26,_11,_3,_7,_10,_17], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -134,7 +136,7 @@ module.exports = swipeModal.create({
     map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_17},globalMap)
 });
 
-define(_11, [_24,_25], function(require, exports, module, __filename, __dirname) {
+define(_11, [_26,_27], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -261,7 +263,7 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_3, [_24,_26,_27], function(require, exports, module, __filename, __dirname) {
+define(_3, [_26,_28,_29], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -369,7 +371,7 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_7, [_24], function(require, exports, module, __filename, __dirname) {
+define(_7, [_26], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
   var json = {}
@@ -436,7 +438,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_10, [_26,_27,_28,_29,_30,_24], function(require, exports, module, __filename, __dirname) {
+define(_10, [_28,_29,_30,_31,_32,_26], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");

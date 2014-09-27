@@ -1,0 +1,1 @@
+module.exports = '<div id="agreement" class="container"><h2 class="h2">用户协议</h2><div class="content"></div><div class="row"><input type="button" value="返回" class="button cancel"/></div></div>'

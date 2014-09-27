@@ -808,6 +808,30 @@ body.openmenu {
   margin-top: 15px;
   width: 120px;
 }
+#agreement .h2 {
+  font-size: 18px;
+  text-align: center;
+  padding: 15px 0;
+  color: #fff;
+}
+#agreement .content {
+  background-color: #fff;
+  color: #b6b6b6;
+  padding: 5px;
+  height: 300px;
+  font-size: 28px;
+}
+#agreement .content p {
+  text-indent: 28px;
+  font-size: 14px;
+}
+#agreement .row {
+  padding: 20px;
+}
+#agreement .row .button {
+  margin: 0 auto;
+  float: none;
+}
 #preorder .h2 {
   font-size: 18px;
   text-align: center;

@@ -33,10 +33,12 @@
     "./pages/promos.js",
     "./pages/recharge.js",
     "./pages/tpl/addcar.html.js",
+    "./pages/tpl/agreement.html.js",
     "./pages/tpl/finishorder.html.js",
     "./pages/tpl/mixins.html.js",
     "./pages/tpl/preorder.html.js",
     "./pages/views/addcar.js",
+    "./pages/views/agreement.js",
     "./pages/views/finishorder.js",
     "./pages/views/preorder.js"
   ],

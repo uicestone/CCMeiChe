@@ -1,5 +1,13 @@
 var wechat = require('../util/wechat');
 var User = require('../model/user');
+var fs = require('fs');
+var path = require('path');
+var agreement = fs.readFileSync( path.join(__dirname, '..', 'agreement.txt'), 'utf-8' )
+  .split(/\n/).map(function(line){
+    return "<p>" + line + "</p>";
+  }).join('');
+
+
 module.exports = function(req,res,next){
   var oauth = wechat.user.oauth;
   var code = req.query.code;
@@ -15,7 +23,8 @@ module.exports = function(req,res,next){
   if(process.env.DEBUG){
     return res.render("login",{
       id:"login",
-      title: "登录"
+      title: "登录",
+      agreement: agreement
     });
   }
 
@@ -41,6 +50,7 @@ module.exports = function(req,res,next){
           res.render("login",{
             id:"login",
             title: "登录",
+            agreement: agreement,
             access_token: result.data.access_token,
             openid: result.data.openid
           });

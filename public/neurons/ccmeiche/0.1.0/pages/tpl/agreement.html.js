@@ -26,50 +26,11 @@ var _22 = "ccmeiche@0.1.0/pages/views/addcar.js";
 var _23 = "ccmeiche@0.1.0/pages/views/agreement.js";
 var _24 = "ccmeiche@0.1.0/pages/views/finishorder.js";
 var _25 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _26 = "zepto@^1.1.3";
-var _27 = "events@^1.0.5";
-var _28 = "util@^1.0.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_9, [_26,_27,_28], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var events = require("events");
-var util = require("util");
-
-function SingleSelect(elem,selector){
-  var self = this;
-  (function(){
-    var current = null;
-    var items = self.items = elem.find(selector);
-    items.on("tap",function(){
-      elem.find(".active").removeClass("active");
-      var me = $(this);
-      if(me == current){
-        me.removeClass("active");
-        current = null;
-      }else{
-        current && current.removeClass("active");
-        me.addClass("active");
-        current = me;
-      }
-      self.emit("change",this);
-    });
-  })();
-  return this;
-}
-
-util.inherits(SingleSelect,events);
-
-SingleSelect.prototype.select = function(data){
-  this.items.filter(function(i){
-    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
-  }).addClass("active");
-}
-
-module.exports = function(elem,selector){
-  return new SingleSelect(elem,selector);
-}
+define(_18, [], function(require, exports, module, __filename, __dirname) {
+module.exports = '<div id="agreement" class="container"><h2 class="h2">用户协议</h2><div class="content"></div><div class="row"><input type="button" value="返回" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap
