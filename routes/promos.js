@@ -1,13 +1,14 @@
-var Service = require("../model/service");
+var Recharge = require("../model/recharge");
 
 module.exports = function(req,res,next){
-  Service.find({haspromo:true}).toArray(function(err,results){
+  Recharge.find({
+    type:"promo"
+  }).toArray(function(err,results){
     if(err){
       return next(err);
     }
-    res.render("promos",{
-      user: req.user,
-      id:"promos",
+    res.render("recharge",{
+      id:"recharge",
       choices:results
     });
   });

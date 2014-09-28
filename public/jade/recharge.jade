@@ -3,7 +3,7 @@ block content
   h1.h1 充值
   ul.choices
     for choice in choices
-      li.row(data-price="#{choice.price}")
+      li.row(data-id="#{choice._id}")
         .price #{choice.price}cc
         .promo #{choice.title}
   .button 提交

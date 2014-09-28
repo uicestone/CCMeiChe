@@ -4,14 +4,13 @@ var RechargeOrder = require("../../model/rechargeorder");
 var wechat_user = require("../../util/wechat").user;
 
 exports.post = function(req,res,next){
-  var price = +req.params.price;
-  Recharge.findOne({
-    price: price
-  },function(err,recharge){
+  var id = req.params.id;
+  Recharge.findById(id,function(err,recharge){
     if(err || !recharge){
       return next(err);
     }
 
+    console.log(recharge);
     RechargeOrder.insert({
       recharge: recharge,
       user: req.user

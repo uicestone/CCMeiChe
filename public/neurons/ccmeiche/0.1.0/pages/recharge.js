@@ -45,14 +45,14 @@ $(".choices .row").on("tap",function(){
 
 $(".button").on("tap",function(){
 
-  var price = $(".row.active").attr("data-price");
+  var id = $(".row.active").attr("data-id");
 
-  if(!price){
-    popMessage("请选择充值金额");
+  if(!id){
+    popMessage("请选择");
     return;
   }
 
-  $.post("/api/v1/recharge/" + price).done(function(result){
+  $.post("/api/v1/recharge/" + id).done(function(result){
     var payment_args = result.payment_args;
     var orderId = result.orderId;
     if(appConfig.env !== "product"){

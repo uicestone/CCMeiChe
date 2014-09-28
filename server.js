@@ -86,12 +86,12 @@ if(SERVICE == "worker"){
   app.get('/logout', require("./routes/logout"));
   app.get("/contact-us", require("./routes/contact"));
   app.get("/services", require("./routes/services"));
-  app.get("/packages", require("./routes/promos"));
+  app.get("/wechat/packages", require("./routes/promos"));
+  app.get('/wechat/recharge', assureUserLogin, require("./routes/recharge"));
   app.get('/wechat/', assureUserLogin, require("./routes/index"));
   app.get('/myorders/:orderid', assureUserLogin, require("./routes/myorders").detail);
   app.get('/myorders', assureUserLogin, require("./routes/myorders").list);
   app.get('/myinfos', assureUserLogin, require("./routes/myinfos"));
-  app.get('/wechat/recharge', assureUserLogin, require("./routes/recharge"));
   app.get('/help', require("./routes/help"));
 }
 

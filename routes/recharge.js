@@ -1,7 +1,9 @@
 var Recharge = require("../model/recharge");
 
 module.exports = function(req,res,next){
-  Recharge.find().toArray(function(err,results){
+  Recharge.find({
+    type:"recharge"
+  }).toArray(function(err,results){
     if(err){
       return next(err);
     }
