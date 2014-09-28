@@ -35,7 +35,7 @@ var _31 = "uploader@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_14, [_26,_7,_24,_4], function(require, exports, module, __filename, __dirname) {
+define(_14, [_26,_7,_4,_24], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var popMessage = require('./mod/popmessage');
 var finishPanel = require('./views/finishorder');
@@ -74,7 +74,7 @@ button.on("click",function(e){
 });
 }, {
     entries:entries,
-    map:mix({"./mod/popmessage":_7,"./views/finishorder":_24,"./mod/countdown":_4},globalMap)
+    map:mix({"./mod/popmessage":_7,"./mod/countdown":_4,"./views/finishorder":_24},globalMap)
 });
 
 define(_7, [_26], function(require, exports, module, __filename, __dirname) {
@@ -139,6 +139,43 @@ function popMessage(message){
 }
 
 module.exports = popMessage
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_4, [_26], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+
+function addZero(num){
+  if(Math.abs(num) < 10){
+    return "0" + num;
+  }else{
+    return num;
+  }
+}
+
+function calculateTime(){
+  $(".time").forEach(function(elem,i){
+    var el = $(elem);
+    var finish_time = new Date(el.attr("data-finish"));
+
+    if(appConfig.service == "worker"){
+      finish_time = new Date( +finish_time - 15 * 60 * 1000 );
+    }
+
+    var now = new Date();
+    var duration = finish_time - now;
+    var negative = now > finish_time ? "-" : "";
+    var minutes =  Math.floor( Math.abs( duration / (1000 * 60)));
+    var seconds = Math.round( (Math.abs(duration) - minutes * 1000 * 60) / 1000);
+    el.html( negative + addZero(minutes) + ":" + addZero(seconds) );
+  });
+}
+
+
+setInterval(calculateTime,1000);
+calculateTime();
 }, {
     entries:entries,
     map:globalMap
@@ -273,43 +310,6 @@ module.exports = new FinishOrder();
 }, {
     entries:entries,
     map:mix({"../tpl/finishorder.html":_19,"../mod/uploader":_11,"../mod/multiselect":_6,"../mod/popmessage":_7},globalMap)
-});
-
-define(_4, [_26], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-
-function addZero(num){
-  if(Math.abs(num) < 10){
-    return "0" + num;
-  }else{
-    return num;
-  }
-}
-
-function calculateTime(){
-  $(".time").forEach(function(elem,i){
-    var el = $(elem);
-    var finish_time = new Date(el.attr("data-finish"));
-
-    if(appConfig.service == "worker"){
-      finish_time = new Date( +finish_time - 15 * 60 * 1000 );
-    }
-
-    var now = new Date();
-    var duration = finish_time - now;
-    var negative = now > finish_time ? "-" : "";
-    var minutes =  Math.floor( Math.abs( duration / (1000 * 60)));
-    var seconds = Math.round( (Math.abs(duration) - minutes * 1000 * 60) / 1000);
-    el.html( negative + addZero(minutes) + ":" + addZero(seconds) );
-  });
-}
-
-
-setInterval(calculateTime,1000);
-calculateTime();
-}, {
-    entries:entries,
-    map:globalMap
 });
 
 define(_19, [], function(require, exports, module, __filename, __dirname) {

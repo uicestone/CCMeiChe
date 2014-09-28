@@ -222,6 +222,36 @@ body.openmenu {
   background-color: #b6b6b6;
   color: #fff;
 }
+#login-form .row-agreement {
+  position: relative;
+  left: -10px;
+  text-align: center;
+  zoom: 1;
+}
+#login-form .row-agreement:before,
+#login-form .row-agreement:after {
+  content: "";
+  display: block;
+}
+#login-form .row-agreement:after {
+  clear: both;
+}
+#login-form .row-agreement .checkbox {
+  position: relative;
+  top: 4px;
+  margin-right: 6px;
+  background-image: url("../img/checkbox.png");
+  -webkit-background-size: 20px 40px;
+  -moz-background-size: 20px 40px;
+  background-size: 20px 40px;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+#login-form .row-agreement .checkbox.active {
+  background-position: 0 -20px;
+}
 #login-form .row-code .icon {
   left: 2px;
   background-position: 0 -440px;
@@ -820,6 +850,7 @@ body.openmenu {
   padding: 5px;
   height: 300px;
   font-size: 28px;
+  overflow: auto;
 }
 #agreement .content p {
   text-indent: 28px;

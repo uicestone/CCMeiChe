@@ -172,6 +172,23 @@ body
       &:disabled
         background-color: grey
         color: #fff
+  .row-agreement
+    position: relative
+    left: -10px
+    text-align: center
+    clearfix()
+    .checkbox
+      position: relative
+      top: 4px
+      margin-right: 6px
+      background-image: url("../img/checkbox.png")
+      background-size: 20px 40px
+      width: 20px
+      height: 20px
+      background-repeat: no-repeat
+      display: inline-block
+      &.active
+        background-position: 0 -20px
   .row-code
     .icon
       left: 2px
@@ -618,6 +635,7 @@ body
     padding: 5px
     height: 300px
     font-size: 28px
+    overflow: auto
     p
       text-indent: 28px
       font-size: 14px

@@ -102,6 +102,10 @@ $(function(){
 
 
   btn_signin.on("tap",function(){
+    if(!$(".checkbox").hasClass("active")){
+      popMessage("请阅读用户协议");
+      return;
+    }
     if(btn_signin.prop("disabled")){return;}
     btn_signin.prop("disabled",true);
     $.post("/api/v1/signin",{
@@ -118,7 +122,13 @@ $(function(){
     });
   });
 
-  // agreement.show();
+  $('.checkbox').on("tap", function(){
+    $(this).toggleClass('active');
+  });
+
+  $('.tap-to-read').on("tap", function(){
+    agreement.show();
+  });
 });
 }, {
     entries:entries,
