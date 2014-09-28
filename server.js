@@ -14,6 +14,7 @@ var http = require('http');
 var fs = require('fs');
 var moment = require("moment");
 moment.locale('zh-cn');
+require('express-di');
 
 var startTime = +new Date();
 require('colors');
@@ -85,7 +86,7 @@ if(SERVICE == "worker"){
   app.get('/logout', require("./routes/logout"));
   app.get("/contact-us", require("./routes/contact"));
   app.get("/services", require("./routes/services"));
-  app.get("/promos", require("./routes/promos"));
+  app.get("/packages", require("./routes/promos"));
   app.get('/wechat/', assureUserLogin, require("./routes/index"));
   app.get('/myorders/:orderid', assureUserLogin, require("./routes/myorders").detail);
   app.get('/myorders', assureUserLogin, require("./routes/myorders").list);

@@ -31,7 +31,8 @@
     "colors": "^0.6.2",
     "han": "0.0.7",
     "MD5": "^1.2.1",
-    "wechat-pay": "https://github.com/supersheep/wechat-pay/tarball/master"
+    "wechat-pay": "https://github.com/supersheep/wechat-pay/tarball/master",
+    "express-di": "^4.1.1"
   },
   "devDependencies": {
     "nib": "~1.0.3",
