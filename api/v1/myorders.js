@@ -4,8 +4,6 @@ var estimateTime = require("../../util/estimate");
 var wechat_user = require('../../util/wechat').user;
 var wechat_worker = require('../../util/wechat').worker;
 var charge = require('../../util/charge');
-var WechatUserApi = wechat_user.api;
-var WechatWorkerApi = wechat_worker.api;
 var Worker = model.worker;
 var Order = model.order;
 var User = model.user;
@@ -260,102 +258,13 @@ exports.confirm = function(req,res,next){
   });
 }
 
-exports._cancel = function(orderId, reason, callback){
-  var order = null;
-
-  function needProcess(){
-    return reason == "order_cancel" || reason == "admin_cancel" && order.status == "todo";
-  }
-
-  async.series([
-    function(done){
-      Order.findById(orderId, function(err, result){
-        if(err){
-          return done(err);
-        }
-        order = result;
-        done(null);
-      });
-    },
-    function(done){
-      if(needProcess()){
-        // 向腾讯发起退款请求
-        if(process.env.DEBUG){
-          done(null);
-        }else{
-          async.waterfall([
-            function(done){
-              Refund.insert({}, function(err, refunds){
-                if(err){
-                  return done(err);
-                }
-                done(null, refunds[0]._id);
-              })
-            },
-            function(refundId, done){
-              wechat_user.refund({
-                out_trade_no: order._id,
-                out_refund_no: refundId,
-                total_fee: order.price /* 100 */,
-                refund_fee: order.price
-              }, function(err, data){
-                if(err){
-                  if(err.name == "BusinessError"){
-                    done(data.err_code_des);
-                  }
-                  return done(err);
-                }
-
-                done(null, data);
-              });
-            }
-          ], done);
-        }
-      }else{
-        done(null);
-      }
-    },
-    function(done){
-      Order.cancel(order._id, reason, done);
-    },
-    function(done){
-      Worker.removeOrder(order.worker._id, order._id, function(err){
-        if(err){
-          return done(err);
-        }
-        done(null);
-      });
-    },
-    function(done){
-      if(needProcess()){
-        WechatUserApi.sendText(order.user.openid, "您的订单已被取消，退款申请已经提交。", done);
-      }else{
-        done(null);
-      }
-    },
-    function(done){
-      if(needProcess()){
-        Worker.getMessage(order.worker._id, {
-          action: "cancel",
-          order: order
-        }, function(err, message){
-          if(err){return done(err);}
-          WechatWorkerApi.sendText(order.worker.openid, message, done);
-        });
-      }else{
-        done(null);
-      }
-    }
-  ], callback);
-}
-
 exports.cancel = function(req,res,next){
   var user = req.user;
   var orderId = req.body.orderId;
   var reason = req.body.reason;
 
 
-  exports._cancel(orderId, reason, function(err){
+  charge.cancel(orderId, reason, function(err){
     if(err){
       return next(err);
     }

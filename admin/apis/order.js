@@ -2,7 +2,7 @@ var Order = require('../../model').order;
 var User = require('../../model').user;
 var Worker = require('../../model').worker;
 
-var myorders = require('../../api/v1/myorders');
+var charge = require('../../util/charge');
 var _ = require('underscore');
 var async = require('async');
 
@@ -28,7 +28,7 @@ exports.clear = function(req,res,next){
 exports.cancel = function(req,res,next){
   var id = req.body.id;
 
-  myorders._cancel(id, "admin_cancel", function(err){
+  charge.cancel(id, "admin_cancel", function(err){
     if(err){
       return next(err);
     }
