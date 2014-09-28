@@ -1,6 +1,6 @@
 var config = require('config');
 var model = require('../../model');
-var estimateTime = require("../../util/estimate");
+var estimateTime = require("../../util/estimate").getSolution;
 var wechat_user = require('../../util/wechat').user;
 var wechat_worker = require('../../util/wechat').worker;
 var charge = require('../../util/charge');

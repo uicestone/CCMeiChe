@@ -103,7 +103,6 @@ exports.cancel = function(orderId, reason, callback){
 
 exports.washcar = function(openid, orderId, req, res, callback){
   var currentOrder;
-  console.log("washcar", openid, orderId)
   async.waterfall([
     function(done){
       Order.confirm(orderId, done);

@@ -7,6 +7,7 @@ var Order = Model("order");
 var Service = Model("service");
 var async = require('async');
 var moment = require('moment');
+var estimate = require('../util/estimate');
 
 module.exports = Order;
 
@@ -26,27 +27,42 @@ db.bind('order', {
         return callback(error);
       }
 
-      var now = new Date();
 
-      order.processed = true;
-      order.status = "todo";
-      order.order_time = new Date();
-      async.series([
-        function(done){
-          Order.updateById(id, order, done);
-        },
-        function(done){
-          Worker.addOrder(order.worker._id, order, done);
-        },
-        function(done){
-          User.charge(order.user._id, order, done);
-        }
-      ], function(err){
-        if(err){
+      Worker.findById(order.worker._id, function(err, worker){
+        if (err || !order) {
           return callback(err);
         }
 
-        callback(null, order);
+        // 重新计算时间
+        estimate.getTimes(order.latlng, worker, function(err, times){
+          if(err){return callback(err);}
+
+          var now = new Date();
+          order.processed = true;
+          order.status = "todo";
+          order.order_time = new Date();
+          order.estimated_finish_time = times.finish_time,  // 预估完成时间
+          order.estimated_arrive_time = times.arrive_time // 预估到达时间
+
+
+          async.series([
+            function(done){
+              Order.updateById(id, order, done);
+            },
+            function(done){
+              Worker.addOrder(order.worker._id, order, done);
+            },
+            function(done){
+              User.charge(order.user._id, order, done);
+            }
+          ], function(err){
+            if(err){
+              return callback(err);
+            }
+
+            callback(null, order);
+          });
+        });
       });
     });
   },

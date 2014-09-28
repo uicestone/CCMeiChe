@@ -1,4 +1,4 @@
-var estimate = require("../../util/estimate");
+var estimate = require("../../util/estimate").getSolution;
 var _ = require("underscore");
 
 
