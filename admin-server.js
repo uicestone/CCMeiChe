@@ -46,17 +46,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', routes.worker);
-app.get('/worker', routes.worker);
-app.get('/user', routes.user);
-app.get('/order', routes.order);
-app.get('/api/worker', apis.worker.list);
-app.post('/api/worker', apis.worker.create);
-app.post('/api/worker/clear', apis.worker.clear);
-app.get('/api/user', apis.user.list);
-app.post('/api/user/clear', apis.user.clear);
-app.get('/api/order', apis.order.list);
-app.post('/api/order/cancel', apis.order.cancel);
-app.post('/api/order/clear', apis.order.clear);
+app.get('/worker', routes.auth, routes.worker);
+app.get('/user', routes.auth, routes.user);
+app.get('/order', routes.auth, routes.order);
+app.get('/api/worker', apis.auth, apis.worker.list);
+app.post('/api/worker', apis.auth, apis.worker.create);
+app.post('/api/worker/clear', apis.auth, apis.worker.clear);
+app.get('/api/user', apis.auth, apis.user.list);
+app.post('/api/user/clear', apis.auth, apis.user.clear);
+app.get('/api/order', apis.auth, apis.order.list);
+app.post('/api/order/cancel', apis.auth, apis.order.cancel);
+app.post('/api/order/clear', apis.auth, apis.order.clear);
 
 app.get('/logout', routes.logout);
 app.get('/login', routes.login);

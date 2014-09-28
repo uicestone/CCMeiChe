@@ -5,12 +5,6 @@ var async = require('async');
 var _ = require('underscore');
 
 exports.clear = function(req,res,next){
-  if(!req.isAuthenticated()){
-    return res.send(403,{
-      code: 403,
-      message: "denied"
-    });
-  }
   Worker.remove(function(err){
     if(err){
       return next(err)
@@ -55,13 +49,6 @@ exports.list = function(req,res,next){
 }
 
 exports.create = function(req,res,next){
-  if(!req.isAuthenticated()){
-    return res.send(403,{
-      code: 403,
-      message: "denied"
-    });
-  }
-
   if(!req.body.name || !req.body.phone || !req.body.openid){
     return res.send(400,{
       code: 400,

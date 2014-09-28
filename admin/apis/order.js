@@ -8,12 +8,6 @@ var async = require('async');
 
 
 exports.clear = function(req,res,next){
-  if(!req.isAuthenticated()){
-    return res.send(403,{
-      code: 403,
-      message: "denied"
-    });
-  }
   Order.remove(function(err){
     if(err){
       return next(err)
