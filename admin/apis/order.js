@@ -7,8 +7,6 @@ var _ = require('underscore');
 var async = require('async');
 
 
-console.log(myorders);
-
 exports.clear = function(req,res,next){
   if(!req.isAuthenticated()){
     return res.send(403,{
