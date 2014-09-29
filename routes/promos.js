@@ -11,6 +11,7 @@ module.exports = function(req,res,next){
     }
     res.render("recharge",{
       id:"recharge",
+      subtitle:"礼包",
       choices:results
     });
   });
