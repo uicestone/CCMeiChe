@@ -1092,6 +1092,8 @@ body.openmenu {
   border-left: 1px solid #ddd;
   color: #dadd50;
   padding: 0 20px;
+  width: 30px;
+  text-align: center;
 }
 #myinfos .section .promos li:first-child {
   border-top: 1px solid #fab44a;

@@ -7,7 +7,9 @@ module.exports = function(req,res,next){
   var oauth = wechat.user.oauth;
   var code = req.query.code;
 
-  Service.find().toArray(function(err,services){
+  Service.find().sort({
+    _id: 1
+  }).toArray(function(err,services){
     if(err){return next(err);}
 
     res.render("index",{

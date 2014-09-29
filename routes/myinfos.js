@@ -2,9 +2,7 @@ var Service = require('../model/service');
 
 module.exports = function(req,res,next){
   var user = req.user;
-  Service.find({
-    haspromo: true
-  }).sort({
+  Service.find().sort({
     _id: 1
   }).toArray(function(err, promos){
     if(err){return next(err);}
