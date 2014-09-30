@@ -165,6 +165,9 @@ function sendMonthly(res){
       }
       count += 1;
     });
+    if(!orders.length){
+      return res.reply("您查询的月份没有订单记录");
+    }
     message = moment(orders[0].finish_time).format('YYYY年MM月订单汇总') + '\n';
     message += Object.keys(services).map(function(name){
       return name + ": " + services[name];
