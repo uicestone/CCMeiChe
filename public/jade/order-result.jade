@@ -34,5 +34,5 @@ block content
           img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")
   script(src="/lib/wechat.js")
   script.
-    var order = "!{JSON.stringify(order)}";
+    var order = !{JSON.stringify(order)};
   +facade('order-result')
