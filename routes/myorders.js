@@ -19,7 +19,7 @@ function addZero(num){
 
 exports.list = function(req,res,next){
   Order.find({
-    "user.phone": req.user.phone
+    "user._id": req.user._id
   }).sort({
     "estimated_finish_time": -1
   }).toArray(function(err,orders){

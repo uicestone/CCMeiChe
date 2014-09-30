@@ -45,7 +45,7 @@ app.use(express.static(__dirname + '/admin/public'))
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', routes.worker);
+app.get('/', routes.auth, routes.worker);
 app.get('/worker', routes.auth, routes.worker);
 app.get('/user', routes.auth, routes.user);
 app.get('/order', routes.auth, routes.order);

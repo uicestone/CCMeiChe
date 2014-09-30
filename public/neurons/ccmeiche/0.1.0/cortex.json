@@ -29,6 +29,7 @@
     "./pages/mod/uploader.js",
     "./pages/myinfos.js",
     "./pages/myorders.js",
+    "./pages/order-result.js",
     "./pages/order.js",
     "./pages/promos.js",
     "./pages/recharge.js",

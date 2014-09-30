@@ -12,10 +12,11 @@ module.exports = function(app){
     app.get("myorders", auth, myorders.list);
     app.post("myorders/cancel", auth, myorders.assure_match, myorders.cancel);
     app.post("myorders/confirm", auth, myorders.confirm);
+    app.post("myorders/share", auth, myorders.share);
     app.post("estimate", auth, require("./estimate").post);
-    app.post("orders/:orderid", require("./orders").detail);
-    app.post("orders/:orderid/arrive", require("./orders").arrive);
-    app.post("orders/:orderid/done", require("./orders").done);
+    app.post("orders/:orderid", auth, require("./orders").detail);
+    app.post("orders/:orderid/arrive", auth, require("./orders").arrive);
+    app.post("orders/:orderid/done", auth, require("./orders").done);
     app.post("orders", require("./orders").list);
     app.get("mycars", auth, require("./mycars").get);
     app.post("mycars", auth, require("./mycars").post);

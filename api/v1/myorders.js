@@ -12,23 +12,23 @@ var async = require("async");
 var _ = require("underscore");
 
 
-function validatePromoCount(data){
+function validatePromoCount(data) {
   var service = data.service;
   var user = data.user;
   var promo_count = +data.promo_count;
-  if(!promo_count){
+  if (!promo_count) {
     return true;
   }
 
-  if(!user.promo){
+  if (!user.promo) {
     return false;
   }
 
-  var my_promo = user.promo.filter(function(promo){
+  var my_promo = user.promo.filter(function (promo) {
     return promo._id == service._id;
   });
 
-  if(!my_promo || my_promo.amount < promo_count){
+  if (!my_promo || my_promo.amount < promo_count) {
     return false;
   }
 
@@ -36,7 +36,7 @@ function validatePromoCount(data){
 }
 
 // 实际需要支付的金额（由service，use_credit, promo_count，以及user.promo计算得到）
-function calculatePriceAndCredit(data){
+function calculatePriceAndCredit(data) {
   var service = data.service;
   var use_credit = data.use_credit;
   var user = data.user;
@@ -48,19 +48,19 @@ function calculatePriceAndCredit(data){
   var credit = 0;
   var user_credit = user.credit;
 
-  for(var i = 0; i < cars_count; i++){
-    if(promo_count){
+  for (var i = 0; i < cars_count; i++) {
+    if (promo_count) {
       promo_count--;
-    }else{
+    } else {
       price += (+service.price);
     }
   }
 
-  if(use_credit){
-    if(user_credit > price){
+  if (use_credit) {
+    if (user_credit > price) {
       credit = price;
       price = 0;
-    }else{
+    } else {
       credit = user_credit;
       price = price - credit;
     }
@@ -72,21 +72,21 @@ function calculatePriceAndCredit(data){
   };
 }
 
-exports.assure_match = function(req,res,next){
+exports.assure_match = function (req, res, next) {
   var orderId = req.body.orderId;
   var user = req.user;
-  if(!orderId){
+  if (!orderId) {
     return next({
       status: 400,
       message: "missing orderId"
     });
   }
 
-  Order.findById(orderId,function(err,order){
-    if(err || !order){
+  Order.findById(orderId, function (err, order) {
+    if (err || !order) {
       return next(err);
     }
-    if(order.user._id.toString() !== user._id.toString()){
+    if (order.user._id.toString() !== user._id.toString()) {
       return next({
         status: 400,
         message: "not your order"
@@ -97,18 +97,18 @@ exports.assure_match = function(req,res,next){
   });
 }
 
-exports.list = function(req,res){
+exports.list = function (req, res) {
   Order.find({
-    "user.phone": req.user.phone
-  }).toArray(function(err,orders){
-    if(err){
+    "user._id": req.user._id
+  }).toArray(function (err, orders) {
+    if (err) {
       return next(err);
     }
     res.status(200).send(orders);
   });
 };
 
-exports.confirm = function(req,res,next){
+exports.confirm = function (req, res, next) {
   var user = req.user;
   var order = req.body;
 
@@ -130,7 +130,7 @@ exports.confirm = function(req,res,next){
     });
   }
 
-  if (!service || !service._id){
+  if (!service || !service._id) {
     return next({
       status: 400,
       message: "invalid service"
@@ -144,28 +144,31 @@ exports.confirm = function(req,res,next){
     promo_count: promo_count
   });
 
-  if(!valid){
+  if (!valid) {
     return next({
       status: 401,
       message: "您没有足够的优惠券"
     });
   }
 
-  user_latlng = user_latlng.split(",").map(function(item){return +item});
+  user_latlng = user_latlng.split(",").map(function (item) {
+    return +item
+  });
 
   var estimate = null;
   var order = null;
   async.waterfall([
-    function(done){
-      estimateTime(user_latlng, function(err, result){
-        if(err){
+
+    function (done) {
+      estimateTime(user_latlng, function (err, result) {
+        if (err) {
           return done(err);
         }
         estimate = result;
         done(null);
       });
     },
-    function(done){
+    function (done) {
       var priceAndCredit = calculatePriceAndCredit({
         service: service,
         use_credit: use_credit,
@@ -175,8 +178,8 @@ exports.confirm = function(req,res,next){
       });
 
       var orderdata = {
-        worker: _.pick(estimate.worker,'_id','openid'), //订单对应的车工
-        user: _.pick(user,'_id','openid','phone'),  //下单用户
+        worker: _.pick(estimate.worker, '_id', 'openid'), //订单对应的车工
+        user: _.pick(user, '_id', 'openid', 'phone'), //下单用户
         cars: cars, //下单车辆
         service: service, //选择的服务
         address: address, //用户地址
@@ -187,35 +190,35 @@ exports.confirm = function(req,res,next){
         price: priceAndCredit.price, // 支付金额
         credit: priceAndCredit.credit, // 支付积分
         preorder_time: new Date(), // 下单时间
-        estimated_finish_time: estimate.finish_time,  // 预估完成时间
+        estimated_finish_time: estimate.finish_time, // 预估完成时间
         estimated_arrive_time: estimate.arrive_time // 预估到达时间
       };
 
-      Order.insert(orderdata, function(err, orders){
-        if(err) return done(err);
+      Order.insert(orderdata, function (err, orders) {
+        if (err) return done(err);
         order = orders[0];
         done(null);
       });
     },
-    function(done){
-      User.addAddress(user.phone, order, function(err){
-        if(err && err.name !== "EEXISTS"){
+    function (done) {
+      User.addAddress(user._id, order, function (err) {
+        if (err && err.name !== "EEXISTS") {
           return done(err);
         }
         return done(null);
       });
     },
-    function(done){
+    function (done) {
       console.log("update default cars");
-      User.updateDefaultCars(user.phone, order.cars, done);
+      User.updateDefaultCars(user._id, order.cars, done);
     },
-    function(done){
+    function (done) {
       console.log("pay_request");
 
-      if(!order.price){
+      if (!order.price) {
         console.log("ORDER", order);
-        return charge.washcar(user.openid, order._id, req, res, function(err){
-          if(err){
+        return charge.washcar(user.openid, order._id, req, res, function (err) {
+          if (err) {
             return done(err);
           }
           return done(null, {
@@ -232,8 +235,8 @@ exports.confirm = function(req,res,next){
         attach: {
           type: "washcar"
         }
-      }, function(err, payargs){
-        if(err){
+      }, function (err, payargs) {
+        if (err) {
           return done(err);
         }
         done(null, {
@@ -242,32 +245,75 @@ exports.confirm = function(req,res,next){
         });
       });
     }
-  ], function(err, result){
-    if(err){
+  ], function (err, result) {
+    if (err) {
       return next(err);
     }
 
-    if(result.code == 201 && process.env.DEBUG){
+    if (result.code == 201 && process.env.DEBUG) {
       res.json({
         code: 201,
         orderId: order._id
       });
-    }else{
+    } else {
       res.json(result);
     }
   });
 }
 
-exports.cancel = function(req,res,next){
+exports.share = function (req, res, next) {
+  var orderId = req.body.orderId;
+  var user = req.user;
+  Order.findById(orderId, function (err, order) {
+    if (err || !order) {
+      return next();
+    }
+
+    if (order.shared) {
+      return res.send({
+        message: "processed"
+      });
+    }
+
+    async.series([
+      function (done) {
+        User.updateById(user._id, {
+          credit:{
+            $inc: 5
+          }
+        }, done);
+      },
+      function (done) {
+        Order.updateById(orderId, {
+          $set: {
+            shared: true
+          }
+        }, done);
+      }
+    ], function (err) {
+      if (err) {
+        return next(err);
+      }
+
+      res.send({
+        message: "ok"
+      })
+    });
+  });
+};
+
+exports.cancel = function (req, res, next) {
   var user = req.user;
   var orderId = req.body.orderId;
   var reason = req.body.reason;
 
 
-  charge.cancel(orderId, reason, function(err){
-    if(err){
+  charge.cancel(orderId, reason, function (err) {
+    if (err) {
       return next(err);
     }
-    res.status(200).send({message:"ok"});
+    res.status(200).send({
+      message: "ok"
+    });
   });
 };

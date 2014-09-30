@@ -34,6 +34,7 @@ module.exports = swipeModal.create({
 
     if(!user.cars.length){
       elem.find(".cancel").hide();
+      elem.find(".submit").css('float','none');
     }
 
     if(data){

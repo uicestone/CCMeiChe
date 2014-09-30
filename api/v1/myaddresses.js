@@ -11,7 +11,7 @@ exports.add = function(req,res,next){
     return res.status(400).send("missing params");
   }
 
-  User.addAddress(req.user.phone, req.body, function(err){
+  User.addAddress(req.user._id, req.body, function(err){
     if(err){
       if(err.name == "EEXISTS"){
         return res.status(400).send("该地址已存在");
@@ -36,7 +36,7 @@ exports.update = function(req,res,next){
     return res.status(400).send("missing params");
   }
 
-  User.modifyAddress(req.user.phone, index, {
+  User.modifyAddress(req.user._id, index, {
     address: address,
     carpark: carpark,
     latlng: latlng

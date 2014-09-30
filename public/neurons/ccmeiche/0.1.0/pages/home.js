@@ -14,29 +14,30 @@ var _10 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
 var _11 = "ccmeiche@0.1.0/pages/mod/uploader.js";
 var _12 = "ccmeiche@0.1.0/pages/myinfos.js";
 var _13 = "ccmeiche@0.1.0/pages/myorders.js";
-var _14 = "ccmeiche@0.1.0/pages/order.js";
-var _15 = "ccmeiche@0.1.0/pages/promos.js";
-var _16 = "ccmeiche@0.1.0/pages/recharge.js";
-var _17 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _20 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _21 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _22 = "ccmeiche@0.1.0/pages/views/addcar.js";
-var _23 = "ccmeiche@0.1.0/pages/views/agreement.js";
-var _24 = "ccmeiche@0.1.0/pages/views/finishorder.js";
-var _25 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _26 = "zepto@^1.1.3";
-var _27 = "tpl@~0.2.1";
-var _28 = "hashstate@~0.1.0";
-var _29 = "util@^1.0.4";
+var _14 = "ccmeiche@0.1.0/pages/order-result.js";
+var _15 = "ccmeiche@0.1.0/pages/order.js";
+var _16 = "ccmeiche@0.1.0/pages/promos.js";
+var _17 = "ccmeiche@0.1.0/pages/recharge.js";
+var _18 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _21 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _22 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _23 = "ccmeiche@0.1.0/pages/views/addcar.js";
+var _24 = "ccmeiche@0.1.0/pages/views/agreement.js";
+var _25 = "ccmeiche@0.1.0/pages/views/finishorder.js";
+var _26 = "ccmeiche@0.1.0/pages/views/preorder.js";
+var _27 = "zepto@^1.1.3";
+var _28 = "tpl@~0.2.1";
+var _29 = "hashstate@~0.1.0";
 var _30 = "events@^1.0.5";
-var _31 = "view-swipe@~0.1.4";
-var _32 = "uploader@~0.1.4";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25];
+var _31 = "util@^1.0.4";
+var _32 = "view-swipe@~0.1.4";
+var _33 = "uploader@~0.1.4";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_26,_27,_28,_3,_9,_8,_7,_22,_25], function(require, exports, module, __filename, __dirname) {
+define(_0, [_27,_28,_29,_9,_8,_3,_7,_23,_26], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
@@ -390,10 +391,156 @@ if(!user.cars.length){
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/popmessage":_7,"./views/addcar":_22,"./views/preorder":_25},globalMap)
+    map:mix({"./mod/singleselect":_9,"./mod/popselect":_8,"./mod/autocomplete":_3,"./mod/popmessage":_7,"./views/addcar":_23,"./views/preorder":_26},globalMap)
 });
 
-define(_3, [_26,_29,_30], function(require, exports, module, __filename, __dirname) {
+define(_9, [_27,_30,_31], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var events = require("events");
+var util = require("util");
+
+function SingleSelect(elem,selector){
+  var self = this;
+  (function(){
+    var current = null;
+    var items = self.items = elem.find(selector);
+    items.on("tap",function(){
+      elem.find(".active").removeClass("active");
+      var me = $(this);
+      if(me == current){
+        me.removeClass("active");
+        current = null;
+      }else{
+        current && current.removeClass("active");
+        me.addClass("active");
+        current = me;
+      }
+      self.emit("change",this);
+    });
+  })();
+  return this;
+}
+
+util.inherits(SingleSelect,events);
+
+SingleSelect.prototype.select = function(data){
+  this.items.filter(function(i){
+    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+  }).addClass("active");
+}
+
+module.exports = function(elem,selector){
+  return new SingleSelect(elem,selector);
+}
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_8, [_27,_30,_31,_9,_6], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var singleSelect = require("./singleselect");
+var multiSelect = require("./multiselect");
+var events = require("events");
+var util = require("util");
+
+function PopSelect(choices, options){
+  this.parser = options.parser || function(v){return v;}
+  this.choices = choices;
+  this.type = options.type;
+  this.name = options.name;
+  var container = this.container =  $("<div class='popselect'>"
+      +"<div class='close'></div>"
+      +"<div class='choices'>"
+      +"<div class='inner'></div>"
+      +"</div>"
+    +"<div class='btn submit'>确认</div>"
+  +"</div>");
+  this.render();
+  this.bind();
+  var doc_height = $(window).height();
+  container.css("max-height",doc_height - 40);
+  container.find(".inner").css("max-height",doc_height - 200);
+  container.appendTo($("body"));
+  container.hide();
+  this.name && container.addClass(this.name);
+}
+
+util.inherits(PopSelect,events);
+
+
+PopSelect.prototype.render = function() {
+  var self = this;
+  var parser = this.parser;
+  var container = this.container;
+
+  var choices_elem = container.find(".choices .inner");
+  choices_elem.empty();
+  this.choices.forEach(function(choice){
+    var text = parser(choice);
+    var item = $("<div class='item'>" + text + "</div>");
+    item.data("data",choice);
+    choices_elem.append(item);
+  });
+
+  switch(this.type){
+    case "single":
+      this.selector = singleSelect(choices_elem,".item");
+      break;
+    case "multi":
+      this.selector = multiSelect(choices_elem,".item");
+      break;
+    default:
+      throw "invalid type " + this.type;
+  }
+};
+
+PopSelect.prototype.bind = function(){
+  var self = this;
+  var container = this.container;
+  container.find(".submit").on("tap",function(){
+    var result = container.find(".active").map(function(i,el){
+      return $(el).data("data");
+    });
+    if(!self.validate || self.validate(result)){
+      self.emit("submit", Array.prototype.slice.call(result));
+      self.close();
+    }
+  });
+
+  container.find(".close").on("tap",function(){
+    self.close();
+  });
+}
+
+PopSelect.prototype.select = function(item){
+  this.selector.select(item);
+}
+
+PopSelect.prototype.add = function(data){
+  this.choices.push(data);
+  this.render();
+}
+
+PopSelect.prototype.open = function(){
+  this.container.show();
+  this.emit("open");
+}
+
+PopSelect.prototype.close = function(){
+  this.container.hide();
+  this.emit("close");
+}
+
+module.exports = function(choices,options){
+  return new PopSelect(choices,options);
+}
+}, {
+    entries:entries,
+    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
+});
+
+define(_3, [_27,_31,_30], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -501,153 +648,7 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_9, [_26,_30,_29], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var events = require("events");
-var util = require("util");
-
-function SingleSelect(elem,selector){
-  var self = this;
-  (function(){
-    var current = null;
-    var items = self.items = elem.find(selector);
-    items.on("tap",function(){
-      elem.find(".active").removeClass("active");
-      var me = $(this);
-      if(me == current){
-        me.removeClass("active");
-        current = null;
-      }else{
-        current && current.removeClass("active");
-        me.addClass("active");
-        current = me;
-      }
-      self.emit("change",this);
-    });
-  })();
-  return this;
-}
-
-util.inherits(SingleSelect,events);
-
-SingleSelect.prototype.select = function(data){
-  this.items.filter(function(i){
-    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
-  }).addClass("active");
-}
-
-module.exports = function(elem,selector){
-  return new SingleSelect(elem,selector);
-}
-}, {
-    entries:entries,
-    map:globalMap
-});
-
-define(_8, [_26,_30,_29,_9,_6], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var singleSelect = require("./singleselect");
-var multiSelect = require("./multiselect");
-var events = require("events");
-var util = require("util");
-
-function PopSelect(choices, options){
-  this.parser = options.parser || function(v){return v;}
-  this.choices = choices;
-  this.type = options.type;
-  this.name = options.name;
-  var container = this.container =  $("<div class='popselect'>"
-      +"<div class='close'></div>"
-      +"<div class='choices'>"
-      +"<div class='inner'></div>"
-      +"</div>"
-    +"<div class='btn submit'>确认</div>"
-  +"</div>");
-  this.render();
-  this.bind();
-  var doc_height = $(window).height();
-  container.css("max-height",doc_height - 40);
-  container.find(".inner").css("max-height",doc_height - 200);
-  container.appendTo($("body"));
-  container.hide();
-  this.name && container.addClass(this.name);
-}
-
-util.inherits(PopSelect,events);
-
-
-PopSelect.prototype.render = function() {
-  var self = this;
-  var parser = this.parser;
-  var container = this.container;
-
-  var choices_elem = container.find(".choices .inner");
-  choices_elem.empty();
-  this.choices.forEach(function(choice){
-    var text = parser(choice);
-    var item = $("<div class='item'>" + text + "</div>");
-    item.data("data",choice);
-    choices_elem.append(item);
-  });
-
-  switch(this.type){
-    case "single":
-      this.selector = singleSelect(choices_elem,".item");
-      break;
-    case "multi":
-      this.selector = multiSelect(choices_elem,".item");
-      break;
-    default:
-      throw "invalid type " + this.type;
-  }
-};
-
-PopSelect.prototype.bind = function(){
-  var self = this;
-  var container = this.container;
-  container.find(".submit").on("tap",function(){
-    var result = container.find(".active").map(function(i,el){
-      return $(el).data("data");
-    });
-    if(!self.validate || self.validate(result)){
-      self.emit("submit", Array.prototype.slice.call(result));
-      self.close();
-    }
-  });
-
-  container.find(".close").on("tap",function(){
-    self.close();
-  });
-}
-
-PopSelect.prototype.select = function(item){
-  this.selector.select(item);
-}
-
-PopSelect.prototype.add = function(data){
-  this.choices.push(data);
-  this.render();
-}
-
-PopSelect.prototype.open = function(){
-  this.container.show();
-  this.emit("open");
-}
-
-PopSelect.prototype.close = function(){
-  this.container.hide();
-  this.emit("close");
-}
-
-module.exports = function(choices,options){
-  return new PopSelect(choices,options);
-}
-}, {
-    entries:entries,
-    map:mix({"./singleselect":_9,"./multiselect":_6},globalMap)
-});
-
-define(_7, [_26], function(require, exports, module, __filename, __dirname) {
+define(_7, [_27], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
   var json = {}
@@ -714,7 +715,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_22, [_26,_11,_3,_7,_10,_17], function(require, exports, module, __filename, __dirname) {
+define(_23, [_27,_11,_3,_7,_10,_18], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -751,6 +752,7 @@ module.exports = swipeModal.create({
 
     if(!user.cars.length){
       elem.find(".cancel").hide();
+      elem.find(".submit").css('float','none');
     }
 
     if(data){
@@ -811,10 +813,10 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_17},globalMap)
+    map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_18},globalMap)
 });
 
-define(_25, [_26,_31,_10,_7,_21], function(require, exports, module, __filename, __dirname) {
+define(_26, [_27,_32,_10,_7,_22], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var viewSwipe = require("view-swipe");
 var swipeModal = require("../mod/swipe-modal");
@@ -891,10 +893,10 @@ function formatTime(estimated_finish_time){
 }
 }, {
     entries:entries,
-    map:mix({"../mod/swipe-modal":_10,"../mod/popmessage":_7,"../tpl/preorder.html":_21},globalMap)
+    map:mix({"../mod/swipe-modal":_10,"../mod/popmessage":_7,"../tpl/preorder.html":_22},globalMap)
 });
 
-define(_6, [_26], function(require, exports, module, __filename, __dirname) {
+define(_6, [_27], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 
 function MultiSelect(container,itemSelector){
@@ -927,7 +929,7 @@ module.exports = function(container,itemSelector){
     map:globalMap
 });
 
-define(_11, [_26,_32], function(require, exports, module, __filename, __dirname) {
+define(_11, [_27,_33], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -1054,7 +1056,7 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_10, [_29,_30,_31,_27,_28,_26], function(require, exports, module, __filename, __dirname) {
+define(_10, [_31,_30,_32,_28,_29,_27], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
@@ -1153,14 +1155,14 @@ exports.create = function(config){
     map:globalMap
 });
 
-define(_17, [], function(require, exports, module, __filename, __dirname) {
+define(_18, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap
 });
 
-define(_21, [], function(require, exports, module, __filename, __dirname) {
+define(_22, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="preorder" class="container"><h2 class="h2">提交订单</h2><div class="order"><div class="inner"><div class="row"><div class="label">手机：</div><div class="text">@{it.phone}</div></div><?js it.cars.forEach(function(car,index){ ?><div class="row"><div class="label"><?js if(index == 0){ ?>车型：<?js }else{ ?>   <?js } ?></div><div class="text"><p>@{car.type}</p><p>@{car.number}</p></div></div><?js }); ?><div class="row"><div class="label">地址：</div><div class="text">@{it.address} @{it.carpark}</div></div><div class="row"><div class="label">服务：</div><div class="text">@{it.service.title}</div></div></div></div><h2 class="h2">预估时间</h2><div class="estimate"><div class="time">@{it.time}</div><div class="text"><p>我们将在预估时间内完成洗车，预估时间以付款后为准</p><p>您也可在我们达到前随时取消订单</p></div></div><h2 class="h2">应付金额<div class="price">￥@{it.price}</div></h2><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,

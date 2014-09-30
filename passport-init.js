@@ -44,7 +44,12 @@ passport.use(new LocalStrategy({
         upsert: true
       }, function(err){
         if(err){return done(err);}
-        done(null,user);
+        User.findOne({
+          phone: phone
+        }, function(err, user){
+          if(err){return done(err);}
+          done(null, user);
+        });
       });
     }
   });
@@ -61,8 +66,9 @@ if(process.env.SERVICE == "worker"){
   passport.deserializeUser(Worker.findByOpenId);
 }else{
   passport.serializeUser(function (user, done) {
-    done(null, user.phone);
+    console.log("idididid",user._id.toString());
+    done(null, user._id.toString());
   });
 
-  passport.deserializeUser(User.findByPhone);
+  passport.deserializeUser(User.findById.bind(User));
 }

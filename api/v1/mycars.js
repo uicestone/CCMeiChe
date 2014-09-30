@@ -38,7 +38,7 @@ exports.post = function (req, res, next) {
   }
 
   if (index){
-    User.modifyCar(phone, index, car, function(err){
+    User.modifyCar(req.user._id, index, car, function(err){
       if(err){
         return next(err);
       }
@@ -46,7 +46,7 @@ exports.post = function (req, res, next) {
     });
   }else{
     User.findOne({
-      phone: phone,
+      "_id": req.user._id,
       "cars.number": number
     }, function (err, user) {
       if (err) {

@@ -89,7 +89,7 @@ if(SERVICE == "worker"){
   app.get("/wechat/packages", require("./routes/promos"));
   app.get('/wechat/recharge', assureUserLogin, require("./routes/recharge"));
   app.get('/wechat/', assureUserLogin, require("./routes/index"));
-  app.get('/myorders/:orderid', assureUserLogin, require("./routes/myorders").detail);
+  app.get('/myorders/:orderid', require("./routes/myorders").detail);
   app.get('/myorders', assureUserLogin, require("./routes/myorders").list);
   app.get('/myinfos', assureUserLogin, require("./routes/myinfos"));
   app.get('/help', require("./routes/help"));

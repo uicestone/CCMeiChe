@@ -28,49 +28,85 @@ var _24 = "ccmeiche@0.1.0/pages/views/agreement.js";
 var _25 = "ccmeiche@0.1.0/pages/views/finishorder.js";
 var _26 = "ccmeiche@0.1.0/pages/views/preorder.js";
 var _27 = "zepto@^1.1.3";
-var _28 = "events@^1.0.5";
-var _29 = "util@^1.0.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_9, [_27,_28,_29], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var events = require("events");
-var util = require("util");
+define(_14, [_27,_7], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+var popMessage = require('./mod/popmessage');
 
-function SingleSelect(elem,selector){
-  var self = this;
-  (function(){
-    var current = null;
-    var items = self.items = elem.find(selector);
-    items.on("tap",function(){
-      elem.find(".active").removeClass("active");
-      var me = $(this);
-      if(me == current){
-        me.removeClass("active");
-        current = null;
-      }else{
-        current && current.removeClass("active");
-        me.addClass("active");
-        current = me;
+$.post('/api/v1/myorders/share',{
+  orderId: orderId
+},'json').done(function(result){
+  popMessage(result.message);
+});
+}, {
+    entries:entries,
+    map:mix({"./mod/popmessage":_7},globalMap)
+});
+
+define(_7, [_27], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message){
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+      json = {
+        error:{
+          message: message.responseText
+        }
       }
-      self.emit("change",this);
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    zIndex: "30",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px"
+  });
+  pop.appendTo($("body"));
+  var width = pop.width()
+    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    //   return parseInt(pop.css(prop));
+    // }).reduce(function(a,b){
+    //   return a+b;
+    // },0);
+  pop.css({
+    "margin-left": - width / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
     });
-  })();
-  return this;
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },1500)
 }
 
-util.inherits(SingleSelect,events);
-
-SingleSelect.prototype.select = function(data){
-  this.items.filter(function(i){
-    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
-  }).addClass("active");
-}
-
-module.exports = function(elem,selector){
-  return new SingleSelect(elem,selector);
-}
+module.exports = popMessage
 }, {
     entries:entries,
     map:globalMap

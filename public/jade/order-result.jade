@@ -24,10 +24,14 @@ block content
     for pic in (order.finish_pics || [])
       .pic
         img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")
-  h2.title 车损部位
-  .container
-    include ./breakages
-  .breakage_pics.container
-    for pic in (order.breakage_pics || [])
-      .pic
-        img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")
+  if (order.breakage && order.breakage.length) || order.breakage_pics.length
+    h2.title 车损部位
+    .container
+      include ./breakages
+    .breakage_pics.container
+      for pic in (order.breakage_pics || [])
+        .pic
+          img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")
+  script.
+    var orderId = "#{order._id}";
+  +facade('order-result')

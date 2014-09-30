@@ -89,7 +89,7 @@ block scripts
                 if(status == "cancel"){
                   status = status + ":" + data.cancel_reason
                 }
-                return status;
+                return status || "--";
               }
             },
             {
@@ -98,7 +98,7 @@ block scripts
                 if(data.status !== "cancel"){
                   return "<a class='cancel' href='javascript:;'>取消</a>";
                 }else{
-                  return "";
+                  return "--";
                 }
               }
             }

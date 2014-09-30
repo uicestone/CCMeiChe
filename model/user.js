@@ -64,33 +64,24 @@ db.bind('user',{
       openid: openid
     }, callback);
   },
-  findByPhone: function(phone, callback){
-    User.findOne({
-      phone: phone
-    }, callback);
-  },
-  addCar: function(phone, car, callback){
-    User.update({
-      phone: phone
-    }, {
+  addCar: function(id, car, callback){
+    User.updateById(id, {
       $addToSet: {
         cars: car
       }
     }, callback);
   },
-  modifyCar: function(phone, index, data, callback){
+  modifyCar: function(id, index, data, callback){
     var updateDoc = {};
     if(!index){
       return callback(null);
     }
-    User.findByPhone(phone, function(err, user){
+    User.findById(id, function(err, user){
       if(err || !user){
         return callback(err);
       }
       updateDoc["cars." + index] = _.extend(user.cars[index], data);
-      User.update({
-        phone: phone
-      }, {
+      User.updateById(id, {
         $set: updateDoc
       }, callback);
     });
@@ -119,18 +110,16 @@ db.bind('user',{
       }, callback);
     });
   },
-  modifyAddress: function(phone, index, data, callback){
+  modifyAddress: function(id, index, data, callback){
     var updateDoc = {};
     updateDoc["addresses." + index] = data;
-    User.update({
-      phone: phone
-    }, {
+    User.updateById(id, {
       $set: updateDoc
     }, callback);
   },
-  addAddress: function(phone, data, callback){
+  addAddress: function(id, data, callback){
     User.findOne({
-      phone: phone,
+      _id: id,
       "addresses.address": data.address,
       "addresses.carpark": data.carpark
     },function(err, user){
@@ -157,8 +146,8 @@ db.bind('user',{
       }, callback);
     });
   },
-  updateDefaultCars: function(phone, cars, callback){
-    User.findByPhone(phone, function(err, user){
+  updateDefaultCars: function(id, cars, callback){
+    User.findById(id, function(err, user){
       if(err){
         return callback(err);
       }
@@ -168,9 +157,7 @@ db.bind('user',{
         });
         return car;
       });
-      User.update({
-        phone: phone
-      },{
+      User.updateById(id, {
         $set:{
           cars: user.cars
         }
