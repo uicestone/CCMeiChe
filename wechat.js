@@ -104,9 +104,9 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     if(message.MsgType == "text"){
       (function(content){
         var year = +content.slice(0,4);
-        var month = +content.slice(4,6);
+        var month = +content.slice(4,6) - 1;
         if(year.toString() == "NaN" || month.toString() == "NaN" || year < 2014 || year > 2050 || month < 0 || month > 12){
-          return res.reply("");
+          return res.reply("请输入正确格式查看历史订单 例: 201409");
         }
 
         Order.getMonthly(user._id, new Date(year, month), sendMonthly(res));
@@ -171,7 +171,6 @@ function sendMonthly(res){
     }).join("\n");
     message += "\n" + "总订单数: " + count;
     console.log(message);
-    process.exit(0);
     return res.reply(message);
   }
 }
