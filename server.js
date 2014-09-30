@@ -82,6 +82,9 @@ if(SERVICE == "worker"){
 }else{
 
   app.use("/wechat/user", require("./wechat").user);
+  app.get('/', function(req,res){
+    res.redirect('/wechat');
+  });
   app.get('/login', require("./routes/login"));
   app.get('/logout', require("./routes/logout"));
   app.get("/contact-us", require("./routes/contact"));
