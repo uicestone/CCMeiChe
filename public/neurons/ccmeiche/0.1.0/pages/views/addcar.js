@@ -104,7 +104,7 @@ module.exports = swipeModal.create({
       number: elem.find(".number input").val(),
       comment: elem.find(".comment input").val()
     };
-    if(index){
+    if(index !== undefined){
       data.index = index;
     }
     return data;
