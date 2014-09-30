@@ -11,17 +11,19 @@ mixin item(data)
       .row
         .label 服务：
         .text #{data.service.title}
-    .control
-      if data.status == "done"
-        if role == "worker"
-          a(href="/orders/#{data._id}",style="text-decoration:none").view-result 查看结果
-        else
-          a(href="/myorders/#{data._id}",style="text-decoration:none").view-result 查看结果
-      else if data.status !== "cancel"
-        .text 倒计时间
-        .time(data-finish="#{data.estimated_finish_time}") #{data.time}
-        if data.status == "todo"
-          .cancel 取消订单
+
+    if data.status !== "cancel"
+      .control
+        if data.status == "done"
+          if role == "worker"
+            a(href="/orders/#{data._id}",style="text-decoration:none").view-result 查看结果
+          else
+            a(href="/myorders/#{data._id}",style="text-decoration:none").view-result 查看结果
+        else if data.status !== "cancel"
+          .text 倒计时间
+          .time(data-finish="#{data.estimated_finish_time}") #{data.time}
+          if data.status == "todo"
+            .cancel 取消订单
 
 mixin empty
   .empty 无

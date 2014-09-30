@@ -30,6 +30,19 @@ exports.cancel = function(orderId, reason, callback){
       });
     },
     function(done){
+      var recharge = {
+        credit: order.credit
+      };
+      if(order.promo_count){
+        recharge.promo = [{
+          "_id" : order.service._id,
+          "title" : order.service.title,
+          "amount" : order.promo_count
+        }];
+      }
+      User.recharge(order.user._id, recharge, done);
+    },
+    function(done){
       if(needProcess()){
         // 向腾讯发起退款请求
         if(process.env.DEBUG){

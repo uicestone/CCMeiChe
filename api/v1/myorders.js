@@ -269,6 +269,11 @@ exports.share = function (req, res, next) {
       return next();
     }
 
+    if (order.user._id !== user._id){
+      return res.status(401).send({
+        message: "access denied"
+      });
+    }
     if (order.shared) {
       return res.send({
         message: "processed"
@@ -278,8 +283,8 @@ exports.share = function (req, res, next) {
     async.series([
       function (done) {
         User.updateById(user._id, {
-          credit:{
-            $inc: 5
+          $inc:{
+            credit: 5
           }
         }, done);
       },

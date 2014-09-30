@@ -1007,6 +1007,12 @@ body.openmenu {
   text-align: left;
   line-height: 2;
 }
+#myorders .section.cancel li {
+  padding-bottom: 0;
+}
+#myorders .section.cancel li .text {
+  width: 200px;
+}
 #myinfos .h1 {
   font-size: 20px;
   text-align: center;

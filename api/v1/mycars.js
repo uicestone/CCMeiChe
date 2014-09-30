@@ -65,7 +65,7 @@ exports.post = function (req, res, next) {
         car["default"] = true;
       }
 
-      User.addCar(phone, car, function (err) {
+      User.addCar(req.user._id, car, function (err) {
         if (err) {
           return next(err);
         }

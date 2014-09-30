@@ -32,6 +32,7 @@ block content
       for pic in (order.breakage_pics || [])
         .pic
           img(src="#{config.qiniu_host}#{pic}?imageView/2/w/640")
+  script(src="/lib/wechat.js")
   script.
-    var orderId = "#{order._id}";
+    var order = "!{JSON.stringify(order)}";
   +facade('order-result')

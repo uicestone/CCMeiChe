@@ -76,6 +76,7 @@ db.bind('user',{
     if(!index){
       return callback(null);
     }
+    console.log("id",id);
     User.findById(id, function(err, user){
       if(err || !user){
         return callback(err);
@@ -133,9 +134,7 @@ db.bind('user',{
         return callback(error);
       }
 
-      User.update({
-        phone: phone
-      }, {
+      User.updateById(id, {
         $addToSet: {
           addresses : {
             address: data.address,
