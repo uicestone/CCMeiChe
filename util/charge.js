@@ -1,7 +1,8 @@
 var async = require('async');
 var model = require('../model');
 var worker_api = require('./wechat').worker.api;
-var user_api = require('./wechat').user.api;
+var wechat_user = require('./wechat').user;
+var user_api = wechat_user.api;
 
 var User = model.user;
 var Worker = model.worker;
@@ -59,7 +60,7 @@ exports.cancel = function(orderId, reason, callback){
               })
             },
             function(refundId, done){
-              user_api.refund({
+              wechat_user.refund({
                 out_trade_no: order._id,
                 out_refund_no: refundId,
                 total_fee: order.price /* 100 */,
