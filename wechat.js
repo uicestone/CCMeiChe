@@ -95,14 +95,13 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     });
 
     if(message.Event == "LOCATION"){
-      Worker.updateStatus(openid, [+message.Latitude,+message.Longitude], function(){
+      return Worker.updateStatus(openid, [+message.Latitude,+message.Longitude], function(){
         return res.reply("");
       });
-      return;
     }
 
     if(message.MsgType == "text"){
-      (function(content){
+      return (function(content){
         var year = +content.slice(0,4);
         var month = +content.slice(4,6) - 1;
         if(year.toString() == "NaN" || month.toString() == "NaN" || year < 2014 || year > 2050 || month < 0 || month > 12){
