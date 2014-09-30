@@ -15,7 +15,7 @@ db.bind('user',{
       }
 
       var userpromos = user.promo || [];
-      recharge.promo.forEach(function(promo){
+      (recharge.promo || []).forEach(function(promo){
         var userpromo = userpromos.filter(function(item){
           return item._id == promo._id;
         })[0];
@@ -31,7 +31,7 @@ db.bind('user',{
 
       User.updateById(id, {
         $inc:{
-          credit: recharge.credit
+          credit: recharge.credit || 0
         },
         $set: {
           promo: userpromos
