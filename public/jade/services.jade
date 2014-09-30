@@ -1,1 +1,8 @@
-services.jade
+extends layout
+block content
+  h1.h1 服务介绍
+  ul.choices
+    for service in services
+      li.row(data-price="#{service.price}")
+        .service #{service.title}
+        .describe #{service.describe}

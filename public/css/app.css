@@ -1336,6 +1336,17 @@ body.openmenu {
   font-size: 12px;
   text-align: center;
 }
+#recharge .choices .row .service,
+#promos .choices .row .service {
+  font-size: 14px;
+  text-align: center;
+}
+#recharge .choices .row .describe,
+#promos .choices .row .describe {
+  font-size: 12px;
+  padding: 0 10px;
+  margin-top: 5px;
+}
 #contact .title {
   padding-top: 10px;
   height: 40px;
