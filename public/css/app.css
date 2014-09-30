@@ -67,8 +67,12 @@ body.openmenu {
   font-size: 14px;
   border: none;
   border-left: 2px solid #fab44a;
-  text-align: left;
-  padding-right: 18px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  padding-right: 10px;
   padding-left: 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
