@@ -1,66 +1,66 @@
 extends layout
 block content
+  .wrap
+    include menu
+    h1.h1 我的信息
+    .section
+      h2.h2 账户
+      ul.account
+        li.row
+          .label 手机
+          .text #{user.phone}
+        li.row
+          .label 积分
+          .text #{user.credit || 0} cc
 
-  include menu
-  h1.h1 我的信息
-  .section
-    h2.h2 账户
-    ul.account
-      li.row
-        .label 手机
-        .text #{user.phone}
-      li.row
-        .label 积分
-        .text #{user.credit || 0} cc
+    .section
+      h2.h2 优惠券
+      ul.promos
+        each promo,i in promos
+          li.row(data="#{JSON.stringify(promo)}")
+            .text #{promo.title}
+            .edit(style="color:#b6b6b6") #{promo.amount}
 
-  .section
-    h2.h2 优惠券
-    ul.promos
-      each promo,i in promos
-        li.row(data="#{JSON.stringify(promo)}")
-          .text #{promo.title}
-          .edit(style="color:#b6b6b6") #{promo.amount}
-
-  .section.cars
-    h2.h2 车型
-    ul
-      for car,i in user.cars || []
-        li.row(data="#{JSON.stringify(car)}")
-          .text
-            p.title #{car.type} #{car.color}
-            p.desc #{car.number}
-          .edit 修改
-    .add.addcar
-      i.icon-add
-      | 添加车辆
-
-  .section.addresses
-    h2.h2 地址
-    ul
-      for address,i in user.addresses || []
-        li.row(data-addr="#{JSON.stringify(address)}")
-          .wrap
+    .section.cars
+      h2.h2 车型
+      ul
+        for car,i in user.cars || []
+          li.row(data="#{JSON.stringify(car)}")
             .text
-              .span.title #{address.address}
-              .span.desc #{address.carpark}
+              p.title #{car.type} #{car.color}
+              p.desc #{car.number}
             .edit 修改
-    .add.addaddress
-      i.icon-add
-      | 添加地址
-    .addaddress-panel(style="display:none")
-      h2.title 添加地址信息
-      .form-group
-        input#input-latlng(type="hidden")
-        input#input-index(type="hidden")
-        .input-row
-          i.icon-location
-          input.input#input-address(placeholder="地址",data-pattern="/api/v1/location/suggestion/{q}")
-        .input-row
-          input.input#input-carpark(placeholder="具体位置")
-      .button-wrap
-        .button#save-address 保存地址
+      .add.addcar
+        i.icon-add
+        | 添加车辆
 
-  .button 保存
+    .section.addresses
+      h2.h2 地址
+      ul
+        for address,i in user.addresses || []
+          li.row(data-addr="#{JSON.stringify(address)}")
+            .wrap
+              .text
+                .span.title #{address.address}
+                .span.desc #{address.carpark}
+              .edit 修改
+      .add.addaddress
+        i.icon-add
+        | 添加地址
+      .addaddress-panel(style="display:none")
+        h2.title 添加地址信息
+        .form-group
+          input#input-latlng(type="hidden")
+          input#input-index(type="hidden")
+          .input-row
+            i.icon-location
+            input.input#input-address(placeholder="地址",data-pattern="/api/v1/location/suggestion/{q}")
+          .input-row
+            input.input#input-carpark(placeholder="具体位置")
+        .button-wrap
+          .button#save-address 保存地址
+
+    .button 保存
 
   +facade('myinfos')
   +facade("menu")

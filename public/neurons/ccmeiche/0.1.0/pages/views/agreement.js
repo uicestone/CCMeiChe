@@ -85,7 +85,7 @@ function SwipeModal(config){
 
   function viewReturn(){
     hashState.setHash("");
-    $("body>.container").css("display","block");
+    $("body>.container,body>.wrap").css("display","block");
     $("body").css("position","fixed");
     $(".swipe-container").css("position","fixed");
     setTimeout(function(){
@@ -99,7 +99,7 @@ function SwipeModal(config){
   function viewCome(){
     var elem = self.elem;
     setTimeout(function(){
-      $("body>.container").css("display","none");
+      $("body>.container,body>.wrap").css("display","none");
       $(".swipe-container").css("position","relative");
     },300);
     viewSwipe.in(elem[0],"bottom");

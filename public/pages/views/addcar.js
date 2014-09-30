@@ -23,11 +23,9 @@ module.exports = swipeModal.create({
         if(!input.val()){
           input.attr("placeholder","");
         }
-        input.css("text-align","left");
       }).on("blur",function(){
         if(!input.val()){
           input.attr("placeholder",ph);
-          input.css("text-align","right");
         }
       });
     });
