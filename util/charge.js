@@ -7,6 +7,7 @@ var User = model.user;
 var Worker = model.worker;
 var Order = model.order;
 var RechargeOrder = model.rechargeorder;
+var Refund = model.refund;
 var DEBUG = process.env.DEBUG;
 
 /**
