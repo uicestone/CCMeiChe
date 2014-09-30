@@ -47,7 +47,7 @@ exports.cancel = function(orderId, reason, callback){
     function(done){
       if(needProcess()){
         // 向腾讯发起退款请求
-        if(process.env.DEBUG){
+        if(process.env.DEBUG || order.price == 0){
           done(null);
         }else{
           async.waterfall([
