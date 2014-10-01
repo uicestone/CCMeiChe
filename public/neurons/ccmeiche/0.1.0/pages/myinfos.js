@@ -5,39 +5,40 @@ var _1 = "ccmeiche@0.1.0/pages/login.js";
 var _2 = "ccmeiche@0.1.0/pages/menu.js";
 var _3 = "ccmeiche@0.1.0/pages/mod/autocomplete.js";
 var _4 = "ccmeiche@0.1.0/pages/mod/countdown.js";
-var _5 = "ccmeiche@0.1.0/pages/mod/menu.js";
-var _6 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
-var _7 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
-var _8 = "ccmeiche@0.1.0/pages/mod/popselect.js";
-var _9 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
-var _10 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
-var _11 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _12 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _13 = "ccmeiche@0.1.0/pages/myorders.js";
-var _14 = "ccmeiche@0.1.0/pages/order-result.js";
-var _15 = "ccmeiche@0.1.0/pages/order.js";
-var _16 = "ccmeiche@0.1.0/pages/promos.js";
-var _17 = "ccmeiche@0.1.0/pages/recharge.js";
-var _18 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
-var _20 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _21 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _22 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _23 = "ccmeiche@0.1.0/pages/views/addcar.js";
-var _24 = "ccmeiche@0.1.0/pages/views/agreement.js";
-var _25 = "ccmeiche@0.1.0/pages/views/finishorder.js";
-var _26 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _27 = "zepto@^1.1.3";
-var _28 = "tpl@~0.2.1";
-var _29 = "util@^1.0.4";
-var _30 = "events@^1.0.5";
-var _31 = "uploader@~0.1.4";
-var _32 = "view-swipe@~0.1.4";
-var _33 = "hashstate@~0.1.0";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26];
+var _5 = "ccmeiche@0.1.0/pages/mod/input-clear.js";
+var _6 = "ccmeiche@0.1.0/pages/mod/menu.js";
+var _7 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
+var _8 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
+var _9 = "ccmeiche@0.1.0/pages/mod/popselect.js";
+var _10 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
+var _11 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
+var _12 = "ccmeiche@0.1.0/pages/mod/uploader.js";
+var _13 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _14 = "ccmeiche@0.1.0/pages/myorders.js";
+var _15 = "ccmeiche@0.1.0/pages/order-result.js";
+var _16 = "ccmeiche@0.1.0/pages/order.js";
+var _17 = "ccmeiche@0.1.0/pages/promos.js";
+var _18 = "ccmeiche@0.1.0/pages/recharge.js";
+var _19 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
+var _21 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _22 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _23 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _24 = "ccmeiche@0.1.0/pages/views/addcar.js";
+var _25 = "ccmeiche@0.1.0/pages/views/agreement.js";
+var _26 = "ccmeiche@0.1.0/pages/views/finishorder.js";
+var _27 = "ccmeiche@0.1.0/pages/views/preorder.js";
+var _28 = "zepto@^1.1.3";
+var _29 = "tpl@~0.2.1";
+var _30 = "util@^1.0.4";
+var _31 = "events@^1.0.5";
+var _32 = "uploader@~0.1.4";
+var _33 = "view-swipe@~0.1.4";
+var _34 = "hashstate@~0.1.0";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_12, [_27,_28,_23,_3,_7], function(require, exports, module, __filename, __dirname) {
+define(_13, [_28,_29,_24,_3,_8], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 
@@ -179,15 +180,16 @@ $("#save-address").on("tap",function(){
 });
 }, {
     entries:entries,
-    map:mix({"./views/addcar":_23,"./mod/autocomplete":_3,"./mod/popmessage":_7},globalMap)
+    map:mix({"./views/addcar":_24,"./mod/autocomplete":_3,"./mod/popmessage":_8},globalMap)
 });
 
-define(_23, [_27,_11,_3,_7,_10,_18], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
 var popMessage = require("../mod/popmessage");
 var swipeModal = require("../mod/swipe-modal");
+var inputClear = require("../mod/input-clear");
 
 module.exports = swipeModal.create({
   button: $(".addcar"),
@@ -220,6 +222,11 @@ module.exports = swipeModal.create({
       elem.find(".submit").css('float','none');
     }
 
+    inputClear(elem.find(".type"));
+    inputClear(elem.find(".number"));
+    inputClear(elem.find(".color"));
+    inputClear(elem.find(".comment"));
+
     if(data){
       if(data.pic){
         var img = $("<img />").attr('src',
@@ -232,6 +239,7 @@ module.exports = swipeModal.create({
         result_elem.attr("data-key", data.pic);
         result_elem.empty().append(img);
       }
+
       elem.find(".type .input").val(data.type||"");
       elem.find(".number .input").val(data.number||"");
       elem.find(".color .input").val(data.color||"");
@@ -268,6 +276,11 @@ module.exports = swipeModal.create({
       return;
     }
 
+    if(!/^[\u4e00-\u9fa5]{1}[A-Z0-9]{6}$/.test(data.number)){
+      popMessage("车号格式无效");
+      return;
+    }
+
     return true
   },
   submit: function(data,callback){
@@ -278,10 +291,10 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_11,"../mod/autocomplete":_3,"../mod/popmessage":_7,"../mod/swipe-modal":_10,"../tpl/addcar.html":_18},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
-define(_3, [_27,_29,_30], function(require, exports, module, __filename, __dirname) {
+define(_3, [_28,_30,_31], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -389,7 +402,7 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_7, [_27], function(require, exports, module, __filename, __dirname) {
+define(_8, [_28], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
   var json = {}
@@ -456,7 +469,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_11, [_27,_31], function(require, exports, module, __filename, __dirname) {
+define(_12, [_28,_32], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader');
 
@@ -583,7 +596,7 @@ exports.init = function(selector,options){
     map:globalMap
 });
 
-define(_10, [_29,_30,_32,_28,_33,_27], function(require, exports, module, __filename, __dirname) {
+define(_11, [_30,_31,_33,_29,_34,_28], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
@@ -682,8 +695,45 @@ exports.create = function(config){
     map:globalMap
 });
 
-define(_18, [], function(require, exports, module, __filename, __dirname) {
-module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input number"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
+define(_5, [_28], function(require, exports, module, __filename, __dirname) {
+$ = require('zepto');
+
+function inputClear(wrap){
+  var input = wrap.find(".input");
+  var clear = $('<div class="clear" />');
+  wrap.addClass('clear-input-wrap');
+  clear.appendTo(wrap);
+  clear.hide();
+
+  input.on('focus', function(){
+    if(input.val()){
+      clear.show();
+    }
+  });
+  input.on('keyup', function(){
+    if(input.val()){
+      clear.show();
+    }else{
+      clear.hide();
+    }
+  });
+  clear.on('tap', function(){
+    input.val("");
+    clear.hide();
+  });
+  input.on('blur', function(){
+    clear.hide();
+  });
+}
+
+module.exports = inputClear;
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_19, [], function(require, exports, module, __filename, __dirname) {
+module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap

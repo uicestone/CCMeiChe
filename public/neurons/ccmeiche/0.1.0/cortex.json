@@ -20,6 +20,7 @@
     "./pages/menu.js",
     "./pages/mod/autocomplete.js",
     "./pages/mod/countdown.js",
+    "./pages/mod/input-clear.js",
     "./pages/mod/menu.js",
     "./pages/mod/multiselect.js",
     "./pages/mod/popmessage.js",

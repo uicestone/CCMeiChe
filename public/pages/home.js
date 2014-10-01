@@ -7,6 +7,7 @@ var popMessage = require('./mod/popmessage');
 var hashState = require('hashstate')();
 var panelAddCar = require("./views/addcar");
 var panelPreOrder = require("./views/preorder");
+var inputClear = require("./mod/input-clear");
 
 hashState.setHash("");
 
@@ -227,6 +228,10 @@ function updateLatlng(data){
   }
   $("#latlng").val(data.location.lat + "," + data.location.lng);
 }
+
+// 清输入
+inputClear($(".location"));
+inputClear($(".carpark"));
 
 var addressInput = $("#address");
 var latlngInput = $("#latlng");

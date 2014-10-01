@@ -3,6 +3,7 @@ var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
 var popMessage = require("../mod/popmessage");
 var swipeModal = require("../mod/swipe-modal");
+var inputClear = require("../mod/input-clear");
 
 module.exports = swipeModal.create({
   button: $(".addcar"),
@@ -35,6 +36,11 @@ module.exports = swipeModal.create({
       elem.find(".submit").css('float','none');
     }
 
+    inputClear(elem.find(".type"));
+    inputClear(elem.find(".number"));
+    inputClear(elem.find(".color"));
+    inputClear(elem.find(".comment"));
+
     if(data){
       if(data.pic){
         var img = $("<img />").attr('src',
@@ -47,6 +53,7 @@ module.exports = swipeModal.create({
         result_elem.attr("data-key", data.pic);
         result_elem.empty().append(img);
       }
+
       elem.find(".type .input").val(data.type||"");
       elem.find(".number .input").val(data.number||"");
       elem.find(".color .input").val(data.color||"");
@@ -80,6 +87,11 @@ module.exports = swipeModal.create({
     }
     if(!data.color){
       popMessage("请填写颜色");
+      return;
+    }
+
+    if(!/^[\u4e00-\u9fa5]{1}[A-Z0-9]{6}$/.test(data.number)){
+      popMessage("车号格式无效");
       return;
     }
 

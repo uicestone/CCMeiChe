@@ -32,38 +32,38 @@ var _28 = "zepto@^1.1.3";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_4, [_28], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
+define(_5, [_28], function(require, exports, module, __filename, __dirname) {
+$ = require('zepto');
 
-function addZero(num){
-  if(Math.abs(num) < 10){
-    return "0" + num;
-  }else{
-    return num;
-  }
-}
+function inputClear(wrap){
+  var input = wrap.find(".input");
+  var clear = $('<div class="clear" />');
+  wrap.addClass('clear-input-wrap');
+  clear.appendTo(wrap);
+  clear.hide();
 
-function calculateTime(){
-  $(".time").forEach(function(elem,i){
-    var el = $(elem);
-    var finish_time = new Date(el.attr("data-finish"));
-
-    if(appConfig.service == "worker"){
-      finish_time = new Date( +finish_time - 15 * 60 * 1000 );
+  input.on('focus', function(){
+    if(input.val()){
+      clear.show();
     }
-
-    var now = new Date();
-    var duration = finish_time - now;
-    var negative = now > finish_time ? "-" : "";
-    var minutes =  Math.floor( Math.abs( duration / (1000 * 60)));
-    var seconds = Math.round( (Math.abs(duration) - minutes * 1000 * 60) / 1000);
-    el.html( negative + addZero(minutes) + ":" + addZero(seconds) );
+  });
+  input.on('keyup', function(){
+    if(input.val()){
+      clear.show();
+    }else{
+      clear.hide();
+    }
+  });
+  clear.on('tap', function(){
+    input.val("");
+    clear.hide();
+  });
+  input.on('blur', function(){
+    clear.hide();
   });
 }
 
-
-setInterval(calculateTime,1000);
-calculateTime();
+module.exports = inputClear;
 }, {
     entries:entries,
     map:globalMap
