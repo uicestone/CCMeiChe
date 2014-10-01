@@ -15,6 +15,8 @@ exports.suggestion = function(req,res,next){
     region: "上海"
   },function(err,result){
     if(err){return next(err);}
-    res.status(200).send(result.results||[]);
+    res.status(200).send(result.results && result.results.filter(function(item){
+      return item.location
+    })||[]);
   });
 }
