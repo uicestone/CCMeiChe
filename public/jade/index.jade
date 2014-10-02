@@ -14,7 +14,7 @@ block content
           tr
             td.cars-cell
               ul
-                - var defaultCars = user.cars.filter(function(car){return car["default"];});
+                - var defaultCars = (user.cars || []).filter(function(car){return car["default"];});
                 - var cars = defaultCars.length ? defaultCars : [user.cars[0]];
                 each car,i in cars
                   li(data="#{JSON.stringify(car)}")
