@@ -324,7 +324,7 @@ function Autocomplete(input, pattern, parser, getVal){
     }
   });
 
-  input.on("keydown",function(){
+  input.on("focus",function(){
     watcher.start();
   });
 
