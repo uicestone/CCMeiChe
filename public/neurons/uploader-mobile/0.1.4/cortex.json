@@ -1,0 +1,48 @@
+{
+  "devDependencies": {
+    "neuron": "~5.1.0",
+    "assert": "~1.0.1"
+  },
+  "asyncDependencies": {},
+  "scripts": {},
+  "dependencies": {
+    "zepto": "~1.1.3",
+    "events": "~1.0.5",
+    "util": "~1.0.4",
+    "underscore": "~1.5.2",
+    "attributes": "~1.4.0",
+    "json": "~1.0.1",
+    "simple-mime": "^0.0.8"
+  },
+  "engines": {},
+  "directories": {},
+  "name": "uploader-mobile",
+  "description": "Upload files with ajax",
+  "version": "0.1.4",
+  "homepage": "https://github.com/supersheep/uploader-mobile",
+  "author": {
+    "name": "supersheep",
+    "email": "supersheepxjy@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/supersheep/uploader-mobile.git"
+  },
+  "main": "./src/index.js",
+  "bugs": {
+    "url": "https://github.com/supersheep/uploader-mobile/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/supersheep/uploader-mobile/blob/master/LICENSE-MIT"
+    }
+  ],
+  "keywords": [],
+  "gitHead": "b593c378982e7b1f8f55f6025ad3be8bb3bff086",
+  "readme": "# uploader\n\n> File Upload Component\n\n\n###APIs\n\n####Uploader(elem,config)\n\nconstruct an uploader with the passing elemement\n\n####config\n\n- `action` url to upload\n- `theme` theme for process and show items\n- `multipleLen` maximum len of multi length select, exceed will be cut\n- `name` name for file field\n- `queueTarget` container to put queue items\n\n####.upload(id)\n\nupload file in `id` of the queue\n\n####.remove(id)\n\nremove file in `id` of the queue\n\n###Events\n\n#### select\n\nemits after file selected\n\n- `ev.files` Array<Files> files selected by user\n\n#### add\n\nemits after file added to queue\n\n- `ev.file` File\n\n#### start\n\nemits after file start to upload\n\n- `ev.file` File\n\n#### progress\n\nemits on file progressing\n\n- `ev.file` File\n- `ev.loaded` byte loaded\n- `ev.total`  total bytes\n\n#### success\n\nemits on file upload success\n\n- `ev.file` File\n- `ev.data` json data responsed from server\n\n#### error\n\nemits on error occurs\n\n- `ev.file` File\n- `ev.code` Error code\n- `ev.message` Error message\n- `ev.data` json data that server responsed\n\n#### remove\n\nemits when file removed from queue\n\n- `ev.file` File",
+  "readmeFilename": "README.md",
+  "_id": "uploader-mobile@0.1.4",
+  "css": [],
+  "entries": []
+}

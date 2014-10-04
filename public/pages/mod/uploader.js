@@ -1,5 +1,5 @@
 var $ = require('zepto');
-var Uploader = require('uploader');
+var Uploader = require('uploader-mobile');
 
 var beforeUpload = function(prefix){
   return function(file, done){

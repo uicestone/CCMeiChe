@@ -29,13 +29,13 @@ var _25 = "ccmeiche@0.1.0/pages/views/agreement.js";
 var _26 = "ccmeiche@0.1.0/pages/views/finishorder.js";
 var _27 = "ccmeiche@0.1.0/pages/views/preorder.js";
 var _28 = "zepto@^1.1.3";
-var _29 = "uploader@~0.1.4";
+var _29 = "uploader-mobile@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
 define(_12, [_28,_29], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
-var Uploader = require('uploader');
+var Uploader = require('uploader-mobile');
 
 var beforeUpload = function(prefix){
   return function(file, done){

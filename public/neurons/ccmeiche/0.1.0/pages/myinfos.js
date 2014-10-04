@@ -32,7 +32,7 @@ var _28 = "zepto@^1.1.3";
 var _29 = "tpl@~0.2.1";
 var _30 = "util@^1.0.4";
 var _31 = "events@^1.0.5";
-var _32 = "uploader@~0.1.4";
+var _32 = "uploader-mobile@~0.1.4";
 var _33 = "view-swipe@~0.1.4";
 var _34 = "hashstate@~0.1.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
@@ -471,7 +471,7 @@ module.exports = popMessage
 
 define(_12, [_28,_32], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
-var Uploader = require('uploader');
+var Uploader = require('uploader-mobile');
 
 var beforeUpload = function(prefix){
   return function(file, done){
