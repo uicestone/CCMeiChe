@@ -16,7 +16,7 @@ exports.suggestion = function(req,res,next){
   },function(err,result){
     if(err){return next(err);}
     res.status(200).send(result.results && result.results.filter(function(item){
-      return item.location
+      return item.location && item.address;
     })||[]);
   });
 }
