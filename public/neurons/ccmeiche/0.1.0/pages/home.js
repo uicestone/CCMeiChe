@@ -199,13 +199,19 @@ $(".section .promo select").on("change",function(){
 });
 
 // 使用积分
-$(".credit .use").on("tap",function(){
+$(".section .credit .use").on("tap",function(){
+  var parent = $(this).closest('.credit');
+  if(parent.hasClass('disabled')){
+    return false;
+  }
   var el = $(this);
   var text = el.find(".text");
   if(el.hasClass("active")){
     el.removeClass("active");
+    parent.data("active",false);
     text.html("未使用");
   }else{
+    parent.data("active",true);
     el.addClass('active');
     text.html("已使用");
   }
@@ -219,10 +225,18 @@ function getPromoCount(){
 // 计算应付金额
 function calculate(){
   var cars_count = $(".cars-cell li").length;
-  var service = currentService;
-  var use_credit = $(".credit .use").hasClass("active");
-  var count = 0;
   var promo_count = getPromoCount();
+
+  if(promo_count >= cars_count){
+    $(".section .credit").addClass("disabled");
+    $(".section .credit .use").removeClass("active");
+  }else{
+    $(".section .credit").removeClass("disabled");
+    $(".section .credit .use").addClass( $(".section .credit").data("active") ? "active" : "");
+  }
+  var service = currentService;
+  var use_credit = $(".section .credit .use").hasClass("active");
+  var count = 0;
 
   var credit = user.credit;
 
@@ -244,7 +258,7 @@ function calculate(){
     }
   }
 
-  $(".credit .num").html(credit);
+  $(".section .credit .num").html(credit);
   $(".payment .count").html(count);
 }
 calculate();
@@ -342,7 +356,7 @@ $("#go-wash").on("tap", function(e){
     latlng :$("#latlng").val(),
     service:currentService,
     promo_count: getPromoCount(),
-    use_credit: $(".credit .use").hasClass("active"),
+    use_credit: $(".section .credit .use").hasClass("active"),
     price: +$(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };

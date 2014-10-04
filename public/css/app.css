@@ -690,6 +690,10 @@ body.openmenu {
 #home .section.coupon .credit .use.active .icon {
   background-position: 0 -27px;
 }
+#home .section.coupon .credit.disabled {
+  background-color: #dbdcdc;
+  color: #b4b4b4;
+}
 #home .section.coupon .promo {
   height: 46px;
   line-height: 35px;
