@@ -76,7 +76,7 @@ panelAddCar.on("submit",function(data){
   }
   calculate();
 });
-addbtn.on("tap", function(e){
+addbtn.on("click", function(e){
   e.preventDefault();
   panelAddCar.show();
   setTimeout(function(){
