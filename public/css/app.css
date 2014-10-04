@@ -694,6 +694,9 @@ body.openmenu {
   background-color: #dbdcdc;
   color: #b4b4b4;
 }
+#home .section.coupon .credit.disabled .icon {
+  -webkit-filter: grayscale(1);
+}
 #home .section.coupon .promo {
   height: 46px;
   line-height: 35px;

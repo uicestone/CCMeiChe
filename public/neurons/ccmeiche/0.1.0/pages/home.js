@@ -226,8 +226,9 @@ function getPromoCount(){
 function calculate(){
   var cars_count = $(".cars-cell li").length;
   var promo_count = getPromoCount();
+  var credit = user.credit;
 
-  if(promo_count >= cars_count){
+  if(promo_count >= cars_count || !credit){
     $(".section .credit").addClass("disabled");
     $(".section .credit .use").removeClass("active");
   }else{
@@ -238,7 +239,8 @@ function calculate(){
   var use_credit = $(".section .credit .use").hasClass("active");
   var count = 0;
 
-  var credit = user.credit;
+
+
 
   for(var i = 0; i < cars_count; i++){
     if(promo_count){
@@ -429,7 +431,7 @@ function Autocomplete(input, pattern, parser, getVal){
   parser = parser || function(item){return item;}
   getVal = getVal || function(item){return item;}
   var needRequest = function(value){
-    return value.match(/\w{3,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
+    return value.match(/\w{1,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
   }
 
   function Watcher(options){

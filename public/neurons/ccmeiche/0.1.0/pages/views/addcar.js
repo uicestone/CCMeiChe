@@ -291,7 +291,7 @@ function Autocomplete(input, pattern, parser, getVal){
   parser = parser || function(item){return item;}
   getVal = getVal || function(item){return item;}
   var needRequest = function(value){
-    return value.match(/\w{3,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
+    return value.match(/\w{1,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
   }
 
   function Watcher(options){
