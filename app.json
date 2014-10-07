@@ -16,4 +16,10 @@
     "NODE_ENV":"product",
     "SERVICE":"worker"
   }
+},{
+  "name":"ccmeiche-admin",
+  "script":"admin-server.js",
+  "env":{
+    "NODE_ENV":"product"
+  }
 }]
