@@ -16,7 +16,7 @@ exports.get = function(req,res,next){
     }
 
     res.send(types.map(function(item){
-      return item.type;
+      return item.type + " (" + item.brand + ")";
     }));
   });
 }
