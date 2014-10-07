@@ -131,10 +131,10 @@ module.exports = swipeModal.create({
       return;
     }
 
-    if(!/^[\u4e00-\u9fa5]{1}[A-Z0-9]{6}$/.test(data.number)){
-      popMessage("车号格式无效");
-      return;
-    }
+    // if(!/^[\u4e00-\u9fa5]{1}[A-Z0-9]{6}$/.test(data.number)){
+    //   popMessage("车号格式无效");
+    //   return;
+    // }
 
     return true
   },
