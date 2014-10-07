@@ -38,7 +38,7 @@ var _34 = "uploader-mobile@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_28,_29,_30,_3,_10,_9,_8,_24,_27,_5], function(require, exports, module, __filename, __dirname) {
+define(_0, [_28,_29,_30,_3,_9,_10,_8,_24,_27,_5], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
@@ -405,7 +405,7 @@ $("#go-wash").on("tap", function(e){
 });
 
 if(!user.cars.length){
-  $(".cars .add").trigger("tap");
+  $(".cars .add").trigger("click");
 }else{
   $(".blank").hide();
   $("body").css("position","static");
@@ -413,7 +413,7 @@ if(!user.cars.length){
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_10,"./mod/popselect":_9,"./mod/popmessage":_8,"./views/addcar":_24,"./views/preorder":_27,"./mod/input-clear":_5},globalMap)
+    map:mix({"./mod/autocomplete":_3,"./mod/popselect":_9,"./mod/singleselect":_10,"./mod/popmessage":_8,"./views/addcar":_24,"./views/preorder":_27,"./mod/input-clear":_5},globalMap)
 });
 
 define(_3, [_28,_31,_32], function(require, exports, module, __filename, __dirname) {
@@ -524,49 +524,6 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_10, [_28,_32,_31], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var events = require("events");
-var util = require("util");
-
-function SingleSelect(elem,selector){
-  var self = this;
-  (function(){
-    var current = null;
-    var items = self.items = elem.find(selector);
-    items.on("tap",function(){
-      elem.find(".active").removeClass("active");
-      var me = $(this);
-      if(me == current){
-        me.removeClass("active");
-        current = null;
-      }else{
-        current && current.removeClass("active");
-        me.addClass("active");
-        current = me;
-      }
-      self.emit("change",this);
-    });
-  })();
-  return this;
-}
-
-util.inherits(SingleSelect,events);
-
-SingleSelect.prototype.select = function(data){
-  this.items.filter(function(i){
-    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
-  }).addClass("active");
-}
-
-module.exports = function(elem,selector){
-  return new SingleSelect(elem,selector);
-}
-}, {
-    entries:entries,
-    map:globalMap
-});
-
 define(_9, [_28,_32,_31,_10,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
@@ -670,6 +627,49 @@ module.exports = function(choices,options){
     map:mix({"./singleselect":_10,"./multiselect":_7},globalMap)
 });
 
+define(_10, [_28,_32,_31], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var events = require("events");
+var util = require("util");
+
+function SingleSelect(elem,selector){
+  var self = this;
+  (function(){
+    var current = null;
+    var items = self.items = elem.find(selector);
+    items.on("tap",function(){
+      elem.find(".active").removeClass("active");
+      var me = $(this);
+      if(me == current){
+        me.removeClass("active");
+        current = null;
+      }else{
+        current && current.removeClass("active");
+        me.addClass("active");
+        current = me;
+      }
+      self.emit("change",this);
+    });
+  })();
+  return this;
+}
+
+util.inherits(SingleSelect,events);
+
+SingleSelect.prototype.select = function(data){
+  this.items.filter(function(i){
+    return JSON.stringify($(this).data("data")) == JSON.stringify(data);
+  }).addClass("active");
+}
+
+module.exports = function(elem,selector){
+  return new SingleSelect(elem,selector);
+}
+}, {
+    entries:entries,
+    map:globalMap
+});
+
 define(_8, [_28], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message){
@@ -737,7 +737,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_24, [_28,_3,_12,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -845,10 +845,10 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/autocomplete":_3,"../mod/uploader":_12,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
-define(_27, [_28,_33,_11,_8,_23], function(require, exports, module, __filename, __dirname) {
+define(_27, [_28,_33,_8,_11,_23], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var viewSwipe = require("view-swipe");
 var swipeModal = require("../mod/swipe-modal");
@@ -925,7 +925,7 @@ function formatTime(estimated_finish_time){
 }
 }, {
     entries:entries,
-    map:mix({"../mod/swipe-modal":_11,"../mod/popmessage":_8,"../tpl/preorder.html":_23},globalMap)
+    map:mix({"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../tpl/preorder.html":_23},globalMap)
 });
 
 define(_5, [_28], function(require, exports, module, __filename, __dirname) {

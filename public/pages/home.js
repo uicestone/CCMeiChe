@@ -364,7 +364,7 @@ $("#go-wash").on("tap", function(e){
 });
 
 if(!user.cars.length){
-  $(".cars .add").trigger("tap");
+  $(".cars .add").trigger("click");
 }else{
   $(".blank").hide();
   $("body").css("position","static");
