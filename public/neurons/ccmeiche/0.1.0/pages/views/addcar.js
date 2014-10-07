@@ -572,7 +572,8 @@ function inputClear(wrap){
       clear.hide();
     }
   });
-  clear.on('tap', function(){
+  clear.on('tap', function(e){
+    e.preventDefault();
     input.val("");
     clear.hide();
   });
