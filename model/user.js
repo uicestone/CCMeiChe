@@ -3,6 +3,7 @@ var User =  Model("user");
 var RechargeOrder = Model
 var _ = require('underscore');
 var db = require("../db");
+var logger = require('../logger');
 
 module.exports = User;
 
@@ -46,14 +47,14 @@ db.bind('user',{
 
       userpromo = userpromo.map(function(promo){
         if(promo._id == order.service._id && promo.amount > 0){
-          console.log("[扣优惠券] %s %s %s-1=%s", user.phone, promo.title, promo.amount, promo.amount - 1);
+          logger.log("[扣优惠券] %s %s %s-1=%s", user.phone, promo.title, promo.amount, promo.amount - 1);
           promo.amount -= 1;
         }
         return promo
       });
 
       if(order.credit){
-        console.log("[扣积分] %s %s-%s=%s", user.phone, user.credit, order.credit, user.credit - order.credit);
+        logger.log("[扣积分] %s %s-%s=%s", user.phone, user.credit, order.credit, user.credit - order.credit);
       }
       User.updateById(id, {
         $inc:{
@@ -82,7 +83,6 @@ db.bind('user',{
     if(!index){
       return callback(null);
     }
-    console.log("id",id);
     User.findById(id, function(err, user){
       if(err || !user){
         return callback(err);
@@ -103,7 +103,6 @@ db.bind('user',{
         var index = user.cars.map(function(car){
           return car.number;
         }).indexOf(car.number);
-        console.log(index, cars);
         if(!user.cars[index].pic && cars[index].pics.length){
           updateDoc["cars." + index] = _.extend(user.cars[index], {
             pic: cars[index].pics[0]
@@ -111,7 +110,6 @@ db.bind('user',{
         }
       });
 
-      console.log(updateDoc);
       User.updateById(id,{
         $set: updateDoc
       }, callback);

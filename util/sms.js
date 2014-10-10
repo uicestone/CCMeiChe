@@ -1,8 +1,9 @@
 var config = require('config');
 var request = require('request');
+var logger = require("../logger");
 
 exports.send = function(phone, code, callback){
-  console.log("send sms ",phone,code);
+  logger.debug("send sms ",phone,code);
   request.post("http://yunpian.com/v1/sms/tpl_send.json", {
     form:{
       apikey: config.yunpian.apikey,

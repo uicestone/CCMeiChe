@@ -4,6 +4,7 @@ var estimateTime = require("../../util/estimate").getSolution;
 var wechat_user = require('../../util/wechat').user;
 var wechat_worker = require('../../util/wechat').worker;
 var charge = require('../../util/charge');
+var logger = require('../../logger');
 var Worker = model.worker;
 var Order = model.order;
 var User = model.user;
@@ -209,11 +210,11 @@ exports.confirm = function (req, res, next) {
       });
     },
     function (done) {
-      console.log("update default cars");
+      logger.debug("update default cars");
       User.updateDefaultCars(user._id, order.cars, done);
     },
     function (done) {
-      console.log("pay_request");
+      logger.debug("pay_request");
 
       if (!order.price) {
         return charge.washcar(user.openid, order._id, req, res, function (err) {
@@ -227,7 +228,7 @@ exports.confirm = function (req, res, next) {
         });
       }
 
-      console.log("[付款] %s %s元", user.phone, order.price);
+      logger.info("[付款] %s %s元", user.phone, order.price);
       wechat_user.pay_request(req, {
         id: order._id,
         price: order.price,
@@ -270,13 +271,13 @@ exports.share = function (req, res, next) {
     }
 
     if (order.user._id.toString() !== user._id.toString()){
-      console.log(order.user._id , user._id, "not match");
+      logger.debug(order.user._id , user._id, "not match");
       return res.status(401).send({
         message: "access denied"
       });
     }
     if (order.shared) {
-      console.log("订单%s已经处理",orderId);
+      logger.debug("订单%s已经处理",orderId);
       return res.send({
         message: "processed"
       });
@@ -284,7 +285,7 @@ exports.share = function (req, res, next) {
 
     async.series([
       function (done) {
-        console.log("update user");
+        logger.debug("update user");
         User.updateById(user._id, {
           $inc:{
             credit: 5

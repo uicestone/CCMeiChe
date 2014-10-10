@@ -6,9 +6,10 @@ var config = require('config');
 var _ = require("underscore");
 var moment = require('moment');
 var async = require('async');
+var logger = require("../logger");
 
 Worker.ensureIndex({"latlng":"2d"}, function(err, replies){
-  console.log("ensureIndex", arguments);
+  logger.debug("ensureIndex", arguments);
 });
 
 function lastOrder(orders){
@@ -57,7 +58,7 @@ db.bind('worker',{
         }
       }
 
-      console.log("New Message:",message);
+      logger.debug("New Message:",message);
       callback(null, message);
     });
   },
@@ -140,13 +141,13 @@ db.bind('worker',{
       },
       function(done){
         if(last_order){
-          console.log("根据车工手头最后一笔订单",last_order._id);
+          logger.debug("根据车工手头最后一笔订单",last_order._id);
         }else{
-          console.log("无后续订单");
+          logger.debug("无后续订单");
         }
         var last_available_time = last_order ? last_order.estimated_finish_time : new Date();
         var last_available_latlng = last_order ? last_order.latlng : worker.latlng;
-        console.log("调整车工时间%s,位置%s",moment(last_available_time).format('lll'),last_available_latlng);
+        logger.debug("调整车工时间%s,位置%s",moment(last_available_time).format('lll'),last_available_latlng);
 
         Worker.updateById(workerId, {
           $set:{

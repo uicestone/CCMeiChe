@@ -13,6 +13,8 @@ var https = require('https');
 var http = require('http');
 var fs = require('fs');
 var moment = require("moment");
+var logger = require("./logger");
+
 moment.locale('zh-cn');
 require('express-di');
 
@@ -43,9 +45,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(function(req,res,next){
-  console.log(SERVICE,req.method,req.url);
+  logger.debug(SERVICE,req.method,req.url);
   if(req.method == "POST"){
-    console.log(JSON.stringify(req.body,null,2));
+    logger.debug(JSON.stringify(req.body,null,2));
   }
   next();
 });
@@ -69,7 +71,7 @@ app.use(function(req,res,next){
 var assureUserLogin = require("./routes/auth").user;
 var assureWorkerLogin = require("./routes/auth").worker;
 if(SERVICE == "worker"){
-  console.log("service worker");
+  logger.debug("service worker");
   if(process.env.DEBUG){
     app.get("/", require('./routes/worker-orders-debug'));
   }
@@ -122,5 +124,5 @@ if(SERVICE == "worker"){
 }
 
 app.listen(port,function(){
-  console.log("server started at %d", port || config.port);
+  logger.info("server started at %d", port || config.port);
 });

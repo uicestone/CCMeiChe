@@ -6,6 +6,7 @@ var moment = require('moment');
 var Notify = require('wechat-pay').middleware.Notify;
 var charge = require('./util/charge');
 var model = require("./model");
+var logger = require("./logger");
 var async = require('async');
 var _ = require('underscore');
 
@@ -35,7 +36,7 @@ function updateInfo(openid,Model,api,callback){
 exports.user = wechat(config.wechat.user.token, function(req,res){
   var message = req.weixin;
   var openid = message.FromUserName;
-  console.log("user wechat recieves message %s",JSON.stringify(message,null,2));
+  logger.debug("user wechat recieves message %s",JSON.stringify(message,null,2));
 
   if(message.Event == "subscribe"){
     res.reply("欢迎关注CC美车 \\(^o^)/");
@@ -60,7 +61,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
   var message = req.weixin;
   var openid = message.FromUserName;
 
-  console.log("worker wechat recieves message %s",JSON.stringify(message,null,2));
+  logger.debug("worker wechat recieves message %s",JSON.stringify(message,null,2));
 
   Worker.findByOpenId(openid, function(err,user){
     if(err){
@@ -83,14 +84,14 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     if(!user.wechat_info){
       updateInfo(openid, Worker, worker_api, function(err){
         if(err){
-          console.log("update worker info fail");
+          logger.debug("update worker info fail");
         }
       });
     }
 
     Worker.updateLastIntraction(openid, function(err){
       if(err){
-        console.log("update worker last intraction time fail");
+        logger.debug("update worker last intraction time fail");
       }
     });
 
@@ -151,7 +152,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 function sendMonthly(res){
   return function(err, orders){
     if(err){
-      console.log(err);
+      logger.debug(err);
       return res.reply("");
     }
     var services = {};
@@ -172,7 +173,7 @@ function sendMonthly(res){
       return name + ": " + services[name];
     }).join("\n");
     message += "\n" + "总订单数: " + count;
-    console.log(message);
+    logger.debug(message);
     return res.reply(message);
   }
 }
@@ -187,7 +188,7 @@ function handleResponse(res, options){
       }
     }else{
       if(err && err.name == "OrderProcessed"){
-        console.log("已处理的" + options.type + "订单请求");
+        logger.debug("已处理的" + options.type + "订单请求");
       }
       if(res.reply){
         res.reply('success');

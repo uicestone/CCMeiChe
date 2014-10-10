@@ -32,7 +32,8 @@
     "han": "0.0.7",
     "MD5": "^1.2.1",
     "wechat-pay": "^0.1.0",
-    "express-di": "^4.1.1"
+    "express-di": "^4.1.1",
+    "tracer": "~0.7.3"
   },
   "devDependencies": {
     "nib": "~1.0.3",

@@ -1,5 +1,7 @@
 var vcode = require("../../model").vcode;
 var sms = require("../../util/sms");
+var logger = require('../../logger');
+
 
 /**
  * 获取验证码
@@ -17,10 +19,10 @@ exports.get = function(req,res,next){
     if(err){return next(err);}
     if(process.env.NODE_ENV=="product" || process.env.CC_SEND_SMS){
       sms.send(phone,code,function(err,resp,data){
-        console.log(err,data)
+        logger.debug(err,data)
       });
     }
-    console.log(code);
+    logger.info(code);
     res.send(200,"ok");
   });
  }

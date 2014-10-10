@@ -3,6 +3,7 @@ var model = require('../model');
 var worker_api = require('./wechat').worker.api;
 var wechat_user = require('./wechat').user;
 var user_api = wechat_user.api;
+var logger = require("../logger");
 
 var User = model.user;
 var Worker = model.worker;
@@ -47,7 +48,7 @@ exports.cancel = function(orderId, reason, callback){
     function(done){
       if(needProcess()){
         // 向腾讯发起退款请求
-        console.log('[退款] %s %s元', order.user.phone, order.price);
+        logger.info('[退款] %s %s元', order.user.phone, order.price);
         if(process.env.DEBUG || order.price == 0){
           done(null);
         }else{
@@ -128,7 +129,7 @@ exports.washcar = function(openid, orderId, req, res, callback){
       Worker.getMessage(order.worker._id, {action:"new"}, done);
     },
     function(message, done){
-      console.log("sendText",currentOrder.worker.openid,message);
+      logger.debug("sendText",currentOrder.worker.openid,message);
       worker_api.sendText(currentOrder.worker.openid,message,done);
     }
   ], callback);
@@ -147,7 +148,7 @@ exports.recharge = function(openid, orderId, req, res, callback){
       User.findOne(condition, done);
     },
     function(user, done){
-      console.log("user", user);
+      logger.debug("user", user);
       userId = user._id;
       RechargeOrder.findById(orderId, function(err, order){
         if(err || !order){
@@ -155,9 +156,9 @@ exports.recharge = function(openid, orderId, req, res, callback){
         }
 
         if(order.recharge.type === "recharge"){
-          console.log("[充值] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
+          logger.info("[充值] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
         }else if(order.recharge.type == "promo"){
-          console.log("[购买优惠券] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
+          logger.info("[购买优惠券] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
         }
         if(order.processed == true){
           var error = new Error();

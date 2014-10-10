@@ -7,6 +7,7 @@ var Payment = require('wechat-pay').Payment;
 var API = wechat.API;
 var OAuth = wechat.OAuth;
 var DEBUG = !!process.env.DEBUG;
+var logger = require("../logger");
 
 function getToken(store_key){
   return function(done){
@@ -19,7 +20,6 @@ function getToken(store_key){
       } catch (e) {
         token = null;
       }
-      console.log("using token",token);
       done(null, token);
     });
   }
@@ -37,13 +37,6 @@ var worker_store_key = 'wechat-access-token-worker';
 var user_api = new API(config.wechat.user.id, config.wechat.user.secret, getToken(user_store_key), setToken(user_store_key));
 var user_oauth = new OAuth(config.wechat.user.id, config.wechat.user.secret);
 
-console.log(config.wechat.user);
-console.log({
-  partnerKey: config.wechat.user.partner_key,
-  appId: config.wechat.user.id,
-  mchId: config.wechat.user.mch_id,
-  notifyUrl: config.wechat.user.notify_url
-});
 var payment = new Payment({
   partnerKey: config.wechat.user.partner_key,
   appId: config.wechat.user.id,
@@ -76,7 +69,7 @@ var pay_request = function(req, order, callback){
 }
 
 var refund = function(detail, callback){
-  console.log('[退款] %s', JSON.stringify(detail));
+  logger.log('[退款] %s', JSON.stringify(detail));
   payment.refund(detail, callback);
 }
 
@@ -94,7 +87,7 @@ function notifyProxy(service){
       }
       var Notification = require('node-notifier');
       var notifier = new Notification();
-      console.log("send message", message);
+      logger.debug("send message", message);
       notifier.notify({
         title: service + ' ' + openid,
         sound: "default",

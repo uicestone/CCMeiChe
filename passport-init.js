@@ -3,6 +3,8 @@ var Worker = require("./model").worker;
 var vcode = require('./model/vcode');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var logger = require('./logger');
+
 passport.use(new LocalStrategy({
   usernameField: "phone",
   passwordField: "code",
@@ -48,7 +50,7 @@ passport.use(new LocalStrategy({
           phone: phone
         }, function(err, user){
           if(err){return done(err);}
-          console.log('[登录]', user.phone);
+          logger.log('[登录]', user.phone);
           done(null, user);
         });
       });

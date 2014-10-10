@@ -4,6 +4,7 @@ var async = require("async");
 var baidumap = require("./baidumap");
 var moment = require("moment");
 var Worker = Model('worker');
+var logger = require("../logger");
 
 
 var getTimes = exports.getTimes = function(latlng, worker, done){
@@ -75,7 +76,7 @@ function findWorkers(latlng,callback){
 }
 
 function nearestWorker(latlng, workers, callback){
-  console.log('[订单查找] 根据经纬度%s查找附近车工', latlng);
+  logger.info('[订单查找] 根据经纬度%s查找附近车工', latlng);
   async.map(workers, function(worker, done){
     getTimes(latlng, worker, done);
   }, function(err,results){
@@ -91,7 +92,7 @@ function nearestWorker(latlng, workers, callback){
     results = results.sort(compare_nearest);
     var result = results[0];
 
-    console.log('[订单查找] 选择车工%s', result.worker.name);
+    logger.info('[订单查找] 选择车工%s', result.worker.name);
     callback(null,result);
   });
 }
@@ -108,7 +109,7 @@ function getFakeWalkSolution(args, callback){
 }
 
 function printData(data){
-  console.log("[订单查找] 车工%s可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
+  logger.info("[订单查找] 车工%s可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
     data.worker.name,
     moment(data.base_time).format("lll"),
     moment.duration(data.drive_time).humanize(),

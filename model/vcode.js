@@ -1,4 +1,5 @@
 var redis = require("../redis");
+var logger = require("../logger");
 
 function _generateRedisKey(pair, callback){
   return "vcode:" + pair.code + ":" + pair.key;
@@ -25,7 +26,7 @@ exports.verify = function(pair, callback){
     var json = JSON.parse(value);
     var expire = json && json.expire;
     if(!expire){
-      console.log(redis_key + ' not exists');
+      logger.debug(redis_key + ' not exists');
       return callback(null, false);
     }
     var ok = +new Date() < expire;

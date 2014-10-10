@@ -6,6 +6,7 @@ var Worker = model.worker;
 var User = model.user;
 var wechat_user = require('../../util/wechat').user.api;
 var wechat_worker = require('../../util/wechat').worker.api;
+var logger = require('../../logger');
 
 exports.detail = function(req,res,next){
   Order.findById(req.params.orderid,function(err,order){
@@ -59,7 +60,7 @@ exports.done = function(req,res,next){
       function(done){
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
-        console.log(data);
+        logger.debug(data);
         var news = order.cars.map(function(car,i){
           return {
             title: "您的服务已完成",

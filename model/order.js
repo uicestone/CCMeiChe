@@ -8,6 +8,7 @@ var Service = Model("service");
 var async = require('async');
 var moment = require('moment');
 var estimate = require('../util/estimate');
+var logger = require('../logger');
 
 module.exports = Order;
 
@@ -108,7 +109,7 @@ db.bind('order', {
         return;
       }
       async.map(orders, function(order, done){
-        console.log("取消超时订单", order._id);
+        logger.info("取消超时订单", order._id);
         Order.cancel(order._id, "timeout", done);
       });
     });
@@ -119,7 +120,7 @@ db.bind('order', {
     if(reasons.indexOf(reason) == -1){
       return callback("invalid reason:" + reason);
     }
-    console.log("取消订单%s，原因:%s",id,reason);
+    logger.info("取消订单%s，原因:%s",id,reason);
     self.findById(id, function(err, order){
       if(order.status == "doing"){
         return callback({
@@ -214,7 +215,7 @@ db.bind('order', {
         return callback(err);
       }
       async.map(orders,function(order,done){
-        console.log("更正后续订单:%s",order._id);
+        logger.info("更正后续订单:%s",order._id);
         Order.updateById(order._id,{
           $set: {
             estimated_arrive_time: new Date(order.estimated_arrive_time - full_time),

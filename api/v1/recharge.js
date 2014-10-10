@@ -2,6 +2,7 @@ var User = require("../../model/user");
 var Recharge = require("../../model/recharge");
 var RechargeOrder = require("../../model/rechargeorder");
 var wechat_user = require("../../util/wechat").user;
+var logger = require('../../logger');
 var _ = require("underscore");
 
 exports.post = function(req,res,next){
@@ -11,7 +12,7 @@ exports.post = function(req,res,next){
       return next(err);
     }
 
-    console.log("INSERT",recharge);
+    logger.debug("INSERT",recharge);
     RechargeOrder.insert({
       recharge: recharge,
       user: _.pick(req.user,"_id","phone")
