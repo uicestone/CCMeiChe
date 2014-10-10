@@ -61,7 +61,6 @@ app.use(function(req,res,next){
     service: SERVICE,
     start_time: startTime
   };
-  console.log(startTime);
   res.locals.env = process.env.NODE_ENV;
   res.locals.package_version = require('./public/cortex.json').version;
   next();

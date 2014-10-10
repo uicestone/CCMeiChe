@@ -48,6 +48,7 @@ passport.use(new LocalStrategy({
           phone: phone
         }, function(err, user){
           if(err){return done(err);}
+          console.log('[登录]', user.phone);
           done(null, user);
         });
       });
@@ -66,7 +67,6 @@ if(process.env.SERVICE == "worker"){
   passport.deserializeUser(Worker.findByOpenId);
 }else{
   passport.serializeUser(function (user, done) {
-    console.log("idididid",user._id.toString());
     done(null, user._id.toString());
   });
 

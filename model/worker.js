@@ -12,7 +12,6 @@ Worker.ensureIndex({"latlng":"2d"}, function(err, replies){
 });
 
 function lastOrder(orders){
-  console.log("getting last order of ", orders);
   return orders.sort(function(a,b){
     return b.preorder_time > a.preorder_time ? 1 : -1;
   })[0];
@@ -135,13 +134,11 @@ db.bind('worker',{
             return done(err);
           }
 
-          console.log("ORDERSSSSSSSSSSSSS", orders);
           last_order = lastOrder(orders);
           done(null);
         });
       },
       function(done){
-        console.log("最后一笔订单",last_order);
         if(last_order){
           console.log("根据车工手头最后一笔订单",last_order._id);
         }else{

@@ -47,6 +47,7 @@ exports.cancel = function(orderId, reason, callback){
     function(done){
       if(needProcess()){
         // 向腾讯发起退款请求
+        console.log('[退款] %s %s元', order.user.phone, order.price);
         if(process.env.DEBUG || order.price == 0){
           done(null);
         }else{
@@ -133,14 +134,8 @@ exports.washcar = function(openid, orderId, req, res, callback){
   ], callback);
 };
 
-// 购买优惠券
-exports.promo = function(openid, orderId, req, res, callback){
-
-}
-
 // 充值
 exports.recharge = function(openid, orderId, req, res, callback){
-  console.log("dealing recharge", openid, orderId);
   var condition = DEBUG ? {
     phone: req.user.phone
   } : {
@@ -159,6 +154,11 @@ exports.recharge = function(openid, orderId, req, res, callback){
           return done(err);
         }
 
+        if(order.recharge.type === "recharge"){
+          console.log("[充值] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
+        }else if(order.recharge.type == "promo"){
+          console.log("[购买优惠券] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
+        }
         if(order.processed == true){
           var error = new Error();
           error.name = "OrderProcessed";

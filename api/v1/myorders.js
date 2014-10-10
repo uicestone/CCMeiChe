@@ -216,7 +216,6 @@ exports.confirm = function (req, res, next) {
       console.log("pay_request");
 
       if (!order.price) {
-        console.log("ORDER", order);
         return charge.washcar(user.openid, order._id, req, res, function (err) {
           if (err) {
             return done(err);
@@ -228,6 +227,7 @@ exports.confirm = function (req, res, next) {
         });
       }
 
+      console.log("[付款] %s %s元", user.phone, order.price);
       wechat_user.pay_request(req, {
         id: order._id,
         price: order.price,
@@ -276,7 +276,7 @@ exports.share = function (req, res, next) {
       });
     }
     if (order.shared) {
-      console.log("processed");
+      console.log("订单%s已经处理",orderId);
       return res.send({
         message: "processed"
       });

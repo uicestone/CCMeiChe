@@ -76,6 +76,7 @@ var pay_request = function(req, order, callback){
 }
 
 var refund = function(detail, callback){
+  console.log('[退款] %s', JSON.stringify(detail));
   payment.refund(detail, callback);
 }
 

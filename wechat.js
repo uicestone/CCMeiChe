@@ -190,10 +190,8 @@ function handleResponse(res, options){
         console.log("已处理的" + options.type + "订单请求");
       }
       if(res.reply){
-        console.log('reply success');
         res.reply('success');
       }else{
-        console.log('normal reply');
         res.status(200).send({message:"ok"});
       }
     }
