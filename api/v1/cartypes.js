@@ -9,6 +9,10 @@ exports.get = function(req,res,next){
       spell: reg
     },{
       type: reg
+    },{
+      brand: reg
+    },{
+      brand_spell: reg
     }]
   }).toArray(function(err,types){
     if(err){
