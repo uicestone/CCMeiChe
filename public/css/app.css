@@ -1355,22 +1355,22 @@ body.openmenu {
 }
 #recharge .choices .row .price,
 #promos .choices .row .price {
-  font-size: 16px;
+  font-size: 22px;
 }
 #recharge .choices .row .promo,
 #promos .choices .row .promo {
   padding: 0 15px;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 #recharge .choices .row .service,
 #promos .choices .row .service {
-  font-size: 20px;
+  font-size: 14px;
   text-align: center;
 }
 #recharge .choices .row .describe,
 #promos .choices .row .describe {
-  font-size: 15px;
+  font-size: 12px;
   padding: 0 10px;
   margin-top: 5px;
 }
