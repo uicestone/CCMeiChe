@@ -5,3 +5,4 @@ config/*.yml
 *.pfx
 *.p12
 app-test.json
+.DS_Store

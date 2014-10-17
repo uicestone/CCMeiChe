@@ -70,12 +70,18 @@ app.use(function(req,res,next){
 
 var assureUserLogin = require("./routes/auth").user;
 var assureWorkerLogin = require("./routes/auth").worker;
+function constructing(req,res){
+  res.render('constructing',{
+    id:"constructing"
+  });
+}
 if(SERVICE == "worker"){
   logger.debug("service worker");
   if(process.env.DEBUG){
     app.get("/", require('./routes/worker-orders-debug'));
   }
   app.use("/wechat/worker", require("./wechat").worker);
+  app.use(constructing);
   app.get("/authworker", require("./routes/authworker"));
   app.get("/orders/:orderid", assureWorkerLogin, require("./routes/orders").detail);
   // app.get("/orders", assureWorkerLogin, require("./routes/orders").list);
@@ -83,6 +89,7 @@ if(SERVICE == "worker"){
 }else{
 
   app.use("/wechat/user", require("./wechat").user);
+  app.use(constructing);
   app.get('/', function(req,res){
     res.redirect('/wechat');
   });
