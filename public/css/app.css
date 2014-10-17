@@ -1395,6 +1395,7 @@ body.openmenu {
   display: block;
 }
 #contact .contacts p a {
+  font-size: 12px;
   margin-left: 10px;
   color: #fff;
 }
