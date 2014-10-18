@@ -985,20 +985,31 @@ body
   .choices
     margin: 0 30px 30px 30px
     .row
+      clearfix()
       text-align: center
       color: grey
       margin-bottom: 1px
       background-color: #fff
       padding: 10px 0
+      .recharge-row
+        display: table-row
       &.active
         color: #fff
         background-color: pink
       .price
-        font-size: 22px
+        display: table-cell
+        padding: 10px
+        font-size: 16px
       .promo
+        display: table-cell
+        vertical-align: middle
+        width: 200px
         padding: 0 15px
         font-size: 14px
-        text-align: center
+        text-align: left
+        .origin-price
+          font-size: 12px
+          margin-top: 2px
       .service
         font-size: 14px
         text-align: center

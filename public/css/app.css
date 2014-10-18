@@ -1342,11 +1342,27 @@ body.openmenu {
 }
 #recharge .choices .row,
 #promos .choices .row {
+  zoom: 1;
   text-align: center;
   color: #b6b6b6;
   margin-bottom: 1px;
   background-color: #fff;
   padding: 10px 0;
+}
+#recharge .choices .row:before,
+#promos .choices .row:before,
+#recharge .choices .row:after,
+#promos .choices .row:after {
+  content: "";
+  display: table;
+}
+#recharge .choices .row:after,
+#promos .choices .row:after {
+  clear: both;
+}
+#recharge .choices .row .recharge-row,
+#promos .choices .row .recharge-row {
+  display: table-row;
 }
 #recharge .choices .row.active,
 #promos .choices .row.active {
@@ -1355,13 +1371,23 @@ body.openmenu {
 }
 #recharge .choices .row .price,
 #promos .choices .row .price {
-  font-size: 22px;
+  display: table-cell;
+  padding: 10px;
+  font-size: 16px;
 }
 #recharge .choices .row .promo,
 #promos .choices .row .promo {
+  display: table-cell;
+  vertical-align: middle;
+  width: 200px;
   padding: 0 15px;
   font-size: 14px;
-  text-align: center;
+  text-align: left;
+}
+#recharge .choices .row .promo .origin-price,
+#promos .choices .row .promo .origin-price {
+  font-size: 12px;
+  margin-top: 2px;
 }
 #recharge .choices .row .service,
 #promos .choices .row .service {
