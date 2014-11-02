@@ -21,8 +21,8 @@ module.exports = function(req,res,next){
 			return next(err);
 		}
 
-		qrcodes = qrcodes.map(function(){
-			item.url = "123";
+		qrcodes = qrcodes.map(function(item){
+			item.url = encodeURIComponent(config.host.user + "/consume_promoqr?token=" + item.token);
 			item.createTime = moment(item.createTime).format("YYYY-MM-DD hh:mm");
 			return item
 		});
