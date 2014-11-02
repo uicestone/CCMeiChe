@@ -10,7 +10,8 @@ var models = [
   "rechargeorder",
   "admin",
   "refund",
-  "promoqr"
+  "promoqr",
+  "serveregion"
 ];
 
 models.forEach(function(name){

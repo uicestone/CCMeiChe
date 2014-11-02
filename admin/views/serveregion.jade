@@ -1,0 +1,28 @@
+extends layout
+block main
+	style.
+		#map-container{
+			width: 1000px;
+			height: 500px
+		}
+	div#map-container
+
+block scripts
+	script(src="http://api.map.baidu.com/api?v=1.4")
+	script.
+		var regions = !{JSON.stringify(regions)};
+		var map = new BMap.Map("map-container");    
+		var point = new BMap.Point(regions[0].points[0][0], regions[0].points[0][1]);    
+		map.centerAndZoom(point, 15);
+
+		regions.forEach(function(region, i){
+			
+			polygon = new BMap.Polygon(
+				regions[i].points.map(function(p){
+					return new BMap.Point(p[0],p[1])
+				}),
+				{strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5}    
+			);
+
+			map.addOverlay(polygon);
+		});
