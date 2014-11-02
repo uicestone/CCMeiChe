@@ -9,7 +9,8 @@ var models = [
   "usermessage",
   "rechargeorder",
   "admin",
-  "refund"
+  "refund",
+  "promoqr"
 ];
 
 models.forEach(function(name){

@@ -49,6 +49,8 @@ app.get('/', routes.auth, routes.worker);
 app.get('/worker', routes.auth, routes.worker);
 app.get('/user', routes.auth, routes.user);
 app.get('/order', routes.auth, routes.order);
+app.get('/promo-qrcode', routes.auth, routes.promo_qrcode);
+
 app.get('/api/worker', apis.auth, apis.worker.list);
 app.post('/api/worker', apis.auth, apis.worker.create);
 app.post('/api/worker/clear', apis.auth, apis.worker.clear);

@@ -1,0 +1,23 @@
+extends layout
+
+block main
+  table#qr-table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th 二维码
+        th 优惠券内容
+        th 生成时间
+        th 状态
+      for item in qrcodes
+        tr
+          th 
+            img(src="https://api.qrserver.com/v1/create-qr-code/?data=#{item.url}&size=200x200")
+          th item.promoTitle
+          th item.createTime
+          th 
+            if item.used
+              | 已被"#{item.user}"使用
+            else
+              | 未使用
+
+
