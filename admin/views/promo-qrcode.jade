@@ -1,6 +1,8 @@
 extends layout
 
 block main
+  div
+    a.btn.btn-primary#button-add(style="margin-right:10px") 添加
   table#qr-table.table.table-striped.table-bordered.table-hover
     thead
       tr
@@ -20,4 +22,53 @@ block main
             else
               | 未使用
 
+  .modal.fade#modal-add-qrcodes
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal')
+            span(aria-hidden='true') ×
+            span.sr-only Close
+          h4.modal-title 添加二维码
 
+        form#create-worker-form
+          .modal-body
+              .form-group
+                label(for='ipt-worker-openid') 优惠券
+                select.form-control#qr-service
+                  each item in recharges
+                    option(value="#{item._id}") #{item.title}
+              .form-group
+                label(for='ipt-worker-name') 数量
+                select.form-control#qr-amount
+                  each n in [1,2,3,4,5,6,7,8,9,10]
+                    option(value="#{n}") #{n}
+          .modal-footer
+            button.btn#btn-add-qr.btn-primary(type='submit') 添加
+
+block scripts
+  script.
+    var add_btn_clicked = false;
+    $("#button-add").click(function(){
+      $('#modal-add-qrcodes').modal('show');
+    });
+
+    $("#btn-add-qr").click(function(){
+      if(add_btn_clicked){return}
+      add_btn_clicked = true;
+      $.ajax({
+        type:"post",
+        url: "/api/add-qr-code",
+        data:{
+          promo: $("#qr-service").val(),
+          amount: $("#qr-amount").val()
+        },
+        success:function(){
+          location.reload();
+        }
+      });
+    });
+
+    $("#create-worker-form").on("submit",function(e){
+      e.preventDefault();
+    });
