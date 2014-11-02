@@ -58,7 +58,7 @@ block scripts
       add_btn_clicked = true;
       $.ajax({
         type:"post",
-        url: "/api/add-qr-code",
+        url: "/api/qrcode/add",
         data:{
           promo: $("#qr-service").val(),
           amount: $("#qr-amount").val()

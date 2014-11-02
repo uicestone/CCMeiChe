@@ -57,8 +57,10 @@ app.post('/api/worker/clear', apis.auth, apis.worker.clear);
 app.get('/api/user', apis.auth, apis.user.list);
 app.post('/api/user/clear', apis.auth, apis.user.clear);
 app.get('/api/order', apis.auth, apis.order.list);
+app.post('/api/qrcode/add', apis.auth, apis.qrcode.add);
 app.post('/api/order/cancel', apis.auth, apis.order.cancel);
 app.post('/api/order/clear', apis.auth, apis.order.clear);
+
 
 app.get('/logout', routes.logout);
 app.get('/login', routes.login);
