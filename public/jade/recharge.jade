@@ -4,11 +4,13 @@ block content
   ul.choices
     for choice in choices
       li.row(data-id="#{choice._id}")
-        if subtitle == "充值"
-          .price #{choice.price}cc
-          .promo #{choice.title}
-        else
-          .price #{choice.title}
-          .promo #{choice.describe}
+        .recharge-row
+          .promo
+            .title #{choice.title}
+            if choice.describe
+              .desc #{choice.describe}
+            if choice.origin_price
+              .origin-price 原价¥#{choice.origin_price}
+          .price ¥#{choice.price}
   .button 提交
   +facade('recharge')
