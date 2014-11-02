@@ -103,6 +103,7 @@ if(SERVICE == "worker"){
   app.get('/myorders/:orderid', require("./routes/myorders").detail);
   app.get('/myorders', assureUserLogin, require("./routes/myorders").list);
   app.get('/myinfos', assureUserLogin, require("./routes/myinfos"));
+  app.get('/consume_promoqr', assureUserLogin, require("./routes/consume_promoqr"));
   app.get('/help', require("./routes/help"));
 }
 

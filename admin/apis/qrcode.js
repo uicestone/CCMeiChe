@@ -36,6 +36,7 @@ exports.add = function(req,res,next){
 			PromoQr.insert({
 				token: uuid.v1(),
 				createTime: new Date(),
+				recharge: recharge._id,
 				promoTitle: recharge.title,
 				used: false
 			}, next);

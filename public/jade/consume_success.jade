@@ -1,0 +1,20 @@
+extends layout
+block content
+	style.
+		body{
+			background-image: none
+		}
+		.hint{
+			text-align: center;
+			padding: 10px
+		}
+	if error
+		.hint.error #{error}
+	else
+		.hint 充值成功！
+
+	if !error
+		script.
+			setTimeout(function(){
+				location.href = "/myinfos";
+			},1500);
