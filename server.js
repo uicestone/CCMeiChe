@@ -81,7 +81,7 @@ if(SERVICE == "worker"){
     app.get("/", require('./routes/worker-orders-debug'));
   }
   app.use("/wechat/worker", require("./wechat").worker);
-  app.use(constructing);
+  // app.use(constructing);
   app.get("/authworker", require("./routes/authworker"));
   app.get("/orders/:orderid", assureWorkerLogin, require("./routes/orders").detail);
   // app.get("/orders", assureWorkerLogin, require("./routes/orders").list);
