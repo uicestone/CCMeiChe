@@ -8,7 +8,7 @@ module.exports = function(req,res,next){
   var code = req.query.code;
 
   Service.find().sort({
-    _id: 1
+    price: 1
   }).toArray(function(err,services){
     if(err){return next(err);}
 
