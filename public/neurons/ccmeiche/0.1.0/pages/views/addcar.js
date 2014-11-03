@@ -38,7 +38,7 @@ var _34 = "hashstate@~0.1.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_24, [_28,_12,_3,_8,_5,_11,_19], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -146,7 +146,7 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/input-clear":_5,"../mod/swipe-modal":_11,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
 define(_12, [_28,_29], function(require, exports, module, __filename, __dirname) {
@@ -418,7 +418,8 @@ function popMessage(message){
     zIndex: "30",
     padding: "10px 25px",
     backgroundColor: "rgba(0,0,0,0.8)",
-    borderRadius:"5px"
+    borderRadius:"5px",
+    width: "200px"
   });
   pop.appendTo($("body"));
   var width = pop.width()
@@ -446,44 +447,6 @@ function popMessage(message){
 }
 
 module.exports = popMessage
-}, {
-    entries:entries,
-    map:globalMap
-});
-
-define(_5, [_28], function(require, exports, module, __filename, __dirname) {
-$ = require('zepto');
-
-function inputClear(wrap){
-  var input = wrap.find(".input");
-  var clear = $('<div class="clear" />');
-  wrap.addClass('clear-input-wrap');
-  clear.appendTo(wrap);
-  clear.hide();
-
-  input.on('focus', function(){
-    if(input.val()){
-      clear.show();
-    }
-  });
-  input.on('keyup', function(){
-    if(input.val()){
-      clear.show();
-    }else{
-      clear.hide();
-    }
-  });
-  clear.on('tap', function(e){
-    e.preventDefault();
-    input.val("");
-    clear.hide();
-  });
-  input.on('blur', function(){
-    clear.hide();
-  });
-}
-
-module.exports = inputClear;
 }, {
     entries:entries,
     map:globalMap
@@ -583,6 +546,44 @@ SwipeModal.prototype.show = function(data){
 exports.create = function(config){
   return new SwipeModal(config);
 }
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_5, [_28], function(require, exports, module, __filename, __dirname) {
+$ = require('zepto');
+
+function inputClear(wrap){
+  var input = wrap.find(".input");
+  var clear = $('<div class="clear" />');
+  wrap.addClass('clear-input-wrap');
+  clear.appendTo(wrap);
+  clear.hide();
+
+  input.on('focus', function(){
+    if(input.val()){
+      clear.show();
+    }
+  });
+  input.on('keyup', function(){
+    if(input.val()){
+      clear.show();
+    }else{
+      clear.hide();
+    }
+  });
+  clear.on('tap', function(e){
+    e.preventDefault();
+    input.val("");
+    clear.hide();
+  });
+  input.on('blur', function(){
+    clear.hide();
+  });
+}
+
+module.exports = inputClear;
 }, {
     entries:entries,
     map:globalMap

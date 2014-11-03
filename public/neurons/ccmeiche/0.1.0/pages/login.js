@@ -191,7 +191,8 @@ function popMessage(message){
     zIndex: "30",
     padding: "10px 25px",
     backgroundColor: "rgba(0,0,0,0.8)",
-    borderRadius:"5px"
+    borderRadius:"5px",
+    width: "200px"
   });
   pop.appendTo($("body"));
   var width = pop.width()

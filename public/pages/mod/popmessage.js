@@ -31,10 +31,11 @@ function popMessage(message){
     zIndex: "30",
     padding: "10px 25px",
     backgroundColor: "rgba(0,0,0,0.8)",
-    borderRadius:"5px"
+    borderRadius:"5px",
+    width: "200px"
   });
   pop.appendTo($("body"));
-  var width = pop.width()
+  var width = pop.width();
     // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
     //   return parseInt(pop.css(prop));
     // }).reduce(function(a,b){
