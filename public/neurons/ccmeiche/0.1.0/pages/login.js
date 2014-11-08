@@ -195,7 +195,7 @@ function popMessage(message){
     width: "200px"
   });
   pop.appendTo($("body"));
-  var width = pop.width()
+  var width = pop.width();
     // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
     //   return parseInt(pop.css(prop));
     // }).reduce(function(a,b){

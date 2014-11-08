@@ -1159,6 +1159,24 @@ body.openmenu {
   padding-top: 40px;
   padding-bottom: 33px;
 }
+.addaddress-panel .button-wrap {
+  padding: 40px 30px 0 30px;
+  zoom: 1;
+}
+.addaddress-panel .button-wrap:before,
+.addaddress-panel .button-wrap:after {
+  content: "";
+  display: table;
+}
+.addaddress-panel .button-wrap:after {
+  clear: both;
+}
+.addaddress-panel .save-address {
+  float: right;
+}
+.addaddress-panel .remove-address {
+  float: left;
+}
 #order {
   background-image: none;
   background-color: #fff;
@@ -1431,4 +1449,13 @@ body.openmenu {
 }
 #contact .button-wrap a {
   text-decoration: none;
+}
+.action-edit .button {
+  width: 90px;
+}
+.action-add .remove-address {
+  display: none;
+}
+.action-add .save-address {
+  float: none;
 }

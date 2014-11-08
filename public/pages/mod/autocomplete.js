@@ -54,7 +54,7 @@ function Autocomplete(input, pattern, parser, getVal){
       $.ajax({
         method: "GET",
         dataType: "json",
-        url: pattern.replace("{q}",v)
+        url: pattern.replace("{q}",encodeURIComponent(v))
       }).done(function(data){
         if(!data.length){return;}
         list.empty();

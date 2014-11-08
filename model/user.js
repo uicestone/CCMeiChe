@@ -2,6 +2,7 @@ var Model = require('./base');
 var User =  Model("user");
 var RechargeOrder = Model
 var _ = require('underscore');
+var async = require('async');
 var db = require("../db");
 var logger = require('../logger');
 
@@ -121,6 +122,21 @@ db.bind('user',{
     User.updateById(id, {
       $set: updateDoc
     }, callback);
+  },
+  removeAddress: function(id, index, callback){
+    var updateDoc = {};
+    updateDoc["addresses." + index] = 1;
+    async.series([function(done){
+      User.updateById(id, {
+        $unset: updateDoc
+      }, done);
+    }, function(done){
+      User.updateById(id, {
+        $pull : {
+          "addresses" : null
+        }
+      }, done);
+    }], callback);
   },
   addAddress: function(id, data, callback){
     User.findOne({

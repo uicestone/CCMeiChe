@@ -473,7 +473,7 @@ function Autocomplete(input, pattern, parser, getVal){
       $.ajax({
         method: "GET",
         dataType: "json",
-        url: pattern.replace("{q}",v)
+        url: pattern.replace("{q}",encodeURIComponent(v))
       }).done(function(data){
         if(!data.length){return;}
         list.empty();
@@ -708,7 +708,7 @@ function popMessage(message){
     width: "200px"
   });
   pop.appendTo($("body"));
-  var width = pop.width()
+  var width = pop.width();
     // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
     //   return parseInt(pop.css(prop));
     // }).reduce(function(a,b){

@@ -61,6 +61,7 @@ app.get('/api/order', apis.auth, apis.order.list);
 app.post('/api/qrcode/add', apis.auth, apis.qrcode.add);
 app.post('/api/order/cancel', apis.auth, apis.order.cancel);
 app.post('/api/order/clear', apis.auth, apis.order.clear);
+app.post('/api/serveregion/:id', apis.auth, apis.serveregion.update);
 
 
 app.get('/logout', routes.logout);

@@ -1,28 +1,78 @@
 extends layout
 block main
-	style.
-		#map-container{
-			width: 1000px;
-			height: 500px
-		}
-	div#map-container
+  style.
+    #map-container{
+      width: 1000px;
+      height: 500px
+    }
+
+    .list-group .label{
+      margin-right: 10px
+    }
+
+    .list-group .btn{
+      margin-left: 10px
+    }
+
+  ul.list-group.clear-list
+    each region,i in regions
+      li.list-group-item
+        span.label.label-primary #{i+1}
+        span.name
+          | #{region.name}
+        button.btn.btn-primary.btn-xs(type="button") 编辑区域
+  div#map-container
 
 block scripts
-	script(src="http://api.map.baidu.com/api?v=1.4")
-	script.
-		var regions = !{JSON.stringify(regions)};
-		var map = new BMap.Map("map-container");    
-		var point = new BMap.Point(regions[0].points[0][0], regions[0].points[0][1]);    
-		map.centerAndZoom(point, 15);
+  script(src="http://api.map.baidu.com/api?v=1.4")
+  script.
+    var regions = !{JSON.stringify(regions)};
+    var map = new BMap.Map("map-container");    
+    var point = new BMap.Point(regions[0].points[0][0], regions[0].points[0][1]);    
+    var listItems = $(".list-group .list-group-item");
 
-		regions.forEach(function(region, i){
-			
-			polygon = new BMap.Polygon(
-				regions[i].points.map(function(p){
-					return new BMap.Point(p[0],p[1])
-				}),
-				{strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5}    
-			);
+    function updateRegion(id, region, callback){
+      $.ajax({
+        type: "post",
+        url: "/api/serveregion/" + id,
+        data: region,
+        success: callback
+      });
+    }
 
-			map.addOverlay(polygon);
-		});
+    map.centerAndZoom(point, 15);
+
+    regions.forEach(function(region, i){
+      var item = $(listItems[i]);
+      var edit = item.find(".btn");
+      var editing = false;
+      var center = new BMap.Point(region.points[0][0],region.points[0][1]);
+      //- var name = item.find(".label").find();
+      var polygon = new BMap.Polygon(
+        region.points.map(function(p){
+          return new BMap.Point(p[0],p[1])
+        }),
+        {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5}    
+      );
+      
+      edit.on("click",function(){
+        if(editing){
+          polygon.disableEditing();
+          edit.html("编辑区域");
+          updateRegion(region._id, {
+            points: polygon.getPath().map(function(point){
+              return [point.lng,point.lat]
+            })
+          }, function(){
+            editing = false;
+          });
+        }else{
+          map.centerAndZoom(center, 15);
+          polygon.enableEditing();
+          edit.html("完成");
+          editing = true;
+        }
+      });
+
+      map.addOverlay(polygon);
+    });

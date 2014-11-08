@@ -17,9 +17,9 @@ panelAddCar.on("submit",function(data){
   if("index" in data){
     li = $(".cars li:eq(" + data.index + ")");
     delete data.index;
-    li.attr('data',JSON.stringify(data)).html(html);
+    li.attr('data-addr',JSON.stringify(data)).html(html);
   }else{
-    li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(html);
+    li = $("<li class='row'/>").attr('data-addr',JSON.stringify(data)).html(html);
     carsList.append(li);
   }
 });
@@ -37,7 +37,7 @@ $(".cars").on("tap", ".edit", function(){
   var data = $(this).parent().attr('data');
   data = JSON.parse(data);
   data.index = $(".cars .edit").index(this);
-  panelAddCar.show(data);
+  panelfAddCar.show(data);
 });
 
 var addaddress = $(".addaddress");
@@ -56,6 +56,7 @@ var ac = autocomplete.init($("#input-address"),function(item){
 
 addaddress.on("tap",function(){
   addaddressPanel.appendTo(".section.addresses");
+  addaddressPanel.addClass("action-add").removeClass("action-edit");
   addaddress.hide();
   addaddressPanel.show();
   addressesList.find("li .wrap").show();
@@ -76,15 +77,35 @@ addressesList.on("tap",".edit",function(){
   $("#input-latlng").val(data.latlng && data.latlng.join(","));
   $("#input-address").val(data.address);
   $("#input-carpark").val(data.carpark);
+  addaddressPanel.addClass("action-edit").removeClass("action-add");
   addaddressPanel.appendTo(li);
   addaddressPanel.find(".title").html("修改地址信息");
   addaddressPanel.show();
 });
 
+$("#remove-address").on("tap", function(){
+  var row = $(this).closest("li");
+  var index = $("#input-index").val();  
+
+  addaddressPanel.appendTo(".section.addresses");
+  row.remove();
+
+  addaddressPanel.hide();
+
+  $.ajax({
+    url: "/api/v1/myaddresses/" + index,
+    type: "DELETE",
+    success: function(){
+      console.log(arguments);
+    }
+  });
+
+});
+
 $("#save-address").on("tap",function(){
   var index = $("#input-index").val();
   var data = {
-    latlng: $("#input-latlng").val(),
+    latlng: $("#input-latlng").val().split(","),
     address: $("#input-address").val(),
     carpark: $("#input-carpark").val()
   };
@@ -112,17 +133,15 @@ $("#save-address").on("tap",function(){
   .done(function(){
 
     if(type == "add"){
-      var template = "<div class='text'>"
+      var template = "<div class='wrap'><div class='text'>"
         +"<p class='title'>@{it.address}</p>"
         +"<p class='desc'>@{it.carpark}</p>"
       +"</div>"
-      +"<div class='edit'>修改</div>";
-
+      +"<div class='edit'>修改</div></div>";
       var html = tpl.render(template,data);
-      li = $("<li class='row'/>").attr('data',JSON.stringify(data)).html(html);
+      li = $("<li class='row'/>").attr('data-addr',JSON.stringify(data)).html(html);
       addressesList.append(li);
     }else{
-      data.latlng = data.latlng.split(",");
       var li = $(".addresses .row").eq(index);
       li.attr("data-addr", JSON.stringify(data));
       li.find(".title").text(data.address);
@@ -134,6 +153,7 @@ $("#save-address").on("tap",function(){
     $("#input-address").val('');
     $("#input-carpark").val('');
     addaddressPanel.hide();
+    addaddress.show();
   })
   .fail(popMessage);
 });

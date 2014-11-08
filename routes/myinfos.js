@@ -1,7 +1,20 @@
 var Service = require('../model/service');
+var _ = require('underscore');
 
 module.exports = function(req,res,next){
   var user = req.user;
+
+  user.addresses = user.addresses.map(function(addr){
+    var latlng = addr.latlng;
+    if(_.isString(latlng)){
+      console.log(addr,latlng,typeof latlng);
+      latlng = latlng.split(",");
+    }
+
+    addr.latlng = latlng;
+    return addr;
+  });
+
   Service.find().sort({
     _id: 1
   }).toArray(function(err, promos){

@@ -22,6 +22,7 @@ module.exports = function(app){
     app.post("mycars", auth, require("./mycars").post);
     app.post("myaddresses", auth, require("./myaddresses").add);
     app.post("myaddresses/:index", auth, require("./myaddresses").update);
+    app.delete("myaddresses/:index", auth, require("./myaddresses").remove);
 
     app.get("cartypes/:query", require("./cartypes").get);
     app.post("recharge/:id", require("./recharge").post);

@@ -1,11 +1,22 @@
 var User = require('../../model/user');
+var _ = require('underscore');
+
+function santitizeLatlng(latlng){
+  if(_.isString(latlng)){
+    latlng = latlng.split(",");
+  }
+
+  latlng = latlng.map(function(item){
+    return +item;
+  });
+
+  return latlng;
+}
 
 exports.add = function(req,res,next){
   var carpark = req.body.carpark;
   var address = req.body.address;
-  var latlng = req.body.latlng && req.body.latlng.split(",").map(function(item){
-    return +item;
-  });
+  var latlng = santitizeLatlng(req.body.latlng);
 
   if(!carpark || !latlng || !address){
     return res.status(400).send("missing params");
@@ -28,9 +39,8 @@ exports.update = function(req,res,next){
   var index = req.params.index;
   var carpark = req.body.carpark;
   var address = req.body.address;
-  var latlng = req.body.latlng && req.body.latlng.split(",").map(function(item){
-    return +item;
-  });
+  var latlng = santitizeLatlng(req.body.latlng);
+
 
   if(!carpark || !latlng || !address){
     return res.status(400).send("missing params");
@@ -48,3 +58,12 @@ exports.update = function(req,res,next){
   });
 }
 
+exports.remove = function(req,res,next){
+  User.removeAddress(req.user._id, req.params.index, function(err){
+    if(err){
+      return next(err);
+    }
+    res.status(200).send({message: "ok"});
+
+  });
+}
