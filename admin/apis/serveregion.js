@@ -4,7 +4,7 @@ exports.update = function(req,res,next){
 	var id = req.params.id;
 	var region = {};
 
-	["name","points"].forEach(function(key){
+	["points"].forEach(function(key){
 		if(req.body[key]){
 			region[key] = req.body[key];
 		}
