@@ -9,12 +9,15 @@ exports.latlng = function(req,res,next){
       to: 5
     }, done);
   },function(json, done){
+    if(json.status != 0){
+      return done(json.message);
+    }
     baidumap.geocoder({
       pois: 1,
       location: json.result[0].y + "," + json.result[0].x
     },done);
   }], function(err, result){
-    if(err){return next();}
+    if(err){return next(err);}
     res.status(200).send(result);
   });
 }
