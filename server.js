@@ -1,3 +1,4 @@
+require('oneapm');
 var express = require('express');
 var namespace = require('express-namespace');
 var session = require('express-session');
@@ -14,7 +15,6 @@ var http = require('http');
 var fs = require('fs');
 var moment = require("moment");
 var logger = require("./logger");
-
 moment.locale('zh-cn');
 require('express-di');
 
