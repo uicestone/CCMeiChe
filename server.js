@@ -6,6 +6,7 @@ var RedisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var errorHandler = require('errorhandler');
+var compression = require('compression');
 var passport = require('passport');
 var config = require('config');
 var wechat = require('wechat');
@@ -51,6 +52,7 @@ app.use(function(req,res,next){
   }
   next();
 });
+app.use(compression())
 app.use(express.static(__dirname + '/public'))
 app.use(passport.initialize());
 app.use(passport.session());
