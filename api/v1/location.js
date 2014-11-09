@@ -2,6 +2,7 @@ var baidumap = require('../../util/baidumap');
 
 exports.latlng = function(req,res){
   baidumap.geocoder({
+    pois: 1,
     location: [req.params.lat,req.params.lng].join(",")
   },function(err, result){
     if(err){return next();}
