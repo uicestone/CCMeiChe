@@ -6,3 +6,4 @@ config/*.yml
 *.p12
 app-test.json
 .DS_Store
+oneapm.js
