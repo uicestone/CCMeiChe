@@ -7,10 +7,12 @@ module.exports = function(req, res){
   PromoQR.find({
     token: req.query.token
   }).toArray(function(err,results){
-    var qr = results[0];
     if(err){
       return next(err);
     }
+
+    var qr = results[0];
+    var expired = +new Date - new Date(qr.createTime) > 24 * 3600 * 1000;
 
     function render(err){
       res.render("consume_success",{
@@ -23,9 +25,11 @@ module.exports = function(req, res){
       return render("二维码券不存在");
     }
 
-    if(qr.used){
+    if(qr.used || expired){
       return render("二维码已过期");
     }
+
+
 
     Recharge.findById(qr.recharge, function(err, recharge){
       if(err){
@@ -44,8 +48,10 @@ module.exports = function(req, res){
         }
 
         PromoQR.updateById(qr._id, {
-          used: true,
-          username: req.user.wechat_info ? req.user.wechat_info.nickname : ('no name:' + req.user._id)
+          $set:{
+            used: true,
+            username: req.user.wechat_info ? req.user.wechat_info.nickname : ('no name:' + req.user._id)
+          }
         }, function(err){
           if(err){
             return next(err);

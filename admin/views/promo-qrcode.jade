@@ -17,7 +17,9 @@ block main
           th #{item.promoTitle}
           th #{item.createTime}
           th 
-            if item.used
+            if item.expired
+              | 已过期
+            else if item.used
               | 已被"#{item.username}"使用
             else
               | 未使用

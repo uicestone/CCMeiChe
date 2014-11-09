@@ -24,7 +24,8 @@ module.exports = function(req,res,next){
 		qrcodes = qrcodes.map(function(item){
 			item.url = encodeURIComponent(config.host.user + "/consume_promoqr?token=" + item.token);
 			item.createTime = moment(item.createTime).format("YYYY-MM-DD hh:mm");
-			return item
+			item.expired = +new Date - new Date(item.createTime) > 24 * 3600 * 1000;
+			return item;
 		});
 
 	  res.render('promo-qrcode',{
