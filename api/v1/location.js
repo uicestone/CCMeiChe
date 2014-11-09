@@ -10,7 +10,7 @@ exports.latlng = function(req,res,next){
     }, done);
   },function(json, done){
     if(json.status != 0){
-      return done(json.message);
+      return res.status(500).send({error: json.status, message: json.message});
     }
     baidumap.geocoder({
       pois: 1,
