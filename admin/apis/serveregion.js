@@ -4,12 +4,13 @@ exports.update = function(req,res,next){
 	var id = req.params.id;
 	var region = {};
 
-	["points"].forEach(function(key){
-		if(req.body[key]){
-			region[key] = req.body[key];
-		}
-	});
-
+	if(req.body.points){
+		region.points = req.body.points.map(function(p){
+			return p.map(function(d){return +d})
+		});
+	}else{
+		res.send(400, "bad request");
+	}
 
 	ServeRegion.updateById(id, {
 		$set: region
