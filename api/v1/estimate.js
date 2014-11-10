@@ -28,7 +28,7 @@ exports.post = function (req, res, next) {
 
     var isInside = false;
     regions.forEach(function(r,i){
-      if(inside(user_latlng.reverse(), r.points)){
+      if(inside(_.reverse(user_latlng), r.points)){
         isInside = true;
       }
     });
