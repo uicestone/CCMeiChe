@@ -4,7 +4,7 @@ var _ = require('underscore');
 module.exports = function(req,res,next){
   var user = req.user;
 
-  user.addresses = user.addresses.map(function(addr){
+  user.addresses = (user.addresses || []).map(function(addr){
     var latlng = addr.latlng;
     if(_.isString(latlng)){
       console.log(addr,latlng,typeof latlng);
