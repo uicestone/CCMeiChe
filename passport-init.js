@@ -38,21 +38,35 @@ passport.use(new LocalStrategy({
         access_token: access_token,
         openid: openid
       };
-      User.update({
-        phone: user.phone
-      }, {
-        $set: user
-      }, {
-        upsert: true
-      }, function(err){
-        if(err){return done(err);}
-        User.findOne({
-          phone: phone
-        }, function(err, user){
+      User.findOne({
+        phone: phone
+      }, function(err, existsUser){
+        if(err){
+          return done(err);
+        }
+        
+        if(!existsUser){
+          console.log("新用户充20积分");
+          user.credit = 20;
+        }
+
+        User.update({
+          phone: user.phone
+        }, {
+          $set: user
+        }, {
+          upsert: true
+        }, function(err){
           if(err){return done(err);}
-          logger.log('[登录]', user.phone);
-          done(null, user);
+          User.findOne({
+            phone: phone
+          }, function(err, user){
+            if(err){return done(err);}
+            logger.log('[登录]', user.phone);
+            done(null, user);
+          });
         });
+
       });
     }
   });
