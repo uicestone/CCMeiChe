@@ -62,6 +62,15 @@ $(function(){
     setBtnGo();
   });
 
+  function getQuery(k){
+    var res = {};
+    location.search.slice(1).split("&").forEach(function(pair){
+      pair = pair.split("=");
+      res[pair[0]] = res[pair[1]];
+    });
+    return res[k];
+  }
+
 
   btn_signin.on("tap",function(){
     if(!$(".checkbox").hasClass("active")){
@@ -76,7 +85,7 @@ $(function(){
       access_token: window.access_token,
       openid: window.openid
     },'json').done(function(response, status, xhr){
-      var redirect = location.search.slice(1).split("redirect=")[1];
+      var redirect = getQuery("redirect");
       location.href = redirect || "/wechat/?showwxpaytitle=1";
     }).fail(function(xhr){
       popMessage(xhr);
