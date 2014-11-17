@@ -33,7 +33,7 @@ exports.post = function (req, res, next) {
       }
     });
 
-    if(!isInside){
+    if(!isInside && !process.env.DEBUG){
       return next("该位置暂且不在我们的服务范围内");
     }
 

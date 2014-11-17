@@ -106,7 +106,7 @@ exports.arrive = function(req,res,next){
         if(order.service.needopen){
           message = "您的CC美车管家已经到达，麻烦您解锁爱车，并取走车上贵重物品。谢谢您的配合。";
         }else{
-          message = "您的CC没车管家已经到达并已开始作业，请耐心等候。";
+          message = "您的CC美车管家已经到达并已开始作业，请耐心等候。";
         }
         wechat_user.sendText(order.user.openid, message, done);
       },
