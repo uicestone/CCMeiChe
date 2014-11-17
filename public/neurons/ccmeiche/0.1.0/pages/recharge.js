@@ -69,7 +69,7 @@ $(".button").on("tap",function(){
         }
         setTimeout(function(){
           location.href = "/wechat/?showwxpaytitle=1";
-        },1000);
+        },3000);
       });
     }else{
       WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){
