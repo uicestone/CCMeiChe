@@ -852,7 +852,7 @@ module.exports = swipeModal.create({
     map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
-define(_27, [_28,_33,_11,_23,_8], function(require, exports, module, __filename, __dirname) {
+define(_27, [_28,_33,_11,_8,_23], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var viewSwipe = require("view-swipe");
 var swipeModal = require("../mod/swipe-modal");
@@ -929,7 +929,7 @@ function formatTime(estimated_finish_time){
 }
 }, {
     entries:entries,
-    map:mix({"../mod/swipe-modal":_11,"../tpl/preorder.html":_23,"../mod/popmessage":_8},globalMap)
+    map:mix({"../mod/swipe-modal":_11,"../mod/popmessage":_8,"../tpl/preorder.html":_23},globalMap)
 });
 
 define(_5, [_28], function(require, exports, module, __filename, __dirname) {
@@ -1095,6 +1095,10 @@ exports.init = function(selector,options){
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
     maxItems: type == "single" ? -1 : options.maxItems
+  }).on("select",function(e){
+    window.onerror("选择文件", e.files.map(function(file){
+      return file.name + " " + Math.round(file.size / 1024) + "KB";
+    }).join(","),'');
   }).on("error", function(e){
     if(type == "single"){
       elem.find(".loading").hide();
@@ -1102,7 +1106,10 @@ exports.init = function(selector,options){
     }
     popMessage("上传失败，请重试");
     e.elem.remove();
-    window.onerror(JSON.stringify({code:e.code,message:e.message}));
+    window.onerror("上传失败",JSON.stringify({code:e.code,message:e.message}),'');
+  }).on("success", function(e){
+    console.log(e);
+    window.onerror("上传成功",appConfig.qiniu_host + e.data.key,'');
   });
 
   var elem = $(selector);

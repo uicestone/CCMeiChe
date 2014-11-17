@@ -203,7 +203,7 @@ $("#save-address").on("tap",function(){
     map:mix({"./views/addcar":_24,"./mod/autocomplete":_3,"./mod/popmessage":_8},globalMap)
 });
 
-define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_8,_5,_11,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -311,7 +311,7 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/input-clear":_5,"../mod/swipe-modal":_11,"../tpl/addcar.html":_19},globalMap)
 });
 
 define(_3, [_28,_30,_31], function(require, exports, module, __filename, __dirname) {
@@ -585,6 +585,10 @@ exports.init = function(selector,options){
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
     maxItems: type == "single" ? -1 : options.maxItems
+  }).on("select",function(e){
+    window.onerror("选择文件", e.files.map(function(file){
+      return file.name + " " + Math.round(file.size / 1024) + "KB";
+    }).join(","),'');
   }).on("error", function(e){
     if(type == "single"){
       elem.find(".loading").hide();
@@ -592,7 +596,10 @@ exports.init = function(selector,options){
     }
     popMessage("上传失败，请重试");
     e.elem.remove();
-    window.onerror(JSON.stringify({code:e.code,message:e.message}));
+    window.onerror("上传失败",JSON.stringify({code:e.code,message:e.message}),'');
+  }).on("success", function(e){
+    console.log(e);
+    window.onerror("上传成功",appConfig.qiniu_host + e.data.key,'');
   });
 
   var elem = $(selector);
@@ -626,6 +633,44 @@ exports.init = function(selector,options){
 }, {
     entries:entries,
     map:mix({"./popmessage":_8},globalMap)
+});
+
+define(_5, [_28], function(require, exports, module, __filename, __dirname) {
+$ = require('zepto');
+
+function inputClear(wrap){
+  var input = wrap.find(".input");
+  var clear = $('<div class="clear" />');
+  wrap.addClass('clear-input-wrap');
+  clear.appendTo(wrap);
+  clear.hide();
+
+  input.on('focus', function(){
+    if(input.val()){
+      clear.show();
+    }
+  });
+  input.on('keyup', function(){
+    if(input.val()){
+      clear.show();
+    }else{
+      clear.hide();
+    }
+  });
+  clear.on('tap', function(e){
+    e.preventDefault();
+    input.val("");
+    clear.hide();
+  });
+  input.on('blur', function(){
+    clear.hide();
+  });
+}
+
+module.exports = inputClear;
+}, {
+    entries:entries,
+    map:globalMap
 });
 
 define(_11, [_30,_31,_33,_29,_34,_28], function(require, exports, module, __filename, __dirname) {
@@ -722,44 +767,6 @@ SwipeModal.prototype.show = function(data){
 exports.create = function(config){
   return new SwipeModal(config);
 }
-}, {
-    entries:entries,
-    map:globalMap
-});
-
-define(_5, [_28], function(require, exports, module, __filename, __dirname) {
-$ = require('zepto');
-
-function inputClear(wrap){
-  var input = wrap.find(".input");
-  var clear = $('<div class="clear" />');
-  wrap.addClass('clear-input-wrap');
-  clear.appendTo(wrap);
-  clear.hide();
-
-  input.on('focus', function(){
-    if(input.val()){
-      clear.show();
-    }
-  });
-  input.on('keyup', function(){
-    if(input.val()){
-      clear.show();
-    }else{
-      clear.hide();
-    }
-  });
-  clear.on('tap', function(e){
-    e.preventDefault();
-    input.val("");
-    clear.hide();
-  });
-  input.on('blur', function(){
-    clear.hide();
-  });
-}
-
-module.exports = inputClear;
 }, {
     entries:entries,
     map:globalMap

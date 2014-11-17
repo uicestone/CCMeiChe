@@ -89,6 +89,10 @@ exports.init = function(selector,options){
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
     maxItems: type == "single" ? -1 : options.maxItems
+  }).on("select",function(e){
+    window.onerror("选择文件", e.files.map(function(file){
+      return file.name + " " + Math.round(file.size / 1024) + "KB";
+    }).join(","),'');
   }).on("error", function(e){
     if(type == "single"){
       elem.find(".loading").hide();
@@ -96,7 +100,10 @@ exports.init = function(selector,options){
     }
     popMessage("上传失败，请重试");
     e.elem.remove();
-    window.onerror(JSON.stringify({code:e.code,message:e.message}));
+    window.onerror("上传失败",JSON.stringify({code:e.code,message:e.message}),'');
+  }).on("success", function(e){
+    console.log(e);
+    window.onerror("上传成功",appConfig.qiniu_host + e.data.key,'');
   });
 
   var elem = $(selector);
