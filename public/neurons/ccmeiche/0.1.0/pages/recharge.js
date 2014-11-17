@@ -62,7 +62,7 @@ $(".button").on("tap",function(){
     }
     setTimeout(function(){
       location.href = "/wechat/?showwxpaytitle=1";
-    },1500);
+    },1000);
   }
 
   $.post("/api/v1/recharge/" + id).done(function(result){
