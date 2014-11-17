@@ -156,9 +156,9 @@ exports.recharge = function(openid, orderId, req, res, callback){
         }
 
         if(order.recharge.type === "recharge"){
-          logger.info("[充值] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
+          logger.info("[充值] %s %s 支付 %s", order.user.phone, order.recharge.title, order.recharge.price);
         }else if(order.recharge.type == "promo"){
-          logger.info("[购买优惠券] %s %s 支付 %s", req.user.phone, order.recharge.title, order.recharge.price);
+          logger.info("[购买优惠券] %s %s 支付 %s", order.user.phone, order.recharge.title, order.recharge.price);
         }
         if(order.processed == true){
           var error = new Error();
