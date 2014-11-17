@@ -65,7 +65,7 @@ exports.cancel = function(orderId, reason, callback){
               wechat_user.refund({
                 out_trade_no: order._id,
                 out_refund_no: refundId,
-                total_fee: order.price /* 100 */,
+                total_fee: order.price * 100,
                 refund_fee: order.price
               }, function(err, data){
                 if(err){
