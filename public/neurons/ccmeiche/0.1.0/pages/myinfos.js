@@ -203,7 +203,7 @@ $("#save-address").on("tap",function(){
     map:mix({"./views/addcar":_24,"./mod/autocomplete":_3,"./mod/popmessage":_8},globalMap)
 });
 
-define(_24, [_28,_3,_12,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -311,7 +311,7 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/autocomplete":_3,"../mod/uploader":_12,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
 define(_3, [_28,_30,_31], function(require, exports, module, __filename, __dirname) {

@@ -228,7 +228,7 @@ calculate();
 navigator.geolocation.getCurrentPosition(function(position){
   var latlng = [position.coords.longitude,position.coords.latitude].join(",");
   $("#latlng").val(latlng);
-  $.get("/api/v1/location/latlng/" + latlng, function(data){
+  $.get("/api/v1/location/latlng/" + [position.coords.latitude,position.coords.longitude].join(","), function(data){
     $(".location .input").val(data.result.pois[0].name);
   });
 },function(){
