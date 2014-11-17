@@ -37,7 +37,7 @@ $(".cars").on("tap", ".edit", function(){
   var data = $(this).parent().attr('data');
   data = JSON.parse(data);
   data.index = $(".cars .edit").index(this);
-  panelfAddCar.show(data);
+  panelAddCar.show(data);
 });
 
 var addaddress = $(".addaddress");
