@@ -65,7 +65,7 @@ $(".button").on("tap",function(){
         if($("h1").text() == "充值"){
           popMessage("充值成功",{textAlign:"center"});
         }else{
-          popMessage("购买成功",{textAlign:"center"});
+          popMessage("您已成功购买" + $(".active .title").text(),{textAlign:"center"});
         }
         setTimeout(function(){
           location.href = "/wechat/?showwxpaytitle=1";
