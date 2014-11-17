@@ -34,7 +34,7 @@ exports.backend = function(err,req,res,next){
   if(typeof err == "string"){
     err = new Error(err);
   }
-  console.log("track error backend %s".red, err.message);
+  console.log("track error backend %s %s".red, err.message, err.stack);
   errmodel.insert({
     type:"backend",
     time: new Date(),
