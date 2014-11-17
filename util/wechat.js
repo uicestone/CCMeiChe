@@ -55,7 +55,7 @@ var pay_request = function(req, order, callback){
     'body': order_name,
     'attach': order_attach,
     'out_trade_no': order_id,
-    'total_fee': (total_price * 100),
+    'total_fee': (total_price * order.user.isTest ? 1 : 100),
     'spbill_create_ip': req.header('x-forwarded-for') || req.connection.remoteAddress,
     "openid": req.user.openid,
     "trade_type": "JSAPI"
