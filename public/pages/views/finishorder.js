@@ -32,6 +32,8 @@ FinishOrder.prototype.show = function(data){
       uploading = true;
     }).on("complete",function(){
       uploading = false;
+    }).on("error", function(){
+      uploading = false;
     });
   });
 
@@ -42,6 +44,8 @@ FinishOrder.prototype.show = function(data){
   }).on("add",function(){
     uploading = true;
   }).on("complete",function(){
+    uploading = false;
+  }).on("error", function(){
     uploading = false;
   });
 

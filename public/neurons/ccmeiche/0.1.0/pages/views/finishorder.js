@@ -72,6 +72,8 @@ FinishOrder.prototype.show = function(data){
       uploading = true;
     }).on("complete",function(){
       uploading = false;
+    }).on("error", function(){
+      uploading = false;
     });
   });
 
@@ -82,6 +84,8 @@ FinishOrder.prototype.show = function(data){
   }).on("add",function(){
     uploading = true;
   }).on("complete",function(){
+    uploading = false;
+  }).on("error", function(){
     uploading = false;
   });
 
@@ -175,10 +179,10 @@ module.exports = '<div id="finishorder" class="container"><h2 class="h2">洗车�
     map:globalMap
 });
 
-define(_12, [_28,_33], function(require, exports, module, __filename, __dirname) {
+define(_12, [_28,_33,_8], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader-mobile');
-
+var popMessage = require('./popmessage');
 var beforeUpload = function(prefix){
   return function(file, done){
     var uploader = this;
@@ -220,29 +224,6 @@ var loadImageToElem = function(key, elem, size, callback){
   });
 };
 
-var uploadTemplate = {
-  template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper"></li>',
-  add: function(e){
-    initloading(e.elem);
-  },
-  success: function(e){
-    var elem = e.elem;
-    var data = e.data;
-    loadImageToElem(data.key, elem, {
-      mode: 2,
-      width: 260
-    },function(){
-      elem.find(".loading").hide();
-    });
-  },
-  remove: function(e){
-      var elem = e.elem;
-      elem && elem.fadeOut();
-  },
-  error: function(e){
-      console && console.log("e")
-  }
-};
 
 function initloading(elem){
   var loading = $("<div class='loading'><div class='spin'></div></div>");
@@ -257,6 +238,29 @@ function initloading(elem){
 }
 
 exports.init = function(selector,options){
+  var uploadTemplate = {
+    template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper"></li>',
+    add: function(e){
+      initloading(e.elem);
+    },
+    success: function(e){
+      var elem = e.elem;
+      var data = e.data;
+      loadImageToElem(data.key, elem, {
+        mode: 2,
+        width: 260
+      },function(){
+        elem.find(".loading").hide();
+      });
+    },
+    remove: function(e){
+        var elem = e.elem;
+        elem && elem.fadeOut();
+    },
+    error: function(e){
+    }
+  };
+
   var type = options.type;
   var uploader =  new Uploader(selector, {
     action:"http://up.qiniu.com",
@@ -267,6 +271,14 @@ exports.init = function(selector,options){
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
     maxItems: type == "single" ? -1 : options.maxItems
+  }).on("error", function(e){
+    if(type == "single"){
+      elem.find(".loading").hide();
+      elem.find(".text").show();
+    }
+    popMessage("上传失败，请重试");
+    e.elem.remove();
+    window.onerror(JSON.stringify({code:e.code,message:e.message}));
   });
 
   var elem = $(selector);
@@ -288,7 +300,7 @@ exports.init = function(selector,options){
         elem.find(".loading").hide();
         elem.find(".result").show();
       });
-    })
+    });
   }else{
     uploader.on("disable",function(){
       elem.hide();
@@ -299,7 +311,7 @@ exports.init = function(selector,options){
 }
 }, {
     entries:entries,
-    map:globalMap
+    map:mix({"./popmessage":_8},globalMap)
 });
 
 define(_7, [_28], function(require, exports, module, __filename, __dirname) {

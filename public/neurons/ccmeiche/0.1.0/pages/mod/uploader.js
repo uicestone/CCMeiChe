@@ -33,10 +33,10 @@ var _29 = "uploader-mobile@~0.1.4";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_12, [_28,_29], function(require, exports, module, __filename, __dirname) {
+define(_12, [_28,_29,_8], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader-mobile');
-
+var popMessage = require('./popmessage');
 var beforeUpload = function(prefix){
   return function(file, done){
     var uploader = this;
@@ -78,29 +78,6 @@ var loadImageToElem = function(key, elem, size, callback){
   });
 };
 
-var uploadTemplate = {
-  template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper"></li>',
-  add: function(e){
-    initloading(e.elem);
-  },
-  success: function(e){
-    var elem = e.elem;
-    var data = e.data;
-    loadImageToElem(data.key, elem, {
-      mode: 2,
-      width: 260
-    },function(){
-      elem.find(".loading").hide();
-    });
-  },
-  remove: function(e){
-      var elem = e.elem;
-      elem && elem.fadeOut();
-  },
-  error: function(e){
-      console && console.log("e")
-  }
-};
 
 function initloading(elem){
   var loading = $("<div class='loading'><div class='spin'></div></div>");
@@ -115,6 +92,29 @@ function initloading(elem){
 }
 
 exports.init = function(selector,options){
+  var uploadTemplate = {
+    template: '<li id="J_upload_item_<%=id%>" class="pic-wrapper"></li>',
+    add: function(e){
+      initloading(e.elem);
+    },
+    success: function(e){
+      var elem = e.elem;
+      var data = e.data;
+      loadImageToElem(data.key, elem, {
+        mode: 2,
+        width: 260
+      },function(){
+        elem.find(".loading").hide();
+      });
+    },
+    remove: function(e){
+        var elem = e.elem;
+        elem && elem.fadeOut();
+    },
+    error: function(e){
+    }
+  };
+
   var type = options.type;
   var uploader =  new Uploader(selector, {
     action:"http://up.qiniu.com",
@@ -125,6 +125,14 @@ exports.init = function(selector,options){
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
     maxItems: type == "single" ? -1 : options.maxItems
+  }).on("error", function(e){
+    if(type == "single"){
+      elem.find(".loading").hide();
+      elem.find(".text").show();
+    }
+    popMessage("上传失败，请重试");
+    e.elem.remove();
+    window.onerror(JSON.stringify({code:e.code,message:e.message}));
   });
 
   var elem = $(selector);
@@ -146,7 +154,7 @@ exports.init = function(selector,options){
         elem.find(".loading").hide();
         elem.find(".result").show();
       });
-    })
+    });
   }else{
     uploader.on("disable",function(){
       elem.hide();
@@ -155,6 +163,77 @@ exports.init = function(selector,options){
 
   return uploader;
 }
+}, {
+    entries:entries,
+    map:mix({"./popmessage":_8},globalMap)
+});
+
+define(_8, [_28], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message, styles, notDismiss){
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+      json = {
+        error:{
+          message: message.responseText
+        }
+      }
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    zIndex: "30",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px",
+    width: "200px"
+  });
+  pop.css(styles || {});
+  pop.appendTo($("body"));
+  var width = pop.width();
+    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    //   return parseInt(pop.css(prop));
+    // }).reduce(function(a,b){
+    //   return a+b;
+    // },0);
+  pop.css({
+    "margin-left": - width / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
+    });
+  });
+  if(!notDismiss){
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },2000);
+  }
+}
+
+module.exports = popMessage
 }, {
     entries:entries,
     map:globalMap
