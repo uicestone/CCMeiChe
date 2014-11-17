@@ -1,5 +1,5 @@
 var $ = require('zepto');
-function popMessage(message){
+function popMessage(message, styles){
   var json = {}
   if(message.constructor == XMLHttpRequest){
     try{
@@ -34,6 +34,7 @@ function popMessage(message){
     borderRadius:"5px",
     width: "200px"
   });
+  pop.css(styles || {});
   pop.appendTo($("body"));
   var width = pop.width();
     // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){

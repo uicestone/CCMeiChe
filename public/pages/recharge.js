@@ -27,7 +27,14 @@ $(".button").on("tap",function(){
         orderId: orderId,
         type: 'recharge'
       },'json').done(function(){
-        location.href = "/wechat/?showwxpaytitle=1";
+        if($("h1").text() == "充值"){
+          popMessage("充值成功",{textAlign:"center"});
+        }else{
+          popMessage("购买成功",{textAlign:"center"});
+        }
+        setTimeout(function(){
+          location.href = "/wechat/?showwxpaytitle=1";
+        },1000);
       });
     }else{
       WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){
