@@ -43,8 +43,8 @@ neuron.config({
         "events@~1.0.5": 1,
         "util@~1.0.4": 2,
         "zepto@~1.1.3": 7,
-        "attributes@~1.4.0": 8,
         "json@~1.0.1": 3,
+        "attributes@~1.4.0": 8,
         "simple-mime@^0.0.8": 10,
         "underscore@~1.5.2": 11
       }
