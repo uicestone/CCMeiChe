@@ -19,6 +19,17 @@ $(".button").on("tap",function(){
     return;
   }
 
+  function popSuccess(){
+    if($("h1").text() == "充值"){
+      popMessage("您已成功充值" + $(".active .price").text().slice(1) + "元",{textAlign:"center"},true);
+    }else{
+      popMessage("您已成功购买" + $(".active .title").text(),{textAlign:"center"},true);
+    }
+    setTimeout(function(){
+      location.href = "/wechat/?showwxpaytitle=1";
+    },1000);
+  }
+
   $.post("/api/v1/recharge/" + id).done(function(result){
     var payment_args = result.payment_args;
     var orderId = result.orderId;
@@ -27,21 +38,13 @@ $(".button").on("tap",function(){
         orderId: orderId,
         type: 'recharge'
       },'json').done(function(){
-        if($("h1").text() == "充值"){
-          popMessage("您已成功充值" + $(".active .price").text().slice(1) + "元",{textAlign:"center"},true);
-        }else{
-          popMessage("您已成功购买" + $(".active .title").text(),{textAlign:"center"},true);
-        }
-        setTimeout(function(){
-          location.href = "/wechat/?showwxpaytitle=1";
-        },5000);
+        popSuccess();
       });
     }else{
       WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){
         var message = res.err_msg;
         if(message == "get_brand_wcpay_request:ok"){
-          popMessage("支付成功！");
-          location.href = "/wechat/?showwxpaytitle=1";
+          popSuccess();
         }else{
           popMessage("支付失败，请重试");
         }
