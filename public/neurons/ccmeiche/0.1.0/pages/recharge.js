@@ -63,13 +63,13 @@ $(".button").on("tap",function(){
         type: 'recharge'
       },'json').done(function(){
         if($("h1").text() == "充值"){
-          popMessage("您已成功充值" + $(".active .price").text().slice(1) + "元",{textAlign:"center"});
+          popMessage("您已成功充值" + $(".active .price").text().slice(1) + "元",{textAlign:"center"},true);
         }else{
-          popMessage("您已成功购买" + $(".active .title").text(),{textAlign:"center"});
+          popMessage("您已成功购买" + $(".active .title").text(),{textAlign:"center"},true);
         }
         setTimeout(function(){
           location.href = "/wechat/?showwxpaytitle=1";
-        },3000);
+        },2000);
       });
     }else{
       WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){
@@ -94,7 +94,7 @@ $(".button").on("tap",function(){
 
 define(_8, [_28], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
-function popMessage(message, styles){
+function popMessage(message, styles, notDismiss){
   var json = {}
   if(message.constructor == XMLHttpRequest){
     try{
@@ -145,6 +145,7 @@ function popMessage(message, styles){
       "opacity":1
     });
   });
+  if(!notDismiss){
   setTimeout(function(){
     pop.css({
       "opacity":0
@@ -152,7 +153,8 @@ function popMessage(message, styles){
     setTimeout(function(){
       pop.remove();
     },400);
-  },1500)
+  },2000);
+  }
 }
 
 module.exports = popMessage

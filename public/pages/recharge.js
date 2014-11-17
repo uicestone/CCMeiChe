@@ -28,13 +28,13 @@ $(".button").on("tap",function(){
         type: 'recharge'
       },'json').done(function(){
         if($("h1").text() == "充值"){
-          popMessage("您已成功充值" + $(".active .price").text().slice(1) + "元",{textAlign:"center"});
+          popMessage("您已成功充值" + $(".active .price").text().slice(1) + "元",{textAlign:"center"},true);
         }else{
-          popMessage("您已成功购买" + $(".active .title").text(),{textAlign:"center"});
+          popMessage("您已成功购买" + $(".active .title").text(),{textAlign:"center"},true);
         }
         setTimeout(function(){
           location.href = "/wechat/?showwxpaytitle=1";
-        },3000);
+        },2000);
       });
     }else{
       WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){

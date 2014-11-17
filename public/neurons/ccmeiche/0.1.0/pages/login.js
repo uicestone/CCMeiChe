@@ -37,7 +37,7 @@ var _33 = "hashstate@~0.1.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_1, [_28,_25,_8], function(require, exports, module, __filename, __dirname) {
+define(_1, [_28,_8,_25], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var agreement = require("./views/agreement");
 var popMessage = require("./mod/popmessage");
@@ -143,32 +143,12 @@ $(function(){
 });
 }, {
     entries:entries,
-    map:mix({"./views/agreement":_25,"./mod/popmessage":_8},globalMap)
-});
-
-define(_25, [_28,_11,_20], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var swipeModal = require("../mod/swipe-modal");
-
-module.exports = swipeModal.create({
-  button: $(".addcar"),
-  template:  require("../tpl/agreement.html"),
-  show: function(data){
-    var elem = this.elem;
-    var content = window.agreement.replace(/\n/,"<br />");
-    var contentel = this.elem.find(".content");
-    contentel.html(content);
-    contentel.css('height', $(window).height() - 152 );
-  }
-});
-}, {
-    entries:entries,
-    map:mix({"../mod/swipe-modal":_11,"../tpl/agreement.html":_20},globalMap)
+    map:mix({"./mod/popmessage":_8,"./views/agreement":_25},globalMap)
 });
 
 define(_8, [_28], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
-function popMessage(message, styles){
+function popMessage(message, styles, notDismiss){
   var json = {}
   if(message.constructor == XMLHttpRequest){
     try{
@@ -219,6 +199,7 @@ function popMessage(message, styles){
       "opacity":1
     });
   });
+  if(!notDismiss){
   setTimeout(function(){
     pop.css({
       "opacity":0
@@ -226,13 +207,34 @@ function popMessage(message, styles){
     setTimeout(function(){
       pop.remove();
     },400);
-  },1500)
+  },2000);
+  }
 }
 
 module.exports = popMessage
 }, {
     entries:entries,
     map:globalMap
+});
+
+define(_25, [_28,_11,_20], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var swipeModal = require("../mod/swipe-modal");
+
+module.exports = swipeModal.create({
+  button: $(".addcar"),
+  template:  require("../tpl/agreement.html"),
+  show: function(data){
+    var elem = this.elem;
+    var content = window.agreement.replace(/\n/,"<br />");
+    var contentel = this.elem.find(".content");
+    contentel.html(content);
+    contentel.css('height', $(window).height() - 152 );
+  }
+});
+}, {
+    entries:entries,
+    map:mix({"../mod/swipe-modal":_11,"../tpl/agreement.html":_20},globalMap)
 });
 
 define(_11, [_29,_30,_31,_32,_33,_28], function(require, exports, module, __filename, __dirname) {

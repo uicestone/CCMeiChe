@@ -424,7 +424,7 @@ exports.init = function(input, parser, getVal){
 
 define(_8, [_28], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
-function popMessage(message, styles){
+function popMessage(message, styles, notDismiss){
   var json = {}
   if(message.constructor == XMLHttpRequest){
     try{
@@ -475,6 +475,7 @@ function popMessage(message, styles){
       "opacity":1
     });
   });
+  if(!notDismiss){
   setTimeout(function(){
     pop.css({
       "opacity":0
@@ -482,7 +483,8 @@ function popMessage(message, styles){
     setTimeout(function(){
       pop.remove();
     },400);
-  },1500)
+  },2000);
+  }
 }
 
 module.exports = popMessage
