@@ -48,6 +48,7 @@ exports.cancel = function(orderId, reason, callback){
     function(done){
       if(needProcess()){
         // 向腾讯发起退款请求
+        var price = order.price * (order.user.isTest ? 1 : 100);
         logger.info('[退款] %s %s元', order.user.phone, order.price);
         if(process.env.DEBUG || order.price == 0){
           done(null);
@@ -65,8 +66,8 @@ exports.cancel = function(orderId, reason, callback){
               wechat_user.refund({
                 out_trade_no: order._id,
                 out_refund_no: refundId,
-                total_fee: order.price * (order.user.isTest ? 1 : 100),
-                refund_fee: order.price
+                total_fee: price,
+                refund_fee: price
               }, function(err, data){
                 if(err){
                   if(err.name == "BusinessError"){
