@@ -33,8 +33,8 @@ exports.post = function (req, res, next) {
       }
     });
 
-    if(!isInside && !process.env.DEBUG){
-      return next("该位置暂且不在我们的服务范围内");
+    if(!isInside){
+      return next("您的坐标(" + user_latlng + ")暂且不在我们的服务范围内");
     }
 
     estimate(user_latlng, function(err, result){
