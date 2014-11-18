@@ -65,17 +65,17 @@ module.exports = swipeModal.create({
     var elem = this.elem;
     var index = elem.data("index");
     var data = {
-      type: elem.find(".type input").val(),
-      color: elem.find(".color input").val(),
-      number: elem.find(".number input").val(),
-      comment: elem.find(".comment input").val()
+      type: elem.find(".type input").val().trim(),
+      color: elem.find(".color input").val().trim(),
+      number: elem.find(".number input").val().trim(),
+      comment: elem.find(".comment input").val().trim()
     };
 
     var pic = elem.find(".result").attr("data-key");
     if(pic){
       data.pic = pic;
     }
-    
+
     if(index !== undefined){
       data.index = index;
     }
