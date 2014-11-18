@@ -2,7 +2,7 @@ extends layout
 block content
   .wrap
     for car in order.cars
-      if car.pic
+      if car.pic && car.pic !== "null"
         .pic
           img(src="#{config.qiniu_host}#{car.pic}?imageView/2/w/640")
     .order
