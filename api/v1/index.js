@@ -26,7 +26,6 @@ module.exports = function(app){
 
     app.get("cartypes/:query", require("./cartypes").get);
     app.post("recharge/:id", require("./recharge").post);
-    // app.get("location/address/:address", require("./location").address);
     app.get("location/latlng/:lat,:lng", require("./location").latlng);
     app.get("location/suggestion/:query", require("./location").suggestion);
   }

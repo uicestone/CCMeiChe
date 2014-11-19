@@ -227,9 +227,10 @@ calculate();
 // 地址及经纬度
 navigator.geolocation.getCurrentPosition(function(position){
   var latlng = [position.coords.latitude,position.coords.longitude].join(",");
-  $("#latlng").val(latlng);
   $.get("/api/v1/location/latlng/" + latlng, function(data){
-    $(".location .input").val(data.result.pois[0].name);
+    var result = data.result;
+    $("#latlng").val(result.location.lat + "," + result.location.lng);
+    $(".location .input").val(result.pois[0].name);
   });
 },function(){
   if($(".location .input").val()){return;}
