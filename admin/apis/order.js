@@ -41,10 +41,13 @@ exports.list = function(req,res,next){
     conditions["worker._id"] = Order.id(query.worker);
   }
 
-  Order.find(conditions).toArray(function(err, orders){
+  Order.find(conditions).sort({
+    _id: -1
+  }).toArray(function(err, orders){
     if(err){
       return next(err);
     }
+
 
     async.map(orders, function(order, done){
 

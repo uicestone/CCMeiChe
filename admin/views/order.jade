@@ -11,6 +11,7 @@ block main
         th 车工姓名
         th 车辆
         th 车辆位置
+        td 预付时间
         th 下单时间
         th 在途耗时
         th 洗车耗时
@@ -56,6 +57,14 @@ block scripts
               "data": null,
               "render": function(data){
                 return data.address || "--";
+              }
+            },
+            {
+              "data": null,
+              render: function(data){
+                return data.preorder_time
+                  ? moment(data.preorder_time).format('YYYY-MM-DD hh:mm:ss')
+                  : "--";
               }
             },
             {

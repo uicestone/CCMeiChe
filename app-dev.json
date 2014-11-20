@@ -1,0 +1,26 @@
+[{
+  "name":"ccmeiche-user",
+  "script":"server.js",
+  "exec_mode":"fork_mode",
+  "env":{
+    "PORT":4272,
+    "DEBUG":"true",
+    "SERVICE":"user"
+  }
+},{
+  "name":"ccmeiche-worker",
+  "script":"server.js",
+  "exec_mode":"fork_mode",
+  "env":{
+    "PORT":4273,
+    "WORKERID":"5425ad19757991733a000001",
+    "DEBUG":"true",
+    "SERVICE":"worker"
+  }
+},{
+  "name":"ccmeiche-admin",
+  "script":"admin-server.js",
+  "env":{
+    "DEBUG":"true"
+  }
+}]
