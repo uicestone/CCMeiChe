@@ -1,12 +1,14 @@
 var db = require('../db');
 var Model = require('./base');
 var Worker = Model("worker");
+var WorkerAction = Model("workeraction");
 var Order = Model('order');
 var config = require('config');
 var _ = require("underscore");
 var moment = require('moment');
 var async = require('async');
 var logger = require("../logger");
+
 
 Worker.ensureIndex({"latlng":"2d"}, function(err, replies){
   logger.debug("ensureIndex", arguments);
@@ -16,6 +18,30 @@ function lastOrder(orders){
   return orders.sort(function(a,b){
     return b.preorder_time > a.preorder_time ? 1 : -1;
   })[0];
+}
+
+
+function addAction(workerId, actionType, done){
+  var date = moment().format("YYYY-MM-DD");
+  var action = {
+    time: new Date(),
+    type: actionType
+  };
+
+  WorkerAction.update({
+    workerId: workerId,
+    date: date
+  }, {
+    $setOnInsert: {
+      workerId: workerId,
+      date: date
+    },
+    $push:{
+      actions: action
+    }
+  }, {
+    upsert: true
+  }, done);
 }
 
 db.bind('worker',{
@@ -192,17 +218,22 @@ db.bind('worker',{
           status:"on_duty"
         }
       },callback);
+      addAction(worker._id, "on_duty");
     });
   },
   offDuty: function(openid, callback){
-    Worker.update({
-      openid: openid
-    },{
-      $set:{
-        status:"off_duty",
-        last_available_time: null
-      }
-    },callback);
+    Worker.findByOpenId(openid, function(err, worker){
+      if(err){return callback(err);}
+      Worker.update({
+        openid: openid
+      },{
+        $set:{
+          status:"off_duty",
+          last_available_time: null
+        }
+      },callback);
+      addAction(worker._id, "off_duty");
+    });
   }
 });
 
