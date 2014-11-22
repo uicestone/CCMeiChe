@@ -35,7 +35,7 @@ db.bind('order', {
         }
 
         // 重新计算时间
-        estimate.getTimes(order.latlng, worker, function(err, times){
+        estimate.getTimes(order.latlng, worker, order.service, function(err, times){
           if(err){return callback(err);}
 
           var now = new Date();

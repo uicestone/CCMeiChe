@@ -161,7 +161,7 @@ exports.confirm = function (req, res, next) {
   async.waterfall([
 
     function (done) {
-      estimateTime(user_latlng, function (err, result) {
+      estimateTime(user_latlng, service, function (err, result) {
         if (err) {
           return done(err);
         }

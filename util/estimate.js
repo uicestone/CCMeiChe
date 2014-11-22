@@ -7,7 +7,7 @@ var Worker = Model('worker');
 var logger = require("../logger");
 
 
-var getTimes = exports.getTimes = function(latlng, worker, done){
+var getTimes = exports.getTimes = function(latlng, worker, service, done){
   var motor_speed = 20; // km/h
   var worker_latlng = worker.last_available_latlng || worker.latlng;
   var speedInMin = motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
@@ -27,7 +27,8 @@ var getTimes = exports.getTimes = function(latlng, worker, done){
     }
 
     var drive_time = solution.result.routes[0].distance / speedInMin;
-    var wash_time = washTime();
+    var wash_time = washTime(service);
+
     var base_time;
     if(worker.last_available_time){
       base_time = Math.max(new Date(worker.last_available_time), new Date());
@@ -49,8 +50,8 @@ var getTimes = exports.getTimes = function(latlng, worker, done){
   });
 }
 
-function washTime(){
-  return config.wash_time * 60 * 1000;
+function washTime(service){
+  return (service.wash_time || config.wash_time) * 60 * 1000;
 }
 
 function findWorkers(latlng,callback){
@@ -75,10 +76,10 @@ function findWorkers(latlng,callback){
   });
 }
 
-function nearestWorker(latlng, workers, callback){
+function nearestWorker(latlng, workers, service, callback){
   logger.info('[订单查找] 根据经纬度%s查找附近车工', latlng);
   async.map(workers, function(worker, done){
-    getTimes(latlng, worker, done);
+    getTimes(latlng, worker, service, done);
   }, function(err,results){
     if(err){return callback(err);}
     function compare_nearest(a,b){
@@ -120,13 +121,13 @@ function printData(data){
 }
 
 
-exports.getSolution = function(latlng, callback){
+exports.getSolution = function(latlng, service, callback){
   async.waterfall([
     function(done){
       findWorkers(latlng, done);
     },
     function(workers, done){
-      nearestWorker(latlng, workers, done);
+      nearestWorker(latlng, workers, service, done);
     }
   ], callback);
 };

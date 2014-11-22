@@ -386,6 +386,7 @@ $("#go-wash").on("tap", function(e){
 
   el.prop("disabled",true);
   $.post("/api/v1/estimate", {
+    service_id: order.service._id,
     latlng: order.latlng
   },"json").done(function(result){
     panelPreOrder.show({

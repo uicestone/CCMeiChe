@@ -1,11 +1,12 @@
 var estimate = require("../../util/estimate").getSolution;
 var _ = require("underscore");
 var ServeRegion = require("../../model/serveregion");
+var Service = require("../../model/service");
 var inside = require('point-in-polygon');
 
 exports.post = function (req, res, next) {
   var user_latlng = req.body.latlng;
-
+  var serviceId = req.body.service_id;
 
   // more validations here
   if (!user_latlng) {
@@ -33,16 +34,20 @@ exports.post = function (req, res, next) {
       }
     });
 
-    if(!isInside){
+    if(!isInside && !process.env.DEBUG){
       return next("您的坐标(" + user_latlng + ")暂且不在我们的服务范围内");
     }
 
-    estimate(user_latlng, function(err, result){
-      if(err){
-        return next(err);
-      }
+    Service.findById(serviceId, function(err, service){
 
-      res.status(200).send(result);
+      estimate(user_latlng, service, function(err, result){
+        if(err){
+          return next(err);
+        }
+
+        res.status(200).send(result);
+      });
+
     });
 
   });
