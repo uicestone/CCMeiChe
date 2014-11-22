@@ -656,6 +656,7 @@ function SwipeModal(config){
   var getData = this.getData = config.getData;
   var validate = this.validate = config.validate || function(){return true};
   var button = this.button = config.button;
+  this.submitting = false;
   this.config = config;
   this.name = config.name || "swipe-modal-" + i;
   this._show = config.show;
@@ -708,15 +709,19 @@ SwipeModal.prototype.show = function(data){
   var cancel = config.cancel;
   var elem = this.elem = $(tpl.render(config.template,data));
   elem.find(".submit").on("tap",function(){
+    if(self.submitting){return}
+    self.submitting = true;
     var data = self.getData();
     var isValid = self.validate(data);
 
     if(isValid){
       if(!submit){
         self.emit("submit",data);
+        self.submitting = false;
       }else{
         submit.bind(self)(data,function(result){
           self.emit("submit",result);
+          self.submitting = false;
         });
       }
     }
