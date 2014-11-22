@@ -23,6 +23,8 @@ function lastOrder(orders){
 
 function addAction(workerId, actionType, done){
   var date = moment().format("YYYY-MM-DD");
+  var month = moment().format("YYYY-MM");
+  
   var action = {
     time: new Date(),
     type: actionType
@@ -30,7 +32,8 @@ function addAction(workerId, actionType, done){
 
   WorkerAction.update({
     workerId: workerId,
-    date: date
+    date: date,
+    month: month
   }, {
     $setOnInsert: {
       workerId: workerId,
