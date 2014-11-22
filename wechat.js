@@ -143,6 +143,8 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
       }else{
         res.reply("");
       }
+    }else if(message.EventKey == "VIEW_CURRENT_ORDER"){
+      res.reply("ready");
     }else{
       return res.reply("");
     }

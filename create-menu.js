@@ -22,6 +22,10 @@ if (service == "worker") {
         "name": "历史订单",
         "key": "VIEW_HISTORY"
       }, {
+        "type": "click",
+        "name": "当前订单",
+        "key": "VIEW_CURRENT_ORDER"
+      }, {
         "type": "view",
         "name": "退出登录",
         "url": config.host.worker + "/logout"

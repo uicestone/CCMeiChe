@@ -37,6 +37,7 @@ var worker_store_key = 'wechat-access-token-worker';
 var user_api = new API(config.wechat.user.id, config.wechat.user.secret, getToken(user_store_key), setToken(user_store_key));
 var user_oauth = new OAuth(config.wechat.user.id, config.wechat.user.secret);
 
+
 var payment = new Payment({
   partnerKey: config.wechat.user.partner_key,
   appId: config.wechat.user.id,
@@ -104,6 +105,9 @@ function notifyProxy(service){
         message: message
       });
       callback(null);
+    },
+    getUser: function(openid, done){
+      worker_api.getUser(openid, done)
     }
   }
 }
