@@ -26,6 +26,7 @@ block scripts
 
         var table = $('#order-table').DataTable({
           "processing": true,
+          "order": [[ 6, "desc" ]],
           "ajax": "/api/order" + location.search,
           "columns": [
             {
