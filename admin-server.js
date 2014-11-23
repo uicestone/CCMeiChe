@@ -1,4 +1,4 @@
-require('oneapm');
+// require('oneapm');
 var express = require('express');
 var namespace = require('express-namespace');
 var session = require('express-session');
