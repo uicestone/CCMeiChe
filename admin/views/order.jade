@@ -3,6 +3,7 @@ extends layout
 block main
   div
     a.btn.btn-primary#button-clear(style="margin-right:10px") 清空
+    a.btn.btn-primary#button-report(style="margin-right:10px") 当月报表
   table#order-table.table.table-striped.table-bordered.table-hover
     thead
       tr
@@ -134,12 +135,19 @@ block scripts
         });
       });
 
-      $("#button-clear").click(function(){
+      $("#button-clear").click(function(e){
+        e.preventDefault();
         var sure = confirm("确定要清空数据么");
         if(sure){
           $.post("/api/order/clear").done(function(){
             location.reload();
           });
         }
+      });
+
+      $("#button-report").click(function(e){
+        var today = new Date();
+        e.preventDefault();
+        window.open("/api/monthlyreport/" + today.getFullYear() + "/" + (today.getMonth() + 1) );
       });
 

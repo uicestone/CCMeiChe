@@ -4,7 +4,7 @@ var fs = require('fs');
 var temp = require('temp');
 var async = require('async');
 var moment = require('moment');
-
+require("moment-duration-format");
 
 var Order = require("../../model/order");
 var WorkerAction = Model("workeraction");
@@ -48,7 +48,7 @@ function getWorkHours(worker, date, done){
 		workerId: worker._id,
 		month: moment(new Date()).format("YYYY-MM")
 	}).toArray(function(err, days){
-		days.forEach(function(err, day){
+		days.forEach(function(day, i){
 			count += workHoursInDay(day);
 		});
 		done(null, count);
@@ -74,7 +74,7 @@ function getFinishedOrders(worker, date, services, done){
 
 function getWorkerInfo(worker, services, date, done){
 	var data = {};
-	data["车工姓名"] = worker.name;
+	data["车工姓名"] = worker.name || "--";
 
 	async.parallel([
 		function(done){
@@ -87,7 +87,7 @@ function getWorkerInfo(worker, services, date, done){
 
 		if(err){return done(err);}
 
-		data["工作时长"] = results[0];
+		data["工作时长"] = moment.duration(results[0]).format("h小时mm分钟ss秒");
 		for(var k in results[1]){
 			data[k] = results[1][k];
 		}
