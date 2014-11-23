@@ -67,6 +67,18 @@ db.bind('order', {
       });
     });
   },
+  getCurrent: function(workerId, callback){
+    console.log(workerId);
+    Order.findOne({
+      $or: [{
+        "worker._id": Worker.id(workerId),
+        "status": "doing"
+      },{
+        "worker._id": Worker.id(workerId),
+        "status": "todo"
+      }]
+    }, callback);
+  },
   getMonthly: function(workerId, date, callback){
     var start = moment(date).startOf('month').toDate();
     var end = moment(date).endOf('month').toDate();

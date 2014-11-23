@@ -144,7 +144,13 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
         res.reply("");
       }
     }else if(message.EventKey == "VIEW_CURRENT_ORDER"){
-      res.reply("ready");
+      Order.getCurrent(user._id, function(err, order){
+        if(order){
+          res.reply("您的当前订单：" + config.host.worker + "/orders/" + order._id);
+        }else{
+          res.reply("您当前没有订单，请原地等候");
+        }
+      });
     }else{
       return res.reply("");
     }
