@@ -64,7 +64,7 @@ block scripts
               "data": null,
               render: function(data){
                 return data.preorder_time
-                  ? moment(data.preorder_time).format('YYYY-MM-DD hh:mm:ss')
+                  ? moment(data.preorder_time).format('YYYY-MM-DD HH:mm:ss')
                   : "--";
               }
             },
@@ -72,7 +72,7 @@ block scripts
               "data": null,
               render: function(data){
                 return data.order_time
-                  ? moment(data.order_time).format('YYYY-MM-DD hh:mm:ss')
+                  ? moment(data.order_time).format('YYYY-MM-DD HH:mm:ss')
                   : "--";
               }
             },
