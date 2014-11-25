@@ -14,6 +14,9 @@
   background-image: url("/img/icons.png");
   background-repeat: no-repeat;
 }
+html {
+  height: 100%;
+}
 body,
 h1,
 h2,
@@ -36,6 +39,7 @@ li {
 }
 body {
   min-height: 400px;
+  height: 100%;
   width: 100%;
   color: #fff;
   background-color: #fab44a;
