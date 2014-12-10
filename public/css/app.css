@@ -622,8 +622,9 @@ body.openmenu {
 .service-select .choices .item .price {
   float: right;
   padding-right: 32px;
-  line-height: 42px;
-  height: 42px;
+  line-height: 22px;
+  height: 22px;
+  margin-bottom: 5px;
 }
 #home .services li .arrow,
 .service-select .choices .item .arrow {
