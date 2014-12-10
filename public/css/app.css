@@ -1357,6 +1357,9 @@ body.openmenu {
 #order-result .breakage.active ellipse {
   fill: #fff;
 }
+#recharge {
+  height: 400px;
+}
 #recharge .h1,
 #promos .h1 {
   font-size: 20px;
@@ -1370,11 +1373,13 @@ body.openmenu {
 #recharge .choices .row,
 #promos .choices .row {
   zoom: 1;
+  width: 100%;
   text-align: center;
   color: #b6b6b6;
   margin-bottom: 1px;
   background-color: #fff;
   padding: 10px 0;
+  display: table;
 }
 #recharge .choices .row:before,
 #promos .choices .row:before,
@@ -1389,7 +1394,19 @@ body.openmenu {
 }
 #recharge .choices .row .recharge-row,
 #promos .choices .row .recharge-row {
+  zoom: 1;
   display: table-row;
+}
+#recharge .choices .row .recharge-row:before,
+#promos .choices .row .recharge-row:before,
+#recharge .choices .row .recharge-row:after,
+#promos .choices .row .recharge-row:after {
+  content: "";
+  display: table;
+}
+#recharge .choices .row .recharge-row:after,
+#promos .choices .row .recharge-row:after {
+  clear: both;
 }
 #recharge .choices .row.active,
 #promos .choices .row.active {
