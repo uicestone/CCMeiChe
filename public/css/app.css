@@ -159,6 +159,11 @@ body.openmenu {
   background-repeat: no-repeat;
   background-position: 7px 6px;
 }
+.popselect .choices .inner .item .price {
+  height: 22px;
+  line-height: 22px;
+  margin-bottom: 5px;
+}
 .popselect .choices {
   padding: 50px 14px 36px 14px;
   zoom: 1;
@@ -622,9 +627,8 @@ body.openmenu {
 .service-select .choices .item .price {
   float: right;
   padding-right: 32px;
-  line-height: 22px;
-  height: 22px;
-  margin-bottom: 5px;
+  line-height: 42px;
+  height: 42px;
 }
 #home .services li .arrow,
 .service-select .choices .item .arrow {
