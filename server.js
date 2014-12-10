@@ -26,7 +26,7 @@ var app = express();
 var SERVICE = process.env.SERVICE == "worker" ? "worker" : "user";
 
 require('./passport-init');
-
+app.disable('etag');
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/jade');
 app.use(function(req,res,next){
