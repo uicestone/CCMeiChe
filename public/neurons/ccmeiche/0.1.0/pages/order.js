@@ -115,7 +115,7 @@ function popMessage(message, styles, notDismiss){
     backgroundColor: "rgba(0,0,0,0.8)",
     borderRadius:"5px",
     width: "200px"
-  });
+  }).addClass("popmessage");
   pop.css(styles || {});
   pop.appendTo($("body"));
   var width = pop.width();

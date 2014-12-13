@@ -346,10 +346,17 @@ $("#go-wash").on("tap", function(e){
   }
 
   el.prop("disabled",true);
-  $.post("/api/v1/estimate", {
-    service_id: order.service._id,
-    latlng: order.latlng
-  },"json").done(function(result){
+  popMessage("正在寻找车工...",{},true);
+  $.ajax({
+    type:"post",
+    url:"/api/v1/estimate",
+    data:{
+      service_id: order.service._id,
+      latlng: order.latlng
+    },
+    timeout: 15000,
+    dataType:"json"
+  }).done(function(result){
     panelPreOrder.show({
       phone: window.user.phone,
       address: order.address,
@@ -360,8 +367,9 @@ $("#go-wash").on("tap", function(e){
       finish_time: result.finish_time
     });
     panelPreOrder.order = order;
-  }).fail(function(xhr){
-    popMessage(xhr);
+  }).fail(function(xhr, reason){
+    $(".popmessage").remove();
+    popMessage(reason == "timeout" ? "请求超时" : xhr);
     el.prop("disabled",false);
   });
 
