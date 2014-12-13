@@ -890,12 +890,19 @@ var preorderPanel = swipeModal.create({
     };
   },
   submit: function(config,callback){
+    var self = this;
     popMessage("请求支付中",{},true);
     var order = config.order;
     var data = config.data;
 
-    $.post("/api/v1/myorders/confirm", order, 'json').done(function(result){
-      callback && callback(null);
+    $.ajax({
+      type:"post",
+      timeout: 15000,
+      url:"/api/v1/myorders/confirm",
+      data:order,
+      dataType:'json'
+    }).done(function(result){
+      self.submitting = false;
       $(".popmessage").remove();
       if(result.code == 200){
         location.href = "/myorders";
@@ -921,9 +928,12 @@ var preorderPanel = swipeModal.create({
           });
         }
       }
-    }).fail(function(){
-      $(".popmessage").remove()
-      callback(null);
+    }).fail(function(xhr, reason){
+      $(".popmessage").remove();
+      self.submitting = false;
+      if(reason && reason == "timeout"){
+        popMessage("请求超时");
+      }
     });
   }
 });
