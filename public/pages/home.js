@@ -135,13 +135,10 @@ function judgePromo(){
   if(mypromo && mypromo.amount){
     $(".promo").removeClass("disabled");
     var html = "";
-    if(hascredit){
-      $(".promo .num .text").html(0);
-    }else{
-      $(".promo .num .text").html(1);
-    }
+    var defaultSelected = hascredit ? 0 : 1;
+    $(".promo .num .text").html(defaultSelected);
     for(var i = 0; i < mypromo.amount + 1; i++){
-      if(i==1){
+      if(i==defaultSelected){
         html += ("<option selected>" + i + "</option>");
       }else{
         html += ("<option>" + i + "</option>");
