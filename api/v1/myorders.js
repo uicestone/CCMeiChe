@@ -180,7 +180,7 @@ exports.confirm = function (req, res, next) {
 
       var orderdata = {
         worker: _.pick(estimate.worker, '_id', 'openid'), //订单对应的车工
-        user: _.pick(user, '_id', 'openid', 'phone'), //下单用户
+        user: _.pick(user, '_id', 'openid', 'phone', 'isTest'), //下单用户
         cars: cars, //下单车辆
         service: service, //选择的服务
         address: address, //用户地址
