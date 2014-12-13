@@ -213,10 +213,10 @@ function calculate(){
 
   if(use_credit){
     if(credit < count){
-      count = (count * 100 - credit * 100) / 100;
+      count = ( parseInt(count * 100) - parseInt(credit * 100)) / 100;
       credit = 0;
     }else{
-      credit = (credit * 100 - count * 100) / 100;
+      credit = ( parseInt(credit * 100) - parseInt(count * 100)) / 100;
       count = 0;
     }
   }
