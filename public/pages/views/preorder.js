@@ -17,11 +17,13 @@ var preorderPanel = swipeModal.create({
     };
   },
   submit: function(config,callback){
-    popMessage("请求支付中");
+    popMessage("请求支付中",{},true);
     var order = config.order;
     var data = config.data;
 
     $.post("/api/v1/myorders/confirm", order, 'json').done(function(result){
+      callback && callback(null);
+      $(".popmessage").remove();
       if(result.code == 200){
         location.href = "/myorders";
       }else if(result.code == 201){
@@ -46,6 +48,9 @@ var preorderPanel = swipeModal.create({
           });
         }
       }
+    }).fail(function(){
+      $(".popmessage").remove()
+      callback(null);
     });
   }
 });

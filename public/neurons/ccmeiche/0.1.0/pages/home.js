@@ -754,7 +754,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_24, [_28,_12,_3,_11,_8,_5,_19], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -867,7 +867,7 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/swipe-modal":_11,"../mod/popmessage":_8,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
 define(_27, [_28,_33,_11,_8,_23], function(require, exports, module, __filename, __dirname) {
@@ -890,11 +890,13 @@ var preorderPanel = swipeModal.create({
     };
   },
   submit: function(config,callback){
-    popMessage("请求支付中");
+    popMessage("请求支付中",{},true);
     var order = config.order;
     var data = config.data;
 
     $.post("/api/v1/myorders/confirm", order, 'json').done(function(result){
+      callback && callback(null);
+      $(".popmessage").remove();
       if(result.code == 200){
         location.href = "/myorders";
       }else if(result.code == 201){
@@ -919,6 +921,9 @@ var preorderPanel = swipeModal.create({
           });
         }
       }
+    }).fail(function(){
+      $(".popmessage").remove()
+      callback(null);
     });
   }
 });
