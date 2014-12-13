@@ -398,6 +398,7 @@ $("#go-wash").on("tap", function(e){
     timeout: 15000,
     dataType:"json"
   }).done(function(result){
+    $(".popmessage").remove();
     panelPreOrder.show({
       phone: window.user.phone,
       address: order.address,
@@ -753,7 +754,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_11,_8,_5,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -866,7 +867,7 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/swipe-modal":_11,"../mod/popmessage":_8,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
 define(_27, [_28,_33,_11,_8,_23], function(require, exports, module, __filename, __dirname) {

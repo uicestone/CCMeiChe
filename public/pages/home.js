@@ -357,6 +357,7 @@ $("#go-wash").on("tap", function(e){
     timeout: 15000,
     dataType:"json"
   }).done(function(result){
+    $(".popmessage").remove();
     panelPreOrder.show({
       phone: window.user.phone,
       address: order.address,

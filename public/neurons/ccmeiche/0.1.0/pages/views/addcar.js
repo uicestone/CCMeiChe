@@ -38,7 +38,7 @@ var _34 = "hashstate@~0.1.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
+define(_24, [_28,_12,_3,_11,_8,_5,_19], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -151,7 +151,7 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/swipe-modal":_11,"../mod/popmessage":_8,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
 });
 
 define(_12, [_28,_29,_8], function(require, exports, module, __filename, __dirname) {
@@ -404,77 +404,6 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_8, [_28], function(require, exports, module, __filename, __dirname) {
-var $ = require('zepto');
-function popMessage(message, styles, notDismiss){
-  var json = {}
-  if(message.constructor == XMLHttpRequest){
-    try{
-      json = JSON.parse(message.responseText);
-    }catch(e){
-      json = {
-        error:{
-          message: message.responseText
-        }
-      }
-    }
-  }else if(typeof message == "string"){
-    json = {
-      error:{
-        message:message
-      }
-    };
-  }
-
-  var text = json.error && json.error.message;
-
-  var pop = $("<div>" + text + "</div>");
-  pop.css({
-    position:"fixed",
-    opacity:"0",
-    transition:"opacity linear .4s",
-    top: "140px",
-    left: "50%",
-    zIndex: "30",
-    padding: "10px 25px",
-    backgroundColor: "rgba(0,0,0,0.8)",
-    borderRadius:"5px",
-    width: "200px"
-  }).addClass("popmessage");
-  pop.css(styles || {});
-  pop.appendTo($("body"));
-  var width = pop.width();
-    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
-    //   return parseInt(pop.css(prop));
-    // }).reduce(function(a,b){
-    //   return a+b;
-    // },0);
-  pop.css({
-    "margin-left": - width / 2
-  });
-  setTimeout(function(){
-    pop.css({
-      "opacity":1
-    });
-  });
-  if(!notDismiss){
-  setTimeout(function(){
-    pop.css({
-      "opacity":0
-    });
-    setTimeout(function(){
-      pop.remove();
-    },400);
-  },2000);
-  }
-}
-
-module.exports = popMessage
-}, {
-    entries:entries,
-    map:globalMap
-});
-
 define(_11, [_30,_31,_32,_33,_34,_28], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
@@ -574,6 +503,77 @@ SwipeModal.prototype.show = function(data){
 exports.create = function(config){
   return new SwipeModal(config);
 }
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_8, [_28], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+function popMessage(message, styles, notDismiss){
+  var json = {}
+  if(message.constructor == XMLHttpRequest){
+    try{
+      json = JSON.parse(message.responseText);
+    }catch(e){
+      json = {
+        error:{
+          message: message.responseText
+        }
+      }
+    }
+  }else if(typeof message == "string"){
+    json = {
+      error:{
+        message:message
+      }
+    };
+  }
+
+  var text = json.error && json.error.message;
+
+  var pop = $("<div>" + text + "</div>");
+  pop.css({
+    position:"fixed",
+    opacity:"0",
+    transition:"opacity linear .4s",
+    top: "140px",
+    left: "50%",
+    zIndex: "30",
+    padding: "10px 25px",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    borderRadius:"5px",
+    width: "200px"
+  }).addClass("popmessage");
+  pop.css(styles || {});
+  pop.appendTo($("body"));
+  var width = pop.width();
+    // + ["padding-left","padding-right","border-left","border-right"].map(function(prop){
+    //   return parseInt(pop.css(prop));
+    // }).reduce(function(a,b){
+    //   return a+b;
+    // },0);
+  pop.css({
+    "margin-left": - width / 2
+  });
+  setTimeout(function(){
+    pop.css({
+      "opacity":1
+    });
+  });
+  if(!notDismiss){
+  setTimeout(function(){
+    pop.css({
+      "opacity":0
+    });
+    setTimeout(function(){
+      pop.remove();
+    },400);
+  },2000);
+  }
+}
+
+module.exports = popMessage
 }, {
     entries:entries,
     map:globalMap
