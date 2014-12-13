@@ -12,7 +12,7 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
   var worker_latlng = worker.last_available_latlng || worker.latlng;
   var speedInMin = motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
   var getBaiduWalkSolution = baidumap.direction.bind(baidumap);
-  var getWalkSolution = process.env.DEBUG ? getFakeWalkSolution : getBaiduWalkSolution;
+  var getWalkSolution = process.env.DEBUG ? getBaiduWalkSolution : getBaiduWalkSolution;
 
   getWalkSolution({
     origin: worker_latlng.join(","),
@@ -21,7 +21,7 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
     origin_region: "上海",
     destination_region: "上海"
   }, function(err,solution){
-    if(err){return done(err);}
+    if(err){console.log(err);return done("服务器出了点麻烦，无法获取车工用时");}
     if(!solution || !solution.result || !solution.result.routes[0]){
       return done("solution parse error " + JSON.stringify(solution));
     }
