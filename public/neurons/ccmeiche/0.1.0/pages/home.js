@@ -172,10 +172,15 @@ function judgePromo(){
   var mypromo = user.promo.filter(function(item){
     return item._id == currentService._id;
   })[0];
+  var hascredit = user.credit && user.credit > 0;
   if(mypromo && mypromo.amount){
     $(".promo").removeClass("disabled");
     var html = "";
-    $(".promo .num .text").html(1);
+    if(hascredit){
+      $(".promo .num .text").html(0);
+    }else{
+      $(".promo .num .text").html(1);
+    }
     for(var i = 0; i < mypromo.amount + 1; i++){
       if(i==1){
         html += ("<option selected>" + i + "</option>");
