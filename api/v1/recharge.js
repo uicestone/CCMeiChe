@@ -14,7 +14,7 @@ exports.post = function(req,res,next){
 
     logger.debug("INSERT",recharge);
     RechargeOrder.insert({
-      recharge: recharge,
+      recharge: recharge.toFixed(2),
       user: _.pick(req.user,"_id","phone")
     }, function(err, orders){
       if(err){

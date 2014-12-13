@@ -188,7 +188,7 @@ exports.confirm = function (req, res, next) {
         carpark: carpark, //车辆停放位置
         use_credit: use_credit, //是否使用积分
         promo_count: promo_count, //使用几张优惠券
-        price: priceAndCredit.price, // 支付金额
+        price: priceAndCredit.price.toFixed(2), // 支付金额
         credit: priceAndCredit.credit, // 支付积分
         preorder_time: new Date(), // 下单时间
         estimated_finish_time: estimate.finish_time, // 预估完成时间
