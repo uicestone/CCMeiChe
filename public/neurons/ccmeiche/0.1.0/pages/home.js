@@ -254,10 +254,10 @@ function calculate(){
 
   if(use_credit){
     if(credit < count){
-      count = count - credit;
+      count = (count * 100 - credit * 100) / 100;
       credit = 0;
     }else{
-      credit = credit - count;
+      credit = (credit * 100 - count * 100) / 100;
       count = 0;
     }
   }
