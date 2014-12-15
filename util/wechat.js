@@ -52,15 +52,20 @@ var pay_request = function(req, order, callback){
   var order_name = order.name;
   var order_attach = order.attach ? JSON.stringify(order.attach) : '';
 
+  var total_fee = (total_price * (req.user.isTest ? 1 : 100));
+  total_fee = Math.round(total_fee);
+
   var package_data = {
     'body': order_name,
     'attach': order_attach,
     'out_trade_no': order_id,
-    'total_fee': (total_price * (req.user.isTest ? 1 : 100)),
+    'total_fee': total_fee,
     'spbill_create_ip': req.header('x-forwarded-for') || req.connection.remoteAddress,
     "openid": req.user.openid,
     "trade_type": "JSAPI"
   };
+
+  console.log("[getBrandWCPayRequestParams]", package_data);
 
   if(DEBUG){
     callback(null,{});
