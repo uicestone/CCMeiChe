@@ -63,12 +63,14 @@ exports.cancel = function(orderId, reason, callback){
               })
             },
             function(refundId, done){
-              wechat_user.refund({
+              var refund_info = {
                 out_trade_no: order._id,
                 out_refund_no: refundId,
-                total_fee: price,
-                refund_fee: price
-              }, function(err, data){
+                total_fee: Math.round(price),
+                refund_fee: Math.round(price)
+              };
+              console.log("[refund]", refund_info);
+              wechat_user.refund(refund_info, function(err, data){
                 if(err){
                   if(err.name == "BusinessError"){
                     done(data.err_code_des);
