@@ -110,8 +110,10 @@ function getFakeWalkSolution(args, callback){
 }
 
 function printData(data){
-  logger.info("[订单查找] 车工%s可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
+  logger.info("[订单查找] 车工%s最后可用位置%s，当前位置%s，可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
     data.worker.name,
+    data.worker.last_available_latlng ? data.worker.last_available_latlng.join(",") : "无",
+    data.worker.latlng.join(","),
     moment(data.base_time).format("lll"),
     moment.duration(data.drive_time).humanize(),
     moment.duration(data.wash_time).humanize(),

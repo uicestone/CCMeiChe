@@ -96,6 +96,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     });
 
     if(message.Event == "LOCATION"){
+      console.log("[车工上报位置]", [+message.Latitude,+message.Longitude].join(","));
       return Worker.updateStatus(openid, [+message.Latitude,+message.Longitude], function(){
         return res.reply("");
       });
