@@ -14,7 +14,6 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
   var getBaiduWalkSolution = baidumap.direction.bind(baidumap);
   var getWalkSolution = process.env.DEBUG ? getBaiduWalkSolution : getBaiduWalkSolution;
 
-  console.log("[订单查找] 用户位置：", latlng.join(","));
   getWalkSolution({
     origin: worker_latlng.join(","),
     destination: latlng.join(","),
