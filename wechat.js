@@ -51,6 +51,8 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
         updateInfo(openid, User, user_api, function(){
           res.reply("");
         });
+      }else{
+        res.reply("");
       }
     });
   }
