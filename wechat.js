@@ -118,7 +118,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
         var result = json.result[0];
         console.log("[更新车工位置]", user.name, [+result.x,+result.y].join(","));
-        Worker.updateStatus(openid, [+result.x,+result.y], function(){
+        Worker.updateStatus(openid, [+result.y,+result.x], function(){
           return res.reply("");
         });
       });
