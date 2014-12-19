@@ -8,6 +8,7 @@ var charge = require('./util/charge');
 var model = require("./model");
 var logger = require("./logger");
 var async = require('async');
+var baidumap = require('./util/baidumap');
 var _ = require('underscore');
 
 var RechargeOrder = model.rechargeorder;
@@ -99,8 +100,26 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
     if(message.Event == "LOCATION"){
       console.log("[车工上报位置]", [+message.Latitude,+message.Longitude].join(","));
-      return Worker.updateStatus(openid, [+message.Latitude,+message.Longitude], function(){
-        return res.reply("");
+
+      return baidumap.geoconv({
+        coords: [+message.Latitude,+message.Longitude].join(","),
+        from: 1,
+        to: 5
+      }, function(err,json){
+        if(err){
+          return res.reply("");
+        }
+
+        if(json.status != 0){
+          console.error("error", JSON.stringify(json));
+          return res.reply("");
+        }
+
+        var result = json.result[0];
+        console.log("[更新车工位置]", [+result.x,+result.y].join(","));
+        Worker.updateStatus(openid, [+result.x,+result.y], function(){
+          return res.reply("");
+        });
       });
     }
 
