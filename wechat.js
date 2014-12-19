@@ -99,10 +99,11 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     });
 
     if(message.Event == "LOCATION"){
-      console.log("[车工上报位置]", [+message.Latitude,+message.Longitude].join(","));
+      // 纬度，经度
+      console.log("[车工上报位置]", [+message.Longitude,+message.Latitude].join(","));
 
       return baidumap.geoconv({
-        coords: [+message.Latitude,+message.Longitude].join(","),
+        coords: [+message.Longitude,+message.Latitude].join(","),
         from: 1,
         to: 5
       }, function(err,json){
