@@ -100,7 +100,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
     if(message.Event == "LOCATION"){
       // 纬度，经度
-      console.log("[车工上报位置]", [+message.Longitude,+message.Latitude].join(","));
+      console.log("[车工上报位置]", user.name, [+message.Longitude,+message.Latitude].join(","));
 
       return baidumap.geoconv({
         coords: [+message.Longitude,+message.Latitude].join(","),
@@ -117,7 +117,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
         }
 
         var result = json.result[0];
-        console.log("[更新车工位置]", [+result.x,+result.y].join(","));
+        console.log("[更新车工位置]", user.name, [+result.x,+result.y].join(","));
         Worker.updateStatus(openid, [+result.x,+result.y], function(){
           return res.reply("");
         });
