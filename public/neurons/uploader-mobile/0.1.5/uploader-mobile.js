@@ -5,13 +5,13 @@ var _1 = "util@~1.0.4";
 var _2 = "zepto@~1.1.3";
 var _3 = "underscore@~1.5.2";
 var _4 = "attributes@~1.4.0";
-var _5 = "uploader-mobile@0.1.4/src/queue.js";
-var _6 = "uploader-mobile@0.1.4/src/errors.js";
-var _7 = "uploader-mobile@0.1.4/src/adapter/ajax.js";
-var _8 = "uploader-mobile@0.1.4/src/theme/default.js";
-var _9 = "uploader-mobile@0.1.4/src/uid.js";
+var _5 = "uploader-mobile@0.1.5/src/queue.js";
+var _6 = "uploader-mobile@0.1.5/src/errors.js";
+var _7 = "uploader-mobile@0.1.5/src/adapter/ajax.js";
+var _8 = "uploader-mobile@0.1.5/src/theme/default.js";
+var _9 = "uploader-mobile@0.1.5/src/uid.js";
 var _10 = "simple-mime@^0.0.8";
-var _11 = "uploader-mobile@0.1.4/src/index.js";
+var _11 = "uploader-mobile@0.1.5/src/index.js";
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
 define(_11, [_0,_1,_2,_3,_4,_5,_6,_7,_8], function(require, exports, module, __filename, __dirname) {
@@ -521,7 +521,7 @@ util.inherits(AjaxUploader, events);
 
 AjaxUploader._renderButton = function (elem, config) {
   var self = this;
-  var btn = $("<input multiple type='file' />");
+  var btn = $("<input multiple capture='camera' type='file' />");
   elem.css("position", "relative");
   btn.css({
     "position": "absolute",

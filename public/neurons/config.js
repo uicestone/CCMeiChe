@@ -6,7 +6,7 @@ neuron.config({
         "events@^1.0.5": 1,
         "hashstate@~0.1.0": 4,
         "tpl@~0.2.1": 5,
-        "uploader-mobile@~0.1.4": 6,
+        "uploader-mobile@~0.1.5": 6,
         "util@^1.0.4": 2,
         "view-swipe@~0.1.4": 12,
         "zepto@^1.1.3": 7
@@ -38,7 +38,7 @@ neuron.config({
       "0.2.1"
     ],
     "6": [
-      "0.1.4",
+      "0.1.5",
       {
         "events@~1.0.5": 1,
         "util@~1.0.4": 2,
