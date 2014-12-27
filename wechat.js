@@ -42,21 +42,17 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
   if(message.Event == "subscribe"){
     res.reply("欢迎关注CC美车 \\(^o^)/");
   }else{
-    User.findByOpenId(openid, function(err,user){
-      if(err || !user){
-        res.reply("");
-        return;
-      }
-
-      if(!user.wechat_info){
-        updateInfo(openid, User, user_api, function(){
-          res.reply("");
-        });
-      }else{
-        res.reply("");
-      }
-    });
+    res.reply("");
   }
+  User.findByOpenId(openid, function(err,user){
+    if(err || !user){
+      return;
+    }
+
+    if(!user.wechat_info){
+      updateInfo(openid, User, user_api, function(){});
+    }
+  });
   UserMessage.insert(message);
 });
 
