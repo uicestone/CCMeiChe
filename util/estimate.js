@@ -66,6 +66,15 @@ function findWorkers(latlng,callback){
     }
   }).limit(5).toArray(function (err, workers) {
     if(err){return callback(err);}
+
+    workers = workers.filter(function(worker){
+      if(worker && +new Date(worker.last_available_time) < +new Date()){
+        return false;
+      }else{
+        return true;
+      }
+    });
+
     if(!workers.length){
       return callback({
         status: 400,
