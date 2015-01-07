@@ -80,12 +80,12 @@ block scripts
             {
               "data": null,
               render: function(data){
-                var end_time = data.status == "cancel" 
-                  ? new Date(data.cancel_time) 
+                var end_time = data.status == "cancel"
+                  ? new Date(data.cancel_time)
                   : data.arrive_time ? new Date(data.arrive_time) : new Date();
                 var ms = end_time - new Date(data.order_time);
                 var d = moment.duration(ms);
-                return ms ? (d.minutes() + "分钟" + d.seconds() + "秒") : "--";
+                return ms ?  (d.days() + "天" + d.hours() + "小时" + d.minutes() + "分钟" + d.seconds() + "秒") : "--";
               }
             },
             {
@@ -93,7 +93,7 @@ block scripts
               render: function(data){
                 var ms = (data.finish_time ? new Date(data.finish_time) : new Date()) - new Date(data.arrive_time);
                 var d = moment.duration(ms);
-                return ms ? (d.minutes() + "分钟" + d.seconds() + "秒") : "--";
+                return ms ? (d.days() + "天" + d.hours() + "小时" + d.minutes() + "分钟" + d.seconds() + "秒") : "--";
               }
             },
             {
