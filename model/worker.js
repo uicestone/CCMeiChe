@@ -24,7 +24,7 @@ function lastOrder(orders){
 function addAction(workerId, actionType, done){
   var date = moment().format("YYYY-MM-DD");
   var month = moment().format("YYYY-MM");
-  
+
   var action = {
     time: new Date(),
     type: actionType
@@ -111,7 +111,7 @@ db.bind('worker',{
         openid: openid
       },{
         $set:{
-          last_available_time: worker.orders && worker.orders.length ? worker.last_available_time : new Date(),
+          last_available_time: worker.orders && worker.orders.length ? worker.last_available_time : null,
           last_available_latlng: worker.orders && worker.orders.length ? worker.last_available_latlng : latlng,
           latlng:latlng
         }
@@ -174,7 +174,7 @@ db.bind('worker',{
         }else{
           logger.debug("无后续订单");
         }
-        var last_available_time = last_order ? last_order.estimated_finish_time : new Date();
+        var last_available_time = last_order ? last_order.estimated_finish_time : null;
         var last_available_latlng = last_order ? last_order.latlng : worker.latlng;
         logger.debug("调整车工时间%s,位置%s",moment(last_available_time).format('lll'),last_available_latlng);
 
