@@ -107,6 +107,7 @@ db.bind('user',{
         if(!user.cars || !user.cars[index]){
           return;
         }
+        logger.log("get user cars", user.cars, index);
         if(!user.cars[index].pic && cars[index].pics.length){
           updateDoc["cars." + index] = _.extend(user.cars[index], {
             pic: cars[index].pics[0]
