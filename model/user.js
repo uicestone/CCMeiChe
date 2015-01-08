@@ -114,6 +114,9 @@ db.bind('user',{
         }
       });
 
+      if(!Object.keys(updateDoc).length){
+        return callback(null);
+      }
       User.updateById(id,{
         $set: updateDoc
       }, callback);
