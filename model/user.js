@@ -104,11 +104,15 @@ db.bind('user',{
         var index = user.cars.map(function(car){
           return car.number;
         }).indexOf(car.number);
-        if(!user.cars || !user.cars[index]){
+        if(!user.cars
+          || !user.cars[index]
+          || !cars[index]
+          || !cars[index].pics
+          || !cars[index].pics.length){
           return;
         }
-        logger.debug("get user cars", user.cars, index);
-        if(!user.cars[index].pic && cars[index].pics.length){
+
+        if(!user.cars[index].pic){
           updateDoc["cars." + index] = _.extend(user.cars[index], {
             pic: cars[index].pics[0]
           });
