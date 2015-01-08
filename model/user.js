@@ -48,14 +48,14 @@ db.bind('user',{
 
       userpromo = userpromo.map(function(promo){
         if(promo._id == order.service._id && promo.amount > 0){
-          logger.log("[扣优惠券] %s %s %s-1=%s", user.phone, promo.title, promo.amount, promo.amount - 1);
+          logger.info("[扣优惠券] %s %s %s-1=%s", user.phone, promo.title, promo.amount, promo.amount - 1);
           promo.amount -= 1;
         }
         return promo
       });
 
       if(order.credit){
-        logger.log("[扣积分] %s %s-%s=%s", user.phone, user.credit, order.credit, user.credit - order.credit);
+        logger.info("[扣积分] %s %s-%s=%s", user.phone, user.credit, order.credit, user.credit - order.credit);
       }
       User.updateById(id, {
         $inc:{
@@ -107,7 +107,7 @@ db.bind('user',{
         if(!user.cars || !user.cars[index]){
           return;
         }
-        logger.log("get user cars", user.cars, index);
+        logger.debug("get user cars", user.cars, index);
         if(!user.cars[index].pic && cars[index].pics.length){
           updateDoc["cars." + index] = _.extend(user.cars[index], {
             pic: cars[index].pics[0]
