@@ -6,7 +6,7 @@ var fs = require('fs');
 var Payment = require('wechat-pay').Payment;
 var API = wechat.API;
 var OAuth = wechat.OAuth;
-var DEBUG = !!process.env.DEBUG;
+var DEBUG = !!process.env.CCDEBUG;
 var logger = require("../logger");
 
 function getToken(store_key){

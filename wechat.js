@@ -44,6 +44,12 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
   }else{
     res.reply("");
   }
+
+  if(message.Content == "天王盖地虎"){
+    user_api.sendText(message.FromUserName,"宝塔镇河妖", function(){
+    });
+  }
+
   User.findByOpenId(openid, function(err,user){
     if(err || !user){
       return;
