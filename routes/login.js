@@ -20,7 +20,7 @@ module.exports = function(req,res,next){
     return res.redirect(redirect);
   }
 
-  if(process.env.DEBUG){
+  if(process.env.CCDEBUG){
     return res.render("login",{
       id:"login",
       title: "登录",
@@ -33,6 +33,7 @@ module.exports = function(req,res,next){
   }else{
     oauth.getAccessToken(code,function(err, result){
       if(err){return next(err);}
+      console.log("access token got", result);
       User.findOne({
         openid: result.data.openid
       },function(err,user){
