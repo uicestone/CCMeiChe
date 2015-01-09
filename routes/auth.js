@@ -20,7 +20,7 @@ exports.user = function(req,res,next){
 exports.worker = function(req,res,next){
   var worker_oauth = require("../util/wechat").worker.oauth;
 
-  if(process.env.DEBUG){
+  if(process.env.CCDEBUG){
     Worker.findById(process.env.WORKERID,function(err,worker){
       if(err){return next(err);}
       console.log(worker);

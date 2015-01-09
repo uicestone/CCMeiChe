@@ -48,7 +48,7 @@ exports.backend = function(err,req,res,next){
     }
   });
 
-  if(err.name == "WeChatAPIError" && process.env.DEBUG){
+  if(err.name == "WeChatAPIError" && process.env.CCDEBUG){
     res.status(200).send({message:"ok"});
   }else{
     next(err);

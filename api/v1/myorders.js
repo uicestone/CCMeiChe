@@ -251,7 +251,7 @@ exports.confirm = function (req, res, next) {
       return next(err);
     }
 
-    if (result.code == 201 && process.env.DEBUG) {
+    if (result.code == 201 && process.env.CCDEBUG) {
       res.json({
         code: 201,
         orderId: order._id

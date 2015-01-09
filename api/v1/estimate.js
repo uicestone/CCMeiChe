@@ -34,7 +34,7 @@ exports.post = function (req, res, next) {
       }
     });
 
-    if(!isInside && !process.env.DEBUG){
+    if(!isInside && !process.env.CCDEBUG){
       return next("您的坐标(" + user_latlng + ")暂且不在我们的服务范围内");
     }
 
