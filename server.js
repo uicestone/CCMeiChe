@@ -79,7 +79,7 @@ function constructing(req,res){
 }
 if(SERVICE == "worker"){
   logger.debug("service worker");
-  if(process.env.DEBUG){
+  if(process.env.CCDEBUG){
     app.get("/", require('./routes/worker-orders-debug'));
   }
   app.use("/wechat/worker", require("./wechat").worker);

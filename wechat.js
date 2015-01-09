@@ -16,7 +16,7 @@ var UserMessage = model.usermessage;
 var Worker = model.worker;
 var User = model.user;
 var Order = model.order;
-var DEBUG = process.env.DEBUG;
+var DEBUG = process.env.CCDEBUG;
 function updateInfo(openid,Model,api,callback){
   api.getUser(openid, function(err, result){
     if(err){return callback(err);}

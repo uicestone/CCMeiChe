@@ -13,7 +13,7 @@ passport.use(new LocalStrategy({
 
   var openid = req.body.openid;
   var access_token = req.body.access_token;
-  if(!process.env.DEBUG && (!openid || !access_token)){
+  if(!process.env.CCDEBUG && (!openid || !access_token)){
     return done({
       status: 400,
       message: "无效请求"
@@ -44,7 +44,7 @@ passport.use(new LocalStrategy({
         if(err){
           return done(err);
         }
-        
+
         if(!existsUser){
           console.log("新用户充18.1积分");
           user.credit = 18.1;
