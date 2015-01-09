@@ -5,7 +5,7 @@ exports.user = function(req,res,next){
   var user_oauth = require("../util/wechat").user.oauth;
 
   if(!req.isAuthenticated()){
-    if(process.env.DEBUG){
+    if(process.env.CCDEBUG){
       return res.redirect("/login?redirect=" + req.url);
     }else{
       var url = user_oauth.getAuthorizeURL(config.host.user + '/login?redirect=' + req.url);

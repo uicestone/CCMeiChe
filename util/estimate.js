@@ -12,7 +12,7 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
   var worker_latlng = worker.last_available_latlng || worker.latlng;
   var speedInMin = motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
   var getBaiduWalkSolution = baidumap.direction.bind(baidumap);
-  var getWalkSolution = process.env.DEBUG ? getBaiduWalkSolution : getBaiduWalkSolution;
+  var getWalkSolution = process.env.CCDEBUG ? getBaiduWalkSolution : getBaiduWalkSolution;
 
   getWalkSolution({
     origin: worker_latlng.join(","),
