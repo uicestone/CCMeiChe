@@ -194,12 +194,14 @@ body.openmenu {
   color: #fff;
 }
 .popselect .btn.submit {
+  position: relative;
+  z-index: 999;
   height: 45px;
   line-height: 45px;
   text-align: center;
   width: 135px;
   margin: 0 auto 50px auto;
-  background-color: #898989;
+  background-color: #fab44a;
   color: #fff;
 }
 #logo {
