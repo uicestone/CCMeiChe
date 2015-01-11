@@ -1,4 +1,7 @@
 var errmodel = require("./model/error");
+var raygun = require('raygun');
+var raygunClient = new raygun.Client().init({ apiKey: 'XspbP/t9+hACoU4yPsjHzg==' });
+
 exports.frontend = function(req,res,next){
   console.log("track error frontend %s %s %s".red, req.query.msg, req.query.url, req.query.line);
   errmodel.insert({
@@ -34,6 +37,7 @@ exports.backend = function(err,req,res,next){
   if(typeof err == "string"){
     err = new Error(err);
   }
+  raygunClient.send(err);
   console.log("track error backend %s %s".red, err.message, err.stack);
   errmodel.insert({
     type:"backend",

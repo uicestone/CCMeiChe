@@ -29,6 +29,8 @@ require('./passport-init');
 app.disable('etag');
 app.set('view engine', 'jade');
 app.set('views', __dirname + '/public/jade');
+
+app.use(require('express-domain-middleware'));
 app.use(function(req,res,next){
   req.reqid = uuid();
   next();
@@ -41,6 +43,7 @@ app.use(session({
   unset: "destroy",
   saveUninitialized: true
 }));
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true
