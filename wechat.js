@@ -140,7 +140,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
     if(message.EventKey == "ON_DUTY"){
       // 上班
-      req.logger.log(req.user, "上班");
+      req.logger.log(user, "上班");
       if(user.status == "on_duty"){
         return res.reply("你已经在上班了，好好干！");
       }
@@ -152,7 +152,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
         res.reply("你已经在上班了，好好干！");
       });
     }else if(message.EventKey == "OFF_DUTY"){
-      req.logger.log(req.user, "下班");
+      req.logger.log(user, "下班");
       // 下班
       if(user.status == "off_duty"){
         return res.reply("你已经下班了，享受生活吧。");

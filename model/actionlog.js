@@ -1,6 +1,6 @@
 var logger = require("../logger");
 var moment = require("moment")
-function getUserName(user){x
+function getUserName(user){
     var username = "";
 	if(typeof user == "string"){
 		return user;
@@ -23,6 +23,6 @@ function getUserName(user){x
 module.exports = {
 	log: function(user, action, detail){
 		var name = getUserName(user);
-		console.log("[actionlog][%s][%s][%s]%s",moment().format("YYYY-MM-DD HH:mm:ss"),name,action,detail);
+		console.log("[actionlog][%s][%s][%s]%s",moment().format("YYYY-MM-DD HH:mm:ss"),name,action,detail||"");
 	}
 }
