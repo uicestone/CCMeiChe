@@ -4,7 +4,7 @@ var worker_api = require('./wechat').worker.api;
 var wechat_user = require('./wechat').user;
 var user_api = wechat_user.api;
 var logger = require("../logger");
-
+var ActionLog = require('../model/actionlog');
 var User = model.user;
 var Worker = model.worker;
 var Order = model.order;
@@ -49,7 +49,7 @@ exports.cancel = function(orderId, reason, callback){
       if(needProcess()){
         // 向腾讯发起退款请求
         var price = order.price * (order.user.isTest ? 1 : 100);
-        logger.info('[退款] %s %s元', order.user.phone, order.price);
+        ActionLog.log("系统",'退款', "向手机号" + order.user.phone + "退款" + order.price + '元');
         if(process.env.DEBUG || order.price == 0){
           done(null);
         }else{
@@ -88,6 +88,8 @@ exports.cancel = function(orderId, reason, callback){
       }
     },
     function(done){
+      var util = require('util');
+      ActionLog.log("系统", "取消订单", util.format("手机号:%s,原因:%s", order.user.phone, reason));
       Order.cancel(order._id, reason, done);
     },
     function(done){
@@ -159,9 +161,9 @@ exports.recharge = function(openid, orderId, req, res, callback){
         }
 
         if(order.recharge.type === "recharge"){
-          logger.info("[充值] %s %s 支付 %s", order.user.phone, order.recharge.title, order.recharge.price);
+          ActionLog.log(order.user, "充值", order.recharge.title + " 支付 " + order.recharge.price);
         }else if(order.recharge.type == "promo"){
-          logger.info("[购买优惠券] %s %s 支付 %s", order.user.phone, order.recharge.title, order.recharge.price);
+          ActionLog.log(order.user, "购买优惠券", order.recharge.title + " 支付 " + order.recharge.price);
         }
         if(order.processed == true){
           var error = new Error();

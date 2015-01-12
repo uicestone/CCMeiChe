@@ -22,7 +22,7 @@ exports.get = function(req,res,next){
         logger.debug(err,data)
       });
     }
-    logger.info(code);
+    req.logger.log("系统", "发送验证码", phone + " " + code);
     res.send(200,"ok");
   });
  }

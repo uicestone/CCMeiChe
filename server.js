@@ -35,6 +35,10 @@ app.use(function(req,res,next){
   req.reqid = uuid();
   next();
 });
+app.use(function(req,res,next){
+  req.logger = require('./model/actionlog');
+  next();
+});
 app.use(session({
   store: new RedisStore(config.redis),
   secret: config.session_secret,

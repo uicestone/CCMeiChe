@@ -9,6 +9,7 @@ var async = require('async');
 var moment = require('moment');
 var estimate = require('../util/estimate');
 var logger = require('../logger');
+var ActionLog = require('../model/actionlog');
 
 module.exports = Order;
 
@@ -34,6 +35,7 @@ db.bind('order', {
           return callback(err);
         }
 
+        ActionLog.log(worker, '排单', id);
         // 重新计算时间
         estimate.getTimes(order.latlng, worker, order.service, function(err, times){
           if(err){return callback(err);}
@@ -121,18 +123,19 @@ db.bind('order', {
         return;
       }
       async.map(orders, function(order, done){
-        logger.info("取消超时订单", order._id);
+        ActionLog.log(order.user, "取消超时订单", order._id);
         Order.cancel(order._id, "timeout", done);
       });
     });
   },
   cancel: function(id, reason, callback){
     var self = this;
+    var util = require('util');
     var reasons = ["payment_cancel","payment_fail","preorder_cancel","order_cancel","admin_cancel","timeout"];
     if(reasons.indexOf(reason) == -1){
       return callback("invalid reason:" + reason);
     }
-    logger.info("取消订单%s，原因:%s",id,reason);
+    ActionLog.log('系统',"取消订单", util.format("%s，原因:%s",id,reason));
     self.findById(id, function(err, order){
       if(order.status == "doing"){
         return callback({
@@ -227,7 +230,7 @@ db.bind('order', {
         return callback(err);
       }
       async.map(orders,function(order,done){
-        logger.info("更正后续订单:%s",order._id);
+        ActionLog.log("系统", "更正后续订单", "更正" + order._id + "后续订单");
         Order.updateById(order._id,{
           $set: {
             estimated_arrive_time: new Date(order.estimated_arrive_time - full_time),

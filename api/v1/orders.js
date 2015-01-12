@@ -41,6 +41,7 @@ exports.done = function(req,res,next){
   Order.findById(req.params.orderid,function(err,order){
     if(err){return next(err);}
 
+    req.logger.log(req.user, '完成', order._id);
     async.series([
       // 给车工发送消息
       function(done){
@@ -102,6 +103,7 @@ exports.arrive = function(req,res,next){
 
     async.series([
       function(done){
+
         var message;
         if(order.service.needopen){
           message = "您的CC美车管家已经到达，麻烦您解锁爱车，并取走车上贵重物品。谢谢您的配合。";
@@ -111,6 +113,7 @@ exports.arrive = function(req,res,next){
         wechat_user.sendText(order.user.openid, message, done);
       },
       function(done){
+        req.logger.log(req.user, '到达', order._id);
         Order.arrive(order._id, done);
       }
     ],function(err){

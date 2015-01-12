@@ -102,7 +102,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
     if(message.Event == "LOCATION"){
       // 纬度，经度
-      console.log("[车工上报位置]", user.name, [+message.Longitude,+message.Latitude].join(","));
+      req.logger.log(req.user, "车工上报位置", [+message.Longitude,+message.Latitude].join(","));
 
       return baidumap.geoconv({
         coords: [+message.Longitude,+message.Latitude].join(","),
@@ -119,7 +119,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
         }
 
         var result = json.result[0];
-        console.log("[更新车工位置]", user.name, [+result.x,+result.y].join(","));
+        req.logger.log("系统", "更新车工位置", [+result.x,+result.y].join(","));
         Worker.updateStatus(openid, [+result.y,+result.x], function(){
           return res.reply("");
         });
@@ -140,6 +140,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
     if(message.EventKey == "ON_DUTY"){
       // 上班
+      req.logger.log(req.user, "上班");
       if(user.status == "on_duty"){
         return res.reply("你已经在上班了，好好干！");
       }
@@ -151,6 +152,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
         res.reply("你已经在上班了，好好干！");
       });
     }else if(message.EventKey == "OFF_DUTY"){
+      req.logger.log(req.user, "下班");
       // 下班
       if(user.status == "off_duty"){
         return res.reply("你已经下班了，享受生活吧。");

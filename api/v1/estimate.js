@@ -38,6 +38,7 @@ exports.post = function (req, res, next) {
       return next("您的坐标(" + user_latlng + ")暂且不在我们的服务范围内");
     }
 
+    // 估算服务耗时，需要用到具体服务的时间
     Service.findById(serviceId, function(err, service){
 
       estimate(user_latlng, service, function(err, result){

@@ -11,7 +11,8 @@ var models = [
   "admin",
   "refund",
   "promoqr",
-  "serveregion"
+  "serveregion",
+  "actionlog"
 ];
 
 models.forEach(function(name){

@@ -228,7 +228,7 @@ exports.confirm = function (req, res, next) {
         });
       }
 
-      logger.info("[付款] %s %s元", user.phone, order.price);
+      req.logger.log(req.user, "付款", order.price + "元");
       wechat_user.pay_request(req, {
         id: order._id,
         price: order.price,

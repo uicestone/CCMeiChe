@@ -5,7 +5,7 @@ var baidumap = require("./baidumap");
 var moment = require("moment");
 var Worker = Model('worker');
 var logger = require("../logger");
-
+var ActionLog = require('../model/actionlog');
 
 var getTimes = exports.getTimes = function(latlng, worker, service, done){
   var motor_speed = 20; // km/h
@@ -14,6 +14,7 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
   var getBaiduWalkSolution = baidumap.direction.bind(baidumap);
   var getWalkSolution = process.env.CCDEBUG ? getBaiduWalkSolution : getBaiduWalkSolution;
 
+  ActionLog.log("系统","计算路线", latlng + "到" + worker_latlng);
   getWalkSolution({
     origin: worker_latlng.join(","),
     destination: latlng.join(","),
@@ -22,8 +23,9 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
     destination_region: "上海"
   }, function(err,solution){
     if(err){console.log(err);return done("服务器出了点麻烦，无法获取车工用时");}
-    if(!solution || !solution.result || !solution.result.routes[0]){
-      return done("solution parse error " + JSON.stringify(solution));
+    if(!solution || !solution.result || !solution.result.routes || !solution.result.routes[0]){
+      console.log(worker.name, "路线解析错误" + JSON.stringify(solution));
+      return done(null, null);
     }
 
     var drive_time = solution.result.routes[0].distance / speedInMin;
@@ -86,23 +88,30 @@ function findWorkers(latlng,callback){
 }
 
 function nearestWorker(latlng, workers, service, callback){
-  logger.info('[订单查找] 根据经纬度%s查找附近车工', latlng);
+  ActionLog.log('系统','车工查找', '根据经纬度' + latlng + '查找附近车工');
   async.map(workers, function(worker, done){
     getTimes(latlng, worker, service, done);
   }, function(err,results){
     if(err){return callback(err);}
+    results = results.filter(function(result){
+      return result;
+    });
+
     function compare_nearest(a,b){
       return b.finish_time > a.finish_time ? -1 : 1;
     }
 
     if(!results.length){
-      return callback(null);
+      return callback({
+        status: 400,
+        message: "未找到可用车工"
+      });
     }
 
     results = results.sort(compare_nearest);
     var result = results[0];
 
-    logger.info('[订单查找] 选择车工%s', result.worker.name);
+    ActionLog.log('系统','订单查找', '选择车工' + result.worker.name);
     callback(null,result);
   });
 }
@@ -119,7 +128,8 @@ function getFakeWalkSolution(args, callback){
 }
 
 function printData(data){
-  logger.info("[订单查找] 车工%s最后可用位置%s，当前位置%s，可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
+  var util = require('util');
+  ActionLog.log('系统',"订单查找", util.format("车工%s最后可用位置%s，当前位置%s，可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
     data.worker.name,
     data.worker.last_available_latlng ? data.worker.last_available_latlng.join(",") : "无",
     data.worker.latlng.join(","),
@@ -128,7 +138,7 @@ function printData(data){
     moment.duration(data.wash_time).humanize(),
     moment(data.finish_time).format("lll"),
     moment.duration(+data.finish_time - (+ new Date())).humanize()
-  );
+  ));
 }
 
 

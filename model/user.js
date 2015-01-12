@@ -5,7 +5,7 @@ var _ = require('underscore');
 var async = require('async');
 var db = require("../db");
 var logger = require('../logger');
-
+var ActionLog = require('./actionlog');
 module.exports = User;
 
 db.bind('user',{
@@ -45,17 +45,17 @@ db.bind('user',{
   charge: function(id, order, callback){
     User.findById(id, function(err, user){
       var userpromo = user.promo || [];
-
+      var util = require('util');
       userpromo = userpromo.map(function(promo){
         if(promo._id == order.service._id && promo.amount > 0){
-          logger.info("[扣优惠券] %s %s %s-1=%s", user.phone, promo.title, promo.amount, promo.amount - 1);
+          ActionLog.log(user, "扣优惠券", util.format("%s %s-1=%s", promo.title, promo.amount, promo.amount - 1));
           promo.amount -= 1;
         }
         return promo
       });
 
       if(order.credit){
-        logger.info("[扣积分] %s %s-%s=%s", user.phone, user.credit, order.credit, user.credit - order.credit);
+        ActionLog.log(user, "扣积分", util.format("%s %s-%s=%s", user.phone, user.credit, order.credit, user.credit - order.credit));
       }
       User.updateById(id, {
         $inc:{
