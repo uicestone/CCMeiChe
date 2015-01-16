@@ -206,18 +206,10 @@ db.bind('worker',{
   onDuty: function(openid, callback){
     Worker.findByOpenId(openid, function(err, worker){
       if(err){return callback(err)}
-      var now = new Date();
-      var last_available_time;
-      if(worker.last_available_time && worker.last_available_time > now){
-        last_available_time = worker.last_available_time;
-      }else{
-        last_available_time = now;
-      }
       Worker.update({
         openid: openid
       },{
         $set:{
-          last_available_time: last_available_time,
           status:"on_duty"
         }
       },callback);
@@ -231,8 +223,7 @@ db.bind('worker',{
         openid: openid
       },{
         $set:{
-          status:"off_duty",
-          last_available_time: null
+          status:"off_duty"
         }
       },callback);
       addAction(worker._id, "off_duty");
