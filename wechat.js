@@ -102,7 +102,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
     if(message.Event == "LOCATION"){
       // 纬度，经度
-      req.logger.log(req.user, "车工上报位置", [+message.Longitude,+message.Latitude].join(","));
+      req.logger.log(user, "车工上报位置", [+message.Longitude,+message.Latitude].join(","));
 
       return baidumap.geoconv({
         coords: [+message.Longitude,+message.Latitude].join(","),
