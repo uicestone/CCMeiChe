@@ -115,7 +115,10 @@ exports.arrive = function(req,res,next){
           message = "您的CC美车管家已经到达并已开始作业，请耐心等候。";
         }
         req.logger.log("系统", "向用户发送消息", message);
-        wechat_user.sendText(order.user.openid, message, done);
+        wechat_user.sendText(order.user.openid, message, function(err){
+          req.logger.log("系统", "向用户发送消息失败", message);
+        });
+        done(null);
       },
       function(done){
         req.logger.log(req.user, '到达', order._id);
