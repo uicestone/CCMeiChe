@@ -62,10 +62,10 @@ exports.done = function(req,res,next){
       function(done){
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
-        var description = car.type + order.address + order.service.title + "已经完成，点击查看详情";
-        req.logger.log("系统", "向用户发消息", description);
         logger.debug(data);
         var news = order.cars.map(function(car,i){
+          var description = car.type + order.address + order.service.title + "已经完成，点击查看详情";
+          req.logger.log("系统", "构建消息", description);
           return {
             title: "您的服务已完成",
             description: description,
