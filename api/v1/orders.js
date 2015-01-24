@@ -108,13 +108,13 @@ exports.arrive = function(req,res,next){
 
     async.series([
       function(done){
-
         var message;
         if(order.service.needopen){
           message = "您的CC美车管家已经到达，麻烦您解锁爱车，并取走车上贵重物品。谢谢您的配合。";
         }else{
           message = "您的CC美车管家已经到达并已开始作业，请耐心等候。";
         }
+        req.logger.log("系统", "向用户发送消息", message);
         wechat_user.sendText(order.user.openid, message, done);
       },
       function(done){
