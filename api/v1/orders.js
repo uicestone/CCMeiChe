@@ -54,6 +54,7 @@ exports.done = function(req,res,next){
           }else{
             message = "您没有后续订单，请原地等待";
           }
+          req.logger.log("系统", "向车工发消息", message);
           wechat_worker.sendText(worker.openid, message, done);
         });
       },
@@ -61,11 +62,13 @@ exports.done = function(req,res,next){
       function(done){
         var url = config.host.user + "/myorders/" + order._id;
         var message = "您的车已洗完：" + url;
+        var description = car.type + order.address + order.service.title + "已经完成，点击查看详情";
+        req.logger.log("系统", "向用户发消息", description);
         logger.debug(data);
         var news = order.cars.map(function(car,i){
           return {
             title: "您的服务已完成",
-            description: car.type + order.address + order.service.title + "已经完成，点击查看详情",
+            description: description,
             url: url,
             picurl: config.qiniu.host + data.finish_pics[i][0]
           }
@@ -74,6 +77,7 @@ exports.done = function(req,res,next){
       },
       // 更新用户默认车辆
       function(done){
+        req.logger.log("系统", "更新用户默认车辆", "");
         var cars = order.cars.map(function(car, i){
           return {
             number: car.number,
@@ -84,6 +88,7 @@ exports.done = function(req,res,next){
       },
       // 更新订单状态
       function(done){
+        req.logger.log("系统", "更新订单状态", order._id);
         Order.finish(order._id, data, done);
       }
     ],function(err){
