@@ -116,7 +116,9 @@ exports.arrive = function(req,res,next){
         }
         req.logger.log("系统", "向用户发送消息", message);
         wechat_user.sendText(order.user.openid, message, function(err){
-          req.logger.log("系统", "向用户发送消息失败", message);
+          if(err){
+            req.logger.log("系统", "向用户发送消息失败", err);
+          }
         });
         done(null);
       },
