@@ -216,6 +216,14 @@ exports.confirm = function (req, res, next) {
     function (done) {
       logger.debug("pay_request");
 
+      User.update({
+        openid: user.openid
+      },{
+        $set:{
+          last_order_agent: req.headers["user-agent"]
+        }
+      });
+
       if (!order.price) {
         return charge.washcar(user.openid, order._id, req, res, function (err) {
           if (err) {

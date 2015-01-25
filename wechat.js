@@ -63,7 +63,6 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
       openid: openid
     },{
       $set:{
-        last_user_agent: req.headers["user-agent"],
         last_interaction_time: new Date()
       }
     });
