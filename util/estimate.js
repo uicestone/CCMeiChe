@@ -4,6 +4,9 @@ var async = require("async");
 var baidumap = require("./baidumap");
 var moment = require("moment");
 var Worker = Model('worker');
+var humanizeDuration = require("humanize-duration").humanizer({
+  language: "zh-CN"
+});
 var logger = require("../logger");
 var ActionLog = require('../model/actionlog');
 
@@ -135,8 +138,8 @@ function printData(data){
     data.worker.last_available_latlng ? data.worker.last_available_latlng.join(",") : "无",
     data.worker.latlng.join(","),
     moment(data.base_time).format("lll"),
-    moment.duration(data.drive_time).humanize(),
-    moment.duration(data.wash_time).humanize(),
+    humanizeDuration(data.drive_time),
+    humanizeDuration(data.wash_time),
     moment(data.finish_time).format("lll"),
     moment.duration(+data.finish_time - (+ new Date())).humanize()
   ));

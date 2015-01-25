@@ -58,7 +58,17 @@ exports.user = wechat(config.wechat.user.token, function(req,res){
     if(!user.wechat_info){
       updateInfo(openid, User, user_api, function(){});
     }
+
+    User.update({
+      openid: openid
+    },{
+      $set:{
+        last_user_agent: req.headers["user-agent"],
+        last_interaction_time: new Date()
+      }
+    });
   });
+
   UserMessage.insert(message);
 });
 
