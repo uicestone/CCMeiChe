@@ -16,6 +16,11 @@ var http = require('http');
 var fs = require('fs');
 var moment = require("moment");
 var logger = require("./logger");
+var qiniu = require("qiniu");
+
+qiniu.conf.ACCESS_KEY = config.qiniu.key;
+qiniu.conf.SECRET_KEY = config.qiniu.secret;
+
 moment.locale('zh-cn');
 require('express-di');
 
@@ -33,6 +38,7 @@ app.set('views', __dirname + '/public/jade');
 app.use(require('express-domain-middleware'));
 app.use(function(req,res,next){
   req.reqid = uuid();
+  req.WECHAT_DEBUG = process.env.WECHAT_DEBUG;
   next();
 });
 app.use(function(req,res,next){
@@ -96,7 +102,6 @@ if(SERVICE == "worker"){
   // app.get("/orders", assureWorkerLogin, require("./routes/orders").list);
   app.get('/logout', require("./routes/logout"));
 }else{
-
   app.use("/wechat/user", require("./wechat").user);
   // app.use(constructing);
   app.get('/', function(req,res){
@@ -120,6 +125,12 @@ if(SERVICE == "worker"){
 app.use('/wechat/notify', require('./wechat').notify);
 app.namespace("/api/v1", require("./api/v1")(app));
 
+app.get("/log.gif", function(req, res, next){
+  var msg = req.query.msg;
+  var detail = req.query.detail || "";
+  req.logger.log(req.user, msg, detail);
+  next();
+});
 app.get("/error.gif",require("./errortracking").frontend);
 app.use(require("./errortracking").backend);
 app.use(function(err,req,res,next){

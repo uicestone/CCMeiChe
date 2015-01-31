@@ -7,6 +7,7 @@ module.exports = function(app){
     app.post("signin", require("./signin").post);
     app.post("signout", require("./signout").post);
 
+    app.post("transfer-image", auth, require("./transfer-image").post);
     app.get("uploadtoken", auth, require("./uploadtoken").get);
 
     app.get("myorders", auth, myorders.list);

@@ -36,6 +36,13 @@ html
             var img = new Image();
             img.src = img_url;
         }
+        window.log = function(msg){
+            var e = encodeURIComponent;
+          var img_url = "/log.gif?"
+               + "msg=" + e(msg)
+          var img = new Image();
+          img.src = img_url;
+        }
         var appConfig = {
             env: "#{env}",
             service: "#{config.service}",

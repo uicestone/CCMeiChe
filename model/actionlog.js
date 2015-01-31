@@ -9,6 +9,11 @@ function getUserName(user){
 	if(typeof user == "string"){
 		return user;
 	}
+
+	if(typeof user == "undefined"){
+		return "未知用户";
+	}
+
 	if(user.orders){
 		// is a workder
 		return "车工:" + user.name;

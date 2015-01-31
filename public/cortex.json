@@ -28,6 +28,8 @@
     "events": "^1.0.5",
     "util": "^1.0.4",
     "tpl": "~0.2.1",
-    "hashstate": "~0.1.0"
+    "hashstate": "~0.1.0",
+    "attributes": "^1.4.1",
+    "underscore": "^1.6.0"
   }
 }

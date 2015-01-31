@@ -1,6 +1,9 @@
 var $ = require('zepto');
 var Uploader = require('uploader-mobile');
 var popMessage = require('./popmessage');
+
+Uploader.addAdapter("wechat", require('./wechat-uploader'));
+
 var beforeUpload = function(prefix){
   return function(file, done){
     var uploader = this;
@@ -84,13 +87,14 @@ exports.init = function(selector,options){
     action:"http://up.qiniu.com",
     name:"file",
     queueTarget: options.queueTarget,
+    type: window.WeixinJSBridge ? "wechat" : "ajax",
     theme: type == "single" ? null : uploadTemplate,
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
     maxItems: type == "single" ? -1 : options.maxItems
   }).on("select",function(e){
-    window.onerror("选择文件", e.files.map(function(file){
+    window.log("选择文件", e.files.map(function(file){
       return file.name + " " + Math.round(file.size / 1024) + "KB";
     }).join(","),'');
   }).on("error", function(e){
@@ -103,7 +107,7 @@ exports.init = function(selector,options){
     window.onerror("上传失败",JSON.stringify({code:e.code,message:e.message}),'');
   }).on("success", function(e){
     console.log(e);
-    window.onerror("上传成功",appConfig.qiniu_host + e.data.key,'');
+    window.log("上传成功",appConfig.qiniu_host + e.data.key,'');
   });
 
   var elem = $(selector);
