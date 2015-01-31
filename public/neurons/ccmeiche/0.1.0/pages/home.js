@@ -13,32 +13,35 @@ var _9 = "ccmeiche@0.1.0/pages/mod/popselect.js";
 var _10 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
 var _11 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
 var _12 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _13 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _14 = "ccmeiche@0.1.0/pages/myorders.js";
-var _15 = "ccmeiche@0.1.0/pages/order-result.js";
-var _16 = "ccmeiche@0.1.0/pages/order.js";
-var _17 = "ccmeiche@0.1.0/pages/promos.js";
-var _18 = "ccmeiche@0.1.0/pages/recharge.js";
-var _19 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _20 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
-var _21 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _22 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _23 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _24 = "ccmeiche@0.1.0/pages/views/addcar.js";
-var _25 = "ccmeiche@0.1.0/pages/views/agreement.js";
-var _26 = "ccmeiche@0.1.0/pages/views/finishorder.js";
-var _27 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _28 = "zepto@^1.1.3";
-var _29 = "tpl@~0.2.1";
-var _30 = "hashstate@~0.1.0";
-var _31 = "util@^1.0.4";
-var _32 = "events@^1.0.5";
-var _33 = "view-swipe@~0.1.4";
-var _34 = "uploader-mobile@~0.1.5";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27];
+var _13 = "ccmeiche@0.1.0/pages/mod/wechat-uploader.js";
+var _14 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _15 = "ccmeiche@0.1.0/pages/myorders.js";
+var _16 = "ccmeiche@0.1.0/pages/order-result.js";
+var _17 = "ccmeiche@0.1.0/pages/order.js";
+var _18 = "ccmeiche@0.1.0/pages/promos.js";
+var _19 = "ccmeiche@0.1.0/pages/recharge.js";
+var _20 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
+var _21 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
+var _22 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
+var _23 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
+var _24 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
+var _25 = "ccmeiche@0.1.0/pages/views/addcar.js";
+var _26 = "ccmeiche@0.1.0/pages/views/agreement.js";
+var _27 = "ccmeiche@0.1.0/pages/views/finishorder.js";
+var _28 = "ccmeiche@0.1.0/pages/views/preorder.js";
+var _29 = "zepto@^1.1.3";
+var _30 = "tpl@~0.2.1";
+var _31 = "hashstate@~0.1.0";
+var _32 = "util@^1.0.4";
+var _33 = "events@^1.0.5";
+var _34 = "view-swipe@~0.1.4";
+var _35 = "uploader-mobile@~0.1.5";
+var _36 = "attributes@^1.4.1";
+var _37 = "underscore@^1.6.0";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_0, [_28,_29,_30,_3,_10,_9,_8,_24,_27,_5], function(require, exports, module, __filename, __dirname) {
+define(_0, [_29,_30,_31,_3,_10,_9,_8,_25,_28,_5], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 var autocomplete = require('./mod/autocomplete');
@@ -426,10 +429,10 @@ if(!user.cars.length){
 
 }, {
     entries:entries,
-    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_10,"./mod/popselect":_9,"./mod/popmessage":_8,"./views/addcar":_24,"./views/preorder":_27,"./mod/input-clear":_5},globalMap)
+    map:mix({"./mod/autocomplete":_3,"./mod/singleselect":_10,"./mod/popselect":_9,"./mod/popmessage":_8,"./views/addcar":_25,"./views/preorder":_28,"./mod/input-clear":_5},globalMap)
 });
 
-define(_3, [_28,_31,_32], function(require, exports, module, __filename, __dirname) {
+define(_3, [_29,_32,_33], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var util = require("util");
 var events = require("events");
@@ -537,7 +540,7 @@ exports.init = function(input, parser, getVal){
     map:globalMap
 });
 
-define(_10, [_28,_32,_31], function(require, exports, module, __filename, __dirname) {
+define(_10, [_29,_33,_32], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var events = require("events");
 var util = require("util");
@@ -580,7 +583,7 @@ module.exports = function(elem,selector){
     map:globalMap
 });
 
-define(_9, [_28,_32,_31,_10,_7], function(require, exports, module, __filename, __dirname) {
+define(_9, [_29,_33,_32,_10,_7], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var singleSelect = require("./singleselect");
 var multiSelect = require("./multiselect");
@@ -683,7 +686,7 @@ module.exports = function(choices,options){
     map:mix({"./singleselect":_10,"./multiselect":_7},globalMap)
 });
 
-define(_8, [_28], function(require, exports, module, __filename, __dirname) {
+define(_8, [_29], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message, styles, notDismiss){
   var json = {}
@@ -754,7 +757,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_24, [_28,_12,_3,_8,_11,_5,_19], function(require, exports, module, __filename, __dirname) {
+define(_25, [_29,_12,_3,_8,_11,_5,_20], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var uploader = require("../mod/uploader");
 var autocomplete = require("../mod/autocomplete");
@@ -867,10 +870,10 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_19},globalMap)
+    map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_20},globalMap)
 });
 
-define(_27, [_28,_33,_11,_8,_23], function(require, exports, module, __filename, __dirname) {
+define(_28, [_29,_34,_11,_8,_24], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var viewSwipe = require("view-swipe");
 var swipeModal = require("../mod/swipe-modal");
@@ -962,10 +965,10 @@ function formatTime(estimated_finish_time){
 }
 }, {
     entries:entries,
-    map:mix({"../mod/swipe-modal":_11,"../mod/popmessage":_8,"../tpl/preorder.html":_23},globalMap)
+    map:mix({"../mod/swipe-modal":_11,"../mod/popmessage":_8,"../tpl/preorder.html":_24},globalMap)
 });
 
-define(_5, [_28], function(require, exports, module, __filename, __dirname) {
+define(_5, [_29], function(require, exports, module, __filename, __dirname) {
 $ = require('zepto');
 
 function inputClear(wrap){
@@ -1003,7 +1006,7 @@ module.exports = inputClear;
     map:globalMap
 });
 
-define(_7, [_28], function(require, exports, module, __filename, __dirname) {
+define(_7, [_29], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 
 function MultiSelect(container,itemSelector){
@@ -1036,10 +1039,13 @@ module.exports = function(container,itemSelector){
     map:globalMap
 });
 
-define(_12, [_28,_34,_8], function(require, exports, module, __filename, __dirname) {
+define(_12, [_29,_35,_8,_13], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var Uploader = require('uploader-mobile');
 var popMessage = require('./popmessage');
+
+Uploader.addAdapter("wechat", require('./wechat-uploader'));
+
 var beforeUpload = function(prefix){
   return function(file, done){
     var uploader = this;
@@ -1123,13 +1129,14 @@ exports.init = function(selector,options){
     action:"http://up.qiniu.com",
     name:"file",
     queueTarget: options.queueTarget,
+    type: window.WeixinJSBridge ? "wechat" : "ajax",
     theme: type == "single" ? null : uploadTemplate,
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
     maxItems: type == "single" ? -1 : options.maxItems
   }).on("select",function(e){
-    window.onerror("选择文件", e.files.map(function(file){
+    window.log("选择文件", e.files.map(function(file){
       return file.name + " " + Math.round(file.size / 1024) + "KB";
     }).join(","),'');
   }).on("error", function(e){
@@ -1142,7 +1149,7 @@ exports.init = function(selector,options){
     window.onerror("上传失败",JSON.stringify({code:e.code,message:e.message}),'');
   }).on("success", function(e){
     console.log(e);
-    window.onerror("上传成功",appConfig.qiniu_host + e.data.key,'');
+    window.log("上传成功",appConfig.qiniu_host + e.data.key,'');
   });
 
   var elem = $(selector);
@@ -1175,10 +1182,10 @@ exports.init = function(selector,options){
 }
 }, {
     entries:entries,
-    map:mix({"./popmessage":_8},globalMap)
+    map:mix({"./popmessage":_8,"./wechat-uploader":_13},globalMap)
 });
 
-define(_11, [_31,_32,_33,_29,_30,_28], function(require, exports, module, __filename, __dirname) {
+define(_11, [_32,_33,_34,_30,_31,_29], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
@@ -1282,15 +1289,162 @@ exports.create = function(config){
     map:globalMap
 });
 
-define(_19, [], function(require, exports, module, __filename, __dirname) {
+define(_20, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap
 });
 
-define(_23, [], function(require, exports, module, __filename, __dirname) {
+define(_24, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="preorder" class="container"><h2 class="h2">提交订单</h2><div class="order"><div class="inner"><div class="row"><div class="label">手机：</div><div class="text">@{it.phone}</div></div><?js it.cars.forEach(function(car,index){ ?><div class="row"><div class="label"><?js if(index == 0){ ?>车型：<?js }else{ ?>   <?js } ?></div><div class="text"><p>@{car.type}</p><p>@{car.number}</p></div></div><?js }); ?><div class="row"><div class="label">地址：</div><div class="text">@{it.address} @{it.carpark}</div></div><div class="row"><div class="label">服务：</div><div class="text">@{it.service.title}</div></div></div></div><h2 class="h2">预估时间</h2><div class="estimate"><div class="time">@{it.time}</div><div class="text"><p>我们将在预估时间内完成洗车，预估时间以付款后为准</p><p>您也可在我们达到前随时取消订单</p></div></div><h2 class="h2">应付金额<div class="price">￥@{it.price}</div></h2><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
+}, {
+    entries:entries,
+    map:globalMap
+});
+
+define(_13, [_29,_32,_33,_36,_37], function(require, exports, module, __filename, __dirname) {
+var $ = require('zepto');
+var util = require('util');
+var events = require('events');
+var attributes = require('attributes');
+var _ = require('underscore');
+var uuid = 0;
+module.exports = WechatUploader;
+
+function WechatLocalFile(localId){
+  this.localId = localId;
+  this.name = "untitled.jpg";
+  this.id = -1;
+}
+
+/**
+ * @name WechatUploader
+ * @class 微信方案上传
+ * @constructor
+ * @requires UploadType
+ */
+function WechatUploader(elem, config) {
+  elem = $(elem);
+  var self = this;
+
+  this.files = [];
+  this.set('config', config);
+  elem.on('click',function(){
+    if(self.get("isDisabled")){
+      return false;
+    }else{
+      self._choose();
+    }
+  });
+  self.on("_wxchoose", function(localIds){
+    for (var i = 0; i < localIds.length; i++) {
+      var file = new WechatLocalFile(localIds[0]);;
+      file.id = uuid++;
+      self.files.push(file);
+    }
+
+    self.emit('select', {
+      files: self.files
+    });
+  });
+
+  self.on("success", function(){
+    self.files.shift();
+  });
+
+  setTimeout(function () {
+    self.emit('load');
+  });
+}
+
+util.inherits(WechatUploader, events);
+
+WechatUploader.prototype._choose = function(){
+  var self = this;
+  wx.chooseImage({
+    success: function (res) {
+      var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+      self.emit("_wxchoose", localIds);
+      self.upload();
+    },
+    fail: function(res){
+      self.emit('error',JSON.stringify(res))
+    }
+  });
+}
+
+WechatUploader.prototype.setDisabled = function(isDisabled){
+  this.set("isDisabled",isDisabled);
+};
+
+WechatUploader.prototype.setFileTypes = function(extensions) {};
+
+WechatUploader.prototype.transfer = function(file){
+  var self = this;
+  var serverId = file.serverId;
+  $.ajax({
+    url:"/api/v1/transfer-image",
+    type:"post",
+    data:{
+      serverId: serverId
+    },
+    success: function(data){
+      self.emit("success", {
+        file: file,
+        data: data
+      });
+    },
+    fail: function(data){
+      self.emit("error", "transfer fail");
+    }
+  });
+}
+
+WechatUploader.prototype.upload = function (file) {
+
+  window.onerror("UPLOADING");
+
+  var self = this;
+  var file = _.filter(this.files,function(file){
+    return file.status == "waiting";
+  })[0];
+
+  var config = this.get('config');
+  var data = this.get('data');
+  var self = this;
+
+  wx.uploadImage({
+    localId: file.localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+    isShowProgressTips: 1, // 默认为1，显示进度提示
+    success: function (res) {
+      file.serverId = res.serverId; // 返回图片的服务器端ID
+      self.transfer(file);
+    },
+    fail: function(res){
+      self.emit('error', {
+        file:file,
+        message: JSON.stringify(res)
+      });
+    }
+  });
+};
+
+WechatUploader.prototype.setData = function (data) {
+  this.set('data', data);
+};
+
+attributes.patch(WechatUploader, {
+  config: {
+    value: {}
+  },
+  data: {
+    value: {}
+  },
+  isDisabled:{
+    value: false
+  }
+});
 }, {
     entries:entries,
     map:globalMap

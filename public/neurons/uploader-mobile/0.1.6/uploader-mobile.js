@@ -2,28 +2,24 @@
 function mix(a,b){for(var k in b){a[k]=b[k];}return a;}
 var _0 = "events@~1.0.5";
 var _1 = "util@~1.0.4";
-var _2 = "jquery@~1.9.1";
+var _2 = "zepto@~1.1.3";
 var _3 = "underscore@~1.6.0";
 var _4 = "attributes@~1.4.0";
-var _5 = "uploader@0.1.4/src/queue.js";
-var _6 = "uploader@0.1.4/src/errors.js";
-var _7 = "uploader@0.1.4/src/adapter/ajax.js";
-var _8 = "uploader@0.1.4/src/adapter/flash.js";
-var _9 = "uploader@0.1.4/src/theme/default.js";
-var _10 = "uploader@0.1.4/src/uid.js";
-var _11 = "simple-mime@^0.0.8";
-var _12 = "swfupload@~0.1.0";
-var _13 = "json@~1.0.1";
-var _14 = "uploader@0.1.4/src/adapter/flash_default_options.js";
-var _15 = "uploader@0.1.4/src/index.js";
+var _5 = "uploader-mobile@0.1.6/src/queue.js";
+var _6 = "uploader-mobile@0.1.6/src/errors.js";
+var _7 = "uploader-mobile@0.1.6/src/adapter/ajax.js";
+var _8 = "uploader-mobile@0.1.6/src/theme/default.js";
+var _9 = "uploader-mobile@0.1.6/src/uid.js";
+var _10 = "simple-mime@^0.0.8";
+var _11 = "uploader-mobile@0.1.6/src/index.js";
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_15, [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9], function(require, exports, module, __filename, __dirname) {
+define(_11, [_0,_1,_2,_3,_4,_5,_6,_7,_8], function(require, exports, module, __filename, __dirname) {
 'use strict';
 
 var events = require("events");
 var util = require("util");
-var $ = require("jquery");
+var $ = require("zepto");
 var Queue = require("./queue");
 var _ = require("underscore");
 var attributes = require("attributes");
@@ -32,7 +28,6 @@ var Errors = require("./errors");
 module.exports = Uploader;
 
 var adapters = {
-    flash : require("./adapter/flash"),
     ajax : require("./adapter/ajax")
 };
 
@@ -125,6 +120,9 @@ function Uploader(element,config){
     this._theme(theme);
 }
 
+Uploader.addAdapter = function(name, adapter){
+    adapters[name] = adapter;
+}
 util.inherits(Uploader,events);
 attributes.patch(Uploader,{
     queueTarget:{
@@ -306,7 +304,7 @@ Uploader.prototype._successCount = function(){
 
 Uploader.prototype.reachMax = function(){
     var maxItems = this.get("maxItems");
-    return maxItems <= this._successCount();
+    return maxItems > 0 && maxItems <= this._successCount();
 }
 
 /**
@@ -344,20 +342,16 @@ Uploader.prototype._continue = function(){
 }
 
 Uploader.prototype._getType = function(){
-    if (new XMLHttpRequest().upload) {
-        return "ajax";
-    } else {
-        return "flash";
-    }
+    return "ajax";
 }
 
 
 }, {
     main:true,
-    map:mix({"./queue":_5,"./errors":_6,"./adapter/ajax":_7,"./adapter/flash":_8,"./theme/default":_9},globalMap)
+    map:mix({"./queue":_5,"./errors":_6,"./adapter/ajax":_7,"./theme/default":_8},globalMap)
 });
 
-define(_5, [_0,_1,_4,_3,_10], function(require, exports, module, __filename, __dirname) {
+define(_5, [_0,_1,_4,_3,_9], function(require, exports, module, __filename, __dirname) {
 var events = require("events");
 var util = require("util");
 var attributes = require("attributes");
@@ -418,7 +412,11 @@ Queue.prototype.remove = function(file){
 }
 
 Queue.prototype.updateFileStatus = function(file,status){
-    file = this.getFileById(file.id);
+    try{
+      file = this.getFileById(file.id);
+    }catch(e){
+      window.onerror(e.stack.toString());
+    }
     if(file){
         file.status = status;
     }
@@ -452,7 +450,7 @@ Queue.prototype.add = function(file){
 
 
 }, {
-    map:mix({"./uid":_10},globalMap)
+    map:mix({"./uid":_9},globalMap)
 });
 
 define(_6, [], function(require, exports, module, __filename, __dirname) {
@@ -477,9 +475,9 @@ module.exports = ERRORS;
     map:globalMap
 });
 
-define(_7, [_2,_1,_0,_4,_3,_11,_6], function(require, exports, module, __filename, __dirname) {
+define(_7, [_2,_1,_0,_4,_3,_10,_6], function(require, exports, module, __filename, __dirname) {
 var EMPTY = '';
-var $ = require('jquery');
+var $ = require('zepto');
 var util = require('util');
 var events = require('events');
 var attributes = require('attributes');
@@ -530,7 +528,7 @@ util.inherits(AjaxUploader, events);
 
 AjaxUploader._renderButton = function (elem, config) {
   var self = this;
-  var btn = $("<input multiple type='file' />");
+  var btn = $("<input multiple capture='camera' type='file' />");
   elem.css("position", "relative");
   btn.css({
     "position": "absolute",
@@ -648,177 +646,7 @@ attributes.patch(AjaxUploader, {
     map:mix({"../errors":_6},globalMap)
 });
 
-define(_8, [_2,_12,_0,_3,_1,_13,_6,_14], function(require, exports, module, __filename, __dirname) {
-var $ = require("jquery");
-var SWFUpload = require("swfupload");
-var events = require("events");
-var _ = require("underscore");
-var util = require("util");
-var JSON = require("json");
-var Errors = require("../errors");
-var default_options = require("./flash_default_options");
-
-module.exports = FlashUploader;
-function FlashUploader(elem, config){
-    var self = this;
-    var isSuccess = _.isFunction(config.isSuccess) ? config.isSuccess : function(){return true;};
-
-    var handlers = {
-        swfupload_loaded_handler:function(){
-            self.emit("load");
-        },
-        file_dialog_complete_handler:function(numFilesSelected, numFilesQueued, numFilesInQueue){
-            var files = [];
-            var stats = this.getStats();
-            var total = _.reduce(_.values(stats),function(a,b){
-                return a+b;
-            },0) - stats.in_progress;
-            for(var i = total - numFilesSelected; i < total; i++){
-                files.push(this.getFile(i));
-            }
-
-            if(files.length){
-                self.emit("select",{
-                    files:files
-                });
-            }
-        },
-        upload_start_handler:function(file){
-            self.emit("start",{
-                file:file
-            });
-        },
-        file_queued_handler:function(file){
-        },
-        file_queue_error_handler:function(file,code,message){
-        },
-        upload_progress_handler:function(file,uploaded,total){
-            self.emit("progress",{
-                file:file,
-                uploaded:uploaded,
-                total:total
-            });
-        },
-        upload_error_handler:function(file,code,message){
-            self.emit("error",{
-                file:file,
-                code:code,
-                message:message
-            });
-        },
-        // file:
-        // The file object that was successfully uploaded
-        // data:
-        // The data that was returned by the server-side script (anything that was echoed by the file)
-        // response:
-        // The response returned by the server—true on success or false if no response.
-        // If false is returned, after the successTimeout option expires, a response of true is assumed.
-        upload_success_handler:function(file,data,response){
-            var data;
-
-
-            try{
-                data = JSON.parse(data);
-            }catch(e){
-                self.emit("error",{
-                    file:file,
-                    code:"-300",
-                    message:"error parsing JSON"
-                });
-                return;
-            }
-
-            if(!isSuccess(data)){
-                self.emit("error",{
-                    file:file,
-                    code:"-310",
-                    message:"error custom",
-                    data:data
-                })
-            }else{
-                self.emit("success",{
-                    file:file,
-                    data:data
-                });
-            }
-        },
-        upload_complete_handler:function(){}
-    };
-
-
-    elem = $(elem);
-    var id = FlashUploader._renderButton(elem);
-
-    var custom_configs = {
-        post_params: config.data || {},
-        upload_url: config.action,
-        // file_queue_limit : config.limit,
-        button_placeholder_id: id,
-        file_post_name: config.name || "file",
-        button_width: elem.width(),
-        button_height: elem.height()
-    }
-
-
-    var swf_config;
-    swf_config = _.extend({},default_options);
-    swf_config = _.extend(swf_config,handlers);
-    swf_config = _.extend(swf_config,custom_configs);
-    swf_config = _.extend(swf_config,config.swf_config);
-
-    this.swfu = new SWFUpload(swf_config);
-};
-
-util.inherits(FlashUploader,events);
-
-FlashUploader.instanceCount = 0;
-
-
-FlashUploader.prototype.upload = function(file){
-    this.swfu.startUpload(file.id);
-}
-
-FlashUploader.prototype.setData = function(data){
-    this.swfu.setPostParams(data);
-}
-
-FlashUploader.prototype.cancel = function(){
-
-};
-
-FlashUploader.prototype.setFileTypes = function(extensions){
-    var types = _.map(extensions, function(ext){
-        return "*." + ext;
-    }).join(";");
-    this.swfu.setFileTypes(types, "Select Files");
-}
-
-FlashUploader.prototype.setDisabled = function(isDisabled){
-    console.log("set disabled", isDisabled);
-    this.swfu.setButtonDisabled(isDisabled);
-}
-
-FlashUploader._renderButton = function(elem){
-
-    var id = "swfu_holder_" + (FlashUploader.instanceCount+1);
-    var holder = $("<div class='swfu_wrapper'><div id='" + id + "' /></div>");
-
-    elem.css("position","relative");
-    holder.css({
-        "position":"absolute",
-        "top":0,
-        "left":0,
-        "width": elem.width(),
-        "height": elem.height()
-    });
-    holder.appendTo(elem);
-    return id;
-};
-}, {
-    map:mix({"../errors":_6,"./flash_default_options":_14},globalMap)
-});
-
-define(_9, [], function(require, exports, module, __filename, __dirname) {
+define(_8, [], function(require, exports, module, __filename, __dirname) {
 module.exports = {
     template: '<li>'
                 +'<div class="pic" style="display:none"><img /></div>'
@@ -854,42 +682,12 @@ module.exports = {
     map:globalMap
 });
 
-define(_10, [], function(require, exports, module, __filename, __dirname) {
+define(_9, [], function(require, exports, module, __filename, __dirname) {
 var count = 0;
 
 module.exports = function(){
     return count++;
 }
-}, {
-    map:globalMap
-});
-
-define(_14, [_12], function(require, exports, module, __filename, __dirname) {
-var SWFUpload = require("swfupload");
-module.exports = {
-    post_params: {},
-    file_size_limit : "100 MB",
-    file_types_description : "All Files",
-    file_upload_limit : 0,
-    // Due to some bugs in the Flash Player the server response may not be acknowledged and no uploadSuccess event is fired by Flash.
-    // set this value to 0, SWFUpload will wait indefinitely for the Flash Player to trigger the uploadSuccess event.
-    assume_success_timeout: 0,
-    custom_settings : {
-        progressTarget : "fsUploadProgress",
-        cancelButtonId : "btnCancel"
-    },
-    debug: false,
-
-    // Button settings
-    // button_image_url: "images/TestImageNoText_65x29.png",
-    button_cursor : SWFUpload.CURSOR.HAND,
-    button_window_mode : SWFUpload.WINDOW_MODE.TRANSPARENT,
-    // button_text: '<span class="theFont">Hello</span>',
-    // button_text_style: ".theFont { font-size: 16; }",
-    button_text_left_padding: 12,
-    button_text_top_padding: 3
-};
-
 }, {
     map:globalMap
 });

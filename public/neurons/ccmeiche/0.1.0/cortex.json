@@ -28,6 +28,7 @@
     "./pages/mod/singleselect.js",
     "./pages/mod/swipe-modal.js",
     "./pages/mod/uploader.js",
+    "./pages/mod/wechat-uploader.js",
     "./pages/myinfos.js",
     "./pages/myorders.js",
     "./pages/order-result.js",
@@ -58,7 +59,9 @@
     "events": "^1.0.5",
     "util": "^1.0.4",
     "tpl": "~0.2.1",
-    "hashstate": "~0.1.0"
+    "hashstate": "~0.1.0",
+    "attributes": "^1.4.1",
+    "underscore": "^1.6.0"
   },
   "readme": "# ccmeiche-static\n\nstatic files for ccmeiche\n\n## Install\n\n```bash\n$ cortex install ccmeiche-static --save\n```\n\n<!--\nWrap examples with a pair of ```\n使用成对的 ``` 来包裹示例。\n代码块的 ``` 后面需要定义这部分代码的类型。比如上面的代码是 bash 脚本，常用的包括：\nbash, js, json, html, css 等\n-->\n\n\n## Usage\n\n```js\nvar ccmeiche_static = require('ccmeiche-static');\n```\n\n<!-- \n\nNOTICE That this is a sample README.md, in order to define the standard way to organize the information of the current package.\n\nMost usually, you should remove unnecessary sections below.\n\n这里仅仅是一个示例README，用于定义标准的书写规范和文档格式。\n大部分时候，如果没有使用到它们，你应该把适当移除这些栏目。\n-->\n\n### Class: ccmeiche_static(options)\n<!-- \n'Class: <name>' means a constructor that we should use it with the `new` keyword.\n'Class: <name>' 表明它是一个构造器，我们应当使用 `new` 关键字来初始化。\n-->\n\n```js\nnew ccmeiche_static({\n\tname: 'Hulk'\n});\n```\n\n<!-- \nSimply list arguments\n直接列出参数\n-->\n- options `Object` description of `options`\n\t- name `String` description of `options.name`\n\t\nCreates a new ccmeiche-static instance.\n\n<!--\nOnly differences are listed below.\n接下来我们只列出不同的地方\n-->\n\t\n#### &lt;method-name&gt;(foo, bar, [bee], boo)\n\n<!-- \nA method of the instance. Usually, they should be listed inside the `Class` section as <h4> with 4 hashes.\n实例（即通过构造器 new 出来的对象）上的方法. 一般来说，实例方法应当在 Class 栏目中，作为 <h4> 标题出现（4个 # 号）\n-->\n\n\n- foo `String='foo'` description of `foo`\n- bar `Boolean=` description of `bar`\n- bee `Object` `[]` indicates that it is an optional parameter\n  - abc `Buffer` a property of `bee`, i.e. `bee.abc`\n- boo `function(arg1, arg2)` what is the method used for\n\n<!--\ntype ends with `=`(equal) indicates the default value, default to `undefined`.\n类型后面跟等号（=）表明了这个参数的默认值\n-->\n\n<!--\nNotice the definition of function type and optional parameters\n注意函数类型定义的描述，以及可选参数的写法\n-->\n\n#### Event: '&lt;event-name&gt;'\n\n<!--\nEvent name should be single-quoted.\n事件名称应当使用单引号括起\n-->\n\n- e `Object` the first parameter of the callback\n\n<!--\nDefine the parameters of event handler directly.\n直接开始定义事件回调的参数，而不用累述。\n-->\n\n\n### ccmeiche-static.&lt;method-name&gt;(arguments)\n\n<!-- \nThe static method.\n静态方法，即不是实例上的方法\n-->\n\n\n",
   "readmeFilename": "README.md",
