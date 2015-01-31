@@ -55,12 +55,14 @@ var pay_request = function(req, order, callback){
   var total_fee = (total_price * (req.user.isTest ? 1 : 100));
   total_fee = Math.round(total_fee);
 
+  var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+  ip = ip.split(",")[0].trim();
   var package_data = {
     'body': order_name,
     'attach': order_attach,
     'out_trade_no': order_id,
     'total_fee': total_fee,
-    'spbill_create_ip': req.header('x-forwarded-for') || req.connection.remoteAddress,
+    'spbill_create_ip': ip,
     "openid": req.user.openid,
     "trade_type": "JSAPI"
   };
@@ -83,6 +85,14 @@ var worker_api = new API(config.wechat.worker.id, config.wechat.worker.secret, g
 var worker_oauth = new OAuth(config.wechat.worker.id, config.wechat.worker.secret);
 
 function notifyProxy(service){
+
+  function wrapMethod(service, method){
+    var api = service == "user" ? user_api : worker_api;
+    return function(){
+      api[method].apply(this, arguments);
+    }
+  }
+
   return {
     sendNews: function(openid, articles, callback){
       var message;
@@ -111,9 +121,8 @@ function notifyProxy(service){
       });
       callback(null);
     },
-    getUser: function(openid, done){
-      worker_api.getUser(openid, done)
-    }
+    getUser: wrapMethod(service,"getUser"),
+    getAccessToken: wrapMethod(service, "getAccessToken")
   }
 }
 
