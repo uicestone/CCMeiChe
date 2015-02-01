@@ -56,6 +56,7 @@ html(id="#{id}")
     if user && config.service == "user"
         script.
             var user = {
+              isTest: #{!!user.isTest},
               addresses: !{JSON.stringify(user.addresses||[])},
               cars: !{JSON.stringify(user.cars||[])},
               phone: "#{user.phone}",
