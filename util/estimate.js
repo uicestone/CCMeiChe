@@ -102,7 +102,11 @@ function nearestWorker(latlng, workers, service, callback){
     });
 
     function compare_nearest(a,b){
-      return b.finish_time > a.finish_time ? -1 : 1;
+      if(b.finish_time - a.finish_time > 1000 * 60){
+        return b.finish_time > a.finish_time ? -1 : 1;
+      }else{
+        return Math.random() > 0.5 ? 1 : -1;
+      }
     }
 
     if(!results.length){
