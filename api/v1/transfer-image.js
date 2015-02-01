@@ -18,7 +18,7 @@ exports.post = function(req, res, next){
   console.log("TEMP_PATH", temp_path);
   function getUpToken(){
     var putPolicy = new qiniu.rs.PutPolicy(config.qiniu.bucket);
-    putPolicy.expires = 30;
+    putPolicy.expires = 300;
     return putPolicy.token();
   }
 

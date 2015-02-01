@@ -17,7 +17,9 @@ html(id="#{id}")
     script(src="/neurons/config.js?t=#{config.start_time}")
     script.
         neuron.config({
-          path:"/neurons"
+          path:"/neurons",
+          cache: false,
+          timestamp: #{config.start_time}
         });
     link(href="/css/app.css?t=#{config.start_time}", rel="stylesheet")
     if config.service == "user"
