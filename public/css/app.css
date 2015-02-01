@@ -1189,8 +1189,6 @@ a {
 #order {
   background-image: none;
   background-color: #fff;
-  position: absolute;
-  height: 100%;
   padding-top: 20px;
 }
 #order .pic {

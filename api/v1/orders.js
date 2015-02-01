@@ -7,6 +7,7 @@ var User = model.user;
 var wechat_user = require('../../util/wechat').user.api;
 var wechat_worker = require('../../util/wechat').worker.api;
 var logger = require('../../logger');
+var moment = require('moment');
 
 exports.detail = function(req,res,next){
   Order.findById(req.params.orderid,function(err,order){
@@ -105,6 +106,8 @@ exports.done = function(req,res,next){
 exports.arrive = function(req,res,next){
   Order.findById(req.params.orderid,function(err, order){
     if(err){return next(err);}
+    var userOpenId = order.user.openid;
+    var workerOpenId = order.worker.openid;
 
     async.series([
       function(done){
@@ -114,13 +117,37 @@ exports.arrive = function(req,res,next){
         }else{
           message = "您的CC美车管家已经到达并已开始作业，请耐心等候。";
         }
-        req.logger.log("系统", "向用户发送消息", message);
-        wechat_user.sendText(order.user.openid, message, function(err){
+        req.logger.log("系统", "向用户发送消息", JSON.stringify({
+          openId: userOpenId,
+          message: message
+        }));
+        wechat_user.sendText(userOpenId, message, function(err){
           if(err){
             req.logger.log("系统", "向用户发送消息失败", err);
           }
         });
         done(null);
+      },
+      function(done){
+        // 更新车工最后可用时间
+        console.log("estimated_finish_time", order.estimated_finish_time);
+        console.log("estimated_arrive_time", order.estimated_arrive_time);
+        var wash_time = new Date(order.estimated_finish_time) - new Date(order.estimated_arrive_time);
+        console.log("wash_time", wash_time);
+        var last_available_time = new Date(+new Date() + wash_time);
+        req.logger.log("系统", "更新车工可用时间", JSON.stringify({
+          name: req.user.name,
+          time: moment(last_available_time).format("lll")
+        }));
+        console.log("openid", workerOpenId);
+        console.log("last_available_time", last_available_time);
+        Worker.update({
+          openid: workerOpenId
+        },{
+          $set:{
+            last_available_time: last_available_time
+          }
+        },done);
       },
       function(done){
         req.logger.log(req.user, '到达', order._id);

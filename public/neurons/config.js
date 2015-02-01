@@ -59,8 +59,8 @@ neuron.config({
       "0.1.6",
       {
         "attributes@~1.4.0": 1,
-        "underscore@~1.6.0": 8,
         "events@~1.0.5": 5,
+        "underscore@~1.6.0": 8,
         "util@~1.0.4": 2,
         "zepto@~1.1.3": 10,
         "json@~1.0.1": 3,

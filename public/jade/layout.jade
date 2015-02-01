@@ -8,7 +8,7 @@ mixin facade(name)
     });
 
 doctype html
-html
+html(id="#{id}")
   head
     title= title || sitename
 
@@ -60,5 +60,5 @@ html
               promo: !{JSON.stringify(user.promo||[])},
               credit: #{user.credit || 0},
             };
-  body(id="#{id}")
+  body
     block content
