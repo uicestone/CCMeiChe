@@ -85,15 +85,10 @@ var worker_api = new API(config.wechat.worker.id, config.wechat.worker.secret, g
 var worker_oauth = new OAuth(config.wechat.worker.id, config.wechat.worker.secret);
 
 function notifyProxy(service){
+  var _ = require("underscore");
+  var api = service == "user" ? user_api : worker_api;
 
-  function wrapMethod(service, method){
-    var api = service == "user" ? user_api : worker_api;
-    return function(){
-      api[method].apply(this, arguments);
-    }
-  }
-
-  return {
+  return _.extend(api,{
     sendNews: function(openid, articles, callback){
       var message;
       if(articles[0]){
@@ -120,10 +115,8 @@ function notifyProxy(service){
         message: message
       });
       callback(null);
-    },
-    getUser: wrapMethod(service,"getUser"),
-    getAccessToken: wrapMethod(service, "getAccessToken")
-  }
+    }
+  });
 }
 
 exports.user = {

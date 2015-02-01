@@ -1,6 +1,6 @@
 var Order = require("../model/order");
-
-
+var WXConfig = require("../util/wxconfig");
+var config = require("config");
 exports.list = function(req,res,next){
 
   Order.find({
@@ -32,9 +32,20 @@ exports.detail = function(req,res,next){
     }
     order.status = order.status || "todo";
 
-    res.render("order",{
-      id:"order",
-      order: order
+
+    new WXConfig("worker")
+    .setDebug(req.WECHAT_DEBUG)
+    .setList(['chooseImage','uploadImage'])
+    .setUrl(req.url)
+    .build(function(err, wxconfig){
+      if(err){
+        return next(err);
+      }
+      res.render("order",{
+        id:"order",
+        order: order,
+        wxconfig: wxconfig
+      });
     });
   });
 }

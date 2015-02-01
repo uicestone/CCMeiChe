@@ -36,10 +36,11 @@ html
             var img = new Image();
             img.src = img_url;
         }
-        window.log = function(msg){
-            var e = encodeURIComponent;
+        window.log = function(msg, detail){
+          var e = encodeURIComponent;
           var img_url = "/log.gif?"
                + "msg=" + e(msg)
+               + "detail=" + e(detail)
           var img = new Image();
           img.src = img_url;
         }

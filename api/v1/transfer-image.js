@@ -2,11 +2,12 @@ var config = require('config');
 var qiniu = require('qiniu');
 var async = require('async');
 var temp = require('temp');
-var userApi = require('../../util/wechat').user.api;
+var wechat = require('../../util/wechat');
 var fs = require('fs');
 
-exports.post = function(req,res){
+exports.post = function(req, res, next){
 
+  var api = wechat[req.SERVICE].api;
   var serverId = req.body.serverId;
 
   var key = ["wechat",req.user.phone,+new Date()].join("/") + ".jpg";
@@ -21,9 +22,10 @@ exports.post = function(req,res){
     return putPolicy.token();
   }
 
+  console.log("TRANSFER:" + serverId);
   async.waterfall([
     function(done){
-      userApi.getMedia(serverId, function(err, data){
+      api.getMedia(serverId, function(err, data){
         if(err){return done(err);}
         fs.writeFile(temp_path, data, done);
       });

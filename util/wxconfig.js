@@ -1,9 +1,9 @@
 var redis = require('../redis');
-var userApi = require('./wechat').user.api;
+var wechat = require('./wechat');
 var request = require('request');
 var async = require('async');
 var util = require('util');
-
+var config = require('config');
 
 var createNonceStr = function () {
   return Math.random().toString(36).substr(2, 15);
@@ -54,9 +54,34 @@ var sign = function (jsapi_ticket, url) {
   return ret;
 };
 
-function getJsTicket(result, callback){
+
+function WXConfig(service){
+  this.serviceName = service;
+  this.host = config.host[service];
+  this.api = wechat[service] && wechat[service].api;
+  this.debug = false;
+  this.list = [];
+  this.appid = config.wechat[service] && config.wechat[service].id;
+}
+
+WXConfig.prototype.setDebug = function(debug){
+  this.debug = !!debug;
+  return this;
+}
+
+WXConfig.prototype.setList = function(list){
+  this.list = list;
+  return this;
+}
+
+WXConfig.prototype.setUrl = function(url){
+  this.url = this.host + url;
+  return this;
+}
+
+WXConfig.prototype._getJsTicket = function(result, callback){
   var url = util.format("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi", result.accessToken);
-  var cache_key = "user:jsticket";
+  var cache_key = this.serviceName + ":jsticket";
 
   redis.get(cache_key, function(err, value){
     if(err){return callback(err);}
@@ -87,30 +112,42 @@ function getJsTicket(result, callback){
       });
     });
   });
-
 }
 
-function getSign(url, callback){
+WXConfig.prototype.build = function(callback){
+  var url = this.url;
+  var api = this.api;
+  var self = this;
 
-  console.log(userApi);
+  if(!self.appid){
+    return callback(new Error("appid missing"));
+  }
+
   async.waterfall([
-    userApi.getAccessToken.bind(userApi),
-    getJsTicket,
+    api.getAccessToken.bind(api),
+    this._getJsTicket.bind(this),
     function(jsTicket, done){
       console.log("JSTICKET", jsTicket);
       done(null, sign(jsTicket, url));
     }
-  ], function(err, result){
+  ], function(err, sign){
     if(err){
       return callback(err);
     }
 
     console.log("URL", url);
+    console.log("RESULT", sign);
 
-    console.log("RESULT", result);
-    callback(null, result);
+    callback(null, {
+      debug : self.debug,
+      appId: self.appid, // 必填，公众号的唯一标识
+      timestamp: sign.timestamp, // 必填，生成签名的时间戳
+      nonceStr: sign.nonceStr, // 必填，生成签名的随机串
+      signature: sign.signature,// 必填，签名，见附录1
+      jsApiList: self.list // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
   });
 
 }
 
-module.exports = getSign;
+module.exports = WXConfig;

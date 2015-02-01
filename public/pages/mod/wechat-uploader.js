@@ -33,7 +33,7 @@ function WechatUploader(elem, config) {
   });
   self.on("_wxchoose", function(localIds){
     for (var i = 0; i < localIds.length; i++) {
-      var file = new WechatLocalFile(localIds[0]);;
+      var file = new WechatLocalFile(localIds[i]);;
       file.id = uuid++;
       self.files.push(file);
     }
@@ -47,7 +47,7 @@ function WechatUploader(elem, config) {
     self.files.shift();
   });
 
-  setTimeout(function () {
+  wx.ready(function(){
     self.emit('load');
   });
 }
@@ -106,7 +106,7 @@ WechatUploader.prototype.upload = function (file) {
 
   wx.uploadImage({
     localId: file.localId, // 需要上传的图片的本地ID，由chooseImage接口获得
-    isShowProgressTips: 1, // 默认为1，显示进度提示
+    isShowProgressTips: 0, // 默认为1，显示进度提示
     success: function (res) {
       file.serverId = res.serverId; // 返回图片的服务器端ID
       self.transfer(file);

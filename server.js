@@ -39,9 +39,7 @@ app.use(require('express-domain-middleware'));
 app.use(function(req,res,next){
   req.reqid = uuid();
   req.WECHAT_DEBUG = process.env.WECHAT_DEBUG;
-  next();
-});
-app.use(function(req,res,next){
+  req.SERVICE = SERVICE;
   req.logger = require('./model/actionlog');
   next();
 });
@@ -140,6 +138,7 @@ app.use(function(err,req,res,next){
       message: err
     });
   }
+  next(err);
 });
 app.use(errorHandler());
 

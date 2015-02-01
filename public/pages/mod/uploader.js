@@ -102,12 +102,13 @@ exports.init = function(selector,options){
       elem.find(".loading").hide();
       elem.find(".text").show();
     }
+    window.onerror(e);
     popMessage("上传失败，请重试");
     e.elem.remove();
     window.onerror("上传失败",JSON.stringify({code:e.code,message:e.message}),'');
   }).on("success", function(e){
     console.log(e);
-    window.log("上传成功",appConfig.qiniu_host + e.data.key,'');
+    window.log("上传成功", appConfig.qiniu_host + e.data.key,'');
   });
 
   var elem = $(selector);

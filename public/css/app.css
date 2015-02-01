@@ -52,6 +52,9 @@ body.openmenu {
   position: fixed;
   width: 100%;
 }
+a {
+  color: #36b;
+}
 .blank {
   position: fixed;
   background-color: #f39600;
@@ -1186,6 +1189,8 @@ body.openmenu {
 #order {
   background-image: none;
   background-color: #fff;
+  position: absolute;
+  height: 100%;
   padding-top: 20px;
 }
 #order .pic {

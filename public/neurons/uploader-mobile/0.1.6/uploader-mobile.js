@@ -418,7 +418,7 @@ Queue.prototype.updateFileStatus = function(file,status){
       window.onerror(e.stack.toString());
     }
     if(file){
-        file.status = status;
+      file.status = status;
     }
     return true;
 }
