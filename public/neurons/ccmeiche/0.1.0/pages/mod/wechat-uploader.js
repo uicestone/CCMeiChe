@@ -100,7 +100,6 @@ WechatUploader.prototype._choose = function(){
     success: function (res) {
       var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
       self.emit("_wxchoose", localIds);
-      self.upload();
     },
     fail: function(res){
       self.emit('error',JSON.stringify(res))
@@ -136,9 +135,6 @@ WechatUploader.prototype.transfer = function(file){
 }
 
 WechatUploader.prototype.upload = function (file) {
-
-  window.onerror("UPLOADING");
-
   var self = this;
   var file = _.filter(this.files,function(file){
     return file.status == "waiting";

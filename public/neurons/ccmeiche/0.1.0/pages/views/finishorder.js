@@ -277,7 +277,7 @@ exports.init = function(selector,options){
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],
     maxSize: "500K",
-    maxItems: type == "single" ? -1 : options.maxItems
+    maxItems: type == "single" ? 1 : options.maxItems
   }).on("select",function(e){
     window.log("选择文件", e.files.map(function(file){
       return file.name + " " + Math.round(file.size / 1024) + "KB";
@@ -308,12 +308,17 @@ exports.init = function(selector,options){
     }).on("success",function(e){
       loadImageToElem(e.data.key, result, {
         mode: 1,
-        width: 155,
+        width: 205,
         height: 105
       }, function(){
         elem.find(".loading").hide();
         elem.find(".result").show();
       });
+      if(type == "single"){
+        uploader.get("queue").clear();
+        uploader.get("adapter").files = [];
+      }
+      uploader.emit("enable");
     });
   }else{
     uploader.on("disable",function(){
@@ -495,7 +500,6 @@ WechatUploader.prototype._choose = function(){
     success: function (res) {
       var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
       self.emit("_wxchoose", localIds);
-      self.upload();
     },
     fail: function(res){
       self.emit('error',JSON.stringify(res))
@@ -531,9 +535,6 @@ WechatUploader.prototype.transfer = function(file){
 }
 
 WechatUploader.prototype.upload = function (file) {
-
-  window.onerror("UPLOADING");
-
   var self = this;
   var file = _.filter(this.files,function(file){
     return file.status == "waiting";

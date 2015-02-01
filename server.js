@@ -129,7 +129,7 @@ app.get("/log.gif", function(req, res, next){
   var msg = req.query.msg;
   var detail = req.query.detail || "";
   req.logger.log(req.user, msg, detail);
-  next();
+  return res.type("gif").status(200).send("");
 });
 app.get("/error.gif",require("./errortracking").frontend);
 app.use(require("./errortracking").backend);
@@ -140,7 +140,6 @@ app.use(function(err,req,res,next){
       message: err
     });
   }
-  next(err);
 });
 app.use(errorHandler());
 

@@ -429,10 +429,10 @@ Queue.prototype.clear = function(){
     function _remove(){
         var files = self.get("files");
         if(files.length){
-            self.remove();
+            self.remove(files[0]);
             _remove();
         }else{
-            self.fire("clear");
+            self.emit("clear");
         }
     }
     _remove();
