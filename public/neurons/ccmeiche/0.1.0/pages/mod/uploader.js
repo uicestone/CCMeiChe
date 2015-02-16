@@ -128,7 +128,7 @@ exports.init = function(selector,options){
     action:"http://up.qiniu.com",
     name:"file",
     queueTarget: options.queueTarget,
-    type: window.WeixinJSBridge ? "wechat" : "ajax",
+    type: navigator.userAgent.match("MicroMessenger") ? "wechat" : "ajax",
     theme: type == "single" ? null : uploadTemplate,
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],

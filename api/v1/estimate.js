@@ -7,6 +7,7 @@ var inside = require('point-in-polygon');
 exports.post = function (req, res, next) {
   var user_latlng = req.body.latlng;
   var serviceId = req.body.service_id;
+  var cars = req.body.cars;
 
   // more validations here
   if (!user_latlng) {
@@ -41,7 +42,7 @@ exports.post = function (req, res, next) {
     // 估算服务耗时，需要用到具体服务的时间
     Service.findById(serviceId, function(err, service){
 
-      estimate(user_latlng, service, function(err, result){
+      estimate(user_latlng, service, cars, function(err, result){
         if(err){
           return next(err);
         }

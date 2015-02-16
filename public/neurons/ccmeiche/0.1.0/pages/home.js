@@ -396,7 +396,8 @@ $("#go-wash").on("tap", function(e){
     url:"/api/v1/estimate",
     data:{
       service_id: order.service._id,
-      latlng: order.latlng
+      latlng: order.latlng,
+      cars: order.cars.length
     },
     timeout: 15000,
     dataType:"json"
@@ -1129,7 +1130,7 @@ exports.init = function(selector,options){
     action:"http://up.qiniu.com",
     name:"file",
     queueTarget: options.queueTarget,
-    type: window.WeixinJSBridge ? "wechat" : "ajax",
+    type: navigator.userAgent.match("MicroMessenger") ? "wechat" : "ajax",
     theme: type == "single" ? null : uploadTemplate,
     beforeUpload: beforeUpload(options.prefix || ""),
     allowExtensions: ["png","jpg"],

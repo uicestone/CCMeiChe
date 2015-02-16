@@ -37,7 +37,7 @@ db.bind('order', {
 
         ActionLog.log(worker, '排单', id);
         // 重新计算时间
-        estimate.getTimes(order.latlng, worker, order.service, function(err, times){
+        estimate.getTimes(order.latlng, worker, order.service, order.cars.length, function(err, times){
           if(err){return callback(err);}
 
           var now = new Date();

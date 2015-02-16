@@ -352,7 +352,8 @@ $("#go-wash").on("tap", function(e){
     url:"/api/v1/estimate",
     data:{
       service_id: order.service._id,
-      latlng: order.latlng
+      latlng: order.latlng,
+      cars: order.cars.length
     },
     timeout: 15000,
     dataType:"json"

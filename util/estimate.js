@@ -10,7 +10,7 @@ var humanizeDuration = require("humanize-duration").humanizer({
 var logger = require("../logger");
 var ActionLog = require('../model/actionlog');
 
-var getTimes = exports.getTimes = function(latlng, worker, service, done){
+var getTimes = exports.getTimes = function(latlng, worker, service, cars_count, done){
   var motor_speed = 20; // km/h
   var worker_latlng = worker.last_available_latlng || worker.latlng;
   var speedInMin = motor_speed * 1000 / (60 * 60 * 1000); // km/h 转换为 m/ms
@@ -32,7 +32,7 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
     }
 
     var drive_time = solution.result.routes[0].distance / speedInMin;
-    var wash_time = washTime(service);
+    var wash_time = washTime(service) * cars_count;
 
     var base_time;
     if(worker.last_available_time){
@@ -49,7 +49,8 @@ var getTimes = exports.getTimes = function(latlng, worker, service, done){
       drive_time: drive_time,
       wash_time: wash_time,
       arrive_time: arrive_time,
-      finish_time: finish_time
+      finish_time: finish_time,
+      cars_count: cars_count
     };
     printData(data);
     done(null,data);
@@ -91,10 +92,10 @@ function findWorkers(latlng,callback){
   });
 }
 
-function nearestWorker(latlng, workers, service, callback){
+function nearestWorker(latlng, workers, service, cars, callback){
   ActionLog.log('系统','车工查找', '根据经纬度' + latlng + '查找附近车工');
   async.map(workers, function(worker, done){
-    getTimes(latlng, worker, service, done);
+    getTimes(latlng, worker, service, cars, done);
   }, function(err,results){
     if(err){return callback(err);}
     results = results.filter(function(result){
@@ -137,12 +138,13 @@ function getFakeWalkSolution(args, callback){
 
 function printData(data){
   var util = require('util');
-  ActionLog.log('系统',"订单查找", util.format("车工%s最后可用位置%s，当前位置%s，可用时间%s，预估驾驶耗时%s，预估洗车耗时%s，预估完成时间%s，距当前时间需要耗时%s",
+  ActionLog.log('系统',"订单查找", util.format("车工%s最后可用位置%s，当前位置%s，可用时间%s，预估驾驶耗时%s，预估洗车耗时%s辆车共%s，预估完成时间%s，距当前时间需要耗时%s",
     data.worker.name,
     data.worker.last_available_latlng ? data.worker.last_available_latlng.join(",") : "无",
     data.worker.latlng.join(","),
     moment(data.base_time).format("lll"),
     humanizeDuration(data.drive_time),
+    data.cars_count,
     humanizeDuration(data.wash_time),
     moment(data.finish_time).format("lll"),
     moment.duration(+data.finish_time - (+ new Date())).humanize()
@@ -150,13 +152,13 @@ function printData(data){
 }
 
 
-exports.getSolution = function(latlng, service, callback){
+exports.getSolution = function(latlng, service, cars, callback){
   async.waterfall([
     function(done){
       findWorkers(latlng, done);
     },
     function(workers, done){
-      nearestWorker(latlng, workers, service, done);
+      nearestWorker(latlng, workers, service, cars, done);
     }
   ], callback);
 };

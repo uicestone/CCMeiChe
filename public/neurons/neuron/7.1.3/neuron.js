@@ -6,7 +6,7 @@
  */
 
 // Goal
-// Manage module dependencies and initialization
+// Manage module dependencies and initialization 
 
 // Non-goal
 // > What neuron will never do
@@ -24,15 +24,15 @@ var FALSE = !1;
 
 var timestamp = + new Date;
 
-// // Check and make sure the module is downloaded,
+// // Check and make sure the module is downloaded, 
 // // if not, it will download the module
 // neuron.load = function (module, callback){
 //   callback();
 // }
 
 // Check and make sure the module is ready for running factory
-// By default,
-// neuron core is only a module manager who doesn't care about module loading,
+// By default, 
+// neuron core is only a module manager who doesn't care about module loading, 
 // and consider all modules are already ready.
 // By attaching `load.js` and `ready.js`, neuron will be an loader
 neuron.ready = function (module, callback) {
@@ -151,7 +151,7 @@ implement(Array, {
       // Kael:
       // Some people might ask: "why we use a `i in this` here?".
       // ECMA:
-      // > callback is invoked only for indexes of the array which have assigned values;
+      // > callback is invoked only for indexes of the array which have assigned values; 
       // > it is not invoked for indexes which have been deleted or which have never been assigned values
 
       // Besides, `filter` method is not always used with real Arrays, invocations below might happen:
@@ -314,7 +314,7 @@ extend(Object, {
       }.propertyIsEnumerable('toString'),
 
       // In some old browsers, such as OLD IE, keys below might not be able to iterated with `for-in`,
-      // even if each of them is one of current object's own properties
+      // even if each of them is one of current object's own properties  
       NONT_ENUMS = [
         'toString',
         'toLocaleString',
@@ -380,7 +380,7 @@ implement(String, {
 // - common methods
 
 // @const
-// 'a@1.2.3/abc' ->
+// 'a@1.2.3/abc' -> 
 // ['a@1.2.3/abc', 'a', '1.2.3', '/abc']
 
 //                    0 1                2         3
@@ -428,7 +428,7 @@ function format_parsed(parsed) {
 // Since 6.2.0, actually, neuron will and should no longer add file extension arbitrarily,
 // because `commonjs-walker@3.x` will do the require resolve during parsing stage.
 // But old version of neuron did and will add a `config.ext` to the end of the file.
-// So, if commonjs-walker does so, we adds a
+// So, if commonjs-walker does so, we adds a 
 function legacy_transform_id (id, env) {
   return env.map
     ? id
@@ -504,7 +504,7 @@ function resolve_id (path, env) {
 // path_join('../abc', './c') -> '../abc/c',
 
 // path_join('', './c')       -> 'c'
-// path_join('', '../c')      -> '../c'
+// path_join('', '../c')      -> '../c' 
 function path_join(from, to) {
   var parts = (from + '/' + to)
     .split('/')
@@ -635,10 +635,10 @@ neuron.on = on;
 
 // Take `'a@1.0.0/relative'` for example:
 
-// ### package
+// ### package 
 // The package which the current module belongs to.
 // - name or package name:  {string} package `name`: 'a'
-// - package or package id: {string} contains package `name` and `version` and the splitter `'@'`.
+// - package or package id: {string} contains package `name` and `version` and the splitter `'@'`. 
 //   'a@1.0.0' for instance.
 
 // ### module
@@ -715,7 +715,7 @@ function parse_id(id, env) {
     parsed = parse_module_id(id);
   }
 
-
+  
   if (parsed.k === env.k) {
     // if inside the same package of the parent module,
     // it uses a same sub graph of the package
@@ -725,7 +725,7 @@ function parse_id(id, env) {
     // We route a package of certain range to a specific version according to `config.graph`
     // so several modules may point to a same exports
     // if is foreign module, we should parses the graph to the the sub graph
-    var sub_graph = get_sub_graph(parsed.k, env.graph)
+    var sub_graph = get_sub_graph(parsed.k, env.graph) 
       // If sub_graph not found, set it as `[]`
       || [];
     parsed.graph = sub_graph;
@@ -754,7 +754,7 @@ function get_sub_graph (pkg, graph) {
 // @param {Object} module
 function get_exports(module) {
   // Since 6.0.0, neuron will not emit a "cyclic" event.
-  // But, detecing static cyclic dependencies is a piece of cake for compilers,
+  // But, detecing static cyclic dependencies is a piece of cake for compilers, 
   // such as [cortex](http://github.com/cortexjs/cortex)
   return module.loaded
     ? module.exports
@@ -769,22 +769,22 @@ function generate_exports (module) {
   // # 85
   // Before module factory being invoked, mark the module as `loaded`
   // so we will not execute the factory function again.
-
+  
   // `mod.loaded` indicates that a module has already been `require()`d
   // When there are cyclic dependencies, neuron will not fail.
   module.loaded = true;
 
-  // During the execution of factory,
+  // During the execution of factory, 
   // the reference of `module.exports` might be changed.
-  // But we still set the `module.exports` as `{}`,
-  // because the module might be `require()`d during the execution of factory
+  // But we still set the `module.exports` as `{}`, 
+  // because the module might be `require()`d during the execution of factory 
   // if cyclic dependency occurs.
   var exports = module.exports = {};
 
   // TODO:
   // Calculate `filename` ahead of time
   var __filename
-    // = module.filename
+    // = module.filename 
     = module_id_to_absolute_url(module.id);
   var __dirname = dirname(__filename);
 
@@ -882,7 +882,7 @@ function test_require_id (id) {
 }
 
 
-// use the sandbox to specify the environment for every id that required in the current module
+// use the sandbox to specify the environment for every id that required in the current module 
 // @param {Object} env The object of the current module.
 // @return {function}
 function create_require(env) {
@@ -894,7 +894,7 @@ function create_require(env) {
     return get_exports(module);
   };
 
-  // @param {string} id Module identifier.
+  // @param {string} id Module identifier. 
   // Since 4.2.0, we only allow to asynchronously load a single module
   require.async = function(id, callback) {
     var origin = id;
@@ -906,8 +906,8 @@ function create_require(env) {
         id = resolve_id(id, env);
         var entries = env.entries;
         id = entries
-          ? test_entries(id, entries)
-            || test_entries(id + '.js', entries)
+          ? test_entries(id, entries) 
+            || test_entries(id + '.js', entries) 
             || test_entries(id + '.json', entries)
             || module_not_found(origin)
           : legacy_transform_id(id, env);
@@ -919,7 +919,7 @@ function create_require(env) {
           // If user try to load a non-entry module, it will get a 404 response
           module.a = true;
         } else {
-          // We only allow to `require.async` main module or entries of the current package
+          // We only allow to `require.async` main module or entries of the current package 
           return;
         }
       }
@@ -998,7 +998,7 @@ var js_onload = DOC.createElement('script').readyState
   : function(node, callback) {
     node.addEventListener('load', callback, false);
   };
-
+  
 
 // module define
 // ---------------------------------------------------------------------------------------------------
@@ -1012,7 +1012,7 @@ var js_onload = DOC.createElement('script').readyState
 // @private
 
 // @param {string} id (optional) module identifier
-// @param {Array.<string>} dependencies ATTENSION! `dependencies` must be array of standard
+// @param {Array.<string>} dependencies ATTENSION! `dependencies` must be array of standard 
 //   module id and there will be NO fault tolerance for argument `dependencies`. Be carefull!
 // @param {function(...[*])} factory (require, exports, module)
 // @param {Object=} options
@@ -1024,14 +1024,14 @@ function define(id, dependencies, factory, options) {
   var parsed = parse_id(id);
   if (parsed.p) {
     // Legacy
-    // in old times, main entry:
+    // in old times, main entry: 
     // - define(id_without_ext)
     // - define(pkg) <- even older
     // now, main entry: define(id_with_ext)
     parsed.p = legacy_transform_id(parsed.p, options);
     format_parsed(parsed);
   }
-
+  
   var pkg = parsed.k;
   var modMain;
   if (options.main) {
@@ -1075,7 +1075,7 @@ function define(id, dependencies, factory, options) {
 // @param {Object} host
 
 // ['a@~0.1.0', 'b@~2.3.9']
-// ->
+// -> 
 // {
 //     a: '~0.1.0',
 //     b: '~2.3.9'
@@ -1132,7 +1132,7 @@ function load_module (module, callback) {
 // 4. require('./path')
 // -> deps on a
 // 5. require.async('a')
-// -> load a.main ->
+// -> load a.main -> 
 // 6. require.async('./path')
 // -> load a/path
 // 7. require.async('b/path'): the entry of a foreign module
@@ -1175,7 +1175,7 @@ function load_by_module(mod) {
 
   if (~loaded.indexOf(evidence)) {
     if (!isAsync) {
-      // If the main entrance of the package is already loaded
+      // If the main entrance of the package is already loaded 
       // and the current module is not an async module, skip loading.
       // see: declaration of `require.async`
       return;
@@ -1221,7 +1221,7 @@ function module_id_to_absolute_url(id) {
   base = base.replace('{n}', pathname.length % 3 + 1);
 
   pathname += NEURON_CONF.cache === false
-    ? '?f=' + (NEURON_CONF.timestamp || timestamp)
+    ? '?f=' + timestamp
     : '';
 
   return base + pathname;
@@ -1232,7 +1232,7 @@ function module_id_to_absolute_url(id) {
 //////////////////////////////////////////////////////////////////////
 
 // ### module.defined <==> module.factory
-// Indicates that a module is defined, but its dependencies might not defined.
+// Indicates that a module is defined, but its dependencies might not defined. 
 
 // ### module.ready
 // Indicates that a module is ready to be `require()`d which may occurs in two cases
@@ -1320,7 +1320,7 @@ neuron.ready = ready;
 // var neuron_loaded = [];
 var NEURON_CONF = neuron.conf = {
   loaded: [],
-  // If `config.tree` is not specified,
+  // If `config.tree` is not specified, 
   graph: {
     _: {}
   }
@@ -1332,16 +1332,15 @@ var SETTERS = {
   // The server where loader will fetch modules from
   // if use `'localhost'` as `base`, switch on debug mode
   'path': function(path) {
-    // Make sure
+    // Make sure 
     // - there's one and only one slash at the end
-    // - `conf.path` is a directory
+    // - `conf.path` is a directory 
     return path.replace(/\/*$/, '/');
   },
 
   'loaded': justReturn,
   'graph': justReturn,
-  'cache': justReturn,
-  'timestamp': justReturn
+  'cache': justReturn
 };
 
 
@@ -1375,7 +1374,7 @@ ENV.define = define;
 // @expose
 // Attach a module for business facade, for configurations of inline scripts
 // if you want a certain biz module to be initialized automatically, the module's exports should contain a method named 'init'
-// ### Usage
+// ### Usage 
 // ```
 // // require biz modules with configs
 // facade({
