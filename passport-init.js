@@ -46,8 +46,8 @@ passport.use(new LocalStrategy({
         }
 
         if(!existsUser){
-          console.log("新用户充18.1积分");
-          user.credit = 18.1;
+          console.log("新用户充11.1积分");
+          user.credit = 11.1;
         }
 
         User.update({
