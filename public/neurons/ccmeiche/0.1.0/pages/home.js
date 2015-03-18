@@ -129,7 +129,7 @@ addbtn.on("click", function(e){
 });
 
 // 选择服务
-var currentService = window.services[0];
+var currentService = window.currentService;
 (function(){
   var serviceSelect = popselect(services, {
     type: 'single',
@@ -155,6 +155,7 @@ var currentService = window.services[0];
   }).on("submit",function(result){
     $("body").css("position","static");
     currentService = result[0];
+    if(!currentService){return;}
     var li = $(".services li");currentService
     li.find(".title").html(currentService.title);
     li.find(".desc").html(currentService.describe);
@@ -173,7 +174,7 @@ var currentService = window.services[0];
 // 优惠券
 function judgePromo(){
   var mypromo = user.promo.filter(function(item){
-    return item._id == currentService._id;
+    return currentService && item._id == currentService._id;
   })[0];
   var hascredit = user.credit && user.credit > 0;
   if(mypromo && mypromo.amount){
@@ -250,7 +251,7 @@ function calculate(){
   for(var i = 0; i < cars_count; i++){
     if(promo_count){
       promo_count--;
-    }else{
+    }else if(service){
       count += (+service.price);
     }
   }
@@ -358,6 +359,7 @@ $("#go-wash").on("tap", function(e){
     e.preventDefault();
     return;
   }
+
   var order = {
     carpark:$(".carpark input").val(),
     address:$("#address").val(),
@@ -368,6 +370,11 @@ $("#go-wash").on("tap", function(e){
     price: +$(".payment .count").html(),
     cars:$(".cars li").get().map(function(e,i){return JSON.parse($(e).attr("data"))})
   };
+
+  if(!order.service){
+    popMessage("未选择服务项目");
+    return;
+  }
 
   if(!order.cars.length){
     popMessage("请添加车辆");

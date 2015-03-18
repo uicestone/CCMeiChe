@@ -4,7 +4,7 @@ block content
   .blank
 
   include menu
-
+  - var currentService = null;
   .container
     .section(style="padding-top:7px")
       h2 手机 #{user.phone}
@@ -31,14 +31,22 @@ block content
     .section
       h2 请选择您需要的服务
       ul.services
-        - var service = services[0];
-        li
-          .detail
-            .title #{service.title}
-            .desc #{service.describe}
-          .arrow
-            .icon
-          .price ￥#{service.price}
+        if !currentService
+          li.default
+            .detail
+              .title 请选择服务项目
+              .desc
+            .arrow
+              .icon
+            .price
+        else
+          li
+            .detail
+              .title #{currentService.title}
+              .desc #{currentService.describe}
+            .arrow
+              .icon
+            .price ￥#{currentService.price}
 
     .section.coupon
       .credit
@@ -93,6 +101,7 @@ block content
       wxconfig.debug = true
     }
     window.wx && wx.config(wxconfig);
+    var currentService = !{JSON.stringify(currentService)};
     var services = !{JSON.stringify(services)};
   +facade("menu")
   +facade("home")
