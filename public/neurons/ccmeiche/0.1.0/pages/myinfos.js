@@ -41,7 +41,7 @@ var _37 = "underscore@^1.6.0";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_14, [_29,_30,_25,_3,_8], function(require, exports, module, __filename, __dirname) {
+define(_14, [_29,_30,_3,_25,_8], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var tpl = require("tpl");
 
@@ -203,7 +203,115 @@ $("#save-address").on("tap",function(){
 });
 }, {
     entries:entries,
-    map:mix({"./views/addcar":_25,"./mod/autocomplete":_3,"./mod/popmessage":_8},globalMap)
+    map:mix({"./mod/autocomplete":_3,"./views/addcar":_25,"./mod/popmessage":_8},globalMap)
+});
+
+define(_3, [_29,_31,_32], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var util = require("util");
+var events = require("events");
+
+function Autocomplete(input, pattern, parser, getVal){
+  input = $(input);
+  var self = this;
+  var list = $("<ul class='autocomplete' />");
+  this.list = list;
+  input.after(list);
+  var delay = 350;
+  parser = parser || function(item){return item;}
+  getVal = getVal || function(item){return item;}
+  var needRequest = function(value){
+    return value.match(/\w{1,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
+  }
+
+  function Watcher(options){
+    var interval = this.interval = options.interval;
+    var getter = this.getter = options.getter;
+    var oldValue = this.oldValue = getter();
+  }
+
+  util.inherits(Watcher,events);
+  Watcher.prototype.start = function(){
+    this.stop();
+    var self = this;
+    self.itv = setInterval(function(){
+      var v = self.getter();
+      if(v !== self.oldValue){
+        self.emit("change",v,self.oldValue);
+      }
+      self.oldValue = v;
+    },self.interval);
+  };
+  Watcher.prototype.stop = function(){
+    var self = this;
+    clearInterval(this.itv);
+  };
+
+  var watcher = this.watcher = new Watcher({
+    interval: 100,
+    getter: function(){
+      return input.val().trim();
+    }
+  });
+
+  input.on("focus",function(){
+    watcher.start();
+  });
+
+  watcher.on('change', function(v){
+      if(!needRequest(v)){return;}
+      $.ajax({
+        method: "GET",
+        dataType: "json",
+        url: pattern.replace("{q}",encodeURIComponent(v))
+      }).done(function(data){
+        if(!data.length){return;}
+        list.empty();
+        data.map(parser).forEach(function(item,i){
+          var li = $("<li>" + item + "</li>");
+          li.on("tap",function(){
+            input.val(getVal(data[i]));
+            self.emit("select",data[i]);
+            watcher.stop();
+            self.hide();
+          });
+          $(list).append(li);
+        });
+        var packup = $("<li class='packup'>收起</li>");
+        packup.on("tap",function(){
+          self.hide();
+        });
+        list.append(packup);
+        self.show();
+      }).fail(function(){
+        console.log("failed");
+      });
+  });
+}
+
+util.inherits(Autocomplete, events);
+
+Autocomplete.prototype.show = function(){
+  this.list.show();
+}
+
+Autocomplete.prototype.stopWatch = function(){
+  this.watcher.stop();
+}
+
+Autocomplete.prototype.hide = function(){
+  this.list.hide();
+}
+
+
+exports.init = function(input, parser, getVal){
+  var pattern = input.attr("data-pattern");
+  if(!pattern){return;}
+  return new Autocomplete(input, pattern, parser, getVal);
+}
+}, {
+    entries:entries,
+    map:globalMap
 });
 
 define(_25, [_29,_12,_3,_8,_11,_5,_20], function(require, exports, module, __filename, __dirname) {
@@ -320,114 +428,6 @@ module.exports = swipeModal.create({
 }, {
     entries:entries,
     map:mix({"../mod/uploader":_12,"../mod/autocomplete":_3,"../mod/popmessage":_8,"../mod/swipe-modal":_11,"../mod/input-clear":_5,"../tpl/addcar.html":_20},globalMap)
-});
-
-define(_3, [_29,_31,_32], function(require, exports, module, __filename, __dirname) {
-var $ = require("zepto");
-var util = require("util");
-var events = require("events");
-
-function Autocomplete(input, pattern, parser, getVal){
-  input = $(input);
-  var self = this;
-  var list = $("<ul class='autocomplete' />");
-  this.list = list;
-  input.after(list);
-  var delay = 350;
-  parser = parser || function(item){return item;}
-  getVal = getVal || function(item){return item;}
-  var needRequest = function(value){
-    return value.match(/\w{1,}/) || value.match(/[\u4e00-\u9fa5]{1,}/);
-  }
-
-  function Watcher(options){
-    var interval = this.interval = options.interval;
-    var getter = this.getter = options.getter;
-    var oldValue = this.oldValue = getter();
-  }
-
-  util.inherits(Watcher,events);
-  Watcher.prototype.start = function(){
-    this.stop();
-    var self = this;
-    self.itv = setInterval(function(){
-      var v = self.getter();
-      if(v !== self.oldValue){
-        self.emit("change",v,self.oldValue);
-      }
-      self.oldValue = v;
-    },self.interval);
-  };
-  Watcher.prototype.stop = function(){
-    var self = this;
-    clearInterval(this.itv);
-  };
-
-  var watcher = this.watcher = new Watcher({
-    interval: 100,
-    getter: function(){
-      return input.val().trim();
-    }
-  });
-
-  input.on("focus",function(){
-    watcher.start();
-  });
-
-  watcher.on('change', function(v){
-      if(!needRequest(v)){return;}
-      $.ajax({
-        method: "GET",
-        dataType: "json",
-        url: pattern.replace("{q}",encodeURIComponent(v))
-      }).done(function(data){
-        if(!data.length){return;}
-        list.empty();
-        data.map(parser).forEach(function(item,i){
-          var li = $("<li>" + item + "</li>");
-          li.on("tap",function(){
-            input.val(getVal(data[i]));
-            self.emit("select",data[i]);
-            watcher.stop();
-            self.hide();
-          });
-          $(list).append(li);
-        });
-        var packup = $("<li class='packup'>收起</li>");
-        packup.on("tap",function(){
-          self.hide();
-        });
-        list.append(packup);
-        self.show();
-      }).fail(function(){
-        console.log("failed");
-      });
-  });
-}
-
-util.inherits(Autocomplete, events);
-
-Autocomplete.prototype.show = function(){
-  this.list.show();
-}
-
-Autocomplete.prototype.stopWatch = function(){
-  this.watcher.stop();
-}
-
-Autocomplete.prototype.hide = function(){
-  this.list.hide();
-}
-
-
-exports.init = function(input, parser, getVal){
-  var pattern = input.attr("data-pattern");
-  if(!pattern){return;}
-  return new Autocomplete(input, pattern, parser, getVal);
-}
-}, {
-    entries:entries,
-    map:globalMap
 });
 
 define(_8, [_29], function(require, exports, module, __filename, __dirname) {
@@ -796,7 +796,7 @@ module.exports = inputClear;
 });
 
 define(_20, [], function(require, exports, module, __filename, __dirname) {
-module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
+module.exports = '<div id="addcar" class="container"><h2 class="h2">我的车辆信息</h2><ul class="upload-list"></ul><div class="add-photo"><div class="area"><div class="text"><div class="title">照片上传</div><div class="desc">含号牌的车辆照片<br/>(非必须)</div></div></div><div class="camera"><img src="/img/upload.png"/></div></div><div class="row type"><input placeholder="车型" data-pattern="/api/v1/cartypes/{q}" class="input"/><i class="icon"></i></div><div class="row number"><input placeholder="号牌" class="input"/><i class="icon"></i></div><div class="row color"><input placeholder="颜色" class="input"/><i class="icon"></i></div><div class="row comment"><input placeholder="备注" class="input"/><i class="icon"></i></div><div class="row"><input type="button" value="提交" class="button submit"/><input type="button" value="取消" class="button cancel"/></div></div>'
 }, {
     entries:entries,
     map:globalMap
