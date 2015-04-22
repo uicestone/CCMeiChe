@@ -105,6 +105,8 @@ if(SERVICE == "worker"){
   app.get('/', function(req,res){
     res.redirect('/wechat');
   });
+
+  app.get('/wechat-config.js', require('./routes/wechat-config'));
   app.get('/login', require("./routes/login"));
   app.get('/logout', require("./routes/logout"));
   app.get("/contact-us", require("./routes/contact"));

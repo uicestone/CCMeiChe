@@ -1,12 +1,74 @@
 extends layout
 block content
-  h1.h1 #{subtitle}
-  ul.choices
-    for choice in choices
-      li.row(data-id="#{choice._id}")
-        .recharge-row
-          .promo
-            .title #{choice.title}
-          .price ¥#{choice.price}元/车
-  .button 提交
-  +facade('month_package')
+
+  .blank
+  include menu
+  - var currentService = null;
+  .container
+    .section(style="padding-top:7px")
+      h2 手机 #{user.phone}
+    .section
+      .cars
+        table.selected-cars
+          tr
+            td.cars-cell
+              ul
+                - var defaultCars = (user.cars || []).filter(function(car){return car["default"];});
+                - var cars = defaultCars.length ? defaultCars : (user.cars && user.cars.length ? [user.cars[0]] : []);
+                each car,i in cars
+                  li(data="#{JSON.stringify(car)}")
+                    .detail
+                      .type #{car.type}#{car.color}
+                      .number #{car.number}
+            td.arrow-cell
+              .arrow
+                .icon
+        if !user.cars || user.cars.length < 5
+          .add.addcar
+            i.icon-add
+            | 添加车辆
+    .section
+      h2 请选择您需要的包月服务
+      ul.services
+        if !currentService
+          li.default
+            .detail
+              .title 请选择服务项目
+              .desc
+            .arrow
+              .icon
+            .price
+        else
+          li
+            .detail
+              .title #{currentService.title}
+            .arrow
+              .icon
+            .price ￥#{currentService.price}
+
+    .section
+      .payment
+        .inner
+          .title 支付金额
+          .num ￥
+            span.count 0
+    .section.address
+      h2 地址
+      input#latlng(type="hidden")
+      .location
+        input#address.input(data-pattern="/api/v1/location/suggestion/{q}")
+        i.icon
+      .carpark
+        input#carpark.input(placeholder="具体位置 如B215车位")
+      .note 注：一地址一订单，其他地址请另行下单
+
+    .section.go-wash-section
+      #go-wash.button 欧耶洗车啦
+  script(src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js")
+  script(src="/wechat-config.js")
+  script.
+    window.wx && wx.config(wxconfig);
+    var currentService = !{JSON.stringify(currentService)};
+    var services = !{JSON.stringify(services)};
+  +facade("menu")
+  +facade("month_package")
