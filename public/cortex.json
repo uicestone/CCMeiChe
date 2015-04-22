@@ -12,7 +12,7 @@
     "email": "supersheepxjy@gmail.com"
   },
   "entries": [
-    "./pages/**/*.js"
+    "./pages/*.js"
   ],
   "bugs": {
     "url": "http://github.com/uicestone/CCMeiChe/issues"

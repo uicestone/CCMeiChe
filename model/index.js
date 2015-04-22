@@ -8,6 +8,8 @@ var models = [
   "cartype",
   "usermessage",
   "rechargeorder",
+  "monthpackage",
+  "monthpackageorder",
   "admin",
   "refund",
   "promoqr",

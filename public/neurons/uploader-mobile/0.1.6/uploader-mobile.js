@@ -6,8 +6,8 @@ var _2 = "zepto@~1.1.3";
 var _3 = "underscore@~1.6.0";
 var _4 = "attributes@~1.4.0";
 var _5 = "uploader-mobile@0.1.6/src/queue.js";
-var _6 = "uploader-mobile@0.1.6/src/errors.js";
-var _7 = "uploader-mobile@0.1.6/src/adapter/ajax.js";
+var _6 = "uploader-mobile@0.1.6/src/adapter/ajax.js";
+var _7 = "uploader-mobile@0.1.6/src/errors.js";
 var _8 = "uploader-mobile@0.1.6/src/theme/default.js";
 var _9 = "uploader-mobile@0.1.6/src/uid.js";
 var _10 = "simple-mime@^0.0.8";
@@ -348,7 +348,7 @@ Uploader.prototype._getType = function(){
 
 }, {
     main:true,
-    map:mix({"./queue":_5,"./errors":_6,"./adapter/ajax":_7,"./theme/default":_8},globalMap)
+    map:mix({"./queue":_5,"./adapter/ajax":_6,"./errors":_7,"./theme/default":_8},globalMap)
 });
 
 define(_5, [_0,_1,_4,_3,_9], function(require, exports, module, __filename, __dirname) {
@@ -412,13 +412,9 @@ Queue.prototype.remove = function(file){
 }
 
 Queue.prototype.updateFileStatus = function(file,status){
-    try{
-      file = this.getFileById(file.id);
-    }catch(e){
-      window.onerror(e.stack.toString());
-    }
+    file = this.getFileById(file.id);
     if(file){
-      file.status = status;
+        file.status = status;
     }
     return true;
 }
@@ -429,10 +425,10 @@ Queue.prototype.clear = function(){
     function _remove(){
         var files = self.get("files");
         if(files.length){
-            self.remove(files[0]);
+            self.remove();
             _remove();
         }else{
-            self.emit("clear");
+            self.fire("clear");
         }
     }
     _remove();
@@ -453,29 +449,7 @@ Queue.prototype.add = function(file){
     map:mix({"./uid":_9},globalMap)
 });
 
-define(_6, [], function(require, exports, module, __filename, __dirname) {
-
-var ERRORS = {
-    "HTTP_ERROR"                  : "-200",
-    "MISSING_UPLOAD_URL"          : "-210",
-    "IO_ERROR"                    : "-220",
-    "SECURITY_ERROR"              : "-230",
-    "UPLOAD_LIMIT_EXCEEDED"       : "-240",
-    "UPLOAD_FAILED"               : "-250",
-    "SPECIFIED_FILE_ID_NOT_FOUND" : "-260",
-    "FILE_VALIDATION_FAILED"      : "-270",
-    "FILE_CANCELLED"              : "-280",
-    "UPLOAD_STOPPED"              : "-290",
-    "JSON_PARSE_FAILED"           : "-300",
-    "CUSTOM_DEFINED_ERROR"        : "-310"
-};
-
-module.exports = ERRORS;
-}, {
-    map:globalMap
-});
-
-define(_7, [_2,_1,_0,_4,_3,_10,_6], function(require, exports, module, __filename, __dirname) {
+define(_6, [_2,_1,_0,_4,_3,_10,_7], function(require, exports, module, __filename, __dirname) {
 var EMPTY = '';
 var $ = require('zepto');
 var util = require('util');
@@ -643,7 +617,29 @@ attributes.patch(AjaxUploader, {
   }
 });
 }, {
-    map:mix({"../errors":_6},globalMap)
+    map:mix({"../errors":_7},globalMap)
+});
+
+define(_7, [], function(require, exports, module, __filename, __dirname) {
+
+var ERRORS = {
+    "HTTP_ERROR"                  : "-200",
+    "MISSING_UPLOAD_URL"          : "-210",
+    "IO_ERROR"                    : "-220",
+    "SECURITY_ERROR"              : "-230",
+    "UPLOAD_LIMIT_EXCEEDED"       : "-240",
+    "UPLOAD_FAILED"               : "-250",
+    "SPECIFIED_FILE_ID_NOT_FOUND" : "-260",
+    "FILE_VALIDATION_FAILED"      : "-270",
+    "FILE_CANCELLED"              : "-280",
+    "UPLOAD_STOPPED"              : "-290",
+    "JSON_PARSE_FAILED"           : "-300",
+    "CUSTOM_DEFINED_ERROR"        : "-310"
+};
+
+module.exports = ERRORS;
+}, {
+    map:globalMap
 });
 
 define(_8, [], function(require, exports, module, __filename, __dirname) {

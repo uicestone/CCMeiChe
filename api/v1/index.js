@@ -25,6 +25,7 @@ module.exports = function(app){
     app.post("myaddresses/:index", auth, require("./myaddresses").update);
     app.delete("myaddresses/:index", auth, require("./myaddresses").remove);
 
+    app.post("pay_month_package/:id", auth, require("./pay_month_package").post);
     app.get("cartypes/:query", require("./cartypes").get);
     app.post("recharge/:id", require("./recharge").post);
     app.get("location/latlng/:lat,:lng", require("./location").latlng);

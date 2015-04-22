@@ -15,44 +15,58 @@ var _11 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
 var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_6, [_10,_11], function(require, exports, module, __filename, __dirname) {
-var $ = require('zepto');
-var popMessage = require('./mod/popmessage');
-
-function postShare(){
-  if(order.status == "done"){
-    $.post('/api/v1/myorders/share',{
-      orderId: order._id
-    },'json').done(function(result){
-      if(result.message == "ok"){
-        popMessage("分享成功，将获得5积分");
-      }
-    });
+define(_3, [_10,_11], function(require, exports, module, __filename, __dirname) {
+var $ = require("zepto");
+var popMessage = require("./mod/popmessage");
+var current = null;
+$(".choices .row").on("tap",function(){
+  if(current){
+    current.removeClass("active");
   }
-}
+  var el = $(this);
+  el.addClass("active");
+  current = el;
+});
 
-var shareData = {
-  "imgUrl": appConfig.qiniu_host + order.finish_pics[0] + "?imageView/2/w/96/h/96",
-  "link": location.href,
-  "desc":'我刚刚在CC美车完成了洗车，获得5积分，你也来试试吧',
-  "title":"我刚刚在CC美车完成了洗车，获得5积分，你也来试试吧"
-};
+$(".button").on("tap",function(){
 
-WeixinApi.ready(function(Api){
-  // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
-  Api.shareToFriend(shareData, {
-    confirm:function (resp) {
-      window.ga && ga('send', 'event', 'share', 'timeline');
-      postShare();
+  var id = $(".row.active").attr("data-id");
+  if(!id){
+    popMessage("请选择");
+    return;
+  }
+
+  function popSuccess(){
+    popMessage("您已成功购买" + $(".active .title").text().trim() ,true);
+    setTimeout(function(){
+      location.href = "/wechat/?showwxpaytitle=1";
+    },1000);
+  }
+
+  $.post("/api/v1/pay_month_package/" + id).done(function(result){
+    var payment_args = result.payment_args;
+    var orderId = result.orderId;
+    if(appConfig.env !== "product"){
+      $.post("/wechat/notify",{
+        orderId: orderId,
+        type: 'monthpackage'
+      },'json').done(function(){
+        popSuccess();
+      });
+    }else{
+      WeixinJSBridge.invoke('getBrandWCPayRequest',payment_args,function(res){
+        var message = res.err_msg;
+        if(message == "get_brand_wcpay_request:ok"){
+          popSuccess();
+        }else{
+          popMessage("支付失败，请重试");
+        }
+      });
     }
+  }).fail(function(){
+    console.log("fail");
   });
-  // 点击分享到朋友圈，会执行下面这个代码
-  Api.shareToTimeline(shareData, {
-    confirm:function (resp) {
-      window.ga && ga('send', 'event', 'share', 'timeline');
-      postShare();
-    }
-  });
+
 });
 }, {
     entries:entries,

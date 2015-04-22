@@ -3,42 +3,27 @@ function mix(a,b){for(var k in b){a[k]=b[k];}return a;}
 var _0 = "ccmeiche@0.1.0/pages/home.js";
 var _1 = "ccmeiche@0.1.0/pages/login.js";
 var _2 = "ccmeiche@0.1.0/pages/menu.js";
-var _3 = "ccmeiche@0.1.0/pages/mod/autocomplete.js";
-var _4 = "ccmeiche@0.1.0/pages/mod/countdown.js";
-var _5 = "ccmeiche@0.1.0/pages/mod/input-clear.js";
-var _6 = "ccmeiche@0.1.0/pages/mod/menu.js";
-var _7 = "ccmeiche@0.1.0/pages/mod/multiselect.js";
-var _8 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
-var _9 = "ccmeiche@0.1.0/pages/mod/popselect.js";
-var _10 = "ccmeiche@0.1.0/pages/mod/singleselect.js";
-var _11 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
-var _12 = "ccmeiche@0.1.0/pages/mod/uploader.js";
-var _13 = "ccmeiche@0.1.0/pages/mod/wechat-uploader.js";
-var _14 = "ccmeiche@0.1.0/pages/myinfos.js";
-var _15 = "ccmeiche@0.1.0/pages/myorders.js";
-var _16 = "ccmeiche@0.1.0/pages/order-result.js";
-var _17 = "ccmeiche@0.1.0/pages/order.js";
-var _18 = "ccmeiche@0.1.0/pages/promos.js";
-var _19 = "ccmeiche@0.1.0/pages/recharge.js";
-var _20 = "ccmeiche@0.1.0/pages/tpl/addcar.html.js";
-var _21 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
-var _22 = "ccmeiche@0.1.0/pages/tpl/finishorder.html.js";
-var _23 = "ccmeiche@0.1.0/pages/tpl/mixins.html.js";
-var _24 = "ccmeiche@0.1.0/pages/tpl/preorder.html.js";
-var _25 = "ccmeiche@0.1.0/pages/views/addcar.js";
-var _26 = "ccmeiche@0.1.0/pages/views/agreement.js";
-var _27 = "ccmeiche@0.1.0/pages/views/finishorder.js";
-var _28 = "ccmeiche@0.1.0/pages/views/preorder.js";
-var _29 = "zepto@^1.1.3";
-var _30 = "util@^1.0.4";
-var _31 = "events@^1.0.5";
-var _32 = "view-swipe@~0.1.4";
-var _33 = "tpl@~0.2.1";
-var _34 = "hashstate@~0.1.0";
-var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28];
+var _3 = "ccmeiche@0.1.0/pages/month_package.js";
+var _4 = "ccmeiche@0.1.0/pages/myinfos.js";
+var _5 = "ccmeiche@0.1.0/pages/myorders.js";
+var _6 = "ccmeiche@0.1.0/pages/order-result.js";
+var _7 = "ccmeiche@0.1.0/pages/order.js";
+var _8 = "ccmeiche@0.1.0/pages/promos.js";
+var _9 = "ccmeiche@0.1.0/pages/recharge.js";
+var _10 = "zepto@^1.1.3";
+var _11 = "ccmeiche@0.1.0/pages/views/agreement.js";
+var _12 = "ccmeiche@0.1.0/pages/mod/popmessage.js";
+var _13 = "ccmeiche@0.1.0/pages/mod/swipe-modal.js";
+var _14 = "ccmeiche@0.1.0/pages/tpl/agreement.html.js";
+var _15 = "util@^1.0.4";
+var _16 = "events@^1.0.5";
+var _17 = "view-swipe@~0.1.4";
+var _18 = "tpl@~0.2.1";
+var _19 = "hashstate@~0.1.0";
+var entries = [_0,_1,_2,_3,_4,_5,_6,_7,_8,_9];
 var asyncDepsToMix = {};
 var globalMap = asyncDepsToMix;
-define(_1, [_29,_26,_8], function(require, exports, module, __filename, __dirname) {
+define(_1, [_10,_11,_12], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 var agreement = require("./views/agreement");
 var popMessage = require("./mod/popmessage");
@@ -144,10 +129,10 @@ $(function(){
 });
 }, {
     entries:entries,
-    map:mix({"./views/agreement":_26,"./mod/popmessage":_8},globalMap)
+    map:mix({"./views/agreement":_11,"./mod/popmessage":_12},globalMap)
 });
 
-define(_26, [_29,_11,_21], function(require, exports, module, __filename, __dirname) {
+define(_11, [_10,_13,_14], function(require, exports, module, __filename, __dirname) {
 var $ = require("zepto");
 var swipeModal = require("../mod/swipe-modal");
 
@@ -164,10 +149,10 @@ module.exports = swipeModal.create({
 });
 }, {
     entries:entries,
-    map:mix({"../mod/swipe-modal":_11,"../tpl/agreement.html":_21},globalMap)
+    map:mix({"../mod/swipe-modal":_13,"../tpl/agreement.html":_14},globalMap)
 });
 
-define(_8, [_29], function(require, exports, module, __filename, __dirname) {
+define(_12, [_10], function(require, exports, module, __filename, __dirname) {
 var $ = require('zepto');
 function popMessage(message, styles, notDismiss){
   var json = {}
@@ -238,7 +223,7 @@ module.exports = popMessage
     map:globalMap
 });
 
-define(_11, [_30,_31,_32,_33,_34,_29], function(require, exports, module, __filename, __dirname) {
+define(_13, [_15,_16,_17,_18,_19,_10], function(require, exports, module, __filename, __dirname) {
 var util = require("util");
 var events = require("events");
 var viewSwipe = require("view-swipe");
@@ -342,7 +327,7 @@ exports.create = function(config){
     map:globalMap
 });
 
-define(_21, [], function(require, exports, module, __filename, __dirname) {
+define(_14, [], function(require, exports, module, __filename, __dirname) {
 module.exports = '<div id="agreement" class="container"><h2 class="h2">用户协议</h2><div class="content"></div><div class="row"><input type="button" value="返回" class="button cancel"/></div></div>'
 }, {
     entries:entries,

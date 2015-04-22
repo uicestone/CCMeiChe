@@ -9,6 +9,7 @@ var User = model.user;
 var Worker = model.worker;
 var Order = model.order;
 var RechargeOrder = model.rechargeorder;
+var MonthPackageOrder = model.monthpackageorder;
 var Refund = model.refund;
 var DEBUG = process.env.DEBUG;
 
@@ -136,6 +137,47 @@ exports.washcar = function(openid, orderId, req, res, callback){
     function(message, done){
       logger.debug("sendText",currentOrder.worker.openid,message);
       worker_api.sendText(currentOrder.worker.openid,message,done);
+    }
+  ], callback);
+};
+
+
+// 充值
+exports.monthpackage = function(openid, orderId, req, res, callback){
+  var condition = DEBUG ? {
+    phone: req.user.phone
+  } : {
+    openid: openid
+  };
+
+  async.waterfall([
+    function(done){
+      User.find(condition, done);
+    },
+    function(user, done){
+      userId = user._id;
+      MonthPackageOrder.findById(orderId, function(err, order){
+        if(err || !order){
+          return done(err);
+        }
+
+        ActionLog.log(order.user, "购买包月", order.monthpackage.title);
+
+        if(order.processed == true){
+          var error = new Error();
+          error.name = "OrderProcessed";
+          return done(error);
+        }
+
+        done(null);
+      });
+    },
+    function(done){
+      MonthPackageOrder.updateById(orderId, {
+        $set:{
+          processed: true
+        }
+      }, done);
     }
   ], callback);
 };

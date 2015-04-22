@@ -1,0 +1,12 @@
+extends layout
+block content
+  h1.h1 #{subtitle}
+  ul.choices
+    for choice in choices
+      li.row(data-id="#{choice._id}")
+        .recharge-row
+          .promo
+            .title #{choice.title}
+          .price ¥#{choice.price}元/车
+  .button 提交
+  +facade('month_package')

@@ -109,6 +109,7 @@ if(SERVICE == "worker"){
   app.get('/logout', require("./routes/logout"));
   app.get("/contact-us", require("./routes/contact"));
   app.get("/services", require("./routes/services"));
+  app.get('/wechat/month-package', require('./routes/month_package'));
   app.get("/wechat/packages", require("./routes/promos"));
   app.get('/wechat/recharge', assureUserLogin, require("./routes/recharge"));
   app.get('/wechat/', assureUserLogin, require("./routes/index"));
