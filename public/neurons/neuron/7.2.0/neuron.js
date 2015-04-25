@@ -22,8 +22,6 @@ var neuron = {
 var NULL = null;
 var FALSE = !1;
 
-var timestamp = + new Date;
-
 // // Check and make sure the module is downloaded, 
 // // if not, it will download the module
 // neuron.load = function (module, callback){
@@ -944,6 +942,8 @@ function create_require(env) {
       // If user try to resolve a url outside the current package
       // it fails silently
       if (!~path.indexOf('../')) {
+        var md5 = get_md5(env.k, path);
+        path = append_md5_to_path(path, md5);
         return module_id_to_absolute_url(env.k + '/' + path);
       }
     }
@@ -1194,8 +1194,17 @@ function load_by_module(mod) {
   load_js(module_to_absolute_url(mod));
 }
 
+function append_md5_to_path(path, md5){
+  var ext = path.match(/\.[\w\d]+$/)[0];
+  if(md5){
+    return path.replace(new RegExp(ext + "$"), "_" + md5 + ext);
+  }else{
+    return path;
+  }
+}
 
 function module_to_absolute_url(mod) {
+  var md5 = get_md5(mod.k, mod.main ? (mod.n + ".js") : mod.p.slice(1));
   var id = mod.main
     // if is a main module, we will load the source file by package
 
@@ -1212,17 +1221,13 @@ function module_to_absolute_url(mod) {
     // if is an async module, we will load the source file by module id
     : mod.id;
 
-  return module_id_to_absolute_url(id);
+  var origin_url = module_id_to_absolute_url(id);
+
+  return append_md5_to_path(origin_url, md5);
 }
 
-function module_id_to_md5(id){
-  var modname = id.split("/")[0];
-  var modpath = id.split(modname)[1];
-  if(modpath){
-    modpath = modpath.slice(1);
-  }
-  var md5 = NEURON_CONF.hash && NEURON_CONF.hash[modname] && NEURON_CONF.hash[modname][modpath];
-  return md5;
+function get_md5(package_id, mod_path){
+  return NEURON_CONF.hash && NEURON_CONF.hash[package_id] && NEURON_CONF.hash[package_id][mod_path];
 }
 
 
@@ -1230,21 +1235,10 @@ function module_id_to_md5(id){
 // -> http://localhost/abc/<relative>
 // @param {string} relative relative module url
 function module_id_to_absolute_url(id) {
-  var md5 = module_id_to_md5(id);
   var pathname = id.replace('@', '/');
   var base = NEURON_CONF.path;
   base || err('config.path must be specified');
   base = base.replace('{n}', pathname.length % 3 + 1);
-
-  if(md5){
-    var ext = pathname.match(/\.[\d\w]+$/)[0];
-    pathname = pathname.split(ext)[0] + "_" + md5 + ext;
-  }
-
-  pathname += NEURON_CONF.cache === false
-    ? '?f=' + timestamp
-    : '';
-
 
   return base + pathname;
 }
@@ -1361,8 +1355,7 @@ var SETTERS = {
   },
   'hash': justReturn,
   'loaded': justReturn,
-  'graph': justReturn,
-  'cache': justReturn
+  'graph': justReturn
 };
 
 

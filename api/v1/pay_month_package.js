@@ -6,8 +6,29 @@ var logger = require('../../logger');
 var _ = require("underscore");
 var moment = require("moment");
 
+// 购买后，生成一条包月洗车的订单，包含车辆信息，位置信息
 exports.post = function(req, res, next) {
 	var id = req.params.id;
+    var cars = req.body.cars;
+    var latlng = req.body.latlng;
+    var address = req.body.address;
+    var carpark = req.body.carpark;
+
+
+    if(!address){
+        return next("请填写地址");
+    }
+
+    if(!carpark){
+        return next("请填写车位信息");
+    }
+
+    if(!latlng){
+        return next("缺少经纬度，请选择地址");
+    }
+
+    latlng = latlng.split(",");
+
 	MonthPackage.findById(id, function(err, monthpackage) {
 		if (err || !monthpackage) {
 			return next(err);
@@ -15,7 +36,11 @@ exports.post = function(req, res, next) {
 
 		MonthPackageOrder.insert({
 			monthpackage: monthpackage,
-			endtime: +moment().add(30, "days").toDate(),
+			endtime: moment().add(30, "days").toDate(),
+            cars: cars,
+            address: address,
+            carpark: carpark,
+            latlng: latlng,
 			user: _.pick(req.user, "_id", "phone")
 		}, function(err, orders) {
 			if (err) {
