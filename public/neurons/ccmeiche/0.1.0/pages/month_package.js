@@ -398,9 +398,19 @@ $("#go-wash").on("tap", function (e) {
   el.prop("disabled", true);
   popMessage("包月订单提交中...", {}, true);
   // 购买后，生成一条包月洗车的订单，包含车辆信息，位置信息
+  var orderId = order.service._id;
+
+
+  function popSuccess(order){
+    popMessage("您已成功购买" + order.service.title, {textAlign:"center"},true);
+    setTimeout(function(){
+      location.href = "/wechat/?showwxpaytitle=1";
+    },1000);
+  }
+
   $.ajax({
     type: "post",
-    url: "/api/v1/pay_month_package/" + order.service._id,
+    url: "/api/v1/pay_month_package/" + orderId,
     data: order,
     timeout: 15000,
     dataType: "json"
@@ -409,15 +419,15 @@ $("#go-wash").on("tap", function (e) {
     if (appConfig.env !== "product") {
       $.post("/wechat/notify", {
         orderId: orderId,
-        type: 'recharge'
+        type: 'monthpackage'
       }, 'json').done(function () {
-        popSuccess();
+        popSuccess(order);
       });
     } else {
       WeixinJSBridge.invoke('getBrandWCPayRequest', payment_args, function (res) {
         var message = res.err_msg;
         if (message == "get_brand_wcpay_request:ok") {
-          popSuccess();
+          popSuccess(order);
         } else {
           popMessage("支付失败，请重试");
         }
