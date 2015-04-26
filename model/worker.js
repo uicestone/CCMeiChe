@@ -119,9 +119,10 @@ db.bind('worker',{
     });
   },
   addOrder: function(workerId, order, callback){
-    if(order.status !== "todo"){
+    if(order.status !== "todo" && !order.monthpackage){
       callback("order status is not todo!");
     }
+
     Worker.updateById(workerId, {
       $set:{
         last_available_time: order.estimated_finish_time,

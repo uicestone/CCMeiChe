@@ -131,7 +131,11 @@ db.bind('order', {
           if(err){
             return callback(err);
           }
-          return callback(null, orders[0]);
+          var order = orders[0];
+          Worker.addOrder(order.worker._id, order, function(err){
+            if(err){return callback(err);}
+            return callback(null, order);
+          });
         });
       });
     });
