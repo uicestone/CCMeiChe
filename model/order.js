@@ -100,22 +100,39 @@ db.bind('order', {
       "service": monthorder.monthpackage
     };
 
-    this.findOne({
+
+    self.findOne({
       monthpackage: monthorder._id,
-      status: "doing"
-    }, function(err, order){
-      if(err){return callback(err);}
-      if(order){
-        if(order.worker._id.toString() !== worker._id.toString()){
-          return callback("该车已有其他车工正在清洗");
-        }
-        return callback(null, order);
+      status: "done",
+      finish_time: {
+        $gt: moment().startOf("day").toDate(),
+        $lt: moment().endOf("day").toDate()
       }
-      self.insert(neworder, function(err, orders){
-        if(err){
-          return callback(err);
+    }, function(err, order){
+      if(err){
+        return callback(err);
+      }
+      if(order){
+        return callback("该用户今天已进行过包月清洗");
+      }
+
+      self.findOne({
+        monthpackage: monthorder._id,
+        status: "doing"
+      }, function(err, order){
+        if(err){return callback(err);}
+        if(order){
+          if(order.worker._id.toString() !== worker._id.toString()){
+            return callback("该车已有其他车工正在清洗");
+          }
+          return callback(null, order);
         }
-        return callback(null, orders[0]);
+        self.insert(neworder, function(err, orders){
+          if(err){
+            return callback(err);
+          }
+          return callback(null, orders[0]);
+        });
       });
     });
   },
