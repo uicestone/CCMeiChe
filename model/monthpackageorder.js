@@ -13,5 +13,14 @@ db.bind('monthpackageorder', {
         $gt: new Date()
       }
     }, callback);
+  },
+  findCurrentMonthByUser: function(user, callback){
+    var self = this;
+    self.findOne({
+      "user._id": user._id,
+      "endtime": {
+        $gt: new Date()
+      }
+    }, callback);
   }
 });

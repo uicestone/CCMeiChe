@@ -161,7 +161,8 @@ exports.monthpackage = function(openid, orderId, req, res, callback){
           return done(err);
         }
 
-        ActionLog.log(order.user, "购买包月", order.monthpackage.title);
+
+        req.logger.log(req.user, "支付包月订单", JSON.stringify(order.monthpackage));
 
         if(order.processed == true){
           var error = new Error();

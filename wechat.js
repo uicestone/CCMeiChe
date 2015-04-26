@@ -163,6 +163,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
 
       var orderUser;
       var content = message.Content;
+      var theMonthOrder;
       if(isValidMonth(content)){
         return Order.getMonthly(user._id, toDate(content), sendMonthly(res));
       }else if(isCarNumber(content)){
@@ -191,6 +192,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
             });
           },
           function(monthorder, done){
+            theMonthOrder = monthorder;
             async.parallel([
               function(done){
                 User.findById(monthorder.user._id, done);
@@ -215,6 +217,7 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
             return "车型:" + car.type + "，车号:" + car.number +  "，" + car.color + "色";
           }).join(",");
           var link = config.host.worker + "/orders/" + order._id;
+          req.logger.log(user, "生成常规订单", "订单号：" + order._id + "包月订单号：" + theMonthOrder._id);
           res.reply(username + " " + cars + " " + link);
         });
       }else{

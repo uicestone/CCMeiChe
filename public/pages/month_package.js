@@ -360,7 +360,7 @@ $("#go-wash").on("tap", function (e) {
   el.prop("disabled", true);
   popMessage("包月订单提交中...", {}, true);
   // 购买后，生成一条包月洗车的订单，包含车辆信息，位置信息
-  var orderId = order.service._id;
+  var serviceId = order.service._id;
 
 
   function popSuccess(order){
@@ -372,7 +372,7 @@ $("#go-wash").on("tap", function (e) {
 
   $.ajax({
     type: "post",
-    url: "/api/v1/pay_month_package/" + orderId,
+    url: "/api/v1/pay_month_package/" + serviceId,
     data: order,
     timeout: 15000,
     dataType: "json"
@@ -380,7 +380,7 @@ $("#go-wash").on("tap", function (e) {
     var payment_args = result.payment_args;
     if (appConfig.env !== "product") {
       $.post("/wechat/notify", {
-        orderId: orderId,
+        orderId: result.orderId,
         type: 'monthpackage'
       }, 'json').done(function () {
         popSuccess(order);

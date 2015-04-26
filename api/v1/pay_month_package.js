@@ -8,7 +8,7 @@ var moment = require("moment");
 
 // 购买后，生成一条包月洗车的订单，包含车辆信息，位置信息
 exports.post = function(req, res, next) {
-	var id = req.params.id;
+	var serviceId = req.params.id;
     var cars = req.body.cars;
     var latlng = req.body.latlng;
     var address = req.body.address;
@@ -29,40 +29,56 @@ exports.post = function(req, res, next) {
 
     latlng = latlng.split(",");
 
-	MonthPackage.findById(id, function(err, monthpackage) {
-		if (err || !monthpackage) {
+	MonthPackage.findById(serviceId, function(err, monthpackage) {
+		if (err) {
 			return next(err);
 		}
 
-		MonthPackageOrder.insert({
-			monthpackage: monthpackage,
-			endtime: moment().add(30, "days").toDate(),
-            cars: cars,
-            address: address,
-            carpark: carpark,
-            latlng: latlng,
-			user: _.pick(req.user, "_id", "phone", "openid", "wechat_info")
-		}, function(err, orders) {
-			if (err) {
-				return next(err);
-			}
-			var order = orders[0];
-			wechat_user.pay_request(req, {
-				id: order._id,
-				price: order.monthpackage.price,
-				name: order.monthpackage.title,
-				attach: {
-					type: "monthpackage"
-				}
-			}, function(err, payment_args) {
-				if (err) {
-					return next(err);
-				}
-				res.status(200).send({
-					orderId: order._id,
-					payment_args: payment_args
-				});
-			});
-		});
+    if(!monthpackage){
+      return next("不存在的包月项目");
+    }
+
+    MonthPackageOrder.findCurrentMonthByUser(req.user, function(err, order){
+      if(err){
+        return next(err);
+      }
+      if(order){
+        return next("您已经购买了当月的包月套餐了，请勿重复购买喔");
+      }
+
+      MonthPackageOrder.insert({
+        monthpackage: monthpackage,
+        generatetime: new Date(),
+        endtime: moment().add(30, "days").toDate(),
+        cars: cars,
+        address: address,
+        carpark: carpark,
+        latlng: latlng,
+        user: _.pick(req.user, "_id", "phone", "openid", "wechat_info")
+      }, function(err, orders) {
+        if (err) {
+          return next(err);
+        }
+        var order = orders[0];
+        wechat_user.pay_request(req, {
+          id: order._id,
+          price: order.monthpackage.price,
+          name: order.monthpackage.title,
+          attach: {
+            type: "monthpackage"
+          }
+        }, function(err, payment_args) {
+          if (err) {
+            return next(err);
+          }
+
+          req.logger.log(req.user, "预购买包月", JSON.stringify(order.monthpackage));
+          res.status(200).send({
+            orderId: order._id,
+            payment_args: payment_args
+          });
+        });
+      });
+    });
 	});
 }
