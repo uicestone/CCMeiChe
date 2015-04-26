@@ -5,6 +5,7 @@ var Order = model.order;
 var Worker = model.worker;
 var User = model.user;
 var wechat_user = require('../../util/wechat').user.api;
+var sms = require('../../util/sms');
 var wechat_worker = require('../../util/wechat').worker.api;
 var logger = require('../../logger');
 var moment = require('moment');
@@ -66,9 +67,6 @@ exports.done = function(req,res,next){
         logger.debug(data);
         var news = order.cars.map(function(car,i){
           var description = car.type + order.address + order.service.title + "已经完成，点击查看详情";
-          if(order.monthpackage){
-            description += " [包月订单]";
-          }
           req.logger.log("系统", "构建消息", description);
           return {
             title: "您的服务已完成",
@@ -77,7 +75,23 @@ exports.done = function(req,res,next){
             picurl: config.qiniu.host + data.finish_pics[i][0]
           }
         });
-        wechat_user.sendNews(order.user.openid, news, done);
+        wechat_user.sendNews(order.user.openid, news, function(err){
+          if(err){
+            req.logger.log("系统", "发送完成消息失败", "转为手机短信发送");
+          }
+
+          var smsContent = order.cars.map(function(car){
+            return car.type + order.address + order.service.title;
+          }).join("，") + "已经完成，请在服务号中查看详情";
+          sms.send(order.user.phone, smsContent, function(err,resp,data){
+            if(err){
+              req.logger.log("系统", "短信发送失败", JSON.stringify(data));
+            }else{
+              req.logger.log("系统", "短信发送成功");
+            }
+          });
+          done(null);
+        });
       },
       // 更新用户默认车辆
       function(done){

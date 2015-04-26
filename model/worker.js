@@ -177,7 +177,7 @@ db.bind('worker',{
         }
         var last_available_time = last_order ? last_order.estimated_finish_time : null;
         var last_available_latlng = last_order ? last_order.latlng : worker.latlng;
-        logger.debug("调整车工时间%s,位置%s",moment(last_available_time).format('lll'),last_available_latlng);
+        logger.debug("调整车工时间%s,位置%s", last_available_time ? moment(last_available_time).format('lll') : "当前", last_available_latlng);
 
         Worker.updateById(workerId, {
           $set:{
