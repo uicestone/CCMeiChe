@@ -41,7 +41,7 @@ exports.post = function(req, res, next) {
             address: address,
             carpark: carpark,
             latlng: latlng,
-			user: _.pick(req.user, "_id", "phone")
+			user: _.pick(req.user, "_id", "phone", "openid", "wechat_info")
 		}, function(err, orders) {
 			if (err) {
 				return next(err);

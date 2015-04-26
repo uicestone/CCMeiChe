@@ -66,6 +66,9 @@ exports.done = function(req,res,next){
         logger.debug(data);
         var news = order.cars.map(function(car,i){
           var description = car.type + order.address + order.service.title + "已经完成，点击查看详情";
+          if(order.monthpackage){
+            description += " [包月订单]";
+          }
           req.logger.log("系统", "构建消息", description);
           return {
             title: "您的服务已完成",

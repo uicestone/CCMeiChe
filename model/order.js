@@ -69,6 +69,56 @@ db.bind('order', {
       });
     });
   },
+
+  findWaitingOrdersByWorker: function(workerId, callback){
+    Order.find({
+      "worker._id": workerId,
+      "status": {
+        $in:["doing","todo"]
+      }
+    }).toArray(callback);
+  },
+  /**
+   * 根据包月订单生成普通订单
+   * 生成认为已到达
+   */
+  generateByMonthOrder: function(monthorder, worker, callback){
+    var self = this;
+    var wash_time = 60; // 速洗60分钟
+    var neworder = {
+      "address" : monthorder.address,
+      "carpark" : monthorder.carpark,
+      "cars" : monthorder.cars,
+      "latlng" : [ 31.254461, 121.583934 ],
+      "price" : 0,
+      "monthpackage": monthorder._id,
+      "arrive_time": new Date(),
+      "estimated_finish_time": new Date(+new Date() + wash_time * 60 * 1000),
+      "status" : "doing",
+      "user": monthorder.user,
+      "worker": worker,
+      "service": monthorder.monthpackage
+    };
+
+    this.findOne({
+      monthpackage: monthorder._id,
+      status: "doing"
+    }, function(err, order){
+      if(err){return callback(err);}
+      if(order){
+        if(order.worker._id.toString() !== worker._id.toString()){
+          return callback("该车已有其他车工正在清洗");
+        }
+        return callback(null, order);
+      }
+      self.insert(neworder, function(err, orders){
+        if(err){
+          return callback(err);
+        }
+        return callback(null, orders[0]);
+      });
+    });
+  },
   getCurrent: function(workerId, callback){
     console.log(workerId);
     Order.findOne({

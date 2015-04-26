@@ -91,7 +91,7 @@ function notifyProxy(service){
   return _.extend(api,{
     sendNews: function(openid, articles, callback){
       var message;
-      if(articles[0]){
+      if(!articles[0]){
         message = "oops";
       }else{
         message = articles[0].title + '\n' + articles[0].description;

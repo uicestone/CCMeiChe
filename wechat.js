@@ -16,6 +16,7 @@ var UserMessage = model.usermessage;
 var Worker = model.worker;
 var User = model.user;
 var Order = model.order;
+var MonthPackageOrder = model.monthpackageorder;
 var DEBUG = process.env.CCDEBUG;
 function updateInfo(openid,Model,api,callback){
   api.getUser(openid, function(err, result){
@@ -136,15 +137,89 @@ exports.worker = wechat(config.wechat.worker.token, function(req,res,next){
     }
 
     if(message.MsgType == "text"){
-      return (function(content){
+
+      function isValidMonth(content){
         var year = +content.slice(0,4);
         var month = +content.slice(4,6) - 1;
-        if(year.toString() == "NaN" || month.toString() == "NaN" || year < 2014 || year > 2050 || month < 0 || month > 12){
-          return res.reply("请输入正确格式查看历史订单 例: 201409");
-        }
+        return !(year.toString() == "NaN"
+          || month.toString() == "NaN"
+          || year < 2014
+          || year > 2050
+          || month < 0
+          || month > 12);
+      }
 
-        Order.getMonthly(user._id, new Date(year, month), sendMonthly(res));
-      })(message.Content);
+      function toDate(content){
+        var year = +content.slice(0,4);
+        var month = +content.slice(4,6) - 1;
+        return new Date(year, month);
+      }
+
+      function isCarNumber(content){
+        return content.split(",").some(function(item){
+          return /^[\u4e00-\u9fa5]{1}[A-Z0-9]{6}$/.test(item);
+        });
+      }
+
+      var orderUser;
+      var content = message.Content;
+      if(isValidMonth(content)){
+        return Order.getMonthly(user._id, toDate(content), sendMonthly(res));
+      }else if(isCarNumber(content)){
+        return async.waterfall([
+          function(done){
+            Order.findWaitingOrdersByWorker(user._id, function(err, orders){
+              if(err){
+                return done(err);
+              }
+              var order = orders[0];
+              if(order){
+                return done("手头有未完成的订单，请先完成：" + config.host.worker + "/orders/" + order._id);
+              }
+              done(null);
+            });
+          },
+          function(done){
+            MonthPackageOrder.findByCarNumber(content, function(err, order){
+              if(err){
+                return done(err);
+              }else if(!order){
+                return done("没有对应该车号的包月订单");
+              }else{
+                return done(null, order);
+              }
+            });
+          },
+          function(monthorder, done){
+            async.parallel([
+              function(done){
+                User.findById(monthorder.user._id, done);
+              },
+              function(done){
+                Order.generateByMonthOrder(monthorder, user, done);
+              }
+            ], done);
+          }
+        ], function(err, results){
+          if(err){
+            console.error(err);
+            return res.reply(typeof err == "string" ? err : "");
+          }
+
+          var user = results[0];
+          var order = results[1];
+
+          // 回复客户名称，车型和一个链接
+          var username = user.wechat_info ? user.wechat_info.nickname : ("用户" + user.phone);
+          var cars = order.cars.map(function(car){
+            return "车型:" + car.type + "，车号:" + car.number +  "，" + car.color + "色";
+          }).join(",");
+          var link = config.host.worker + "/orders/" + order._id;
+          res.reply(username + " " + cars + " " + link);
+        });
+      }else{
+        return res.reply("输入月份查看当月订单，例: 201409\n输入车牌号进行包月洗车");
+      }
     }
 
     if(message.EventKey == "ON_DUTY"){
