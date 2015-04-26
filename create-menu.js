@@ -55,6 +55,10 @@ if (service == "worker") {
         "name": "服务礼包",
         "type": "view",
         "url": config.host.user + "/wechat/packages?showwxpaytitle=1"
+      }, {
+        "name": "包月套餐",
+        "type": "view",
+        "url": config.host.user + "/wechat/month-package?showexpaytitle=1"
       }]
     }, {
       "name": "CC助手",
